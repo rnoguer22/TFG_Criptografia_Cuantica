@@ -1,0 +1,151 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+% Necesario para usar fuentes del sistema
+% \usepackage{fontspec} 
+% \setmainfont{Arial} 
+
+\usepackage{graphicx} % Required for inserting images
+\usepackage{imakeidx}
+\usepackage{amssymb, amsmath}
+\usepackage{listings}
+
+\usepackage{xcolor} % Para definir colores personalizados
+\usepackage{hyperref}
+
+% Definir un azul más oscuro
+\definecolor{darkblue}{rgb}{0.0, 0.0, 1} % Azul oscuro
+
+% Configuración personalizada para hyperref
+\hypersetup{
+    colorlinks=true,     % Colorear los enlaces en lugar de ponerles un recuadro
+    linkcolor=blue,      % Color de los enlaces internos (por ejemplo, índice)
+    citecolor=blue,      % Color de los enlaces de citas
+    filecolor=magenta,   % Color de los enlaces a archivos
+    urlcolor=darkblue        % Color de los enlaces a URLs
+}
+
+\makeindex
+\setlength{\parindent}{12pt}
+
+
+% Márgenes de página
+\usepackage[left=2.5cm, right=2.5cm, top=3cm, bottom=3cm]{geometry}
+
+% Fuente y formato
+\usepackage[T1]{fontenc} % Para las ñ y letras con tilde
+\usepackage{times}
+\usepackage{microtype} % Mejora el espaciado de las palabras
+
+% Encabezado y pie de página
+\usepackage{fancyhdr}
+\pagestyle{fancy} 
+\fancyhf{}         
+\rfoot{\thepage} 
+
+
+\begin{document}
+    \begin{titlepage}
+        \centering
+        {\fontsize{18pt}{22pt}\selectfont \textbf{UNIVERSIDAD ALFONSO X EL SABIO}\par}
+        \vspace{1cm}
+        {\fontsize{16pt}{22pt}\selectfont \textbf{ESCUELA POLITÉCNICA SUPERIOR}\par}
+        \vspace{1cm}
+        {\fontsize{14pt}{22pt}\selectfont \textbf{GRADO EN INGENIERÍA MATEMÁTICA}\par}
+        \vspace{2cm}
+        {\includegraphics[width=1\textwidth]{img/portada.png}\par}
+        \vspace{0.5cm}
+        {\fontsize{20pt}{22pt}\selectfont \textbf{TRABAJO DE FIN DE GRADO}\par}
+        \vspace{1cm}
+        {\fontsize{14pt}{22pt}\selectfont \textbf{Computación Cuántica aplicada a la Criptografía}\par}
+        \vfill
+        {\fontsize{14pt}{22pt}\selectfont \textbf{Rubén Nogueras González}\par}
+        \vspace{1cm}
+        {\fontsize{14pt}{22pt}\selectfont \textbf{Junio de 2025}\par}
+    \end{titlepage}
+    
+    % Pagina en blanco
+    \newpage
+    \thispagestyle{empty}
+    \mbox{}
+    \newpage
+
+    \tableofcontents
+
+    % Pagina en blanco
+    \newpage
+    \thispagestyle{empty}
+    \mbox{}
+    \newpage
+
+    \listoffigures
+
+    % Pagina en blanco
+    \newpage
+    \thispagestyle{empty}
+    \mbox{}
+    \newpage
+    
+    \section{Introducción}
+
+    \vspace{0.5cm}
+
+    La computación cuántica es un nuevo sistema de computación, en el que nos apoyamos en las propiedades de los sistemas cuánticos para mejorar distintos paradigmas de la computación clásica. Esto lo hacemos mediante el uso del \textit{qubit}, la unidad básica de información cuántica, a diferencia de la información clásica que se centra en el \textit{bit} como unidad minima de información. La principal ventaja de los \textit{qubits} es que, además de albergar información binaria (0 o 1), podemos obtener una mezcla de ambos estados (esto se conoce como el principio de superposición cuántica, que ya veremos en los próximos capítulos), de manera que podemos obtener algoritmos cuánticos que no pueden ser modelizados mediante \textit{bits}, reduciendo en muchos casos la complejidad de algoritmos clásicos tradicionales, lo que mejora el rendimiento y eficiencia de nuestros computadores.
+
+    \vspace{0.5cm}
+
+    Para explicar esto de la mejor manera posible, nos remontamos a los orígenes de la física cuántica, a finales del siglo XIX cuando se pensaba que la física clásica era el foco global para resolver todos nuestros problemas, hasta que con el resultado de ciertos experimentos se comenzó a ver una relación entre el comportamiento de las ondas y las partículas.
+
+    \vspace{0.5cm}
+
+
+
+
+
+    % Pagina en blanco
+    \newpage
+    \thispagestyle{empty}
+    \mbox{}
+    \newpage
+
+    \section{Bibliografía}
+
+    TFG Silvia Rodriguez
+    https://matematicas.uam.es/~fernando.chamizo/supervision/TFG/past/memoirs/TFG_silvia_rodriguez.pdf
+
+    Investigacion Computacion Cuantica --> Seguridad informatica, redes informaticas, IA, etc.
+    https://rua.ua.es/dspace/bitstream/10045/124691/1/Estudio_de_la_computacion_cuantica_en_los_diferent_Claramunt_Carriles_Sergio.pdf
+
+    Universidad de Murcia --> Schrodinguer, Hamiltoniano, Oscilador armonico, Atomo de Hidrogeno
+    https://webs.um.es/gustavo.garrigos/tfg/MarinMunoz_Diego_TFG_julio2021.pdf
+
+    TFG Pablo --> Algoritmo de Grover y otros algoritmos
+    https://rodin.uca.es/bitstream/handle/10498/27218/tfg_pablo.pdf?sequence=1&isAllowed=y
+
+    TFM a sus niños --> Schrodinguer e interpretacion probabilistica de la funcion de onda
+    https://repositorioinstitucional.buap.mx/server/api/core/bitstreams/fb9bfe95-7945-404d-a3c5-00ba77b8ad71/content
+
+    Universidad Autonoma de Madrid --> Interpretacion probabilistica de la funcion de onda e introduccion al atomo de hidrogeno
+    https://matematicas.uam.es/~fernando.chamizo/supervision/TFG/past/memoirs/TFG_luis_sanchez.pdf
+
+    TFG explica bien --> Espacios de Hilbert y su relacion con la mecanica cuantica
+    https://idus.us.es/server/api/core/bitstreams/4c49766a-cdfc-4d72-9acf-f62761db63fb/content
+
+    Claudia Mielgo --> El sistema cuantico es un espacio de Hilbert, y funciones de onda 
+    https://matematicas.uam.es/~fernando.chamizo/supervision/TFG/past/memoirs/TFG_claudia_mielgo.pdf
+
+    Algebra Lineal --> Algebra lineal xd, y criptografia cuantica
+    https://repositorio.ual.es/bitstream/handle/10835/9810/VILLASANA%20ALCARAZ%2C%20MARIA%20DEL%20MAR.pdf
+
+    Roberto Gonzalez --> Sistema Bineario e introduccion a los qubits
+    https://oa.upm.es/69234/1/TFG_ROBERTO_GONZALEZ_RIVAS.pdf
+
+    Por que un ordenador cuantico?
+    https://zaguan.unizar.es/record/76803/files/TAZ-TFG-2018-3072.pdf
+
+    https://www.fisicacuantica.es/la-radiacion-del-cuerpo-negro/
+
+    https://redaccion.org/como-los-fisicos-cuanticos-describen-un-cuerpo-negro/
+    
+\end{document}

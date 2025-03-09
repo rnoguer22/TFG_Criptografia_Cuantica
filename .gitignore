@@ -4,4 +4,9 @@ main.lof
 main.log
 main.out
 main.toc
+main.fdb_latexmk
+main.fls
+main.ilg
+main.ind
+main.synctex.gz
 .gitignore

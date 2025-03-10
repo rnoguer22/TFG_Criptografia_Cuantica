@@ -141,6 +141,7 @@
 
     \begin{equation}
         B_{\nu}(T) = \frac{2h\nu^3}{c^2} \frac{1}{e^{\frac{h\nu}{k_B T}} - 1}
+        \label{eq: planck_ultravioleta}
     \end{equation}
 
     \vspace{5mm}
@@ -151,6 +152,8 @@
 
     A finales del siglo XIX, en 1888, se presenta el efecto fotoeléctrico, definido por \textit{Heinrich Hertz}, que consiste en la emision de electrones (fotoelectrones) al incidir luz sobre un metal, actuando como cátodo, los cuales se recogen en un ánodo, generando corriente en un circuito. Dicha luz suele ser ultravioleta, aunque en algunos casos puede ser visible.
 
+    \vspace{5mm}
+
     Previamente al experimento, se plantearon varias hipótesis en base a la física clásica de la época:
 
     \begin{itemize}
@@ -158,15 +161,38 @@
         \item A mayor frecuencia mayor intensidad de corriente en el circuito. 
     \end{itemize}
 
+    \vspace{5mm}
+
     Los resultados de dicho experimento fueron sorprendentes, ya que se observó que la energía cinetica de los electrones que poseen el cátodo no dependen de la intensidad de la luz, sino de su frecuencia, y adicionalmente se pudo ver que a mayor intensidad de luz mayor intensidad de corriente. Más tarde, en 1905, se presentó un artículo, ciertamente atrevido teniendo en cuenta los recursos de la época, que resolvía todos estos problemas.
+
+    \vspace{5mm}
 
     \textit{Albert Einstein} presentó su hipótesis para el efecto fotoeléctrico, basándose en los resultados del experimento de \textit{Planck}, aclarando que la luz no se comporta como una onda, sino que está compuesta de pequeñas partículas, llamadas \textit{fotones}, cuya energía depende de su frecuencia, como ya propuso \textit{Max Planck} en \autoref{eq: planck}, rompiendo de nuevo con los principios de la física clásica.
 
-    En dicha hipótesis se establece la necesidad de una frecuencia mínima, denominada frecuencia umbral, para que el efecto fotoeléctrico tenga lugar, la cual depende del material del que esté construido el cátodo. Por lo que si la frecuencia de los \textit{fotones} emitidos por el haz de luz es menor a esta frecuencia umbral, no se produce corriente en el circuito, por muy intensa que sea la luz. De esta manera, si la frecuencia es mayor o igual a la umbral, los \textit{fotoelectrones} se trasladarán hacia el ánodo al ser expulsados del núcleo de sus átomos, generando energía cinética y por lo tanto, intensidad de corriente en el circuito.
+    \vspace{5mm}
 
-    POR AQUI VOY
+    En dicha hipótesis se establece la necesidad de una frecuencia mínima, denominada frecuencia umbral, para que el efecto fotoeléctrico tenga lugar, la cual depende del material del que esté construido el cátodo. Por lo que si la frecuencia de los \textit{fotones} emitidos por el haz de luz es menor a esta frecuencia umbral, no se produce corriente en el circuito, por muy intensa que sea la luz. De esta manera, si la frecuencia es mayor o igual a la umbral, los \textit{fotoelectrones} se trasladarán hacia el ánodo al ser expulsados del núcleo de sus átomos, generando energía cinética y por lo tanto, intensidad de corriente en el circuito. Esto lo podemos razonar con la siguiente ecuación:
 
-    La energia necesaria para que un electrón pueda abandonar su átomo se conoce como trabajo de extraccion, que ha de ser menor que la energía que necesitan los fotones para poder arrancar el electrón, ya que el resto de energía sobrante es la energía cinética que se transfiere a los electrones para poder generar corriente
+    \vspace{5mm}
+
+    \begin{equation}
+        E_e = E_{ionizacion} + E_{cinetica}
+        \label{eq: einstein_fotoelectrico}
+    \end{equation}
+
+    \vspace{5mm}
+
+    Esta ecuación tiene sentido visto lo anterior, de manera que la energía de los electrones del cátodo ha de ser igual a su \textit{energía de ionización} (o también conocido como \textit{trabajo de extracción}), la cual es la cantidad de energía necesaria para que se produzca el efecto fotoeléctrico, sumado a su \textit{energía cinética}. Por la explicación vista anteriormente, sabemos que dicha \textit{energía de ionización} depende de la \textit{frecuencia umbral \( \nu_{0} \)}, y con la ecuación de la energía de \textit{Planck} (\autoref{eq: planck}), además de conocer la \textit{energía cinética} de una partícula, podemos desarrollar la \autoref{eq: einstein_fotoelectrico}:
+
+    \vspace{5mm}
+
+    \begin{equation*}
+        h \nu = h \nu_{0} + \frac{1}{2} m_{e} v_{e}^{2}
+    \end{equation*}
+
+    \vspace{5mm}
+
+    Donde \textit{h} es la \textit{constante de Planck}, \( \nu \) es la \textit{frecuencia}, \( \nu_{0} \) es la \textit{frecuencia umbral}, \( m_{e} \) es la masa del electrón, y \( v_{e} \) la velocidad del electrón, en este caso al cuadrado.
 
     % Pagina en blanco
     \newpage

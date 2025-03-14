@@ -87,7 +87,7 @@
     \mbox{}
     \newpage
     
-    \section{Introducción}
+    \section{Introducción Histórica a la Mecánica Cuántica}
 
     \vspace{5mm}
 
@@ -105,7 +105,7 @@
 
     \begin{figure}[h]
         \centering
-        \includegraphics[width=0.25\textwidth]{img/Introduccion/cavidad_cuerpo_negro.png}
+        \includegraphics[width=0.2\textwidth]{img/Introduccion/cavidad_cuerpo_negro2.png}
         \caption{Ilustración del cuerpo negro}
         \label{fig: f1}
     \end{figure}
@@ -217,14 +217,75 @@
 
     \begin{equation}
         \varphi (x, t) = e^{i(px - Et) / \hbar}
-        \label{eq: funcion de onda}
+        \label{eq: funcion_de_onda}
     \end{equation}
 
     \vspace{5mm}
 
-    Sin embargo todavía no se conocía su significado físico con total exactitud.
+    Sin embargo, todavia no se conocia su significado fisico con total exactitud. No fue hasta que con el experimento de la doble rendija de \textit{Clinton Davisson} y \textit{Lester Germer} sobre electrones en \textit{1927} (aunque \textit{Thomas Young} lo propuso en \textit{1801}, sobre un haz de luz, demostrando su naturaleza ondulatoria) que se confirmó la hipótesis de \textit{De Broglie}. Como su propio nombre indica, dicho experimento consiste en una superficie opaca con dos rendijas, detrás de la cual colocamos un detector de partículas para poder percibir el comportamiento de los electrones o fotones que pasan a través de ambas rendijas. Según la física clásica, se espera que las partículas pasen a través de las rendijas en forma de línea recta, como lo haría cualquier objeto. Sin embargo, esto no sucede así en el contexto de la mecánica cuántica.
 
-    SEGUIR POR AQUI EXPLICANDO LA SUPERPOSICION DE ONDAS
+    \vspace{5mm}
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{img/Introduccion/doble_rendija.png}
+        \caption{Experimento de la doble rendija}
+        \label{fig: doble_rendija}
+    \end{figure}
+
+    \vspace{5mm}
+
+    Al realizar el experimento, podemos observar un patrón de interferencias en la pantalla de detección situada detrás de las rendijas, el cual es muy similar al patrón que siguen las ondas cuando se superponen unas con otras. Efectivamente, las ondas asociadas a cada partícula se superponen unas con otras como se reveló en el experimento, no obstante, cuando observamos estas partículas mediante el detector, se comportan como una partícula clásica, cambiando su comportamiento, de manera que podemos ver por qué rendija cruzó la partícula. Este fenómeno se conoce como \textit{colapso de función de onda}, y existen muchas teorías que intentar explicar esto, siendo la más famosa la \textit{intepretación de Copenhage}, en la que se establece que la observación de la partícula produce un colapso de su función de onda, determinando su estado correspondiente a la medición.
+
+    \vspace{5mm}
+
+    Matemáticamente, podemos expresar la superposición de ondas como una superposición de estados, esto es:
+
+    \vspace{5mm}
+
+    \begin{equation}
+        \varphi(x, t) = \varphi_{1}(x, t) + \varphi_{2}(x, t) + \dots + \varphi_{n}(x, t), \qquad \forall n \in \mathbb{N} \setminus \{0\}
+        \label{eq: superposicion}
+    \end{equation}
+
+    \vspace{5mm}
+
+    Adicionalmente, surgieron ciertas dudas relacionadas con la naturaleza de la función de onda. Es lógico preguntarse que, si las partículas están definidas por funciones de onda, ¿Dónde están realmente las partículas? Ya que una partícula no puede estar en varios puntos a la vez, ha de estar en un único punto. Es aquí cuando entró \textit{Max Born}, quien sugiere que \( \lvert \varphi(x, t) \rvert ^ {2} \) no es simplemente el cuadrado del módulo de la función de onda, sino que es una función de probabilidad, de manera que 
+
+    \vspace{5mm}
+
+    \begin{equation}
+        \lvert \varphi(x, t) \rvert ^ {2}
+        \label{eq: probabilidad_onda}
+    \end{equation}
+
+    \vspace{5mm}
+
+    Representa la probabilidad de encontrar una partícula en una determinada posición. Esto tuvo una importancia bastante profunda en la mecánica cuántica de la época y en la física en general, ya que las únicas ideas de probabilidad estaban relacionadas a sistemas de incertidumbre, como el lanzamiento de una moneda. De esta manera se concluyó en la probabilidad como uno de los principales focos de la física y de la comprensión de las partículas subatómicas.
+
+    \vspace{5mm}
+
+    \section{Ecuación de Schrödinguer}
+    \subsection{El Espacio de Hilbert}
+    \section{Álgebra Lineal y Puertas Cuánticas}
+    \subsection{Estados Cuánticos}
+    \subsubsection{Esfera de Bloch}    
+    \subsection{Producto Escalar}
+    \subsubsection{Ortonormalidad}
+    \subsection{Puertas Cuánticas}
+    \subsection{Producto Tensorial}
+    \section{Errores Cuánticos}
+    \subsection{Decoherencia}
+    \subsection{Shor Code}
+    \section{Entrelazamiento Cuántico}
+    \subsection{Estados de Bell}
+    \subsection{Codificación Superdensa}
+    \section{Teleportación Cuántica}
+    \section{Algoritmos Cuánticos}
+    \subsection{Oracles Cuánticos}
+    \subsection{Algoritmo de Grover}
+    \subsection{Algoritmo de Shor}
+
 
     % Pagina en blanco
     \newpage
@@ -252,7 +313,7 @@
         \url{https://rodin.uca.es/bitstream/handle/10498/27218/tfg\_pablo.pdf?sequence=1\&isAllowed=y}
         \vspace{2mm}
 
-        TFM a sus niños --> Schrodinguer e interpretacion probabilistica de la funcion de onda\par
+        TFM --> Schrodinguer e interpretacion probabilistica de la funcion de onda\par
         \url{https://repositorioinstitucional.buap.mx/server/api/core/bitstreams/fb9bfe95-7945-404d-a3c5-00ba77b8ad71/content}
         \vspace{2mm}
 
@@ -260,7 +321,7 @@
         \url{https://matematicas.uam.es/~fernando.chamizo/supervision/TFG/past/memoirs/TFG\_luis\_sanchez.pdf}
         \vspace{2mm}
 
-        TFG explica bien --> Espacios de Hilbert y su relacion con la mecanica cuantica\par
+        TFG --> Espacios de Hilbert y su relacion con la mecanica cuantica\par
         \url{https://idus.us.es/server/api/core/bitstreams/4c49766a-cdfc-4d72-9acf-f62761db63fb/content}
         \vspace{2mm}
 
@@ -268,7 +329,7 @@
         \url{https://matematicas.uam.es/~fernando.chamizo/supervision/TFG/past/memoirs/TFG\_claudia\_mielgo.pdf}
         \vspace{2mm}
 
-        Algebra Lineal --> Algebra lineal xd, y criptografia cuantica\par
+        Algebra Lineal --> Algebra lineal y criptografia cuantica\par
         \url{https://repositorio.ual.es/bitstream/handle/10835/9810/VILLASANA%20ALCARAZ%2C%20MARIA%20DEL%20MAR.pdf}
         \vspace{2mm}
 
@@ -280,13 +341,8 @@
         \url{https://zaguan.unizar.es/record/76803/files/TAZ-TFG-2018-3072.pdf}
         \vspace{2mm}
 
+        Radiacion del cuerpo negro\par
         \url{https://www.fisicacuantica.es/la-radiacion-del-cuerpo-negro/}
-        \vspace{2mm}
-
-        \url{https://redaccion.org/como-los-fisicos-cuanticos-describen-un-cuerpo-negro/}
-        \vspace{2mm}
-
-        \url{https://weblab.deusto.es/olarex/cd/kaernten/BBR_ES_new_27.09.2013/el_cuerpo_negro.html}
         \vspace{2mm}
 
         \url{https://weblab.deusto.es/olarex/cd/kaernten/BBR_ES_new_27.09.2013/distribucin_de_la_energa.html}
@@ -295,13 +351,21 @@
         \url{https://www.quimicafisica.com/teoria-cuantica/la-radiacion-del-cuerpo-negro.html}
         \vspace{2mm}
 
+        Efecto Fotoeléctrico\par
         \url{https://es.khanacademy.org/science/ap-chemistry/electronic-structure-of-atoms-ap/bohr-model-hydrogen-ap/a/photoelectric-effect}
         \vspace{2mm}
 
         \url{https://www.quimicafisica.com/teoria-cuantica/el-efecto-fotoelectrico.html}
         \vspace{2mm}
 
+        Experimento de la Doble Rendija\par
         \url{https://www.fisicalab.com/apartado/cantidad-movimiento#google_vignette}
+        \vspace{2mm}
+
+        \url{https://www.dciencia.es/fisica-cuantica-el-experimento-de-la-doble-rendija/}
+        \vspace{2mm}
+
+        \url{https://mecanicosvalencia.es/max-born-mecanica-cuantica/}
         \vspace{2mm}
     
 \end{document}

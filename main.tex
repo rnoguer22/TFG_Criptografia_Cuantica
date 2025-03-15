@@ -10,6 +10,7 @@
 \usepackage{imakeidx}
 \usepackage{amssymb, amsmath}
 \usepackage{listings}
+\usepackage{float} % Para poner las imagenes justo donde queramos
 
 \usepackage{xcolor} % Para definir colores personalizados
 \usepackage{hyperref}
@@ -86,7 +87,22 @@
     \thispagestyle{empty}
     \mbox{}
     \newpage
-    
+
+    \section{Objetivos}
+
+    \vspace{5mm}
+
+    \begin{itemize}
+        \item Comprender la necesidad de la mecánica cuántica en la física clásica.
+        \item Entender los fundamentos matemáticos de la mecánica cuántica, incluyendo álgebra lineal y espacios de Hilbert.
+        \item Aprender las diferencias, ventajas y desventajas entre un ordenador cuántico y uno tradicional.
+        \item Analizar el papel que juegan las puertas cuánticas en la manipulación de estados, y por lo tanto en algoritmos cuánticos.
+        \item Explicar los distintos principios básicos de la criptografía cuántica para garantizar la seguridad de los nuevos sistemas.
+        \item Aprender el concepto de teleportación cuántica como mecanismo eficiente y seguro para la transmisión de información.
+    \end{itemize}
+
+    \vspace{5mm}
+
     \section{Introducción Histórica a la Mecánica Cuántica}
 
     \vspace{5mm}
@@ -95,7 +111,7 @@
 
     \vspace{5mm}
 
-    Para explicar esto de la mejor manera posible, nos remontamos a los orígenes de la física cuántica, a principios del siglo XX, cuando se pensaba que la física clásica era el foco global para resolver todos nuestros problemas, hasta que con el resultado de ciertos experimentos se comenzó a ver una relación entre el comportamiento de las ondas y las partículas.
+    Para explicar esto de la mejor manera posible, nos remontamos a los orígenes de la física cuántica, a finales del siglo \textit{XIX} y principios del siglo \textit{XX}, cuando se pensaba que la física clásica era el foco global para explicar todos los fenómenos que suceden a nuestro alrededor, hasta que con el resultado de ciertos experimentos se comenzó a ver una relación entre el comportamiento de las ondas y las partículas, rompiendo completamente con los principios de la física clásica.
 
     \vspace{5mm}
 
@@ -103,7 +119,7 @@
 
     \vspace{5mm}
 
-    \begin{figure}[h]
+    \begin{figure}[H]
         \centering
         \includegraphics[width=0.2\textwidth]{img/Introduccion/cavidad_cuerpo_negro2.png}
         \caption{Ilustración del cuerpo negro}
@@ -125,6 +141,8 @@
     \vspace{5mm}
 
     Siendo \( h \) la denominada \textit{constante de Planck}, la cual alcanza un valor de \( 6.62607015 \times 10^{-34} \, \text{J} \cdot \text{s} \), y siendo \( \nu \) la frecuencia. Esta energía o intensidad que libera el cuerpo la podemos medir, en función de su longitud de onda, obteniendo la siguiente gráfica:
+
+    \vspace{5mm}
 
     \begin{figure}[h]
         \centering
@@ -222,7 +240,7 @@
 
     \vspace{5mm}
 
-    Sin embargo, todavia no se conocia su significado fisico con total exactitud. No fue hasta que con el experimento de la doble rendija de \textit{Clinton Davisson} y \textit{Lester Germer} sobre electrones en \textit{1927} (aunque \textit{Thomas Young} lo propuso en \textit{1801}, sobre un haz de luz, demostrando su naturaleza ondulatoria) que se confirmó la hipótesis de \textit{De Broglie}. Como su propio nombre indica, dicho experimento consiste en una superficie opaca con dos rendijas, detrás de la cual colocamos un detector de partículas para poder percibir el comportamiento de los electrones o fotones que pasan a través de ambas rendijas. Según la física clásica, se espera que las partículas pasen a través de las rendijas en forma de línea recta, como lo haría cualquier objeto. Sin embargo, esto no sucede así en el contexto de la mecánica cuántica.
+    Siendo \textit{i} la unidad imaginaria, \( \hbar \) la \textit{constante de Planck normalizada} y \textit{x} y \textit{t} las coordenadas de posición y tiempo de la partícula. Sin embargo, todavia no se conocia su significado fisico con total exactitud. No fue hasta que con el experimento de la doble rendija de \textit{Clinton Davisson} y \textit{Lester Germer} sobre electrones en \textit{1927} (aunque \textit{Thomas Young} lo propuso en \textit{1801}, sobre un haz de luz, demostrando su naturaleza ondulatoria) que se confirmó la hipótesis de \textit{De Broglie}. Como su propio nombre indica, dicho experimento consiste en una superficie opaca con dos rendijas, detrás de la cual colocamos un detector de partículas para poder percibir el comportamiento de los electrones o fotones que pasan a través de ambas rendijas. Según la física clásica, se espera que las partículas pasen a través de las rendijas en forma de línea recta, como lo haría cualquier objeto. Sin embargo, esto no sucede así en el contexto de la mecánica cuántica.
 
     \vspace{5mm}
 
@@ -286,6 +304,35 @@
     \subsection{Algoritmo de Grover}
     \subsection{Algoritmo de Shor}
 
+    \section{Estado del Arte}
+
+    \vspace{5mm}
+
+    La empresa líder en computación cuántica es, hasta la fecha y sin duda alguna, IBM, la cual ofrece a nuestra disposición distintas páginas web en las que podemos ejecutar circuitos cuánticos y ver su comportamiento de la manera más real posible. El desarrollo del circuito se hace a través de \textit{Python} mediante su librería destinada a la computación cuántica \textit{Qiskit}, y una vez lo hemos completado, tenemos distintas opciones de configuración para la ejecución del circuito.
+
+    \vspace{5mm}
+
+    Por otra parte, si la programación en \textit{Python} no es nuestro punto fuerte, tenemos a nuestra disposición la interfaz gráfica para el desarrollo de circuitos cuánticos de IBM, Quantum Composer. Con esta herramiento web podemos crear circuitos cuánticos con el sistema \textit{drag and drop} sobre puertas cuánticas o qubits, de manera que se genera el correspondiente código equivalente al circuito cuántico creado y se ejecuta en un emulador o sistema cuántico, además de que podemos visualizar el estado y la fase correspondiente en la \textit{esfera de Bloch}, y un histograma con las probabilidades de los estados a los que puede colapsar el circuito.
+    
+    \vspace{5mm}
+
+    De la misma manera que IBM, Amazon ha desarrollado su propia plataforma para la ejecución de circuitos cuánticos, la cual está basada nuevamente en \textit{Python}, con la diferencia de que usamos la librería relacionada con su propio producto, \textit{Braket}. Este producto incluye ciertas ventajas sobre el producto de IBM, como que permite la combinación de computación cuántica y clásica, aunque como vimos anteriormente, todo circuito clásico se puede expresar como un circuito cuántico. Tambień podemos encontrar productos de otras empresas para la simulación y ejecución de circuitos cuánticos, como Google o Azure, pero no dejan de ser, junto con el producto de Amazon, competidores de la solución presentada por IBM, la cual fue la primera en salir públicamente al mercado con su plataforma IBM Quantum Experience, lanzada en \textit{2016}.
+
+    \vspace{5mm}
+
+    No obstante, la computación cuántica tiene muchos problemas, relacionados precisamente con la naturaleza de las partículas subatómicas, las cuales son muy sensibles al ruido causado por el exterior, lo que hace que se produzcan muchos fallos en los circuitos y que, por lo tanto, los computadores cuánticos actuales no sean tolerantes a fallos (\textit{fault-tolerant}), de manera que los errores se acumulan muy rápidamente y sin la capacidad de ser revertidos con la tecnología cuántica hasta el momento. Sin embargo, Microsoft ha hecho un hallazgo que puede convertirse en la revolución del siglo, mucho más allá que el desarrollo de la inteligencia artificial en estos últimos años.
+
+    \vspace{5mm}
+
+    Microsoft ha anunciado el lanzamiento de \textit{Majorana 1}, la primera unidad de procesamiento cuántico (QPU) con qubits topológicos, qubits que almacenan informacion cuántica de manera más estable y robusta, de manera que es mucho menos susceptible a errores cuánticos, que es uno de los principales problemas de este campo de la física y la tecnología, siendo una de las principales motivaciones para Microsoft construir el primer ordenador cuántico con tolerancia a fallos en los próximos años.
+
+    \vspace{5mm}
+
+    La clave de este gran avance ha sido el desarrollo de materiales topoconductores, los cuales permiten la superconductividad topológica, un estado de la materia que hasta este descubrimiento solo existía en la teoría. Este tipo de materiales se crean con arseniuro de indio y aluminio, de manera que cuando se enfrían prácticamente al cero aboluto y se sintonizan con campos magnéticos, se forman nanocables superconductores topológicos con modos cero de Majorana (MZM) en sus extremos, de manera que aumentan la estabilidad y se reducen los errores en comparación con los qubits tradicionales.
+
+    \vspace{5mm}
+
+    Así es como se ha desarrollado el primer qubit topológico del mundo, y se plantea tener un chip cuántico con más de un millón de qubits y tolerante a fallos en unos años, y no en unas décadas como se planteaba anteriormente, dando un gran paso en la computación cuántica práctica y probablemente uno de los mayores hitos de este campo.
 
     % Pagina en blanco
     \newpage
@@ -329,7 +376,7 @@
         \url{https://matematicas.uam.es/~fernando.chamizo/supervision/TFG/past/memoirs/TFG\_claudia\_mielgo.pdf}
         \vspace{2mm}
 
-        Algebra Lineal --> Algebra lineal y criptografia cuantica\par
+        Algebra Lineal --> Algebra lineal, espacios de Hilbert y criptografia cuantica\par
         \url{https://repositorio.ual.es/bitstream/handle/10835/9810/VILLASANA%20ALCARAZ%2C%20MARIA%20DEL%20MAR.pdf}
         \vspace{2mm}
 
@@ -366,6 +413,10 @@
         \vspace{2mm}
 
         \url{https://mecanicosvalencia.es/max-born-mecanica-cuantica/}
+        \vspace{2mm}
+
+        Majorana\par
+        \url{https://news.microsoft.com/source/latam/noticias-de-microsoft/microsoft-presenta-majorana-1-el-primer-procesador-cuantico-del-mundo-impulsado-por-qubits-topologicos/}
         \vspace{2mm}
     
 \end{document}

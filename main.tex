@@ -15,6 +15,8 @@
 \usepackage{xcolor} % Para definir colores personalizados
 \usepackage{hyperref}
 
+\numberwithin{equation}{section} % Para las ecuaciones
+
 % Definir un azul más oscuro
 \definecolor{darkblue}{rgb}{0.0, 0.0, 1} % Azul oscuro
 
@@ -88,202 +90,285 @@
     \mbox{}
     \newpage
 
-    \section{Objetivos}
 
-    \vspace{5mm}
+    \section{Introducción}
+        \subsection{Objetivos}
 
-    \begin{itemize}
-        \item Comprender la necesidad de la mecánica cuántica en la física clásica.
-        \item Entender los fundamentos matemáticos de la mecánica cuántica, incluyendo álgebra lineal y espacios de Hilbert.
-        \item Aprender las diferencias, ventajas y desventajas entre un ordenador cuántico y uno tradicional.
-        \item Analizar el papel que juegan las puertas cuánticas en la manipulación de estados, y por lo tanto en algoritmos cuánticos.
-        \item Explicar los distintos principios básicos de la criptografía cuántica para garantizar la seguridad de los nuevos sistemas.
-        \item Aprender el concepto de teleportación cuántica como mecanismo eficiente y seguro para la transmisión de información.
-    \end{itemize}
+        \vspace{5mm}
 
-    \vspace{5mm}
+        \begin{itemize}
+            \item Comprender la necesidad de la mecánica cuántica en la física clásica.
+            \item Entender los fundamentos matemáticos de la mecánica cuántica, incluyendo álgebra lineal y espacios de Hilbert.
+            \item Aprender las diferencias, ventajas y desventajas entre un ordenador cuántico y uno tradicional.
+            \item Analizar el papel que juegan las puertas cuánticas en la manipulación de estados, y por lo tanto en algoritmos cuánticos.
+            \item Explicar los distintos principios básicos de la criptografía cuántica para garantizar la seguridad de los nuevos sistemas.
+            \item Aprender el concepto de teleportación cuántica como mecanismo eficiente y seguro para la transmisión de información.
+        \end{itemize}
 
-    \section{Introducción Histórica a la Mecánica Cuántica}
+        \vspace{5mm}
 
-    \vspace{5mm}
+        \subsection{Historia de la Mecánica Cuántica}
 
-    La computación cuántica es un nuevo sistema de computación, en el que nos apoyamos en las propiedades de los sistemas cuánticos para mejorar distintos paradigmas de la computación clásica. Esto lo hacemos mediante el uso del \textit{qubit}, la unidad básica de información cuántica, a diferencia de la información clásica que se centra en el \textit{bit} como unidad minima de información. La principal ventaja de los \textit{qubits} es que, además de albergar información binaria (0 o 1), podemos obtener una mezcla de ambos estados (esto se conoce como el principio de superposición cuántica, que ya veremos en los próximos capítulos), de manera que podemos obtener algoritmos cuánticos que no pueden ser modelizados mediante \textit{bits}, reduciendo en muchos casos la complejidad de algoritmos clásicos tradicionales, lo que mejora el rendimiento y eficiencia de nuestros computadores.
+        \vspace{5mm}
 
-    \vspace{5mm}
+        La computación cuántica es un nuevo sistema de computación, en el que nos apoyamos en las propiedades de los sistemas cuánticos para mejorar distintos paradigmas de la computación clásica. Esto lo hacemos mediante el uso del \textit{qubit}, la unidad básica de información cuántica, a diferencia de la información clásica que se centra en el \textit{bit} como unidad minima de información. La principal ventaja de los \textit{qubits} es que, además de albergar información binaria (0 o 1), podemos obtener una mezcla de ambos estados (esto se conoce como el principio de superposición cuántica, que ya veremos en los próximos capítulos), de manera que podemos obtener algoritmos cuánticos que no pueden ser modelizados mediante \textit{bits}, reduciendo en muchos casos la complejidad de algoritmos clásicos tradicionales, lo que mejora el rendimiento y eficiencia de nuestros computadores.
 
-    Para explicar esto de la mejor manera posible, nos remontamos a los orígenes de la física cuántica, a finales del siglo \textit{XIX} y principios del siglo \textit{XX}, cuando se pensaba que la física clásica era el foco global para explicar todos los fenómenos que suceden a nuestro alrededor, hasta que con el resultado de ciertos experimentos se comenzó a ver una relación entre el comportamiento de las ondas y las partículas, rompiendo completamente con los principios de la física clásica.
+        \vspace{5mm}
 
-    \vspace{5mm}
+        Para explicar esto de la mejor manera posible, nos remontamos a los orígenes de la física cuántica, a finales del siglo \textit{XIX} y principios del siglo \textit{XX}, cuando se pensaba que la física clásica era el foco global para explicar todos los fenómenos que suceden a nuestro alrededor, hasta que con el resultado de ciertos experimentos se comenzó a ver una relación entre el comportamiento de las ondas y las partículas, rompiendo completamente con los principios de la física clásica.
 
-    En primer lugar, vamos a comenzar explicando qué es un cuerpo negro, esto es un cuerpo que absorbe toda la radiación emitida sobre él, sin reflejar nada de lo que le llega. Esto se puede imaginar como una cavidad isotérmica con un orificio por el que se aproxima cierta radiación, de manera que permanezca en su interior. Además, suponemos que dicha cavidad se encuentra en equilibrio térmico, es decir, a una temperatura constante, de manera que la radiación que permanece dentro de ella se transforma en energía, obligando a emitir radiación hacia el exterior, sin tener nada que ver con la radiación que entra por el orificio.
+        \vspace{5mm}
 
-    \vspace{5mm}
+        En primer lugar, vamos a comenzar explicando qué es un cuerpo negro, esto es un cuerpo que absorbe toda la radiación emitida sobre él, sin reflejar nada de lo que le llega. Esto se puede imaginar como una cavidad isotérmica con un orificio por el que se aproxima cierta radiación, de manera que permanezca en su interior. Además, suponemos que dicha cavidad se encuentra en equilibrio térmico, es decir, a una temperatura constante, de manera que la radiación que permanece dentro de ella se transforma en energía, obligando a emitir radiación hacia el exterior, sin tener nada que ver con la radiación que entra por el orificio.
 
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.2\textwidth]{img/Introduccion/cavidad_cuerpo_negro2.png}
-        \caption{Ilustración del cuerpo negro}
-        \label{fig: f1}
-    \end{figure}
-    
-    \vspace{5mm}
+        \vspace{5mm}
 
-    La física clásica es incapaz de explicar la radiación emitida por un cuerpo negro en función de la longitud de onda,
-    hasta que la explicación de este fenómeno vino de la mano de \textit{Max Planck} en el siglo \textit{XX}, el cual establece que la energía liberada por el cuerpo negro se emite en pequeños paquetes, llamados \textit{cuantos de energía}. Esta energía es proporcional a una pequeña constante, la constante de Planck, de manera que la energía emitida por el cuerpo negro no es continua, sino que toma un valor discreto que ha de ser múltiplo de dicha constante por su frecuencia de onda, rompiendo completamente con la física de la época y dando el nacimiento a un nuevo campo de la física, la mecánica cuántica.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.2\textwidth]{img/Introduccion/cavidad_cuerpo_negro2.png}
+            \caption{Ilustración del cuerpo negro}
+            \label{fig: f1}
+        \end{figure}
+        
+        \vspace{5mm}
 
-    \vspace{5mm}
+        La física clásica es incapaz de explicar la radiación emitida por un cuerpo negro en función de la longitud de onda,
+        hasta que la explicación de este fenómeno vino de la mano de \textit{Max Planck} en el siglo \textit{XX}, el cual establece que la energía liberada por el cuerpo negro se emite en pequeños paquetes, llamados \textit{cuantos de energía}. Esta energía es proporcional a una pequeña constante, la constante de Planck, de manera que la energía emitida por el cuerpo negro no es continua, sino que toma un valor discreto que ha de ser múltiplo de dicha constante por su frecuencia de onda, rompiendo completamente con la física de la época y dando el nacimiento a un nuevo campo de la física, la mecánica cuántica.
 
-    \begin{equation}
-        E = h \nu
-        \label{eq: planck}
-    \end{equation}
+        \vspace{5mm}
 
-    \vspace{5mm}
+        \begin{equation}
+            E = h \nu
+            \label{eq: planck}
+        \end{equation}
 
-    Siendo \( h \) la denominada \textit{constante de Planck}, la cual alcanza un valor de \( 6.62607015 \times 10^{-34} \, \text{J} \cdot \text{s} \), y siendo \( \nu \) la frecuencia. Esta energía o intensidad que libera el cuerpo la podemos medir, en función de su longitud de onda, obteniendo la siguiente gráfica:
+        \vspace{5mm}
 
-    \vspace{5mm}
+        Siendo \( h \) la denominada \textit{constante de Planck}, la cual alcanza un valor de \( 6.62607015 \times 10^{-34} \, \text{J} \cdot \text{s} \), y siendo \( \nu \) la frecuencia. Esta energía o intensidad que libera el cuerpo la podemos medir, en función de su longitud de onda, obteniendo la siguiente gráfica:
 
-    \begin{figure}[h]
-        \centering
-        \includegraphics[width=0.75\textwidth]{img/Introduccion/catastrofe_ultravioleta.png}
-        \caption{Catástrofe del ultravioleta}
-        \label{fig: f2}
-    \end{figure}
+        \vspace{5mm}
 
-    \vspace{5mm}
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.75\textwidth]{img/Introduccion/catastrofe_ultravioleta.png}
+            \caption{Catástrofe del ultravioleta}
+            \label{fig: f2}
+        \end{figure}
 
-    Podemos observar que a diferentes temperaturas (longitudes de onda) llegamos a diferentes curvas. La física clásica intentaba predecir estas curvas mediante ciertos modelos, que, aunque se ajustaban correctamente en distintas zonas de la gráfica, no se acercaban ni mucho menos a la realidad. Un ejemplo de esto es la catástrofe del ultravioleta, como resultado de no ajustarse correctamente en la zona ultravioleta, en la que la intensidad de la energía tendía a infinito como resultado de otros modelos, en lugar de tender a cero como propuso \textit{Max Planck}, formulando una ecuación que describe perfectamente la \autoref{fig: f2}:
+        \vspace{5mm}
 
-    \vspace{5mm}
+        Podemos observar que a diferentes temperaturas (longitudes de onda) llegamos a diferentes curvas. La física clásica intentaba predecir estas curvas mediante ciertos modelos, que, aunque se ajustaban correctamente en distintas zonas de la gráfica, no se acercaban ni mucho menos a la realidad. Un ejemplo de esto es la catástrofe del ultravioleta, como resultado de no ajustarse correctamente en la zona ultravioleta, en la que la intensidad de la energía tendía a infinito como resultado de otros modelos, en lugar de tender a cero como propuso \textit{Max Planck}, formulando una ecuación que describe perfectamente la figura (\ref{fig: f2}):
 
-    \begin{equation}
-        B_{\nu}(T) = \frac{2h\nu^3}{c^2} \frac{1}{e^{\frac{h\nu}{k_B T}} - 1}
-        \label{eq: planck_ultravioleta}
-    \end{equation}
+        \vspace{5mm}
 
-    \vspace{5mm}
+        \begin{equation}
+            B_{\nu}(T) = \frac{2h\nu^3}{c^2} \frac{1}{e^{\frac{h\nu}{k_B T}} - 1}
+            \label{eq: planck_ultravioleta}
+        \end{equation}
 
-    Donde \textit{h} es la \textit{constante de Planck}, \( \nu \) la frecuencia de la radiación, \textit{c} la velocidad de la luz en el vacío, \( k_B \) la \textit{constante de Boltzmann}, \textit{T} la temperatura, y \textit{e} como base de los logaritmos naturales. No obstante, esta teoría cuántica fue primeramente descartada por los físicos de la época, al establecer que la energía no es un valor continuo sino discreto, hasta que con la llegada del efecto fotoeléctrico de \textit{Albert Einstein} todo comenzó a cobrar sentido.
+        \vspace{5mm}
 
-    \vspace{5mm}    
+        Donde \textit{h} es la \textit{constante de Planck}, \( \nu \) la frecuencia de la radiación, \textit{c} la velocidad de la luz en el vacío, \( k_B \) la \textit{constante de Boltzmann}, \textit{T} la temperatura, y \textit{e} como base de los logaritmos naturales. No obstante, esta teoría cuántica fue primeramente descartada por los físicos de la época, al establecer que la energía no es un valor continuo sino discreto, hasta que con la llegada del efecto fotoeléctrico de \textit{Albert Einstein} todo comenzó a cobrar sentido.
 
-    A finales del siglo XIX, en 1888, se presenta el efecto fotoeléctrico, definido por \textit{Heinrich Hertz}, que consiste en la emision de electrones (fotoelectrones) al incidir luz sobre un metal, actuando como cátodo, los cuales se recogen en un ánodo, generando corriente en un circuito. Dicha luz suele ser ultravioleta, aunque en algunos casos puede ser visible.
+        \vspace{5mm}    
 
-    \vspace{5mm}
+        A finales del siglo XIX, en 1888, se presenta el efecto fotoeléctrico, definido por \textit{Heinrich Hertz}, que consiste en la emision de electrones (fotoelectrones) al incidir luz sobre un metal, actuando como cátodo, los cuales se recogen en un ánodo, generando corriente en un circuito. Dicha luz suele ser ultravioleta, aunque en algunos casos puede ser visible.
 
-    Previamente al experimento, se plantearon varias hipótesis en base a la física clásica de la época:
+        \vspace{5mm}
 
-    \begin{itemize}
-        \item El aumento de la intensidad de la luz incrementaría la energía cinética de los fotoelectrones emitidos.
-        \item A mayor frecuencia mayor intensidad de corriente en el circuito. 
-    \end{itemize}
+        Previamente al experimento, se plantearon varias hipótesis en base a la física clásica de la época:
 
-    \vspace{5mm}
+        \begin{itemize}
+            \item El aumento de la intensidad de la luz incrementaría la energía cinética de los fotoelectrones emitidos.
+            \item A mayor frecuencia mayor intensidad de corriente en el circuito. 
+        \end{itemize}
 
-    Los resultados de dicho experimento fueron sorprendentes, ya que se observó que la energía cinetica de los electrones que poseen el cátodo no dependen de la intensidad de la luz, sino de su frecuencia, y adicionalmente se pudo ver que a mayor intensidad de luz mayor intensidad de corriente. Más tarde, en 1905, se presentó un artículo, ciertamente atrevido teniendo en cuenta los recursos de la época, que resolvía todos estos problemas.
+        \vspace{5mm}
 
-    \vspace{5mm}
+        Los resultados de dicho experimento fueron sorprendentes, ya que se observó que la energía cinetica de los electrones que poseen el cátodo no dependen de la intensidad de la luz, sino de su frecuencia, y adicionalmente se pudo ver que a mayor intensidad de luz mayor intensidad de corriente. Más tarde, en 1905, se presentó un artículo, ciertamente atrevido teniendo en cuenta los recursos de la época, que resolvía todos estos problemas.
 
-    \textit{Albert Einstein} presentó su hipótesis para el efecto fotoeléctrico, basándose en los resultados del experimento de \textit{Planck}, aclarando que la luz no se comporta como una onda, sino que está compuesta de pequeñas partículas, llamadas \textit{fotones}, cuya energía depende de su frecuencia, como ya propuso \textit{Max Planck} en \autoref{eq: planck}, rompiendo de nuevo con los principios de la física clásica.
+        \vspace{5mm}
 
-    \vspace{5mm}
+        \textit{Albert Einstein} presentó su hipótesis para el efecto fotoeléctrico, basándose en los resultados del experimento de \textit{Planck}, aclarando que la luz no se comporta como una onda, sino que está compuesta de pequeñas partículas, llamadas \textit{fotones}, cuya energía depende de su frecuencia, como ya propuso \textit{Max Planck} en (\ref{eq: planck}), rompiendo de nuevo con los principios de la física clásica.
 
-    En dicha hipótesis se establece la necesidad de una frecuencia mínima, denominada frecuencia umbral, para que el efecto fotoeléctrico tenga lugar, la cual depende del material del que esté construido el cátodo. Por lo que si la frecuencia de los \textit{fotones} emitidos por el haz de luz es menor a esta frecuencia umbral, no se produce corriente en el circuito, por muy intensa que sea la luz. De esta manera, si la frecuencia es mayor o igual a la umbral, los \textit{fotoelectrones} se trasladarán hacia el ánodo al ser expulsados del núcleo de sus átomos, generando energía cinética y por lo tanto, intensidad de corriente en el circuito. Esto lo podemos razonar con la siguiente ecuación:
+        \vspace{5mm}
 
-    \vspace{5mm}
+        En dicha hipótesis se establece la necesidad de una frecuencia mínima, denominada frecuencia umbral, para que el efecto fotoeléctrico tenga lugar, la cual depende del material del que esté construido el cátodo. Por lo que si la frecuencia de los \textit{fotones} emitidos por el haz de luz es menor a esta frecuencia umbral, no se produce corriente en el circuito, por muy intensa que sea la luz. De esta manera, si la frecuencia es mayor o igual a la umbral, los \textit{fotoelectrones} se trasladarán hacia el ánodo al ser expulsados del núcleo de sus átomos, generando energía cinética y por lo tanto, intensidad de corriente en el circuito. Esto lo podemos razonar con la siguiente ecuación:
 
-    \begin{equation}
-        E_e = E_{ionizacion} + E_{cinetica}
-        \label{eq: einstein_fotoelectrico}
-    \end{equation}
+        \vspace{5mm}
 
-    \vspace{5mm}
+        \begin{equation}
+            E_e = E_{ionizacion} + E_{cinetica}
+            \label{eq: einstein_fotoelectrico}
+        \end{equation}
 
-    Esta ecuación tiene sentido visto lo anterior, de manera que la energía de los electrones del cátodo ha de ser igual a su \textit{energía de ionización} (o también conocido como \textit{trabajo de extracción}), la cual es la cantidad de energía necesaria para que se produzca el efecto fotoeléctrico, sumado a su \textit{energía cinética}. Por la explicación vista anteriormente, sabemos que dicha \textit{energía de ionización} depende de la \textit{frecuencia umbral \( \nu_{0} \)}, y con la ecuación de la energía de \textit{Planck} (\autoref{eq: planck}), además de conocer la \textit{energía cinética} de una partícula, podemos desarrollar la \autoref{eq: einstein_fotoelectrico}:
+        \vspace{5mm}
 
-    \vspace{5mm}
+        Esta ecuación tiene sentido visto lo anterior, de manera que la energía de los electrones del cátodo ha de ser igual a su \textit{energía de ionización} (o también conocido como \textit{trabajo de extracción}), la cual es la cantidad de energía necesaria para que se produzca el efecto fotoeléctrico, sumado a su \textit{energía cinética}. Por la explicación vista anteriormente, sabemos que dicha \textit{energía de ionización} depende de la \textit{frecuencia umbral \( \nu_{0} \)}, y con la ecuación de la energía de \textit{Planck} (\ref{eq: planck}), además de conocer la \textit{energía cinética} de una partícula, podemos desarrollar la expresión (\ref{eq: einstein_fotoelectrico}):
 
-    \begin{equation*}
-        h \nu = h \nu_{0} + \frac{1}{2} m_{e} v_{e}^{2}
-    \end{equation*}
+        \vspace{5mm}
 
-    \vspace{5mm}
+        \begin{equation*}
+            h \nu = h \nu_{0} + \frac{1}{2} m_{e} v_{e}^{2}
+        \end{equation*}
 
-    Donde \textit{h} es la \textit{constante de Planck}, \( \nu \) es la \textit{frecuencia}, \( \nu_{0} \) es la \textit{frecuencia umbral}, \( m_{e} \) es la masa del electrón, y \( v_{e} \) la velocidad del electrón, en este caso al cuadrado. 
-    
-    \vspace{5mm}
+        \vspace{5mm}
 
-    Estos son solo dos de los múltiples experimentos con soluciones extrañas para los físicos clásicos de aquella época, en los que, como hemos visto, el comportamiento de ciertos fenómenos, teóricamente imaginados como funciones de onda, se comportan como partículas. También se da el fenómeno contrario, experimentos planteados como partículas pero que son razonados mediante funciones de onda. Esto se definió con el nombre de \textit{dualidad onda-corpúsculo}.
-    
-    \vspace{5mm}
+        Donde \textit{h} es la \textit{constante de Planck}, \( \nu \) es la \textit{frecuencia}, \( \nu_{0} \) es la \textit{frecuencia umbral}, \( m_{e} \) es la masa del electrón, y \( v_{e} \) la velocidad del electrón, en este caso al cuadrado. 
+        
+        \vspace{5mm}
 
-    Más tarde, tras estudiar a fondo las bases de la mecánica cuántica propuesta por \textit{Max Planck} y \textit{Albert Einstein}, \textit{Louis de Broglie} propuso en su tesis doctoral, en \textit{1924}, que no solo la luz tiene un carácter ondulatorio, sino que toda partícula material, como los electrones, tienen una naturaleza ondulatoria, cuya longitud de onda \( \lambda \) es:
-    
-    \vspace{5mm}
+        Estos son solo dos de los múltiples experimentos con soluciones extrañas para los físicos clásicos de aquella época, en los que, como hemos visto, el comportamiento de ciertos fenómenos, teóricamente imaginados como funciones de onda, se comportan como partículas. También se da el fenómeno contrario, experimentos planteados como partículas pero que son razonados mediante funciones de onda. Esto se definió con el nombre de \textit{dualidad onda-corpúsculo}.
+        
+        \vspace{5mm}
 
-    \begin{equation}
-        \lambda = \frac{h}{p}
-        \label{eq: longitud de onda}
-    \end{equation}
+        Más tarde, tras estudiar a fondo las bases de la mecánica cuántica propuesta por \textit{Max Planck} y \textit{Albert Einstein}, \textit{Louis de Broglie} propuso en su tesis doctoral, en \textit{1924}, que no solo la luz tiene un carácter ondulatorio, sino que toda partícula material, como los electrones, tienen una naturaleza ondulatoria, cuya longitud de onda \( \lambda \) es:
+        
+        \vspace{5mm}
 
-    \vspace{5mm}
+        \begin{equation}
+            \lambda = \frac{h}{p}
+            \label{eq: longitud de onda}
+        \end{equation}
 
-    Donde \textit{p} se refiere al \textit{momento lineal} de la partícula, lo cual podemos expresar como \( p = m \cdot v \), siendo \textit{m} la masa, y \textit{v} la velocidad de la partícula. Tras el razonamiento de \textit{Broglie} en \textit{1924}, surge la \textit{función de onda} en una dimensión, la cual describe el comportamiento las partículas con carácter ondulatorio:
+        \vspace{5mm}
 
-    \vspace{5mm}
+        Donde \textit{p} se refiere al \textit{momento lineal} de la partícula, lo cual podemos expresar como \( p = m \cdot v \), siendo \textit{m} la masa, y \textit{v} la velocidad de la partícula. Tras el razonamiento de \textit{Broglie} en \textit{1924}, surge la \textit{función de onda} en una dimensión, la cual describe el comportamiento las partículas con carácter ondulatorio:
 
-    \begin{equation}
-        \varphi (x, t) = e^{i(px - Et) / \hbar}
-        \label{eq: funcion_de_onda}
-    \end{equation}
+        \vspace{5mm}
 
-    \vspace{5mm}
+        \begin{equation}
+            \varphi (x, t) = e^{i(px - Et) / \hbar}
+            \label{eq: funcion_de_onda}
+        \end{equation}
 
-    Siendo \textit{i} la unidad imaginaria, \( \hbar \) la \textit{constante de Planck normalizada} y \textit{x} y \textit{t} las coordenadas de posición y tiempo de la partícula. Sin embargo, todavia no se conocia su significado fisico con total exactitud. No fue hasta que con el experimento de la doble rendija de \textit{Clinton Davisson} y \textit{Lester Germer} sobre electrones en \textit{1927} (aunque \textit{Thomas Young} lo propuso en \textit{1801}, sobre un haz de luz, demostrando su naturaleza ondulatoria) que se confirmó la hipótesis de \textit{De Broglie}. Como su propio nombre indica, dicho experimento consiste en una superficie opaca con dos rendijas, detrás de la cual colocamos un detector de partículas para poder percibir el comportamiento de los electrones o fotones que pasan a través de ambas rendijas. Según la física clásica, se espera que las partículas pasen a través de las rendijas en forma de línea recta, como lo haría cualquier objeto. Sin embargo, esto no sucede así en el contexto de la mecánica cuántica.
+        \vspace{5mm}
 
-    \vspace{5mm}
+        Siendo \textit{i} la unidad imaginaria, \( \hbar \) la \textit{constante de Planck normalizada}
 
-    \begin{figure}[h]
-        \centering
-        \includegraphics[width=0.75\textwidth]{img/Introduccion/doble_rendija.png}
-        \caption{Experimento de la doble rendija}
-        \label{fig: doble_rendija}
-    \end{figure}
+        \vspace{5mm}
 
-    \vspace{5mm}
+        \begin{equation}
+            \hbar = \frac{h}{2\pi} 
+            \label{constante_planck_normalizada}
+        \end{equation}    
 
-    Al realizar el experimento, podemos observar un patrón de interferencias en la pantalla de detección situada detrás de las rendijas, el cual es muy similar al patrón que siguen las ondas cuando se superponen unas con otras. Efectivamente, las ondas asociadas a cada partícula se superponen unas con otras como se reveló en el experimento, no obstante, cuando observamos estas partículas mediante el detector, se comportan como una partícula clásica, cambiando su comportamiento, de manera que podemos ver por qué rendija cruzó la partícula. Este fenómeno se conoce como \textit{colapso de función de onda}, y existen muchas teorías que intentar explicar esto, siendo la más famosa la \textit{intepretación de Copenhage}, en la que se establece que la observación de la partícula produce un colapso de su función de onda, determinando su estado correspondiente a la medición.
+        \vspace{5mm}
+        
+        y \textit{x} y \textit{t} las coordenadas de posición y tiempo de la partícula. Sin embargo, todavia no se conocia su significado fisico con total exactitud. No fue hasta que con el experimento de la doble rendija de \textit{Clinton Davisson} y \textit{Lester Germer} sobre electrones en \textit{1927} (aunque \textit{Thomas Young} lo propuso en \textit{1801}, sobre un haz de luz, demostrando su naturaleza ondulatoria) que se confirmó la hipótesis de \textit{De Broglie}. Como su propio nombre indica, dicho experimento consiste en una superficie opaca con dos rendijas, detrás de la cual colocamos un detector de partículas para poder percibir el comportamiento de los electrones o fotones que pasan a través de ambas rendijas. Según la física clásica, se espera que las partículas pasen a través de las rendijas en forma de línea recta, como lo haría cualquier objeto. Sin embargo, esto no sucede así en el contexto de la mecánica cuántica.
 
-    \vspace{5mm}
+        \vspace{5mm}
 
-    Matemáticamente, podemos expresar la superposición de ondas como una superposición de estados, esto es:
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.75\textwidth]{img/Introduccion/doble_rendija.png}
+            \caption{Experimento de la doble rendija}
+            \label{fig: doble_rendija}
+        \end{figure}
 
-    \vspace{5mm}
+        \vspace{5mm}
 
-    \begin{equation}
-        \varphi(x, t) = \varphi_{1}(x, t) + \varphi_{2}(x, t) + \dots + \varphi_{n}(x, t), \qquad \forall n \in \mathbb{N} \setminus \{0\}
-        \label{eq: superposicion}
-    \end{equation}
+        Al realizar el experimento, podemos observar un patrón de interferencias en la pantalla de detección situada detrás de las rendijas, el cual es muy similar al patrón que siguen las ondas cuando se superponen unas con otras. Efectivamente, las ondas asociadas a cada partícula se superponen unas con otras como se reveló en el experimento, no obstante, cuando observamos estas partículas mediante el detector, se comportan como una partícula clásica, cambiando su comportamiento, de manera que podemos ver por qué rendija cruzó la partícula. Este fenómeno se conoce como \textit{colapso de función de onda}, y existen muchas teorías que intentar explicar esto, siendo la más famosa la \textit{intepretación de Copenhage}, en la que se establece que la observación de la partícula produce un colapso de su función de onda, determinando su estado correspondiente a la medición.
 
-    \vspace{5mm}
+        \vspace{5mm}
 
-    Adicionalmente, surgieron ciertas dudas relacionadas con la naturaleza de la función de onda. Es lógico preguntarse que, si las partículas están definidas por funciones de onda, ¿Dónde están realmente las partículas? Ya que una partícula no puede estar en varios puntos a la vez, ha de estar en un único punto. Es aquí cuando entró \textit{Max Born}, quien sugiere que \( \lvert \varphi(x, t) \rvert ^ {2} \) no es simplemente el cuadrado del módulo de la función de onda, sino que es una función de probabilidad, de manera que 
+        Matemáticamente, podemos expresar la superposición de ondas como una superposición de estados, esto es:
 
-    \vspace{5mm}
+        \vspace{5mm}
 
-    \begin{equation}
-        \lvert \varphi(x, t) \rvert ^ {2}
-        \label{eq: probabilidad_onda}
-    \end{equation}
+        \begin{equation}
+            \psi(x, t) = \psi_{1}(x, t) + \psi_{2}(x, t) + \dots + \psi_{n}(x, t), \qquad \forall n \in \mathbb{N} \setminus \{0\}
+            \label{eq: superposicion}
+        \end{equation}
 
-    \vspace{5mm}
+        \vspace{5mm}
 
-    Representa la probabilidad de encontrar una partícula en una determinada posición. Esto tuvo una importancia bastante profunda en la mecánica cuántica de la época y en la física en general, ya que las únicas ideas de probabilidad estaban relacionadas a sistemas de incertidumbre, como el lanzamiento de una moneda. De esta manera se concluyó en la probabilidad como uno de los principales focos de la física y de la comprensión de las partículas subatómicas.
+        Adicionalmente, surgieron ciertas dudas relacionadas con la naturaleza de la función de onda. Es lógico preguntarse que, si las partículas están definidas por funciones de onda, ¿Dónde están realmente las partículas? Ya que una partícula no puede estar en varios puntos a la vez, ha de estar en un único punto. Es aquí cuando entró \textit{Max Born}, quien sugiere que \( \lvert \psi(x, t) \rvert ^ {2} \) no es simplemente el cuadrado del módulo de la función de onda, sino que es una función de densidad de probabilidad, de manera que, para cada instante de tiempo y una región del espacio, la siguiente integral
+
+        \vspace{5mm}
+
+        \begin{equation}
+            \int_{E} \lvert \psi(x, t) \rvert ^ {2} dx, \qquad \forall t \in \mathbb{R}, E \subset \Omega
+            \label{eq: densidad_probabilidad_onda}
+        \end{equation}
+
+        \vspace{5mm}
+
+        Representa la densidad de probabilidad de encontrar una partícula para un valor de \textit{t} en una determinada región \textit{E} del espacio \( \Omega \), de manera que podemos deducir una condición que ha de cumplir la expresión (\ref{eq: densidad_probabilidad_onda}):
+        
+        \vspace{5mm}
+
+        \begin{equation}
+            \int_{\Omega} \lvert \psi(x, t) \rvert ^ {2} dx = 1, \qquad \forall t \in \mathbb{R}
+        \end{equation}
+
+        \vspace{5mm}
+        
+        Esto tuvo una importancia bastante profunda en la mecánica cuántica de la época y en la física en general, ya que las únicas ideas de probabilidad estaban relacionadas a sistemas de incertidumbre, como el lanzamiento de una moneda. De esta manera se concluyó en la probabilidad como uno de los principales focos de la física y de la comprensión de las partículas subatómicas.
+
+        \vspace{5mm}
+
+        Esto concluye, al no poder medir con exactitud el estado de una partícula, como ocurre en la física clásica, en el \textit{principio de incertidumbre} de \textit{Heisenberg} en \textit{1927}, estableciéndose que en la medición de una partícula no podemos conocer con completa exactitud la posición y el momento lineal a la vez, sino que cuanto más preciso midamos su posición exacta menos precisa será la medición del momento lineal de dicha partícula y viceversa.
 
     \vspace{5mm}
 
     \section{Ecuación de Schrödinguer}
+
+    \subsection{Obtención de la Ecuación de Schrödinguer}
+
+    \vspace{5mm}
+
+    Todas las ideas vistas anteriormente, la función de onda (\ref{eq: funcion_de_onda}), la superposición cuántica (\ref{eq: superposicion}) y la interpretacion probabilística de la función de onda (\ref{eq: densidad_probabilidad_onda}) dieron lugar a la necesidad de decribir la evolución de la función de onda \( \psi(x, t) \) en función del tiempo \textit{t}. Es en este momento cuando aparece \textit{Erwin Schrödinguer} en \textit{1926}, presentando su famosa ecuación, obtenida de derivar y desarrollar la ecuación  (\ref{eq: funcion_de_onda}). 
+    
+    En primer lugar, derivamos (\ref{eq: funcion_de_onda}) con respecto al tiempo \textit{t}:
+    \begin{align*}
+        \frac{\partial}{\partial t} \psi(x, t) &= \frac{\partial}{\partial t} e^{i(px - Et) / \hbar} \\[8pt]
+        \frac{\partial}{\partial t} \psi(x, t) &= e^{i(px - Et) / \hbar} \left(- \frac{iE}{\hbar} \right)
+    \end{align*}
+    Podemos observar que vuelve a aparecer la función de onda (\ref{eq: funcion_de_onda}):
+    \begin{equation*}
+        \frac{\partial}{\partial t} \psi(x, t) = - \frac{iE}{\hbar} \psi(x, t)
+    \end{equation*}
+    A continuación multiplicamos ambos miembros por \( i\hbar \):
+    \begin{equation}
+        i \hbar \frac{\partial}{\partial t} \psi(x, t) = E \psi(x, t)
+        \label{eq: obtencion_schrodinguer}
+    \end{equation}
+    Esta expresión la reservaremos para más adelante. Ahora vamos a continuar derivando la función de onda (\ref{eq: funcion_de_onda}) con respecto de \textit{x}:
+    \begin{align*}
+        \frac{\partial}{\partial x} \psi(x, t) &= \frac{\partial}{\partial x} e^{i(px - Et) / \hbar} \\[10pt]
+        \frac{\partial}{\partial x} \psi(x, t) &= e^{i(px - Et) / \hbar} (\frac{ip}{\hbar}) \\[10pt]
+        \frac{\partial}{\partial x} \psi(x, t) &= \frac{ip}{\hbar} \psi(x, t)
+    \end{align*}
+    Derivamos por segunda vez respecto de la variable espacial:
+    \begin{align*}
+        \frac{\partial}{\partial x^{2}} \psi(x, t) &= \frac{\partial}{\partial x^{2}} (\frac{ip}{\hbar} \psi(x, t)) \\[10pt]
+        \frac{\partial}{\partial x^{2}} \psi(x, t) &= - \frac{p^{2}}{\hbar^{2}} \psi(x, t)
+    \end{align*}
+    Multiplicamos por \( - \frac{\hbar^{2}}{2m} \)
+    \begin{equation*}
+        - \frac{\hbar^{2}}{2m} \frac{\partial}{\partial x^{2}} \psi(x, t) = \frac{p^{2}}{2m} \psi(x, t)
+        \\[2mm]
+    \end{equation*}
+    Conociéndose que la energía cinética es \( E = \frac{p^{2}}{2m} \), obtenemos la siguiente expresión
+    \begin{equation*}
+        - \frac{\hbar^{2}}{2m} \frac{\partial}{\partial x^{2}} \psi(x, t) = E \psi(x, t)
+    \end{equation*}
+    Sustituyendo el valor que acabamos de obtener \( E \psi(x, t) \) en (\ref{eq: obtencion_schrodinguer}), llegamos prácticamente a la ecuación que estamos buscando:
+    \begin{equation*}
+        i \hbar \frac{\partial}{\partial t} \psi(x, t) = - \frac{\hbar^{2}}{2m} \frac{\partial}{\partial x^{2}} \psi(x, t)
+        \\[2mm]
+    \end{equation*}
+    Para terminar, si agregamos la energía potencial y generalizamos la ecuación para más de una dimensión espacial, obtenemos la famosa \textbf{\textit{ecuación de Schrödinguer}}:
+    \begin{equation}
+        \boxed{i \hbar \frac{\partial}{\partial t} \psi(x, t) = (- \frac{\hbar^{2}}{2m} \Delta + V(x)) \psi(x, t)} 
+        \label{eq: ecuacion_schrodinguer}     
+    \end{equation}
+    Siendo \( \Delta \) el operador Laplaciano en coordenadas canónicas, que se define como
+    \begin{equation*}
+        \Delta = \frac{\partial}{\partial^{2} x_{1}} + \cdots + \frac{\partial}{\partial^{2} x_{n}}, \qquad \forall n \in \mathbb{N}
+    \end{equation*}
+
     \subsection{El Espacio de Hilbert}
     \section{Álgebra Lineal y Puertas Cuánticas}
     \subsection{Estados Cuánticos}
@@ -329,7 +414,6 @@
     \vspace{5mm}
 
     La clave de este gran avance ha sido el desarrollo de materiales topoconductores, los cuales permiten la superconductividad topológica, un estado de la materia que hasta este descubrimiento solo existía en la teoría. Este tipo de materiales se crean con arseniuro de indio y aluminio, de manera que cuando se enfrían prácticamente al cero aboluto y se sintonizan con campos magnéticos, se forman nanocables superconductores topológicos con modos cero de Majorana (MZM) en sus extremos, de manera que aumentan la estabilidad y se reducen los errores en comparación con los qubits tradicionales.
-
     \vspace{5mm}
 
     Así es como se ha desarrollado el primer qubit topológico del mundo, y se plantea tener un chip cuántico con más de un millón de qubits y tolerante a fallos en unos años, y no en unas décadas como se planteaba anteriormente, dando un gran paso en la computación cuántica práctica y probablemente uno de los mayores hitos de este campo.

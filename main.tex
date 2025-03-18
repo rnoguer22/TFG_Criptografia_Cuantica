@@ -325,27 +325,27 @@
         \frac{\partial}{\partial t} \psi(x, t) &= \frac{\partial}{\partial t} e^{i(px - Et) / \hbar} \\[8pt]
         \frac{\partial}{\partial t} \psi(x, t) &= e^{i(px - Et) / \hbar} \left(- \frac{iE}{\hbar} \right)
     \end{align*}
-    Podemos observar que vuelve a aparecer la función de onda (\ref{eq: funcion_de_onda}):
+    Podemos observar que vuelve a aparecer la función de onda (\ref{eq: funcion_de_onda}), al tratarse de una función exponencial:
     \begin{equation*}
         \frac{\partial}{\partial t} \psi(x, t) = - \frac{iE}{\hbar} \psi(x, t)
     \end{equation*}
-    A continuación multiplicamos ambos miembros por \( i\hbar \):
+    A continuación multiplicamos ambos miembros por \( i\hbar \), para eliminar los denominadores y substrayendos de la expresión:
     \begin{equation}
         i \hbar \frac{\partial}{\partial t} \psi(x, t) = E \psi(x, t)
         \label{eq: obtencion_schrodinguer}
     \end{equation}
-    Esta expresión la reservaremos para más adelante. Ahora vamos a continuar derivando la función de onda (\ref{eq: funcion_de_onda}) con respecto de \textit{x}:
+    Esta expresión la reservaremos para más adelante, ya que, en los siguientes cálculos, necesitaremos el producto de la energía del sistema \( E \) y la función de onda \( \psi \). Como siguiente paso, vamos a continuar derivando la función de onda (\ref{eq: funcion_de_onda}) con respecto de \textit{x}:
     \begin{align*}
         \frac{\partial}{\partial x} \psi(x, t) &= \frac{\partial}{\partial x} e^{i(px - Et) / \hbar} \\[10pt]
-        \frac{\partial}{\partial x} \psi(x, t) &= e^{i(px - Et) / \hbar} (\frac{ip}{\hbar}) \\[10pt]
+        \frac{\partial}{\partial x} \psi(x, t) &= e^{i(px - Et) / \hbar} \left( \frac{ip}{\hbar} \right) \\[10pt]
         \frac{\partial}{\partial x} \psi(x, t) &= \frac{ip}{\hbar} \psi(x, t)
     \end{align*}
     Derivamos por segunda vez respecto de la variable espacial:
     \begin{align*}
-        \frac{\partial}{\partial x^{2}} \psi(x, t) &= \frac{\partial}{\partial x^{2}} (\frac{ip}{\hbar} \psi(x, t)) \\[10pt]
+        \frac{\partial}{\partial x^{2}} \psi(x, t) &= \frac{\partial}{\partial x} \left( \frac{ip}{\hbar} \psi(x, t) \right) \\[10pt]
         \frac{\partial}{\partial x^{2}} \psi(x, t) &= - \frac{p^{2}}{\hbar^{2}} \psi(x, t)
     \end{align*}
-    Multiplicamos por \( - \frac{\hbar^{2}}{2m} \)
+    Multiplicamos por (\( - \frac{\hbar^{2}}{2m} \)) para obtener lo siguiente:
     \begin{equation*}
         - \frac{\hbar^{2}}{2m} \frac{\partial}{\partial x^{2}} \psi(x, t) = \frac{p^{2}}{2m} \psi(x, t)
         \\[2mm]
@@ -361,7 +361,7 @@
     \end{equation*}
     Para terminar, si agregamos la energía potencial y generalizamos la ecuación para más de una dimensión espacial, obtenemos la famosa \textbf{\textit{ecuación de Schrödinguer}}:
     \begin{equation}
-        \boxed{i \hbar \frac{\partial}{\partial t} \psi(x, t) = (- \frac{\hbar^{2}}{2m} \Delta + V(x)) \psi(x, t)} 
+        \boxed{i \hbar \frac{\partial}{\partial t} \psi(x, t) = (- \frac{\hbar^{2}}{2m} \Delta + V(x, t)) \psi(x, t)} 
         \label{eq: ecuacion_schrodinguer}     
     \end{equation}
     Siendo \( \Delta \) el operador Laplaciano en coordenadas canónicas, que se define como
@@ -369,9 +369,83 @@
         \Delta = \frac{\partial}{\partial^{2} x_{1}} + \cdots + \frac{\partial}{\partial^{2} x_{n}}, \qquad \forall n \in \mathbb{N}
     \end{equation*}
 
+    \vspace{5mm}
 
-    
     \subsection{La Ecuación de Schrödinguer Independiente del Tiempo}
+
+    \vspace{5mm}
+
+    A continuación, para obtener la \textit{ecuación de Schrödinguer independiente del tiempo} tenemos que plantearnos obtener las soluciones de la ecuación de Schrödinguer (\ref{eq: ecuacion_schrodinguer}). Para simplificar cálculos, vamos a suponer que la energía potencial \( V(x) \) en (\ref{eq: ecuacion_schrodinguer}) depende única y exclusivamente de la variable espacial \textit{x}, de manera que podemos probar a encontrar soluciones por el método de \textit{separación de variables}. Supongamos una solución como producto de dos funciones \( \psi(x) \) y \( \tau(t) \):
+
+    \begin{equation*}
+        \Psi(x, t) = \psi(x) \tau(t) \\[5pt]
+    \end{equation*}
+
+    Sustituyendo en (\ref{eq: ecuacion_schrodinguer}) nos queda como
+
+    \begin{equation*}
+        i \hbar \frac{\partial}{\partial t} \psi(x) \tau(t) = \left( - \frac{\hbar^{2}}{2m} \Delta + V(x) \right) \psi(x) \tau(t) \\[5pt]
+    \end{equation*}
+
+    Podemos dividir entre \( \psi(x) \tau(t) \) y ordenar ambos miembros, de manera que un miembro nos quede únicamente en función de \textit{x} y otro en función de \textit{t}:
+
+    \begin{equation*}
+        i \hbar \frac{1}{\tau(t)} \frac{\partial}{\partial t} \tau(t) = V(x) - \frac{\hbar^{2}}{2m} \frac{1}{\psi(x)} \frac{\partial}{\partial x^{2}} \psi(x) \\[5pt]
+    \end{equation*}
+
+    Hemos de recalcar que hemos tomado el laplaciano \( \Delta \) como \( \frac{\partial}{\partial x^{2}} \), siendo este el laplaciano en una dimensión espacial, con el fin de simplificar los cálculos. Llegados a este punto, para que se cumpla la igualdad, cada miembro de la ecuación ha de ser igual a una constante \( E \), al demostrarse que se trata de una ecuación separable
+    
+    \begin{equation}
+        \begin{cases}
+            \displaystyle i \hbar \frac{1}{\tau(t)} \frac{\partial}{\partial t} \tau(t) = E \\[10pt]
+            \displaystyle V(x) - \frac{\hbar^{2}}{2m} \frac{1}{\psi(x)} \frac{\partial}{\partial x^{2}} \psi(x) = E \\[10pt]
+        \end{cases}
+        \label{eq: separacion_variables}
+    \end{equation}
+
+    Tomando como base la primera ecuación del sistema, podemos obtener una solución exponencial de la siguiente manera:
+        
+    \begin{align*}
+        \frac{\partial}{\partial t} \tau(t) &= \frac{E}{i \hbar} \tau(t) \\[10pt]
+        \tau(t) &= e ^ { \left( - \frac{Ei}{\hbar} \right) t}
+    \end{align*}
+
+    Esto nos proporciona una evolución temporal del sistema en el que se encuentra la partícula. Sin embargo, para obtener la ecuación que estamos buscando, hemos de fijarnos en la segunda ecuación de (\ref{eq: separacion_variables}):
+
+    \begin{equation*}
+        V(x) - \frac{\hbar^{2}}{2m} \frac{1}{\psi(x)} \frac{\partial}{\partial x^{2}} \psi(x) = E
+    \end{equation*}
+
+    La cual podemos reescribir como
+
+    \begin{equation}
+        \left( - \frac{\hbar^{2}}{2m} \frac{\partial}{\partial x^{2}} + V(x) \right) \psi(x) = E \psi(x) \\[5pt]
+        \label{eq: schrodinguer_independiente_tiempo}
+    \end{equation}
+
+    En muchas referencias, la ecuación (\ref{eq: schrodinguer_independiente_tiempo}) es ya la ecuación que estamos buscando. Sin embargo, nosotros la vamos a denotar en función del operador \textit{Hamiltoniano} \( H \), el cual representa la energía total de nuestro sistema cuando ésta permanece constante en el tiempo, que en nuestro caso sucede al establecer que \( V(x, t) = V(x) \). Así, la \textbf{\textit{ecuación de Schrödinguer independiente del tiempo}} queda como
+    
+    \begin{equation}
+        \boxed{ H \psi(x) = E \psi(x)}
+        \label{eq: schrodinguer_independiente_tiempo_hamiltoniano}
+    \end{equation}
+
+    Siendo \( H = \left( - \frac{\hbar^{2}}{2m} \frac{\partial}{\partial x^{2}} + V(x) \right) \) el operador \texit{Hamiltoniano}. Finalmente, podemos concluir que la solución completa queda como
+
+    \begin{equation}
+        \Psi(x, t) = e ^ { \left( - \frac{Ei}{\hbar} \right) t} \psi(x)
+    \end{equation}
+
+    \vspace{5mm}
+
+    La ecuación (\ref{eq: schrodinguer_independiente_tiempo_hamiltoniano}) describe los estados estacionarios de una partícula en el potencial \( V(x) \) y es usada en muchos sistemas físicos de vital importancia (generalmente aquellos cuyo potencial no depende del tiempo \( t \)) como átomos y moléculas en estado estacionario, siempre y cuando el sistema se encuentre en equilibrio y no haya fuerzas externas que varíen el valor de la energía potencial con respecto al tiempo, pozos de potencial infinito, osciladores armónicos, o campos eléctricos y gravitacionales constantes.
+
+    \vspace{5mm}
+
+    Sin embargo, hay otras muchas situaciones en las que el potencial no solo depende de la posición \( x \), de manera que no podemos aplicar el método de separación de variables visto anteriormente, como partículas en campos magnéticos, problemas asociados a la relatividad, o sistemas caóticos. Para estos sistemas utilizamos otros métodos de resolución, como simulaciones numéricas, para alcanzar la solución del sistema.
+
+    \vspace{5mm}
+
     \subsection{El Espacio de Hilbert}
     \section{Álgebra Lineal y Puertas Cuánticas}
     \subsection{Estados Cuánticos}

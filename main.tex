@@ -14,6 +14,7 @@
 
 \usepackage{xcolor} % Para definir colores personalizados
 \usepackage{hyperref}
+\usepackage{braket}
 
 \numberwithin{equation}{section} % Para las ecuaciones
 
@@ -430,7 +431,7 @@
         \label{eq: schrodinguer_independiente_tiempo_hamiltoniano}
     \end{equation}
 
-    Siendo \( H = \left( - \frac{\hbar^{2}}{2m} \frac{\partial}{\partial x^{2}} + V(x) \right) \) el operador \texit{Hamiltoniano}. Finalmente, podemos concluir que la solución completa queda como
+    Siendo \( H = \left( - \frac{\hbar^{2}}{2m} \frac{\partial}{\partial x^{2}} + V(x) \right) \) el operador \textit{Hamiltoniano}. Finalmente, podemos concluir que la solución completa queda como
 
     \begin{equation}
         \Psi(x, t) = e ^ { \left( - \frac{Ei}{\hbar} \right) t} \psi(x)
@@ -447,6 +448,51 @@
     \vspace{5mm}
 
     \subsection{El Espacio de Hilbert}
+    \subsubsection{Formalismo Matemático del Espacio de Hilbert en Dimensión Finita}
+
+    \vspace{5mm}
+
+    El \textit{espacio de Hilbert} viene dado de base por un espacio vectorial \( \mathcal{H} = \{ \ket{\varphi}, \ket{x}, \cdots \} \) sobre el cuerpo de los números complejos \( \mathbb{C} \), de manera que se cumplen la siguientes propiedades:
+
+    \begin{itemize}
+        \item Suma: \( \ket{\varphi} + \ket{x} \in \mathcal{H}, \qquad \forall \ket{\varphi}, \ket{x} \in \mathcal{H} \)
+        \item Multiplicación por un escalar: \( \alpha \ket{\varphi} \in \mathcal{H}, \qquad \forall \ket{\varphi}, \ket{x} \in \mathcal{H} \)
+        \item Notación: \( \alpha \ket{\varphi} \equiv \ket{\alpha \varphi} \)
+        \item Producto escalar hermítico, el cual es una aplicación
+            \begin{align*}
+                \mathcal{H} \times \mathcal{H} &\longrightarrow \mathbb{C} \\
+                \ket{\varphi}, \ket{x} &\longrightarrow \braket{\varphi | x}
+            \end{align*}
+            Que cumple con las propiedades de linealidad y hermiticidad, respectivamente:
+            \begin{align*}
+                \braket{x | \lambda_{1}\varphi_{1} + \lambda_{2}\varphi_{2}} &= \lambda_{1} \braket{x | \varphi_{1}} + \lambda_{2} \braket{x | \varphi_{2}}, \qquad \forall \lambda_{1}, \lambda{2} \in \mathbb{C} \\[10pt]
+                \braket{x | \varphi} &= \braket{\varphi | x}^{*}
+            \end{align*}
+            \vspace{2mm}
+            Siendo \( \braket{\varphi | x}^{*} \) la expresión conjugada compleja de \( \braket{x | \varphi} \). Además, esta aplicación ha de ser definida positiva, de manera que
+            \begin{equation*}
+                \braket{\varphi | \varphi} \geq 0 \quad \text{y} \quad \braket{\varphi | \varphi} = 0 \ \Leftrightarrow \ \ket{\varphi} = 0
+            \end{equation*}
+
+            Con esto podemos definir la norma de un vector \( \varphi \) como
+
+            \begin{equation*}
+                \| \varphi \| = \sqrt{\braket{\varphi | \varphi}} \in \mathbb{R} \geq 0
+            \end{equation*}
+
+            Podemos observar que \( \| \varphi |\ \in \mathbb{R} \geq 0 \), ya que al tratarse de la longitud de un vector, ha de ser un número real no negativo. Con esto podemos introducir la desigualdad de Schwartz, la cual establece que 
+
+            \begin{equation*}
+                \| \braket{x | \varphi} \| ^{2} \leq \| x \| ^{2} \| \varphi \|^{2}
+            \end{equation*}
+
+            Seguir definiendo el espacio de Hilbert y luego entrar en el espacio dual
+    \end{itemize}
+
+    \vspace{5mm}
+
+    \subsubsection{El Espacio de Hilbert en Dimensión Infinita}
+
     \section{Álgebra Lineal y Puertas Cuánticas}
     \subsection{Estados Cuánticos}
     \subsubsection{Esfera de Bloch}    
@@ -574,6 +620,24 @@
         \vspace{2mm}
 
         \url{https://mecanicosvalencia.es/max-born-mecanica-cuantica/}
+        \vspace{2mm}
+
+        Espacios de Hilbert. El concepto de espacio de Hilbert es una generalización del concepto de espacio euclídeo.\par
+        \url{https://uvadoc.uva.es/bitstream/handle/10324/57982/TFG-G5986.pdf?sequence=1}
+        \vspace{2mm}
+
+        Presentacion espacios de Hilbert\par
+        \url{https://materias.df.uba.ar/ft2a2021c2/files/2012/07/clase_1.pdf}
+        \vspace{2mm}
+
+        Videos espacios de Hilbert\par
+        \url{https://www.youtube.com/watch?v=ZfZ39YpHZE0}
+        \vspace{2mm}
+
+        \url{https://www.youtube.com/watch?v=sZ5lwXuD5mA&t=1057s}
+        \vspace{2mm}
+
+        \url{https://campusvirtual.ull.es/ocw/file.php/26/tema1/1-ehilbert.pdf}
         \vspace{2mm}
 
         Majorana\par

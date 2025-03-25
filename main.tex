@@ -474,19 +474,82 @@
                 \braket{\varphi | \varphi} \geq 0 \quad \text{y} \quad \braket{\varphi | \varphi} = 0 \ \Leftrightarrow \ \ket{\varphi} = 0
             \end{equation*}
 
+            \vspace{2mm}
+
             Con esto podemos definir la norma de un vector \( \varphi \) como
 
             \begin{equation*}
                 \| \varphi \| = \sqrt{\braket{\varphi | \varphi}} \in \mathbb{R} \geq 0
             \end{equation*}
 
-            Podemos observar que \( \| \varphi |\ \in \mathbb{R} \geq 0 \), ya que al tratarse de la longitud de un vector, ha de ser un número real no negativo. Con esto podemos introducir la desigualdad de Schwartz, la cual establece que 
+            Podemos observar que \( \| \varphi \| \in \mathbb{R} \geq 0 \), ya que al tratarse de la longitud de un vector, ha de ser un número real no negativo. Con esto podemos introducir la desigualdad de Schwartz, la cual establece que 
+
+            \begin{equation}
+                \| \braket{x | \varphi} \| ^{2} \leq \| x \| ^{2} \| \varphi \|^{2}
+                \label{eq: desigualdad_schwartz}
+            \end{equation}
+
+            \vspace{5mm}
+
+            Con esto ya podemos llegar a la conclusión de que, un espacio de Hilbert, en resumidas cuentas, es un espacio vectorial \( \mathcal{H} \) con un producto escalar hermítico, y por lo tanto sobre el cuerpo de los números complejos \( \mathbb{C} \). Sabiendo esto podemos definir el concepto de ortonormalidad y base ortonormal de un espacio vectorial, en este caso \( \mathcal{H} \), como
 
             \begin{equation*}
-                \| \braket{x | \varphi} \| ^{2} \leq \| x \| ^{2} \| \varphi \|^{2}
+                \{ \ket{h} \} = \{ \ket{1}, \ket{2}, \ldots , \ket{N}\}
             \end{equation*}
 
-            Seguir definiendo el espacio de Hilbert y luego entrar en el espacio dual
+            \vspace{2mm}
+
+            Donde \( N \) es la dimensión del espacio vectorial \( \mathcal{H} \). Además, se tienen que dar las condiciones de ortonormalidad, donde el producto escalar de dos vectores distintos de dicha base es cero, y la norma de ambos vectores ha de ser igual a la unidad. Esto lo podemos formalizar de la siguiente manera
+            \vspace{2mm}
+            \begin{equation}
+                \braket{n | m} = \delta_{n, m}, \qquad \forall \ket{n}, \ket{m} \in \{ \ket{h} \}
+                \label{eq: ortonormalidad}
+            \end{equation}
+            \begin{equation}
+                \| m \| = 1, \qquad \forall \ket{m} \in \{ \ket{h} \}
+                \label{eq: linealidad}
+            \end{equation}
+
+            \vspace{2mm}
+
+            Donde \( \delta_{n, m} \) en (\ref{eq: ortonormalidad}) es la función \textit{delta de Kronecker}, que se define como
+            \begin{equation}
+                \delta_{i, j} = 
+                \begin{cases}
+                    1, & \text{si } i = j, \\
+                    0, & \text{si } i \neq j
+                \end{cases}
+                \label{eq:delta_kronecker}
+            \end{equation}
+
+            Así, el producto escalar de dos vectores de una base ortonormal siempre va a ser cero, y el producto escalar de un vector consigo mismo es la unidad. Entonces, podemos expresar cualquier vector de nuestro espacio vectorial \( \mathcal{H} \) como una combinación lineal de los vectores de la base:
+            \begin{equation}
+                \ket{\varphi} = \sum_{n = 1}^{N} c_{n} \ket{n}, \qquad \forall \ket{\varphi} \in \mathcal{H}
+                \label{eq: combinacion_lineal_Hilbert}
+            \end{equation}
+
+            Esto es muy importante ya que vamos a usar estos vectores para ver el estado en el que se encuentra nuestro sistema cuantico. Esto está directamente ligado con la superposición de la función de onda, como ya vimos en (\ref{eq: superposicion}), ya que, cada uno de los posibles estados de una partícula en una superposición de funciones de onda, no son más que los vectores de una base ortonormal perteneciente a un espacio de Hilbert \( \mathcal{H} \). Esto es de vital importancia y lo seguiremos viendo cuando introduzcamos los estados de un \textit{qubit}, como ya veremos más adelante.
+
+            \vspace{5mm}
+
+            No obstante, a partir de (\ref{eq: ortonormalidad}), podemos deducir el valor de \( c_{n} \) que aparece en (\ref{eq: combinacion_lineal_Hilbert}):
+            \begin{align}
+                \braket{n | m} &= \sum_{n = 1}^{N} c_{n} \delta_{n, m} = c_{m} \\[10pt]
+                c_{m} &= \braket{n | m}, \qquad c_{m} \in \mathbb{C}
+            \end{align}
+
+            Entonces, si \( \ket{\varphi} = \sum_{n = 1}^{N} c_{n} \ket{n} \) y \( \ket{x} = \sum_{m = 1}^{N} c_{m} \ket{m} \) son dos vectores cualesquiera de nuestro espacio vectorial \( \mathbb{H} \), podemos deducir que el producto escalar de ambos vectores es
+            \begin{equation}
+                \braket{x | \varphi} = \sum_{n, m = 1}^{N} c_{m}^{*} c_{n} \delta_{n, m} = \sum_{n = 1}^{N} c_{m}^{*} c_{n}
+                \braket{x | \varphi} = \sum_{n = 1}^{N} c_{m}^{*} c_{n}
+                \label{eq: producto_escalar_desarrollado}
+            \end{equation}
+
+            De manera que obtenemos un producto, donde los factores provenientes del \textit{bra} (\( \bra{x} \)) son complejos conjugados. Encontrándonos en este punto, con (\ref{eq: producto_escalar_desarrollado}) podemos desarrollar la norma de un vector en \( \mathcal{H} \), obteniendo que
+            \begin{equation}
+                \| \varphi \| ^{2} = \braket{\varphi | \varphi} = \sum_{n = 1}^{N} c_{n}^{*} c_{n} = \sum_{n = 1}^{N} \| c_{n} \| ^{2} \geq 0
+            \end{equation}
+
     \end{itemize}
 
     \vspace{5mm}

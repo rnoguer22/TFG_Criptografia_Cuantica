@@ -16,6 +16,8 @@
 \usepackage{hyperref}
 \usepackage{braket}
 
+% \setlength{\parindent}{0pt} % Elimina la sangría en todo el documento
+
 \numberwithin{equation}{section} % Para las ecuaciones
 
 % Definir un azul más oscuro
@@ -42,14 +44,29 @@
 \usepackage{times}
 \usepackage{microtype} % Mejora el espaciado de las palabras
 
-% Encabezado y pie de página
+% Encabezado y pie de página guapo
 \usepackage{fancyhdr}
+\setlength{\headheight}{12.5pt}
 \pagestyle{fancy} 
-\fancyhf{}         
-\rfoot{\thepage} 
+\fancyhf{} % Limpia los valores predeterminados     
+\fancyhead[R]{\textit{\rightmark}} % Sección o subsección actual en la parte superior derecha
+\fancyfoot[C]{\thepage} % Número de página centrado en el pie de página
+
+\usepackage{titlesec}  % Paquete para personalizar secciones
+\usepackage{tikz}      % Paquete para gráficos y formato personalizado
+% Modificar el formato de las secciones
+\titleformat{\section}[block]
+  {\normalfont\Huge\bfseries\raggedleft}    % Título más grande, en negrita y alineado a la derecha
+  {\color{gray}\large CAPÍTULO\\}  % "Capítulo" en gris y pequeño, seguido por el número de la sección
+  {\tikz[baseline]{\node[anchor=base, scale=3, text=gray, inner sep=0pt] {\thesection};} \\[1em]}  
+  {\normalfont\bfseries\raggedleft}         % Título de la sección en negro, alineado a la derecha
+  [\vspace{1em}]                  % Espacio después del título
+
 
 
 \begin{document}
+    \parindent=0pt
+
     \begin{titlepage}
         \centering
         {\fontsize{18pt}{22pt}\selectfont \textbf{UNIVERSIDAD ALFONSO X EL SABIO}\par}
@@ -92,6 +109,7 @@
     \newpage
 
 
+    \thispagestyle{empty}
     \section{Introducción}
         \subsection{Objetivos}
 
@@ -108,7 +126,7 @@
 
         \vspace{5mm}
 
-        \subsection{Historia de la Mecánica Cuántica}
+        \subsection{Historia de la Mecánica Cuántica}\label{sec: historia}
 
         \vspace{5mm}
 
@@ -313,6 +331,10 @@
 
     \vspace{5mm}
 
+    \newpage
+    \thispagestyle{empty}
+    \mbox{}
+
     \section{Ecuación de Schrödinguer}
 
     \subsection{Obtención de la Ecuación de Schrödinguer}
@@ -456,8 +478,7 @@
 
     \begin{itemize}
         \item Suma: \( \ket{\varphi} + \ket{x} \in \mathcal{H}, \qquad \forall \ket{\varphi}, \ket{x} \in \mathcal{H} \)
-        \item Multiplicación por un escalar: \( \alpha \ket{\varphi} \in \mathcal{H}, \qquad \forall \ket{\varphi}, \ket{x} \in \mathcal{H} \)
-        \item Notación: \( \alpha \ket{\varphi} \equiv \ket{\alpha \varphi} \)
+        \item Multiplicación por un escalar: \( \alpha \ket{\varphi} \in \mathcal{H}, \qquad \forall \ket{\varphi}, \in \mathcal{H} \quad \text{y} \quad \forall \alpha \in \mathbb{C}\)
         \item Producto escalar hermítico, el cual es una aplicación
             \begin{align*}
                 \mathcal{H} \times \mathcal{H} &\longrightarrow \mathbb{C} \\
@@ -477,13 +498,11 @@
             \vspace{2mm}
 
             Con esto podemos definir la norma de un vector \( \varphi \) como
-
             \begin{equation*}
                 \| \varphi \| = \sqrt{\braket{\varphi | \varphi}} \in \mathbb{R} \geq 0
             \end{equation*}
 
-            Podemos observar que \( \| \varphi \| \in \mathbb{R} \geq 0 \), ya que al tratarse de la longitud de un vector, ha de ser un número real no negativo. Con esto podemos introducir la desigualdad de Schwartz, la cual establece que 
-
+            Podemos observar que \( \| \varphi \| \in \mathbb{R} \geq 0 \), ya que al tratarse de la longitud de un vector, ha de ser un número real no negativo. Con esto podemos introducir la desigualdad de Schwartz, la cual establece lo siguiente:
             \begin{equation}
                 \| \braket{x | \varphi} \| ^{2} \leq \| x \| ^{2} \| \varphi \|^{2}
                 \label{eq: desigualdad_schwartz}
@@ -491,68 +510,143 @@
 
             \vspace{5mm}
 
-            Con esto ya podemos llegar a la conclusión de que, un espacio de Hilbert, en resumidas cuentas, es un espacio vectorial \( \mathcal{H} \) con un producto escalar hermítico, y por lo tanto sobre el cuerpo de los números complejos \( \mathbb{C} \). Sabiendo esto podemos definir el concepto de ortonormalidad y base ortonormal de un espacio vectorial, en este caso \( \mathcal{H} \), como
-
-            \begin{equation*}
-                \{ \ket{h} \} = \{ \ket{1}, \ket{2}, \ldots , \ket{N}\}
-            \end{equation*}
-
-            \vspace{2mm}
-
-            Donde \( N \) es la dimensión del espacio vectorial \( \mathcal{H} \). Además, se tienen que dar las condiciones de ortonormalidad, donde el producto escalar de dos vectores distintos de dicha base es cero, y la norma de ambos vectores ha de ser igual a la unidad. Esto lo podemos formalizar de la siguiente manera
-            \vspace{2mm}
-            \begin{equation}
-                \braket{n | m} = \delta_{n, m}, \qquad \forall \ket{n}, \ket{m} \in \{ \ket{h} \}
-                \label{eq: ortonormalidad}
-            \end{equation}
-            \begin{equation}
-                \| m \| = 1, \qquad \forall \ket{m} \in \{ \ket{h} \}
-                \label{eq: linealidad}
-            \end{equation}
-
-            \vspace{2mm}
-
-            Donde \( \delta_{n, m} \) en (\ref{eq: ortonormalidad}) es la función \textit{delta de Kronecker}, que se define como
-            \begin{equation}
-                \delta_{i, j} = 
-                \begin{cases}
-                    1, & \text{si } i = j, \\
-                    0, & \text{si } i \neq j
-                \end{cases}
-                \label{eq:delta_kronecker}
-            \end{equation}
-
-            Así, el producto escalar de dos vectores de una base ortonormal siempre va a ser cero, y el producto escalar de un vector consigo mismo es la unidad. Entonces, podemos expresar cualquier vector de nuestro espacio vectorial \( \mathcal{H} \) como una combinación lineal de los vectores de la base:
-            \begin{equation}
-                \ket{\varphi} = \sum_{n = 1}^{N} c_{n} \ket{n}, \qquad \forall \ket{\varphi} \in \mathcal{H}
-                \label{eq: combinacion_lineal_Hilbert}
-            \end{equation}
-
-            Esto es muy importante ya que vamos a usar estos vectores para ver el estado en el que se encuentra nuestro sistema cuantico. Esto está directamente ligado con la superposición de la función de onda, como ya vimos en (\ref{eq: superposicion}), ya que, cada uno de los posibles estados de una partícula en una superposición de funciones de onda, no son más que los vectores de una base ortonormal perteneciente a un espacio de Hilbert \( \mathcal{H} \). Esto es de vital importancia y lo seguiremos viendo cuando introduzcamos los estados de un \textit{qubit}, como ya veremos más adelante.
-
-            \vspace{5mm}
-
-            No obstante, a partir de (\ref{eq: ortonormalidad}), podemos deducir el valor de \( c_{n} \) que aparece en (\ref{eq: combinacion_lineal_Hilbert}):
-            \begin{align}
-                \braket{n | m} &= \sum_{n = 1}^{N} c_{n} \delta_{n, m} = c_{m} \\[10pt]
-                c_{m} &= \braket{n | m}, \qquad c_{m} \in \mathbb{C}
-            \end{align}
-
-            Entonces, si \( \ket{\varphi} = \sum_{n = 1}^{N} c_{n} \ket{n} \) y \( \ket{x} = \sum_{m = 1}^{N} c_{m} \ket{m} \) son dos vectores cualesquiera de nuestro espacio vectorial \( \mathbb{H} \), podemos deducir que el producto escalar de ambos vectores es
-            \begin{equation}
-                \braket{x | \varphi} = \sum_{n, m = 1}^{N} c_{m}^{*} c_{n} \delta_{n, m} = \sum_{n = 1}^{N} c_{m}^{*} c_{n}
-                \braket{x | \varphi} = \sum_{n = 1}^{N} c_{m}^{*} c_{n}
-                \label{eq: producto_escalar_desarrollado}
-            \end{equation}
-
-            De manera que obtenemos un producto, donde los factores provenientes del \textit{bra} (\( \bra{x} \)) son complejos conjugados. Encontrándonos en este punto, con (\ref{eq: producto_escalar_desarrollado}) podemos desarrollar la norma de un vector en \( \mathcal{H} \), obteniendo que
-            \begin{equation}
-                \| \varphi \| ^{2} = \braket{\varphi | \varphi} = \sum_{n = 1}^{N} c_{n}^{*} c_{n} = \sum_{n = 1}^{N} \| c_{n} \| ^{2} \geq 0
-            \end{equation}
-
     \end{itemize}
 
+
+    Con esto ya podemos llegar a la conclusión de que, un espacio de Hilbert, en resumidas cuentas, es un espacio vectorial \( \mathcal{H} \) con un producto escalar hermítico, y por lo tanto sobre el cuerpo de los números complejos \( \mathbb{C} \). Sabiendo esto podemos trabajar sobre el concepto de ortonormalidad definiendo una base ortonormal de nuestro espacio vectorial \( \mathcal{H} \), como
+
+    \begin{equation*}
+        \{ \ket{h} \} = \{ \ket{1}, \ket{2}, \ldots , \ket{N}\}
+    \end{equation*}
+
+    \vspace{2mm}
+
+    Donde \( N \) es la dimensión del espacio vectorial \( \mathcal{H} \). No obstante, esto no deja de ser una base común y corriente. Para que esta base sea ortonormal, se tienen que dar las condiciones de ortonormalidad, donde el producto escalar de dos vectores distintos de dicha base es cero, y la norma de ambos vectores ha de ser igual a la unidad. Esto lo podemos formalizar de la siguiente manera
+    \vspace{2mm}
+    \begin{equation}
+        \braket{n | m} = \delta_{n, m}, \qquad \forall \ket{n}, \ket{m} \in \{ \ket{h} \}
+        \label{eq: ortonormalidad}
+    \end{equation}
+    \begin{equation}
+        \| m \| = 1, \qquad \forall \ket{m} \in \{ \ket{h} \}
+        \label{eq: linealidad}
+    \end{equation}
+
+    \vspace{2mm}
+
+    Donde \( \delta_{n, m} \) en (\ref{eq: ortonormalidad}) es la función \textit{delta de Kronecker}, que se define como
+    \begin{equation}
+        \delta_{i, j} = 
+        \begin{cases}
+            1, & \text{si } i = j, \\
+            0, & \text{si } i \neq j
+        \end{cases}
+        \label{eq:delta_kronecker}
+    \end{equation}
+
+    Así, el producto escalar de dos vectores de una base ortonormal siempre va a ser cero, y el producto escalar de un vector consigo mismo es la unidad. Entonces, podemos expresar cualquier vector de nuestro espacio vectorial \( \mathcal{H} \) como una combinación lineal de los vectores de la base:
+    \begin{equation}
+        \ket{\varphi} = \sum_{n = 1}^{N} c_{n} \ket{n}, \qquad \forall \ket{\varphi} \in \mathcal{H}
+        \label{eq: combinacion_lineal_Hilbert}
+    \end{equation}
+
+    Esto es muy importante ya que vamos a usar estos vectores para ver el estado en el que se encuentra nuestro sistema cuantico. Esto está directamente ligado con la superposición de la función de onda, como ya vimos en (\ref{eq: superposicion}), ya que, cada uno de los posibles estados de una partícula en una superposición de funciones de onda, no son más que los vectores de una base ortonormal perteneciente a un espacio de Hilbert \( \mathcal{H} \). Esto es de vital importancia y lo seguiremos viendo cuando introduzcamos los estados de un \textit{qubit}, como ya veremos más adelante.
+
     \vspace{5mm}
+
+    No obstante, a partir de (\ref{eq: ortonormalidad}), podemos deducir el valor de \( c_{n} \) que aparece en (\ref{eq: combinacion_lineal_Hilbert}):
+    \begin{align}
+        \braket{n | m} &= \sum_{n = 1}^{N} c_{n} \delta_{n, m} = c_{m} \\[10pt]
+        c_{m} &= \braket{n | m}, \qquad c_{m} \in \mathbb{C}
+    \end{align}
+
+    Entonces, si \( \ket{\varphi} = \sum_{n = 1}^{N} c_{n} \ket{n} \) y \( \ket{x} = \sum_{m = 1}^{N} c_{m} \ket{m} \) son dos vectores cualesquiera de nuestro espacio vectorial \( \mathcal{H} \), podemos deducir que el producto escalar de ambos vectores es
+    \begin{equation*}
+        \braket{x | \varphi} = \sum_{n, m = 1}^{N} c_{m}^{*} c_{n} \delta_{n, m} = \sum_{n = 1}^{N} c_{m}^{*} c_{n}
+    \end{equation*}
+    \begin{equation}
+        \braket{x | \varphi} = \sum_{n = 1}^{N} c_{m}^{*} c_{n}
+        \label{eq: producto_escalar_desarrollado}
+    \end{equation}
+
+    De manera que obtenemos un producto, donde los factores provenientes del \textit{bra} (\( \bra{x} \)) son complejos conjugados, pudiéndose definir como una aplicación \( \bra{x} \) sobre un vector \( \varphi \) en un espacio \( \mathcal{H} \), dando como resultado un número complejo:
+    \begin{align*}
+        \bra{x}: \mathcal{H} &\longrightarrow \mathbb{C} \\[10pt]
+        \ket{\varphi} &\longrightarrow \braket{x | \varphi}
+    \end{align*}
+    
+    Donde \( \bra{x} \) se construye con el conjugado hermítico, el cual se define de la siguiente manera:
+    \begin{equation*}
+        ( \ket{x} )^{\dagger} = \bra{x}
+    \end{equation*}
+
+    Encontrándonos en este punto, a partir de (\ref{eq: producto_escalar_desarrollado}) podemos desarrollar la norma de un vector en \( \mathcal{H} \), obteniendo que
+    \begin{equation}
+        \| \varphi \| ^{2} = \braket{\varphi | \varphi} = \sum_{n = 1}^{N} c_{n}^{*} c_{n} = \sum_{n = 1}^{N} \| c_{n} \| ^{2} \geq 0, \qquad \forall \varphi \in \mathcal{H}
+    \end{equation}
+
+    Esto es de vital importancia y nos ayudará a comprender y explicar los \textit{postulados de la mecánica cuántica}, como vamos a ver a continuación.
+
+
+    \vspace{5mm}
+
+    \subsection{Postulados de la Mecánica Cuántica}
+
+    \vspace{5mm}
+
+    Una vez hemos asentado las bases históricas de la mecánica cuántica, introducido las funciones de onda, la ecuación de Schrödinguer, y hemos podido apreciar la relación de este campo de la física con el álgebra lineal, por medio de los espacios de Hilbert, estamos en condiciones de enunciar y comprender los postulados de la mecánica cuántica. Estos se podrían definir, a modo de resumen, en los principios fundamentales sobre los que se basa esta nueva teoría para definir el comportamiento de las partículas subatómicas, basándose en resultados experimentales como algunos que ya vimos en la introducción histórica (\ref{sec: historia}). Comencemos por el primer postulado:
+    
+    \vspace{5mm}
+
+    \textbf{Postulado 1}: \textit{Para un instante \( t_{0} \), el estado de un sistema cuántico se puede describir mediante un vector \( \ket{\varphi(t_{0})} \) de un espacio de Hilbert \( \mathcal{H} \)}.
+
+    \vspace{5mm}
+
+    \textbf{Postulado 2}: \textit{Toda magnitud física medible \( \mathcal{A} \) se representa mediante un operador
+    hermítico A que actúa sobre \( \mathcal{H} \). Este operador es un observable}.
+    
+    \vspace{5mm}
+
+    \textbf{Postulado 3}: \textit{Los únicos resultados posibles a obtener en una medición de la
+    magnitud \( \mathcal{A}\) son los autovalores del operador A. En la definición de operador se
+    pide que A sea hermítico, por lo que las cantidades medidas serían reales}.
+    
+    \vspace{5mm}
+
+    \textbf{Postulado 4}: \textbf{Regla de Born}. \textit{Cuando medimos la magnitud \( \mathcal{A} \) en un sistema
+    cuántico que se encuentra en el estado \( \ket{\varphi} \), la probabilidad \( \mathcal{P}(a_{n})\) de obtener el
+    autovalor no degenerado \( a_{n}\) del observable A será}
+    \begin{equation}
+        \mathcal{P}(a_{n}) = \| \braket{a_{n} | \varphi} \| ^{2}
+    \end{equation}
+
+    \textit{donde \( \ket{a_{n}} \) es el autovector normalizado asociado al autovalor \( a_{n} \)}.
+    
+    \vspace{5mm}
+
+    \textbf{Postulado 5}: \textit{Si en la medición de la magnitud \( \mathcal{A} \) en un sistema en el estado \( \ket{\varphi} \) obtenemos el resultado \( a_{n} \), inmediatamente después de la medición, el estado del sistema será la proyección del estado \( \ket{\varphi} \) sobre el subespacio asociado a \( a_{n} \)}:
+    \begin{equation}
+        \ket{\varphi} \overset{a_{n}}{\longrightarrow} \frac{P_{n} \ket{\varphi}}{\sqrt{\bra{\varphi} P_{n} \ket{\varphi}}}
+    \end{equation}
+
+    \vspace{2mm}
+    \textit{Donde \( P_{n} \) es el operador proyección sobre el subespacio asociado a \( a_{n} \)}.
+    
+    \vspace{5mm}
+
+    \textbf{Postulado 6}: \textit{La evolución temporal del estado de un sistema \( |\psi(t)\rangle \) está gobernada por la ecuación de Schrödinger},
+    \begin{equation}
+        i\hbar \frac{d}{dt} |\psi(t)\rangle = H(t) |\psi(t)\rangle,
+        \label{eq:schrodinger}
+    \end{equation}
+    
+    \textit{donde \( H(t) \) es el observable asociado a la energía total del sistema}.
+    
+    \vspace{5mm}
+
+
+
+
 
     \subsubsection{El Espacio de Hilbert en Dimensión Infinita}
 
@@ -706,5 +800,12 @@
         Majorana\par
         \url{https://news.microsoft.com/source/latam/noticias-de-microsoft/microsoft-presenta-majorana-1-el-primer-procesador-cuantico-del-mundo-impulsado-por-qubits-topologicos/}
         \vspace{2mm}
+
+        Postulados\par
+        \url{https://uvadoc.uva.es/bitstream/handle/10324/70993/TFG-G6793.pdf}
+        \vspace{2mm}
+
+        \url{https://idus.us.es/server/api/core/bitstreams/e6e34b3a-fc74-4043-98ae-8244902b96e4/content}
+        \
     
 \end{document}

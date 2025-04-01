@@ -470,53 +470,66 @@
     \vspace{5mm}
 
     \subsection{El Espacio de Hilbert}
-    \subsubsection{Formalismo Matemático del Espacio de Hilbert en Dimensión Finita}
 
     \vspace{5mm}
 
-    El \textit{espacio de Hilbert} viene dado de base por un espacio vectorial \( \mathcal{H} = \{ \ket{\varphi}, \ket{x}, \cdots \} \) sobre el cuerpo de los números complejos \( \mathbb{C} \), de manera que se cumplen la siguientes propiedades:
+    En el contexto de la mecánica cuántica, el \textit{espacio de Hilbert}, el cual denotaremos como \( \mathcal{H} \), es el marco matemático en el que nos apoyamos para explicar el estado físico de las partículas subatómicas, como ya veremos en la sección (\ref{sec: postulados}) explicando los postulados. Este \textit{espacio de Hilbert} no deja de ser un espacio vectorial sobre el cuerpo de los números complejos \( \mathbb{C} \) con un producto escalar hermítico, y que además, este espacio es completo respecto a la norma inducida por dicho producto escalar.
 
-    \begin{itemize}
-        \item Suma: \( \ket{\varphi} + \ket{x} \in \mathcal{H}, \qquad \forall \ket{\varphi}, \ket{x} \in \mathcal{H} \)
-        \item Multiplicación por un escalar: \( \alpha \ket{\varphi} \in \mathcal{H}, \qquad \forall \ket{\varphi}, \in \mathcal{H} \quad \text{y} \quad \forall \alpha \in \mathbb{C}\)
-        \item Producto escalar hermítico, el cual es una aplicación
-            \begin{align*}
-                \mathcal{H} \times \mathcal{H} &\longrightarrow \mathbb{C} \\
-                \ket{\varphi}, \ket{x} &\longrightarrow \braket{\varphi | x}
-            \end{align*}
-            Que cumple con las propiedades de linealidad y hermiticidad, respectivamente:
-            \begin{align*}
-                \braket{x | \lambda_{1}\varphi_{1} + \lambda_{2}\varphi_{2}} &= \lambda_{1} \braket{x | \varphi_{1}} + \lambda_{2} \braket{x | \varphi_{2}}, \qquad \forall \lambda_{1}, \lambda{2} \in \mathbb{C} \\[10pt]
-                \braket{x | \varphi} &= \braket{\varphi | x}^{*}
-            \end{align*}
-            \vspace{2mm}
-            Siendo \( \braket{\varphi | x}^{*} \) la expresión conjugada compleja de \( \braket{x | \varphi} \). Además, esta aplicación ha de ser definida positiva, de manera que
-            \begin{equation*}
-                \braket{\varphi | \varphi} \geq 0 \quad \text{y} \quad \braket{\varphi | \varphi} = 0 \ \Leftrightarrow \ \ket{\varphi} = 0
-            \end{equation*}
+    \vspace{5mm}
 
-            \vspace{2mm}
+    Consideremos un espacio vectorial \( \mathcal{H} = \{ \ket{\varphi}, \ket{x}, \cdots \} \) sobre el cuerpo de los números complejos \( \mathbb{C} \), de manera que se cumplen la propiedad de la suma y la multiplicación por un escalar:
+    \begin{align*}
+        \ket{\varphi} + \ket{x} \in \mathcal{H}, \qquad &\forall \ket{\varphi}, \ket{x} \in \mathcal{H}\\[10pt]
+        \alpha \ket{\varphi} \in \mathcal{H}, \qquad &\forall \ket{\varphi}, \in \mathcal{H} \quad \text{y} \quad \forall \alpha \in \mathbb{C}
+    \end{align*}
 
-            Con esto podemos definir la norma de un vector \( \varphi \) como
-            \begin{equation*}
-                \| \varphi \| = \sqrt{\braket{\varphi | \varphi}} \in \mathbb{R} \geq 0
-            \end{equation*}
+    Además, dicho espacio vectorial \( \mathcal{H} \) cuenta con un producto escalar hermítico, el cual es una aplicación
+    \begin{align*}
+        \mathcal{H} \times \mathcal{H} &\longrightarrow \mathbb{C} \\
+        \ket{\varphi}, \ket{x} &\longrightarrow \braket{\varphi | x}
+    \end{align*}
 
-            Podemos observar que \( \| \varphi \| \in \mathbb{R} \geq 0 \), ya que al tratarse de la longitud de un vector, ha de ser un número real no negativo. Con esto podemos introducir la desigualdad de Schwartz, la cual establece lo siguiente:
-            \begin{equation}
-                \| \braket{x | \varphi} \| ^{2} \leq \| x \| ^{2} \| \varphi \|^{2}
-                \label{eq: desigualdad_schwartz}
-            \end{equation}
+    Que cumple con las propiedades de linealidad y hermiticidad, respectivamente:
+    \begin{align*}
+        \braket{x | \lambda_{1}\varphi_{1} + \lambda_{2}\varphi_{2}} &= \lambda_{1} \braket{x | \varphi_{1}} + \lambda_{2} \braket{x | \varphi_{2}}, \qquad \forall \lambda_{1}, \lambda{2} \in \mathbb{C} \\[10pt]
+        \braket{x | \varphi} &= \braket{\varphi | x}^{*}
+    \end{align*}
 
-            \vspace{5mm}
+    Siendo \( \braket{\varphi | x}^{*} \) la expresión conjugada compleja de \( \braket{x | \varphi} \). Además, esta aplicación ha de ser definida positiva, de manera que
+    \begin{equation*}
+        \braket{\varphi | \varphi} \geq 0 \quad \text{y} \quad \braket{\varphi | \varphi} = 0 \ \Leftrightarrow \ \ket{\varphi} = 0
+    \end{equation*}
 
-    \end{itemize}
+    \vspace{2mm}
 
+    Si \( \mathcal{H} \) satisface estas propiedades, podemos concluir que \( \mathcal{H} \) es un espacio de Hilbert. Con esto podemos definir la norma de un vector \( \varphi \) como
+    \vspace{2mm}
+    \begin{equation}
+        \| \varphi \| = \sqrt{\braket{\varphi | \varphi}} \qquad \in \mathbb{R} \geq 0
+        \label{eq: norma_producto_escalar}
+    \end{equation}
+
+    \vspace{2mm}
+
+    Podemos observar que \( \| \varphi \| \in \mathbb{R} \geq 0 \), ya que al tratarse de la longitud de un vector, ha de ser un número real no negativo. Con esto podemos introducir la desigualdad de Schwartz, la cual establece lo siguiente:
+    \begin{equation}
+        \| \braket{x | \varphi} \| ^{2} \leq \| x \| ^{2} \| \varphi \|^{2}
+        \label{eq: desigualdad_schwartz}
+    \end{equation}
+
+    Al complirse esta desigualdad, el producto interno está bien definido, de donde obtenemos la norma como ya vimos en (\ref{eq: norma_producto_escalar}), pasando a ser un espacio normado cuya norma cumple con la \textit{sucesión de Cauchy}:
+    \begin{equation*}
+        \forall \epsilon > 0, \quad \exists N \in \mathbb{N} \ \text{tal que} \ m, n \geq N \implies \| x_{n} - x_{m} \| < \epsilon
+    \end{equation*}
+    
+    por lo que además es un espacio completo.
+
+    \vspace{5mm}
 
     Con esto ya podemos llegar a la conclusión de que, un espacio de Hilbert, en resumidas cuentas, es un espacio vectorial \( \mathcal{H} \) con un producto escalar hermítico, y por lo tanto sobre el cuerpo de los números complejos \( \mathbb{C} \). Sabiendo esto podemos trabajar sobre el concepto de ortonormalidad definiendo una base ortonormal de nuestro espacio vectorial \( \mathcal{H} \), como
 
     \begin{equation*}
-        \{ \ket{h} \} = \{ \ket{1}, \ket{2}, \ldots , \ket{N}\}
+        \{ \ket{e_{n}} \} = \{ \ket{1}, \ket{2}, \ldots , \ket{N}\}
     \end{equation*}
 
     \vspace{2mm}
@@ -524,11 +537,11 @@
     Donde \( N \) es la dimensión del espacio vectorial \( \mathcal{H} \). No obstante, esto no deja de ser una base común y corriente. Para que esta base sea ortonormal, se tienen que dar las condiciones de ortonormalidad, donde el producto escalar de dos vectores distintos de dicha base es cero, y la norma de ambos vectores ha de ser igual a la unidad. Esto lo podemos formalizar de la siguiente manera
     \vspace{2mm}
     \begin{equation}
-        \braket{n | m} = \delta_{n, m}, \qquad \forall \ket{n}, \ket{m} \in \{ \ket{h} \}
+        \braket{n | m} = \delta_{n, m}, \qquad \forall \ket{n}, \ket{m} \in \{ \ket{e_{n}} \}
         \label{eq: ortonormalidad}
     \end{equation}
     \begin{equation}
-        \| m \| = 1, \qquad \forall \ket{m} \in \{ \ket{h} \}
+        \| m \| = 1, \qquad \forall \ket{m} \in \{ \ket{e_{n}} \}
         \label{eq: linealidad}
     \end{equation}
 
@@ -585,20 +598,29 @@
         \| \varphi \| ^{2} = \braket{\varphi | \varphi} = \sum_{n = 1}^{N} c_{n}^{*} c_{n} = \sum_{n = 1}^{N} \| c_{n} \| ^{2} \geq 0, \qquad \forall \varphi \in \mathcal{H}
     \end{equation}
 
+    \vspace{2mm}
+
     Esto es de vital importancia y nos ayudará a comprender y explicar los \textit{postulados de la mecánica cuántica}, como vamos a ver a continuación.
 
 
     \vspace{5mm}
 
-    \subsection{Postulados de la Mecánica Cuántica}
+    \subsection{Postulados de la Mecánica Cuántica}\label{sec: postulados}
 
     \vspace{5mm}
 
     Una vez hemos asentado las bases históricas de la mecánica cuántica, introducido las funciones de onda, la ecuación de Schrödinguer, y hemos podido apreciar la relación de este campo de la física con el álgebra lineal, por medio de los espacios de Hilbert, estamos en condiciones de enunciar y comprender los postulados de la mecánica cuántica. Estos se podrían definir, a modo de resumen, en los principios fundamentales sobre los que se basa esta nueva teoría para definir el comportamiento de las partículas subatómicas, basándose en resultados experimentales como algunos que ya vimos en la introducción histórica (\ref{sec: historia}). Comencemos por el primer postulado:
     
-    \vspace{5mm}
+    \vspace{7.5mm}
 
     \textbf{Postulado 1}: \textit{Para un instante \( t_{0} \), el estado de un sistema cuántico se puede describir mediante un vector \( \ket{\varphi(t_{0})} \) de un espacio de Hilbert \( \mathcal{H} \)}.
+
+    \vspace{2.5mm}
+
+    Efectivamente, esto es uno de los puntos clave que vimos en (\ref{eq: combinacion_lineal_Hilbert}) tratando sobre el espacio de Hilbert \( \mathcal{H}\), en el que establecíamos que cualquier vector perteneciente a \( \mathcal{H} \), se puede expresar como una combinación lineal de los vectores de la base, siendo esta base ortonormal:
+    \begin{equation*}
+        \ket{\varphi} = \sum_{n = 1}^{N} c_{n} \ket{n}, \qquad \forall \ket{\varphi} \in \mathcal{H}, \quad \forall \ket{n} \in \{ \ket{e_{n}} \}, \quad c_{n} \in \mathbb{C}
+    \end{equation*}
 
     \vspace{5mm}
 
@@ -608,10 +630,44 @@
     \vspace{5mm}
 
     \textbf{Postulado 3}: \textit{Los únicos resultados posibles a obtener en una medición de la
-    magnitud \( \mathcal{A}\) son los autovalores del operador A. En la definición de operador se
-    pide que A sea hermítico, por lo que las cantidades medidas serían reales}.
+    magnitud \( \mathcal{A}\) son los autovalores del operador \( \hat{A} \). En la definición de operador se
+    pide que \( \hat{A} \) sea hermítico, por lo que las cantidades medidas serían reales}.
     
-    \vspace{5mm}
+    \vspace{2.5mm}
+
+    Comencemos con la definición de \textit{autovector} y \textit{autovalor}. Imaginemos un operador \( \hat{A} \) actuando sobre un vector \( \psi \), de manera que, tras aplicar el operador, obtenemos el mismo vector \( \psi \) multiplicado por un escalar \( \lambda \). Esto es el autovector \( \psi \) asociado al autovalor \( \lambda \), respectivamente:
+    \begin{equation}
+        \hat{A} \ket{\psi} = \lambda \ket{\psi}, \qquad \lambda \in \mathbb{R}
+        \label{eq: autovectores_y_autovalores}
+    \end{equation}
+
+    Y podemos verificar que \( \lambda \in \mathbb{R} \), partiendo de (\ref{eq: autovectores_y_autovalores}) y tomando el producto interno en ambos miembros, como sigue a continuación
+    \begin{align*}
+        \bra{\psi} \hat{A} \ket{\psi} &= \lambda \braket{\psi | \psi} \\[10pt]
+        \bra{\psi} \hat{A} \ket{\psi} &= \bra{\psi} {\hat{A ^ {\dagger}}} \ket{\psi} = \lambda ^ {*} \braket{\psi | \psi} 
+    \end{align*}
+
+    Por lor que hemos demostrado que \( \ \lambda \in \mathbb{R} \ \) ya que \( \ \lambda ^ {*} = \lambda \ \). Por último vamos a ver que los autovectores asociados a autovalores distintos entre sí son ortogonales, es decir, su producto escalar es igual a cero:
+    \begin{align*}
+        (\hat{A} \ket{\psi_{i}})^{\dagger} &= (\lambda_{i} \ket{\psi_{i}})^{\dagger} \\[10pt]
+        \bra{\psi_{i}} \hat{A} &= \lambda_{i}^{*} \bra{\psi_{i}} = \lambda_{i} \bra{\psi_{i}} \\[10pt]
+        \bra{\psi_{i}} \hat{A} \ket{\psi_{j}} &= \lambda_{i} \braket{\psi_{i} | \psi_{j}}
+    \end{align*}
+
+    Dado que \( \hat{A} \ket{\psi_{j}} = \lambda_{j} \ket{\psi_{j}} \), obtenemos la siguiente igualdad:
+    \begin{align*}
+        \bra{\psi_{i}} \lambda_{j} \ket{\psi_{j}} &= \lambda_{i} \braket{\psi_{i} | \psi_{j}} \\[10pt]
+        ( \lambda_{j} - \lambda_{i} ) \braket{\psi_{i} | \psi_{j}} &= 0
+    \end{align*}
+
+    Y debido a que \( \lambda_{j} \neq \lambda_{i} \), obtenemos que ambos vectores \( \psi_{i} \text{,} \psi_{j} \)
+    \begin{equation}
+        \braket{\psi_{i} | \psi_{j}} = 0
+    \end{equation}
+
+    Son ortogonales. Entonces, podemos concluir que, en un espacio de Hilbert \( \mathcal{H} \), un operador hermítico \( \hat{A} \) tiene \( N \) autovectores \( \psi_{i} \) asociados a los autovalores \( \lambda_{i} \), que como hemos demostrado, pertenecen al conjunto de los números reales \( \mathbb{R} \) y son ortogonales entre sí, por lo que únicamente tendríamos que normalizar dichos autovectores para obtener una base ortonormal de autovectores, por lo que hemos demostrado que un operador hermítico siempre va a ser diagonalizable. 
+
+    \vspace{7.5mm}
 
     \textbf{Postulado 4}: \textbf{Regla de Born}. \textit{Cuando medimos la magnitud \( \mathcal{A} \) en un sistema
     cuántico que se encuentra en el estado \( \ket{\varphi} \), la probabilidad \( \mathcal{P}(a_{n})\) de obtener el
@@ -783,8 +839,10 @@
         \url{https://uvadoc.uva.es/bitstream/handle/10324/57982/TFG-G5986.pdf?sequence=1}
         \vspace{2mm}
 
-        Presentacion espacios de Hilbert\par
-        \url{https://materias.df.uba.ar/ft2a2021c2/files/2012/07/clase_1.pdf}
+        \url{https://ecfm.usac.edu.gt/sites/default/files/2021-06/Joel%20Armando%20Ju%C3%A1rez.pdf}
+        \vspace{2mm}
+
+        \url{https://repositorio.ual.es/bitstream/handle/10835/9810/VILLASANA%20ALCARAZ%2C%20MARIA%20DEL%20MAR.pdf}
         \vspace{2mm}
 
         Videos espacios de Hilbert\par

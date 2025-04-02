@@ -473,79 +473,95 @@
 
     \vspace{5mm}
 
-    En el contexto de la mecánica cuántica, el \textit{espacio de Hilbert}, el cual denotaremos como \( \mathcal{H} \), es el marco matemático en el que nos apoyamos para explicar el estado físico de las partículas subatómicas, como ya veremos en la sección (\ref{sec: postulados}) explicando los postulados. Este \textit{espacio de Hilbert} no deja de ser un espacio vectorial sobre el cuerpo de los números complejos \( \mathbb{C} \) con un producto escalar hermítico, y que además, este espacio es completo respecto a la norma inducida por dicho producto escalar.
+    En el contexto de la mecánica cuántica, el \textit{espacio de Hilbert}, el cual denotaremos como \( \mathcal{H} \), es el marco matemático en el que nos apoyamos para explicar el estado físico de las partículas subatómicas, como ya veremos en la sección (\ref{sec: postulados}) explicando los postulados. Este \textit{espacio de Hilbert} es simplemente una generalización de los espacios euclídeos \( \mathbb{R}^{n} \) sobre el cuerpo de los números reales \( \mathbbl{R} \) o sobre los números complejos \( \mathbb{C} \), siendo en el caso de la mecánica cuántica, como podremos imaginar, una generalización sobre \( \mathbb{C} \) ya que la geometría compleja juega un papel fundamental en este campo de la física.
+    
+    \vspace{5mm}
+
+    Una vez hemos introducido los \textit{espacios de Hilbert}, vamos a pasar a explicar sus propiedades básicas, para poder comprender los conceptos que vendrán más adelante en los siguientes capítulos. La diferencia fundamental con respecto a los espacios euclídeos \( \mathbb{R}^{n} \), además de que las distintas componentes de los vectores \( \ket{\psi} \in \mathcal{H} \) son complejas, reside en el producto escalar, el cual para un espacio euclídeo \( \mathbb{R}^{n} \) podemos expresar de la siguiente manera
+
+    \begin{equation*}
+        \braket{v, w} = \sum_{i = 1}^{N} v_{i} w_{i}, \qquad \forall \ v_{i}, w_{i} \in \mathbb{R}^{n}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Siendo \( N \) la dimensión del espacio euclídeo \( \mathbb{R}^{n} \). La principal diferencia es que un \textit{espacio de Hilbert} \( \mathcal{H} \) cuenta con un producto escalar hermítico, el cual definiremos a continuación.
 
     \vspace{5mm}
 
-    Consideremos un espacio vectorial \( \mathcal{H} = \{ \ket{\varphi}, \ket{x}, \cdots \} \) sobre el cuerpo de los números complejos \( \mathbb{C} \), de manera que se cumplen la propiedad de la suma y la multiplicación por un escalar:
+    Consideremos un espacio vectorial \( \mathcal{H} = \{ \ket{\psi}, \ket{\phi}, \cdots \} \) sobre el cuerpo de los números complejos \( \mathbb{C} \), de manera que se cumplen la propiedad de la suma y la multiplicación por un escalar:
     \begin{align*}
-        \ket{\varphi} + \ket{x} \in \mathcal{H}, \qquad &\forall \ket{\varphi}, \ket{x} \in \mathcal{H}\\[10pt]
-        \alpha \ket{\varphi} \in \mathcal{H}, \qquad &\forall \ket{\varphi}, \in \mathcal{H} \quad \text{y} \quad \forall \alpha \in \mathbb{C}
+        \ket{\psi} + \ket{\phi} \in \mathcal{H}, \qquad &\forall \ket{\psi}, \ket{\phi} \in \mathcal{H}\\[10pt]
+        \alpha \ket{\psi} \in \mathcal{H}, \qquad &\forall \ket{\psi} \in \mathcal{H} \quad \text{y} \quad \forall \alpha \in \mathbb{C}
     \end{align*}
+
+    \vspace{1.5mm}
 
     Además, dicho espacio vectorial \( \mathcal{H} \) cuenta con un producto escalar hermítico, el cual es una aplicación
     \begin{align*}
         \mathcal{H} \times \mathcal{H} &\longrightarrow \mathbb{C} \\
-        \ket{\varphi}, \ket{x} &\longrightarrow \braket{\varphi | x}
+        \ket{\phi}, \ket{\psi} &\longrightarrow \braket{\phi \ | \ \psi}
     \end{align*}
+
+    \vspace{1.5mm}
 
     Que cumple con las propiedades de linealidad y hermiticidad, respectivamente:
     \begin{align*}
-        \braket{x | \lambda_{1}\varphi_{1} + \lambda_{2}\varphi_{2}} &= \lambda_{1} \braket{x | \varphi_{1}} + \lambda_{2} \braket{x | \varphi_{2}}, \qquad \forall \lambda_{1}, \lambda{2} \in \mathbb{C} \\[10pt]
-        \braket{x | \varphi} &= \braket{\varphi | x}^{*}
+        \braket{\phi \ | \ \lambda_{1}\psi_{1} + \lambda_{2}\psi_{2}} &= \lambda_{1} \braket{\phi \ | \ \psi_{1}} + \lambda_{2} \braket{\phi \ | \ \psi_{2}}, \qquad \forall \lambda_{1}, \lambda{2} \in \mathbb{C} \\[10pt]
+        \braket{\phi \ | \ \psi} &= \braket{\psi \ | \ \phi}^{*}
     \end{align*}
 
-    Siendo \( \braket{\varphi | x}^{*} \) la expresión conjugada compleja de \( \braket{x | \varphi} \). Además, esta aplicación ha de ser definida positiva, de manera que
+    \vspace{1.5mm}
+
+    Siendo \( \braket{\psi \ | \ \phi}^{*} \) la expresión conjugada compleja de \( \braket{\phi \ | \ \psi} \). Esta aplicación ha de ser definida positiva, de manera que
     \begin{equation*}
-        \braket{\varphi | \varphi} \geq 0 \quad \text{y} \quad \braket{\varphi | \varphi} = 0 \ \Leftrightarrow \ \ket{\varphi} = 0
+        \braket{\psi \ | \ \psi} \geq 0 \quad \text{y} \quad \braket{\psi \ | \ \psi} = 0 \ \Leftrightarrow \ \ket{\psi} = 0
     \end{equation*}
 
-    \vspace{2mm}
+    \vspace{1.5mm}
 
-    Si \( \mathcal{H} \) satisface estas propiedades, podemos concluir que \( \mathcal{H} \) es un espacio de Hilbert. Con esto podemos definir la norma de un vector \( \varphi \) como
-    \vspace{2mm}
+    Si \( \mathcal{H} \) satisface estas propiedades, podemos concluir que \( \mathcal{H} \) es un espacio de Hilbert. Con esto podemos definir la norma de un vector \( \psi \) como
     \begin{equation}
-        \| \varphi \| = \sqrt{\braket{\varphi | \varphi}} \qquad \in \mathbb{R} \geq 0
+        \| \psi \| = \sqrt{\braket{\psi \ | \ \psi}} \qquad \in \mathbb{R} \geq 0
         \label{eq: norma_producto_escalar}
     \end{equation}
 
-    \vspace{2mm}
+    \vspace{1.5mm}
 
-    Podemos observar que \( \| \varphi \| \in \mathbb{R} \geq 0 \), ya que al tratarse de la longitud de un vector, ha de ser un número real no negativo. Con esto podemos introducir la desigualdad de Schwartz, la cual establece lo siguiente:
+    Podemos observar que \( \| \psi \| \in \mathbb{R} \geq 0 \), ya que al tratarse de la longitud de un vector, ha de ser un número real no negativo. Con esto podemos introducir la desigualdad de Schwartz, la cual establece lo siguiente:
     \begin{equation}
-        \| \braket{x | \varphi} \| ^{2} \leq \| x \| ^{2} \| \varphi \|^{2}
+        \| \braket{\phi \ | \ \psi} \| ^{2} \leq \| \phi \| ^{2} \| \psi \|^{2}
         \label{eq: desigualdad_schwartz}
     \end{equation}
 
-    Al complirse esta desigualdad, el producto interno está bien definido, de donde obtenemos la norma como ya vimos en (\ref{eq: norma_producto_escalar}), pasando a ser un espacio normado cuya norma cumple con la \textit{sucesión de Cauchy}:
+    \vspace{1.5mm}
+
+    Al complirse esta expresión, el producto interno está bien definido, de donde obtenemos la norma como ya vimos en (\ref{eq: norma_producto_escalar}), pasando a ser un espacio normado cuya norma cumple con la \textit{sucesión de Cauchy}:
     \begin{equation*}
         \forall \epsilon > 0, \quad \exists N \in \mathbb{N} \ \text{tal que} \ m, n \geq N \implies \| x_{n} - x_{m} \| < \epsilon
     \end{equation*}
     
+    \vspace{1.5mm}
+
     por lo que además es un espacio completo.
 
     \vspace{5mm}
 
-    Con esto ya podemos llegar a la conclusión de que, un espacio de Hilbert, en resumidas cuentas, es un espacio vectorial \( \mathcal{H} \) con un producto escalar hermítico, y por lo tanto sobre el cuerpo de los números complejos \( \mathbb{C} \). Sabiendo esto podemos trabajar sobre el concepto de ortonormalidad definiendo una base ortonormal de nuestro espacio vectorial \( \mathcal{H} \), como
-
-    \begin{equation*}
-        \{ \ket{e_{n}} \} = \{ \ket{1}, \ket{2}, \ldots , \ket{N}\}
-    \end{equation*}
-
-    \vspace{2mm}
-
-    Donde \( N \) es la dimensión del espacio vectorial \( \mathcal{H} \). No obstante, esto no deja de ser una base común y corriente. Para que esta base sea ortonormal, se tienen que dar las condiciones de ortonormalidad, donde el producto escalar de dos vectores distintos de dicha base es cero, y la norma de ambos vectores ha de ser igual a la unidad. Esto lo podemos formalizar de la siguiente manera
-    \vspace{2mm}
+    Con esto ya podemos llegar a la conclusión de que, un espacio de Hilbert, en resumidas cuentas, es un espacio vectorial \( \mathcal{H} \) con un producto escalar hermítico, y por lo tanto sobre el cuerpo de los números complejos \( \mathbb{C} \). Aún así, vamos a profundizar más en la definición de \textit{producto escalar hermítico} en \( \mathcal{H} \). Para ello, vamos a trabajar sobre el concepto de \textit{espacio dual} y \textit{ortonormalidad} definiendo una base ortonormal de nuestro espacio vectorial \( \mathcal{H} \), como
     \begin{equation}
-        \braket{n | m} = \delta_{n, m}, \qquad \forall \ket{n}, \ket{m} \in \{ \ket{e_{n}} \}
-        \label{eq: ortonormalidad}
-    \end{equation}
-    \begin{equation}
-        \| m \| = 1, \qquad \forall \ket{m} \in \{ \ket{e_{n}} \}
-        \label{eq: linealidad}
+        B = \{ \ket{e_{j}} \} _{j = 1}^{N}
+        \label{eq: base_ortonormal_H}
     \end{equation}
 
-    \vspace{2mm}
+    \vspace{1.5mm}
+
+    Donde \( N \) es la dimensión de \( \mathcal{H} \). No obstante, esto no deja de ser una base común y corriente. Para que esta base sea ortonormal, se tienen que dar las condiciones de ortonormalidad, en las que se establece que el producto escalar de dos vectores distintos de dicha base es cero, y la norma de ambos vectores ha de ser igual a la unidad. Esto lo podemos formalizar de la siguiente manera
+    \begin{align}
+        \braket{e_{1} | e_{2}} = \delta_{e_{1}, e_{2}}, \qquad &\forall \ \ket{e_{1}}, \ket{e_{2}} \in B \label{eq: ortonormalidad} \\
+        \| e_{j} \| = 1,  \qquad &\forall \ \ket{e_{j}} \in B \label{eq: linealidad}
+    \end{align}
+    
+    \vspace{1.5mm}
 
     Donde \( \delta_{n, m} \) en (\ref{eq: ortonormalidad}) es la función \textit{delta de Kronecker}, que se define como
     \begin{equation}
@@ -557,45 +573,76 @@
         \label{eq:delta_kronecker}
     \end{equation}
 
-    Así, el producto escalar de dos vectores de una base ortonormal siempre va a ser cero, y el producto escalar de un vector consigo mismo es la unidad. Entonces, podemos expresar cualquier vector de nuestro espacio vectorial \( \mathcal{H} \) como una combinación lineal de los vectores de la base:
+    \vspace{1.5mm}
+
+    Así, el producto escalar de dos vectores de una base ortonormal siempre va a ser cero, y el producto escalar de un vector consigo mismo es la unidad
     \begin{equation}
-        \ket{\varphi} = \sum_{n = 1}^{N} c_{n} \ket{n}, \qquad \forall \ket{\varphi} \in \mathcal{H}
+        \braket{e_{1} | e_{2}} = 0, \qquad \forall \ e_{1}, e_{2} \in B 
+    \end{equation}
+
+    \vspace{1.5mm}
+
+    Entonces, podemos expresar cualquier vector de nuestro espacio vectorial \( \mathcal{H} \) como una combinación lineal de los vectores de la base:
+    \begin{equation}
+        \ket{\psi} = \sum_{j = 1}^{N} c_{j} \ket{e_{j}}, \qquad \forall \ \ket{\psi} \in \mathcal{H} \quad \text{y} \quad \ \forall c_{j} \in \mathbb{C}
         \label{eq: combinacion_lineal_Hilbert}
     \end{equation}
+
+    \vspace{1.5mm}
 
     Esto es muy importante ya que vamos a usar estos vectores para ver el estado en el que se encuentra nuestro sistema cuantico. Esto está directamente ligado con la superposición de la función de onda, como ya vimos en (\ref{eq: superposicion}), ya que, cada uno de los posibles estados de una partícula en una superposición de funciones de onda, no son más que los vectores de una base ortonormal perteneciente a un espacio de Hilbert \( \mathcal{H} \). Esto es de vital importancia y lo seguiremos viendo cuando introduzcamos los estados de un \textit{qubit}, como ya veremos más adelante.
 
     \vspace{5mm}
 
-    No obstante, a partir de (\ref{eq: ortonormalidad}), podemos deducir el valor de \( c_{n} \) que aparece en (\ref{eq: combinacion_lineal_Hilbert}):
-    \begin{align}
-        \braket{n | m} &= \sum_{n = 1}^{N} c_{n} \delta_{n, m} = c_{m} \\[10pt]
-        c_{m} &= \braket{n | m}, \qquad c_{m} \in \mathbb{C}
-    \end{align}
-
-    Entonces, si \( \ket{\varphi} = \sum_{n = 1}^{N} c_{n} \ket{n} \) y \( \ket{x} = \sum_{m = 1}^{N} c_{m} \ket{m} \) son dos vectores cualesquiera de nuestro espacio vectorial \( \mathcal{H} \), podemos deducir que el producto escalar de ambos vectores es
+    Ahora vamos a dar las primeras nociones del \textit{espacio dual} \( \mathcal{H} ^ {*} \) de \( \mathcal{H} \). Si tenemos un espacio de Hilbert \( \mathcal{H} \) sobre el cuerpo de los número complejos \( \mathbb{C} \), definimos su \textit{espacio dual} \( \mathcal{H} ^ {*} \) como el conjunto de todas las aplicaciones lineales que transforman elementos de \( \mathcal{H} \), es decir, \textit{kets}, en un número complejo \( \mathbb{C} \)
     \begin{equation*}
-        \braket{x | \varphi} = \sum_{n, m = 1}^{N} c_{m}^{*} c_{n} \delta_{n, m} = \sum_{n = 1}^{N} c_{m}^{*} c_{n}
+        \mathcal{H} ^ {*} = \{ \bra{\phi}: \mathcal{H} \longrightarrow \mathbb{C} \}
     \end{equation*}
+
+    \vspace{1.5mm}
+
+    Donde \( \bra{\phi} \) se construye con el conjugado hermítico, el cual se define con el operador \( \dagger \):
+    \begin{equation*}
+        ( \ket{\phi} )^{\dagger} = \bra{\phi}
+    \end{equation*}
+
+    \vspace{1.5mm}
+
+    Aprovechamos para explicar la notación, en la tenemos los elementos pertenecientes al espacio dual \( \mathcal{H} ^ {*} \) conocidos como \textit{bra} \( \bra{\phi} \), vectores pertenecientes al espacio de Hilbert \( \mathcal{H} \) que son llamados como \textit{kets} \( \ket{\psi} \), y el resultado de aplicar un producto escalar hermítico sobre un \textit{bra} y un \textit{ket}, al que haremos referencia como \textit{bracket} \( \braket{\phi \ | \ \psi} \).
+
+    \vspace{5mm}
+
+    El espacio dual \( \mathcal{H} ^ {*} \) tiene una base dual asociada
     \begin{equation}
-        \braket{x | \varphi} = \sum_{n = 1}^{N} c_{m}^{*} c_{n}
-        \label{eq: producto_escalar_desarrollado}
+        B ^ {*} = \{ \bra{e_{i}} \} _{i = 1}^{N}
     \end{equation}
 
-    De manera que obtenemos un producto, donde los factores provenientes del \textit{bra} (\( \bra{x} \)) son complejos conjugados, pudiéndose definir como una aplicación \( \bra{x} \) sobre un vector \( \varphi \) en un espacio \( \mathcal{H} \), dando como resultado un número complejo:
-    \begin{align*}
-        \bra{x}: \mathcal{H} &\longrightarrow \mathbb{C} \\[10pt]
-        \ket{\varphi} &\longrightarrow \braket{x | \varphi}
-    \end{align*}
-    
-    Donde \( \bra{x} \) se construye con el conjugado hermítico, el cual se define de la siguiente manera:
+    \vspace{1.5mm}
+
+    mediante la que, de la misma manera que con la base \( B \) definida en (\ref{eq: base_ortonormal_H}) sobre un espacio de Hilbert \( \mathcal{H} \), podemos expresar cualquier \textit{bra} \( \bra{\phi} \in \mathcal{H} ^ {*} \) como una combinación lineal de los \textit{bra} de la base \( B ^ {*} \):
+    \begin{equation}
+        \bra{\phi} = \sum_{i = 1}^{N} d_{i}^{*} \bra{e_{i}}, \qquad \forall \ \bra{\phi} \in B^{*} \quad y \quad \forall \ c_{i}^{*} \in \mathbb{C}
+    \end{equation}    
+
+    \vspace{1.5mm}
+
+    Por lo tanto, la actuación de un \textit{bra} \( \bra{\phi} \in \mathcal{H}^{*} \) sobre un \textit{ket} \( \ket{\psi} \in \mathcal{H} \) es el producto escalar hermítico de los \textit{kets}, y debido a la propiedad de linealidad en \( \mathcal{H} \), este producto queda perfectamente definido en \( \mathcal{H} \)
     \begin{equation*}
-        ( \ket{x} )^{\dagger} = \bra{x}
+        \braket{\phi \ | \ \psi} = \ket{\phi} \cdot \ket{\psi} = \left( \sum_{i = 1}^{N} d_{i}^{*} \bra{e_{i}} \right) \left( \sum_{j = 1}^{N} c_{j} \ket{e_{j}} \right) = \sum_{i = 1}^{N} \sum_{j = 1}^{N} d_{i}^{*} \ c_{j} \ \braket{e_{i} \ | \ e_{j}} = \sum_{i = 1}^{N} \sum_{j = 1}^{N} d_{i}^{*} \ c_{j} \ \delta_{e_{i}, e_{j}} = \sum_{i = 1}^{N} d_{i}^{*} \ c_{i}
     \end{equation*}
+    \begin{equation}
+        \boxed{\braket{\phi \ | \ \psi} = \sum_{i = 1}^{N} d_{i}^{*} \ c_{i}}
+    \end{equation}
+
+    \vspace{1.5mm}
+
+    Por lo que, el producto escalar hermítico \( \braket{\phi \ | \ \psi} \) es simplemente multiplicar los complejos conjugados \( d_{i}^{*} \) provenientes del \textit{bra} \( \bra{\phi} \) por los distintos elementos \( c_{i} \) de los vectores \( \ket{\psi} \) del espacio de Hilbert \( \mathcal{H} \). 
+
+    \vspace{5mm}
 
     Encontrándonos en este punto, a partir de (\ref{eq: producto_escalar_desarrollado}) podemos desarrollar la norma de un vector en \( \mathcal{H} \), obteniendo que
     \begin{equation}
-        \| \varphi \| ^{2} = \braket{\varphi | \varphi} = \sum_{n = 1}^{N} c_{n}^{*} c_{n} = \sum_{n = 1}^{N} \| c_{n} \| ^{2} \geq 0, \qquad \forall \varphi \in \mathcal{H}
+        \| \psi \| ^{2} = \braket{\psi | \psi} = \sum_{i = 1}^{N} d_{i}^{*} c_{i} = \sum_{i = 1}^{N} \| c_{i} \| ^{2} \geq 0, \qquad \forall \psi \in \mathcal{H}
     \end{equation}
 
     \vspace{2mm}
@@ -660,7 +707,7 @@
         ( \lambda_{j} - \lambda_{i} ) \braket{\psi_{i} | \psi_{j}} &= 0
     \end{align*}
 
-    Y debido a que \( \lambda_{j} \neq \lambda_{i} \), obtenemos que ambos vectores \( \psi_{i} \text{,} \psi_{j} \)
+    Y debido a que \( \lambda_{j} \neq \lambda_{i} \), obtenemos que ambos autovectores \( \psi_{i} \text{,} \psi_{j} \)
     \begin{equation}
         \braket{\psi_{i} | \psi_{j}} = 0
     \end{equation}

@@ -665,16 +665,54 @@
 
     \vspace{2.5mm}
 
-    Efectivamente, esto es uno de los puntos clave que vimos en (\ref{eq: combinacion_lineal_Hilbert}) tratando sobre el espacio de Hilbert \( \mathcal{H}\), en el que establecíamos que cualquier vector perteneciente a \( \mathcal{H} \), se puede expresar como una combinación lineal de los vectores de la base, siendo esta base ortonormal:
-    \begin{equation*}
-        \ket{\varphi} = \sum_{n = 1}^{N} c_{n} \ket{n}, \qquad \forall \ket{\varphi} \in \mathcal{H}, \quad \forall \ket{n} \in \{ \ket{e_{n}} \}, \quad c_{n} \in \mathbb{C}
-    \end{equation*}
+    Efectivamente, esto es uno de los puntos clave que vimos en (\ref{eq: combinacion_lineal_Hilbert}) tratando sobre el espacio de Hilbert \( \mathcal{H}\), en el que establecíamos que cualquier vector perteneciente a \( \mathcal{H} \), se puede expresar como una combinación lineal de los vectores de la base, siendo esta base ortonormal.
 
     \vspace{5mm}
 
     \textbf{Postulado 2}: \textit{Toda magnitud física medible \( \mathcal{A} \) se representa mediante un operador
     hermítico A que actúa sobre \( \mathcal{H} \). Este operador es un observable}.
     
+    \vspace{5mm}
+
+    En mecánica cuántica, a las magnitudes se les asigna un operador en concreto, un \textit{observable}, y este \textit{observable} no es más que un operador lineal hermítico. Vamos a ir desglosando punto por punto para enteder todo de la mejor manera posible.
+
+    \vspace{5mm}
+
+    Un operador es un objeto que actúa sobre los elementos de un espacio vectorial, en nuestro caso, un espacio de Hilbert \( \mathcal{H} \), transformándolos en otro vector perteneciente al mismo espacio
+    \begin{equation*}
+        \hat{A} \ket{\psi} \overset{\hat{A}}{\longrightarrow} \ket{\psi '}, \qquad \ket{\psi}, \ket{\psi '} \in \mathcal{H}
+    \end{equation*}
+
+    \vspace{1.5mm}
+
+    Pongamos como ejemplo el producto externo \( \ket{\phi} \bra{\psi} \) multiplicado a un vector \( \ket{\varphi} \in \mathcal{H} \), esto es:
+    \begin{equation*}
+        \left( \ket{\phi} \bra{\psi} \right) \left( \ket{\varphi} \right) = \ket{\phi} \braket{\psi \ | \ \varphi} = \ket{\phi} k = k \ket{\phi}, \qquad k \in \mathbb{C}
+    \end{equation*}
+
+    \vspace{1.5mm}
+
+    Con esto hemos probado que \( \ket{\phi} \bra{\psi} \) es un \textit{operador}, ya que 
+    \begin{equation}
+        \hat{A} \ket\varphi = k \ket{\phi}, \qquad k \in \mathbb{C}
+    \end{equation}
+
+    \vspace{1.5mm}
+
+    Esto resulta en que un operador fruto de un producto externo se puede expresar como una combinación lineal de productos externos de vectores de la base
+    \begin{equation}
+        \hat{A} = \sum_{i = 1}^{N} \sum_{j = 0}^{N} A_{ij} \ket{i} \bra{j}, \qquad \forall \ \ket{i}, \ket{j} \in B
+        \label{eq: operador_combinacion_lineal}
+    \end{equation}
+
+    \vspace{1.5mm}
+
+    Podemos ver fácilmente que estos operadores se pueden representar como matrices cuadradas de dimensión \( N \times N \). Además, partiendo de la expresión anterior, existe una condición suficiente y necesaria para que un conjunto de vectores sea base. Esta condición se denomina \textit{relación de cierre}, y se obtiene de particularizar la expresión (\ref{eq: operador_combinacion_lineal}) para el operador identidad, el cual se define como 
+
+
+
+
+
     \vspace{5mm}
 
     \textbf{Postulado 3}: \textit{Los únicos resultados posibles a obtener en una medición de la

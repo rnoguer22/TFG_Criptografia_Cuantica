@@ -707,12 +707,73 @@
 
     \vspace{1.5mm}
 
-    Podemos ver fácilmente que estos operadores se pueden representar como matrices cuadradas de dimensión \( N \times N \). Además, partiendo de la expresión anterior, existe una condición suficiente y necesaria para que un conjunto de vectores sea base. Esta condición se denomina \textit{relación de cierre}, y se obtiene de particularizar la expresión (\ref{eq: operador_combinacion_lineal}) para el operador identidad, el cual se define como 
+    Podemos ver fácilmente que estos operadores se pueden representar como matrices cuadradas de dimensión \( N \times N \). Además, partiendo de la expresión anterior, existe una condición suficiente y necesaria para que un conjunto de vectores sea base. Esta condición se denomina \textit{relación de cierre}, y se obtiene de particularizar la expresión (\ref{eq: operador_combinacion_lineal}) para el operador identidad \( I \), el cual se define como 
+    \begin{equation}
+        I_{ij} =
+        \left\{
+        \begin{array}{ll}
+            1, & \text{si } i = j \\
+            0, & \text{si } i \neq j
+        \end{array}
+        \right\}
+        = \delta_{ij}
+    \end{equation}
 
+    \vspace{1.5mm}
 
+    Entonces, esta relación establece que, si la suma de los \textit{ketbras} \( \ket{i} \bra{j} \) de los elementos de la base es igual al operador identidad \( I \), todos los elementos de dicha base pueden generar el espacio de Hilbert \( \mathcal{H} \), de la siguiente manera
+    \begin{align*}
+        I &= \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N -1} \delta_{ij} \ket{i} \bra{j} = \sum_{i = 0}^{N -1} \ket{i} \bra{i} \\[10pt]
+        I \ket{\psi} &= \sum_{i = 0}^{N - 1} \ket{i} \braket{i \ | \ \psi} = \sum_{i = 0}^{N - 1} c_{i} \ket{i} = \ket{\psi} \\[10pt]
+    \end{align*}
+    \begin{equation}
+        I \ket{\psi} = \psi
+        \label{eq: operador_identidad}
+    \end{equation}
 
+    \vspace{1.5mm}
 
+    De donde hemos obtenido que \( \braket{i \ | \ \psi} = c_{i} \). Esto lo podemos obtener a partir de (\ref{eq: combinacion_lineal_Hilbert}), de manera que
+    \begin{align}
+        \braket{i \ | \ \psi} &= \sum_{j = 0}^{N - 1} c_{j} \braket{i \ | \ j} \\[10pt]
+        \braket{i \ | \ \psi} &= \sum_{j = 0}^{N - 1} c_{j} \delta_{ij} = c_{i}\label{eq: ci}
+    \end{align}
+    
+    \vspace{1.5mm}
 
+    El resultado que acabamos de obtener en (\ref{eq: ci}), \( c_{i} \), por definición, es la proyección del vector \( \ket{\psi} \in \mathcal{H} \) sobre el vector \( \ket{i} \) de la base. Así, podemos observar que (\ref{eq: operador_identidad}) es efectivamente la identidad \( I \), y que dejará al vector \( \ket{\psi}\) exactamente igual, cumpliéndose así la \textit{relación de cierre}. A continuación, el concepto de linealidad en un operador no es más que
+    \begin{equation}
+        \hat{A} \left( a \ket{\psi} + b \ket{\phi} \right) = a \hat{A} \ket{\psi} + b \hat{A} \ket{\phi}, \qquad \psi, \phi \in  \mathcal{H} \ \text{y} \ \forall \ a,b \in \mathbb{C} 
+        \label{eq: linealidad_operador}
+    \end{equation}
+
+    \vspace{1.5mm}
+
+    Y, finalmente, nos queda definir la condición de hermiticidad en un operador, resultando en un \textit{operador hermítico} que, como podemos imaginar, cumple con
+    \begin{equation}
+        \hat{A} ^ {\dagger} = \hat{A}
+        \label{eq: hermiticidad_operador}
+    \end{equation}
+
+    \vspace{1.5mm}
+
+    De manera que tras aplicar el operador \( \dagger \) sobre \( \hat{A} \), se vuelve a obtener \( \hat{A} \). Esto conlleva a otra condición, que se obtiene como resultado de (\ref{eq: hermiticidad_operador}):
+    \begin{equation*}
+        \hat{A} ^ {\dagger} = \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} A_{ij}^{\dagger} \left( \ket{i} \bra{j} \right) ^ {\dagger} = \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} A_{ij}^{*} \ket{j} \bra{i} = \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} A_{ji}^{*} \ket{i} \bra{j}
+    \end{equation*}
+
+    \vspace{1.5mm}
+
+    Entonces, como vimos en (\ref{eq: hermiticidad_operador}), para que un operador sea hermítico, su traspuesto conjugado \( \hat{A}^{\dagger} \) ha de ser igual a él mismo \( \hat{A} \), resultando en la siguiente condición
+    \begin{align}
+        \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} A_{ji}^{*} \ket{i} \bra{j} &= \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} A_{ij} \ket{i} \bra{j} \\[10pt]
+        A_{ji}^{*} &= A_{ij} \label{eq: hermiticidad_componentes_operador}
+    \end{align}
+
+    \vspace{1.5mm}
+
+    Y esta condición (\ref{eq: hermiticidad_componentes_operador}) se ha de cumplir en todo observable.
+    
     \vspace{5mm}
 
     \textbf{Postulado 3}: \textit{Los únicos resultados posibles a obtener en una medición de la

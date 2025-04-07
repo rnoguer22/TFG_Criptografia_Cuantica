@@ -860,15 +860,85 @@
 
     \vspace{10mm}
 
-    \textbf{Postulado 5}: \textit{Si en la medición de la magnitud \( \mathcal{A} \) en un sistema en el estado \( \ket{\varphi} \) obtenemos el resultado \( a_{n} \), inmediatamente después de la medición, el estado del sistema será la proyección del estado \( \ket{\varphi} \) sobre el subespacio asociado a \( a_{n} \)}:
+    \textbf{Postulado 5}: \textit{Si en la medición de la magnitud \( \mathcal{A} \) en un sistema en el estado \( \ket{\psi} \) obtenemos el resultado \( \lambda_{i} \), inmediatamente después de la medición, el estado del sistema será la proyección del estado \( \ket{\psi} \) sobre el subespacio asociado a \( \lambda_{i} \)}:
     \begin{equation}
-        \ket{\varphi} \overset{a_{n}}{\longrightarrow} \frac{P_{n} \ket{\varphi}}{\sqrt{\bra{\varphi} P_{n} \ket{\varphi}}}
+        \ket{\psi} \overset{\lambda_{i}}{\longrightarrow} \frac{\hat{\Pi_{i}} \ket{\psi}}{\sqrt{\bra{\psi} \hat{\Pi_{i}} \ket{\psi}}}
     \end{equation}
 
     \vspace{2mm}
-    \textit{Donde \( P_{n} \) es el operador proyección sobre el subespacio asociado a \( a_{n} \)}.
+    \textit{Donde \( \hat{\Pi_{i}} \) es el operador proyección sobre el subespacio asociado a \( \lambda_{i} \)}.
     
     \vspace{5mm}
+
+    Después de medir y obtener el resultado \( \lambda_{i} \), que, como sabemos por el tercer postulado, es un autovalor, el estado se proyecta sobre el autovector asociado al resultado \( \lambda_{i} \). Matemáticamente, esto lo podemos expresar mediante el producto del estado de la partícula por su proyector:
+    \begin{equation}
+        \ket{\psi_{i}} = \hat{\Pi_{i}} \ket{\psi}
+        \label{eq: proyeccion_estado}
+    \end{equation}
+
+    \vspace{1.5mm}
+
+    Definiéndose así el operador de proyección sobre un vector como el producto externo del autovector \( \ket{\lambda_{i}} \) sobre el que queremos proyectar nuestro estado \( \ket{\psi} \)
+    \begin{equation*}
+        \hat{\Pi_{i}} = \ket{\lambda_{i}} \bra{\lambda_{i}}
+    \end{equation*} 
+
+    \vspace{1.5mm}
+
+    Que, por definición, su cuadrado es igual a sí mismo, y es ortogonal al resto de proyectores
+    \begin{equation*}
+        \hat{\Pi_{i}} ^ {2} = \ket{\lambda_{i}} \braket{\lambda_{i} \ | \ \lambda_{i}} \bra{\lambda_{i}} = \ket{\lambda_{i}} \bra{\lambda_{i}} = \hat{\Pi_{i}}
+    \end{equation*}
+    \begin{equation*}
+        \hat{\Pi_{i}} \hat{\Pi_{j}} = 0
+    \end{equation*}
+
+    \vspace{1.5mm}
+
+    Siguiendo en la expresión (\ref{eq: proyeccion_estado}), como el módulo del estado \( \ket{\psi_{i}} \) debe ser igual a la unidad, lo dividimos entre su módulo para normalizarlo, y desarrollando la expresión que nos queda, llegamos al autovector asociado al resultado de la medición
+    \vspace{1mm}
+    \begin{equation*}
+        \ket{\psi_{i}} = \frac{\hat{\Pi_{i}} \ket{\psi}}{| \hat{\Pi_{i}} \ket{\psi} |} = \frac{\ket{\lambda_{i}} \braket{\lambda_{i} \ | \ \psi}}{\sqrt{| \ket{\lambda_{i}} \braket{\lambda_{i} \ | \ \psi} | ^ {2}}} = \frac{\ket{\lambda_{i}} \braket{\lambda_{i} \ | \ \psi}}{\sqrt{| \braket{\psi \ | \ \lambda_{i}} \braket{\lambda_{i} \ | \ \lambda_{i}} \braket{\lambda_{i} \ | \ \psi} | ^ {2}}} = 
+    \end{equation*}
+    \begin{equation*}
+        = \frac{\ket{\lambda_{i}} \braket{\lambda_{i} \ | \ \psi}}{\sqrt{| \braket{\psi \ | \ \lambda_{i}} \braket{\lambda_{i} \ | \ \psi} | ^ {2}}} = \frac{\ket{\lambda_{i}} \braket{\lambda_{i} \ | \ \psi}}{\sqrt{| \braket{\lambda_{i} \ | \ \psi} | ^ {2}}} = \frac{\braket{\lambda_{i} \ | \ \psi}}{| \braket{\lambda_{i} \ | \ \psi} |} \ket{\lambda_{i}} = e^{i \theta} \ket{\lambda_{i}}
+    \end{equation*}
+
+    \vspace{1.5mm}
+
+    Siendo
+    \begin{equation}
+        e ^ {i \theta} = \frac{\braket{\lambda_{i} \ | \ \psi}}{| \braket{\lambda_{i} \ | \ \psi} |}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    La conocida como \textit{fase global}, la cual es un número complejo de módulo igual a la unidad, de manera que si multiplicamos dicha fase por un estado cuántico, dicho estado va a corresponder al mismo estado físico. Esto se debe a que si calculamos el módulo al cuadrado del producto de dos vectores arbitrarios con una fase global \( e ^ {i \theta} \)
+    \begin{equation*}
+        \ket{\psi'} = e^{i \theta} \ket{\psi}
+    \end{equation*}
+    \begin{equation*}
+        \ket{\phi'}^{\dagger} = {e^{i \rho}}^{\dagger} \ket{\phi}^{\dagger} \ \rightarrow \ \bra{\phi'} = e^{-i \rho} \bra{\phi}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    El resultado sigue siendo el mismo que si no la tuviera
+    \begin{equation*}
+        | \braket{\phi' \ | \ \psi'} | ^ {2} = | e^{i \theta} e^{-i \rho} \braket{\phi \ | \ \psi} | ^ {2} = | e^{i (\theta - \rho)} | ^ {2} \ | \braket{\phi \ | \ \psi} | ^ {2} =
+    \end{equation*}
+    \begin{equation*}
+        = e^{i (\theta - \rho)} e^{-i(\theta - \rho)} \ | \braket{\phi \ | \ \psi} | ^ {2} = e^{0} \ | \braket{\phi \ | \ \psi} | ^ {2} = | \braket{\phi \ | \ \psi} | ^ {2}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Por lo que podemos concluir que la proyección normalizada de un estado \( \ket{\psi_{i}} \) es su autovector \( \lambda_{i} \):
+    \begin{equation}
+        \ket{\psi_{i}} = \frac{\hat{\Pi_{i}} \ket{\psi}}{\sqrt{\hat{\Pi_{i}} \ket{\psi}}} \equiv \ket{\lambda_{i}}
+    \end{equation}
+
+    \vspace{10mm}
 
     \textbf{Postulado 6}: \textit{La evolución temporal del estado de un sistema \( |\psi(t)\rangle \) está gobernada por la ecuación de Schrödinger},
     \begin{equation}

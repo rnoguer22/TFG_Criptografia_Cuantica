@@ -667,7 +667,7 @@
 
     Efectivamente, esto es uno de los puntos clave que vimos en (\ref{eq: combinacion_lineal_Hilbert}) tratando sobre el espacio de Hilbert \( \mathcal{H}\), en el que establecíamos que cualquier vector perteneciente a \( \mathcal{H} \), se puede expresar como una combinación lineal de los vectores de la base, siendo esta base ortonormal.
 
-    \vspace{5mm}
+    \vspace{10mm}
 
     \textbf{Postulado 2}: \textit{Toda magnitud física medible \( \mathcal{A} \) se representa mediante un operador
     hermítico A que actúa sobre \( \mathcal{H} \). Este operador es un observable}.
@@ -774,13 +774,13 @@
 
     Y esta condición (\ref{eq: hermiticidad_componentes_operador}) se ha de cumplir en todo observable.
     
-    \vspace{5mm}
+    \vspace{10mm}
 
     \textbf{Postulado 3}: \textit{Los únicos resultados posibles a obtener en una medición de la
     magnitud \( \mathcal{A}\) son los autovalores del operador \( \hat{A} \). En la definición de operador se
     pide que \( \hat{A} \) sea hermítico, por lo que las cantidades medidas serían reales}.
     
-    \vspace{2.5mm}
+    \vspace{5mm}
 
     Comencemos con la definición de \textit{autovector} y \textit{autovalor}. Imaginemos un operador \( \hat{A} \) actuando sobre un vector \( \psi \), de manera que, tras aplicar el operador, obtenemos el mismo vector \( \psi \) multiplicado por un escalar \( \lambda \). Esto es el autovector \( \psi \) asociado al autovalor \( \lambda \), respectivamente:
     \begin{equation}
@@ -788,11 +788,15 @@
         \label{eq: autovectores_y_autovalores}
     \end{equation}
 
+    \vspace{1.5mm}
+
     Y podemos verificar que \( \lambda \in \mathbb{R} \), partiendo de (\ref{eq: autovectores_y_autovalores}) y tomando el producto interno en ambos miembros, como sigue a continuación
     \begin{align*}
         \bra{\psi} \hat{A} \ket{\psi} &= \lambda \braket{\psi | \psi} \\[10pt]
         \bra{\psi} \hat{A} \ket{\psi} &= \bra{\psi} {\hat{A ^ {\dagger}}} \ket{\psi} = \lambda ^ {*} \braket{\psi | \psi} 
     \end{align*}
+
+    \vspace{1.5mm}
 
     Por lor que hemos demostrado que \( \ \lambda \in \mathbb{R} \ \) ya que \( \ \lambda ^ {*} = \lambda \ \). Por último vamos a ver que los autovectores asociados a autovalores distintos entre sí son ortogonales, es decir, su producto escalar es igual a cero:
     \begin{align*}
@@ -801,31 +805,60 @@
         \bra{\psi_{i}} \hat{A} \ket{\psi_{j}} &= \lambda_{i} \braket{\psi_{i} | \psi_{j}}
     \end{align*}
 
+    \vspace{1.5mm}
+
     Dado que \( \hat{A} \ket{\psi_{j}} = \lambda_{j} \ket{\psi_{j}} \), obtenemos la siguiente igualdad:
     \begin{align*}
         \bra{\psi_{i}} \lambda_{j} \ket{\psi_{j}} &= \lambda_{i} \braket{\psi_{i} | \psi_{j}} \\[10pt]
         ( \lambda_{j} - \lambda_{i} ) \braket{\psi_{i} | \psi_{j}} &= 0
     \end{align*}
 
+    \vspace{1.5mm}
+
     Y debido a que \( \lambda_{j} \neq \lambda_{i} \), obtenemos que ambos autovectores \( \psi_{i} \text{,} \psi_{j} \)
     \begin{equation}
         \braket{\psi_{i} | \psi_{j}} = 0
     \end{equation}
 
-    Son ortogonales. Entonces, podemos concluir que, en un espacio de Hilbert \( \mathcal{H} \), un operador hermítico \( \hat{A} \) tiene \( N \) autovectores \( \psi_{i} \) asociados a los autovalores \( \lambda_{i} \), que como hemos demostrado, pertenecen al conjunto de los números reales \( \mathbb{R} \) y son ortogonales entre sí, por lo que únicamente tendríamos que normalizar dichos autovectores para obtener una base ortonormal de autovectores, por lo que hemos demostrado que un operador hermítico siempre va a ser diagonalizable. 
+    \vspace{1.5mm}
 
-    \vspace{7.5mm}
+    Son ortogonales. Entonces, podemos concluir que, en un espacio de Hilbert \( \mathcal{H} \), un operador hermítico \( \hat{A} \) tiene \( N \) autovectores \( \ket{\psi_{i}} \) asociados a los autovalores \( \lambda_{i} \), que como hemos demostrado, pertenecen al conjunto de los números reales \( \mathbb{R} \) y son ortogonales entre sí, por lo que únicamente tendríamos que normalizar dichos autovectores para obtener una base ortonormal de autovectores, cumpliendo con el \textit{Teorema Espectral}, el cual establece que todo operador hermítico \( \hat{A} \) definido en un espacio de Hilbert \( \mathcal{H} \) de dimensión finita es diagonalizable, es decir, existe una base ortonormal \( B_{\hat{A}} \in \mathcal{H} \) formada por los autovectores \( \ket{\psi_{i}} \) del operador \( \hat{A} \).
+
+    \vspace{5mm}
+    
+    De esta manera no solo garantizamos que todo operador \( \hat{A} \in \mathcal{H} \) sea diagonalizable, sino que podemos expresar cualquier vector \( \ket{\phi} \in \mathcal{H} \) como combinación lineal de los autovectores de \( \hat{A} \), por lo que los resulados de la medición son los autovalores \( \lambda_{i} \) de dicho operador, que como hemos demostrado anteriormente, \( \lambda_{i} \in \mathbb{R} \).
+
+    \vspace{10mm}
 
     \textbf{Postulado 4}: \textbf{Regla de Born}. \textit{Cuando medimos la magnitud \( \mathcal{A} \) en un sistema
-    cuántico que se encuentra en el estado \( \ket{\varphi} \), la probabilidad \( \mathcal{P}(a_{n})\) de obtener el
-    autovalor no degenerado \( a_{n}\) del observable A será}
+    cuántico que se encuentra en el estado \( \ket{\psi} \), la probabilidad \( \mathcal{P}(\lambda_{n})\) de obtener el
+    autovalor no degenerado \( \lambda_{n}\) del observable A será}
     \begin{equation}
-        \mathcal{P}(a_{n}) = \| \braket{a_{n} | \varphi} \| ^{2}
+        \mathcal{P}(\lambda_{n}) = \| \braket{\lambda_{n} \ | \ \psi} \| ^{2}
+        \label{eq: regla_born}
     \end{equation}
 
-    \textit{donde \( \ket{a_{n}} \) es el autovector normalizado asociado al autovalor \( a_{n} \)}.
+    \textit{donde \( \ket{\lambda_{n}} \) es el autovector normalizado asociado al autovalor \( \lambda_{n} \)}.
     
     \vspace{5mm}
+
+    Como bien ya sabemos, el resultado de una medición en en mecánica cuántica se rige bajo una función de probabilidad, y esta probabilidad se define como en (\ref{eq: regla_born}).
+
+    \vspace{5mm}
+
+    En este punto puede surgirnos una pregunta interesante, y es que la media de estas probabilidades puede darnos una pequeña orientación, con cierto riesgo, del valor esperado de dicha medición. Podemos obtener la media, al ser la suma ponderada de los posibles estados que podemos obtener al medir la magnitud \( \mathcal{A} \):
+    \begin{equation*}
+        < \hat{A} >_{\ket{\psi}} = \sum_{i = 0}^{N - 1} \lambda_{i} \mathcal{P}_{i} = \sum_{i = 0}^{N - 1} \lambda_{i} \| \braket{\lambda_{i} \ | \ \psi} \| ^ {2} = \sum_{i = 0}^{N - 1} \lambda_{i} \braket{\psi \ | \ \lambda_{i}} \braket{\lambda_{i} \ | \ \psi} =
+    \end{equation*}
+    \begin{equation*}
+        = \bra{\psi} \left( \sum_{i = 0}^{N - 1} \lambda_{i} \ket{\lambda_{i}} \bra{\lambda_{i}} \right) \ket{\psi} = \bra{\psi} \hat{A} \ket{\psi}
+    \end{equation*}
+
+    \vspace{1.5mm}
+
+    Así queda que ya tenemos la media, una orientación del valor \( \lambda_{n} \) que puede tomar el resultado, pero, ¿Y el resultado, qué pasa con él?
+
+    \vspace{10mm}
 
     \textbf{Postulado 5}: \textit{Si en la medición de la magnitud \( \mathcal{A} \) en un sistema en el estado \( \ket{\varphi} \) obtenemos el resultado \( a_{n} \), inmediatamente después de la medición, el estado del sistema será la proyección del estado \( \ket{\varphi} \) sobre el subespacio asociado a \( a_{n} \)}:
     \begin{equation}

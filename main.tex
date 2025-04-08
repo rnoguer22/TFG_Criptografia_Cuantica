@@ -335,7 +335,11 @@
     \thispagestyle{empty}
     \mbox{}
 
-    \section{Ecuación de Schrödinguer}
+
+
+
+    
+    \section{La Ecuación de Schrödinguer}\label{sec: la_ecuacion_de_schrodinguer}
 
     \subsection{Obtención de la Ecuación de Schrödinguer}
 
@@ -393,6 +397,10 @@
     \end{equation*}
 
     \vspace{5mm}
+
+
+
+
 
     \subsection{La Ecuación de Schrödinguer Independiente del Tiempo}
 
@@ -468,6 +476,10 @@
     Sin embargo, hay otras muchas situaciones en las que el potencial no solo depende de la posición \( x \), de manera que no podemos aplicar el método de separación de variables visto anteriormente, como partículas en campos magnéticos, problemas asociados a la relatividad, o sistemas caóticos. Para estos sistemas utilizamos otros métodos de resolución, como simulaciones numéricas, para alcanzar la solución del sistema.
 
     \vspace{5mm}
+
+
+
+
 
     \subsection{El Espacio de Hilbert}
 
@@ -942,7 +954,7 @@
 
     \textbf{Postulado 6}: \textit{La evolución temporal del estado de un sistema \( |\psi(t)\rangle \) está gobernada por la ecuación de Schrödinger},
     \begin{equation}
-        i\hbar \frac{d}{dt} |\psi(t)\rangle = H(t) |\psi(t)\rangle,
+        i\hbar \frac{\partial}{\partial t} \ket{\psi(t)} = H(t) \ket{\psi(t)},
         \label{eq:schrodinger}
     \end{equation}
     
@@ -950,11 +962,42 @@
     
     \vspace{5mm}
 
+    Esto ya lo vimos en (\ref{sec: la_ecuacion_de_schrodinguer}), en el que obtuvimos la ecuación de Schrödinger a partir de la función de onda (\ref{eq: funcion_de_onda}), y la desarrollamos obteniendo además la ecuación de Schrödinguer independiente del tiempo (\ref{eq: schrodinguer_independiente_tiempo}), con la que podemos ver perfectamente que el operador hamiltoniano \( H \) representa la energía total del sistema. Por otra parte, con esta ecuación vemos claramente que el sistema cuántico no es realmente un espacio de Hilbert de dimensión finita, sino que, al trabajar con derivadas parciales, también aparecen primitivas e integrales, dando paso a la siguiente sección, en la que describiremos un espacio de Hilbert \( L^{2} \) en infinitas dimensiones.
+    
+    \vspace{5mm}
+
+    A modo de conclusión, con estos postulados y con la introducción a los espacios de Hilbert \( \mathcal{H} \), hemos visto la estrecha relación entre la mecánica cuántica y el álgebra lineal, ya que, como vimos anteriormente, el sistema cuántico es un espacio de Hilbert \( \mathcal{H} \), el cual es un espacio vectorial, en el que podemos expresar el estado de una partícula subatómica a través de un vector \( \ket{\psi} \), y expresar dicho vector como combinación lineal de vectores de la base, realizar aplicaciones sobre dicho vector, ver como surgen conceptos básicos del álgebra lineal como autovectores y autovalores, y todas las lecciones tratadas anteriormente. Por esto es el espacio de Hilbert tan importante en la física cuántica (además de aplicarse en muchos otros campos de la ciencia), porque es el puente que conecta la mecánica de las partículas y las matemáticas.
+
+    \vspace{10mm}
+
 
 
 
 
     \subsubsection{El Espacio de Hilbert en Dimensión Infinita}
+
+    \vspace{5mm}
+
+    En la sección anterior, explicamos los conceptos básicos de un espacio de Hilbert \( \mathcal{H} \) en una dimensión finita, donde definíamos en (\ref{eq: base_ortonormal_H}) una base de dicho espacio vectorial de dimensión \( N \). Esto lo hicimos para dar una mejor explicación y comprender todos los conceptos adecuadamente, aunque en la mecánica cuántica no suceda realmente así. 
+
+    \vspace{5mm}
+
+    Sin embargo, podemos pensar que, cuando \( N \) tiende al infinito (\( N \rightarrow \infty \)), todo el trabajo que llevamos hasta ahora es válido, y no vamos por mal camino, simplemente hemos de hacer algunos cambios en las expresiones vistas anteriormente. Comencemos por la base, que ahora tendrá infinitas componentes:
+    \begin{equation}
+        B = \{ \ket{\alpha} \} _{\alpha \in \mathbb{R}}
+        \label{eq: base_ortonormal_L2}
+    \end{equation} 
+
+
+
+
+
+
+
+
+
+
+    
 
     \section{Álgebra Lineal y Puertas Cuánticas}
     \subsection{Estados Cuánticos}

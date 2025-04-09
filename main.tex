@@ -492,7 +492,7 @@
     Una vez hemos introducido los \textit{espacios de Hilbert}, vamos a pasar a explicar sus propiedades básicas, para poder comprender los conceptos que vendrán más adelante en los siguientes capítulos. La diferencia fundamental con respecto a los espacios euclídeos \( \mathbb{R}^{n} \), además de que las distintas componentes de los vectores \( \ket{\psi} \in \mathcal{H} \) son complejas, reside en el producto escalar, el cual para un espacio euclídeo \( \mathbb{R}^{n} \) podemos expresar de la siguiente manera
 
     \begin{equation*}
-        \braket{v, w} = \sum_{i = 1}^{N} v_{i} w_{i}, \qquad \forall \ v_{i}, w_{i} \in \mathbb{R}^{n}
+        \braket{v, w} = \sum_{i = 0}^{N - 1} v_{i} w_{i}, \qquad \forall \ v_{i}, w_{i} \in \mathbb{R}^{n}
     \end{equation*}
 
     \vspace{2.5mm}
@@ -561,7 +561,7 @@
 
     Con esto ya podemos llegar a la conclusión de que, un espacio de Hilbert, en resumidas cuentas, es un espacio vectorial \( \mathcal{H} \) con un producto escalar hermítico, y por lo tanto sobre el cuerpo de los números complejos \( \mathbb{C} \). Aún así, vamos a profundizar más en la definición de \textit{producto escalar hermítico} en \( \mathcal{H} \). Para ello, vamos a trabajar sobre el concepto de \textit{espacio dual} y \textit{ortonormalidad} definiendo una base ortonormal de nuestro espacio vectorial \( \mathcal{H} \), como
     \begin{equation}
-        B = \{ \ket{e_{j}} \} _{j = 1}^{N}
+        B = \{ \ket{e_{j}} \} _{j = 0}^{N - 1}
         \label{eq: base_ortonormal_H}
     \end{equation}
 
@@ -596,7 +596,7 @@
 
     Entonces, podemos expresar cualquier vector de nuestro espacio vectorial \( \mathcal{H} \) como una combinación lineal de los vectores de la base:
     \begin{equation}
-        \ket{\psi} = \sum_{j = 1}^{N} c_{j} \ket{e_{j}}, \qquad \forall \ \ket{\psi} \in \mathcal{H} \quad \text{y} \quad \ \forall c_{j} \in \mathbb{C}
+        \ket{\psi} = \sum_{j = 0}^{N - 1} c_{j} \ket{e_{j}}, \qquad \forall \ \ket{\psi} \in \mathcal{H} \quad \text{y} \quad \ \forall c_{j} \in \mathbb{C}
         \label{eq: combinacion_lineal_Hilbert}
     \end{equation}
 
@@ -626,24 +626,25 @@
 
     El espacio dual \( \mathcal{H} ^ {*} \) tiene una base dual asociada
     \begin{equation}
-        B ^ {*} = \{ \bra{e_{i}} \} _{i = 1}^{N}
+        B ^ {*} = \{ \bra{e_{i}} \} _{i = 0}^{N - 1}
     \end{equation}
 
     \vspace{1.5mm}
 
     mediante la que, de la misma manera que con la base \( B \) definida en (\ref{eq: base_ortonormal_H}) sobre un espacio de Hilbert \( \mathcal{H} \), podemos expresar cualquier \textit{bra} \( \bra{\phi} \in \mathcal{H} ^ {*} \) como una combinación lineal de los \textit{bra} de la base \( B ^ {*} \):
     \begin{equation}
-        \bra{\phi} = \sum_{i = 1}^{N} d_{i}^{*} \bra{e_{i}}, \qquad \forall \ \bra{\phi} \in B^{*} \quad y \quad \forall \ c_{i}^{*} \in \mathbb{C}
+        \bra{\phi} = \sum_{i = 0}^{N - 1} d_{i}^{*} \bra{e_{i}}, \qquad \forall \ \bra{\phi} \in B^{*} \quad y \quad \forall \ c_{i}^{*} \in \mathbb{C}
+        \label{eq: combinacion_lineal_hilbert_dual}
     \end{equation}    
 
     \vspace{1.5mm}
 
     Por lo tanto, la actuación de un \textit{bra} \( \bra{\phi} \in \mathcal{H}^{*} \) sobre un \textit{ket} \( \ket{\psi} \in \mathcal{H} \) es el producto escalar hermítico de los \textit{kets}, y debido a la propiedad de linealidad en \( \mathcal{H} \), este producto queda perfectamente definido en \( \mathcal{H} \)
     \begin{equation*}
-        \braket{\phi \ | \ \psi} = \ket{\phi} \cdot \ket{\psi} = \left( \sum_{i = 1}^{N} d_{i}^{*} \bra{e_{i}} \right) \left( \sum_{j = 1}^{N} c_{j} \ket{e_{j}} \right) = \sum_{i = 1}^{N} \sum_{j = 1}^{N} d_{i}^{*} \ c_{j} \ \braket{e_{i} \ | \ e_{j}} = \sum_{i = 1}^{N} \sum_{j = 1}^{N} d_{i}^{*} \ c_{j} \ \delta_{e_{i}, e_{j}} = \sum_{i = 1}^{N} d_{i}^{*} \ c_{i}
+        \braket{\phi \ | \ \psi} = \ket{\phi} \cdot \ket{\psi} = \left( \sum_{i = 0}^{N - 1} d_{i}^{*} \bra{e_{i}} \right) \left( \sum_{j = 0}^{N - 1} c_{j} \ket{e_{j}} \right) = \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} d_{i}^{*} \ c_{j} \ \braket{e_{i} \ | \ e_{j}} = \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} d_{i}^{*} \ c_{j} \ \delta_{e_{i}, e_{j}} = \sum_{i = 0}^{N - 1} d_{i}^{*} \ c_{i}
     \end{equation*}
     \begin{equation}
-        \boxed{\braket{\phi \ | \ \psi} = \sum_{i = 1}^{N} d_{i}^{*} \ c_{i}}
+        \boxed{\braket{\phi \ | \ \psi} = \sum_{i = 0}^{N - 1} d_{i}^{*} \ c_{i}}
         \label{eq: producto_escalar_desarrollado}
     \end{equation}
 
@@ -655,7 +656,7 @@
 
     Encontrándonos en este punto, a partir de (\ref{eq: producto_escalar_desarrollado}) podemos desarrollar la norma de un vector en \( \mathcal{H} \), obteniendo que
     \begin{equation}
-        \| \psi \| ^{2} = \braket{\psi | \psi} = \sum_{i = 1}^{N} d_{i}^{*} c_{i} = \sum_{i = 1}^{N} \| c_{i} \| ^{2} \geq 0, \qquad \forall \psi \in \mathcal{H}
+        \| \psi \| ^{2} = \braket{\psi | \psi} = \sum_{i = 0}^{N - 1} d_{i}^{*} c_{i} = \sum_{i = 0}^{N - 1} \| c_{i} \| ^{2} \geq 0, \qquad \forall \psi \in \mathcal{H}
     \end{equation}
 
     \vspace{2mm}
@@ -713,7 +714,7 @@
 
     Esto resulta en que un operador fruto de un producto externo se puede expresar como una combinación lineal de productos externos de vectores de la base
     \begin{equation}
-        \hat{A} = \sum_{i = 1}^{N} \sum_{j = 0}^{N} A_{ij} \ket{i} \bra{j}, \qquad \forall \ \ket{i}, \ket{j} \in B
+        \hat{A} = \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} A_{ij} \ket{i} \bra{j}, \qquad \forall \ \ket{i}, \ket{j} \in B
         \label{eq: operador_combinacion_lineal}
     \end{equation}
 
@@ -988,15 +989,26 @@
         \label{eq: base_ortonormal_L2}
     \end{equation} 
 
+    \vspace{2.5mm}
+
+    Entonces, tenemos que modificar la nomenclatura vista anteriormente, como cuando establecimos en la expresión (\ref{eq: combinacion_lineal_Hilbert}) que podemos expresar todo vector perteneciente a un espacio de Hilbert, ahora tenemos que generalizar dicha expresión para un espacio de dimensión infinita, quedando que
+    \begin{equation}
+        \ket{\psi} = \int_{\mathbb{R}} c \ (\alpha) \ket{\alpha} d \alpha
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Donde \( c \ (\alpha) \) es una función compleja de variable real, siendo ahora una función continua, la cual es la contrapartida de lo que llamábamos antes \( c_{j} \), que no eran más que elementos complejos de una sucesión en la que para cada valor de \( j \) obteníamos un número complejo \( c_{j} \). Por otra parte, la generalización de un sumatorio en un espacio continuo es simplemente la integral sobre un cierto dominio perteneciente a \( \mathbb{R} \) que ya definiremos más adelante. Con esto, hemos dado el salto de un vector perteneciente a un espacio discreto, a un vector en un espacio continuo \( \ket{\psi} \in L^{2} \). El vector dual se puede construir con la misma lógica que en (\ref{eq: combinacion_lineal_hilbert_dual})
+    \begin{equation}
+        \bra{\psi} = \int_{\mathbb{R}} c^{*} (\alpha) \bra{\alpha} d \alpha
+    \end{equation}
+    
 
 
 
-
-
-
-
-
-
+    
+    
+    
     
 
     \section{Álgebra Lineal y Puertas Cuánticas}

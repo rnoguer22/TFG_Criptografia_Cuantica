@@ -582,7 +582,7 @@
             1, & \text{si } i = j, \\
             0, & \text{si } i \neq j
         \end{cases}
-        \label{eq:delta_kronecker}
+        \label{eq: delta_kronecker}
     \end{equation}
 
     \vspace{1.5mm}
@@ -993,15 +993,79 @@
 
     Entonces, tenemos que modificar la nomenclatura vista anteriormente, como cuando establecimos en la expresión (\ref{eq: combinacion_lineal_Hilbert}) que podemos expresar todo vector perteneciente a un espacio de Hilbert, ahora tenemos que generalizar dicha expresión para un espacio de dimensión infinita, quedando que
     \begin{equation}
-        \ket{\psi} = \int_{\mathbb{R}} c \ (\alpha) \ket{\alpha} d \alpha
+        \ket{\psi} = \int_{\mathbb{R}} c (\alpha) \ket{\alpha} d \alpha
     \end{equation}
 
     \vspace{2.5mm}
 
-    Donde \( c \ (\alpha) \) es una función compleja de variable real, siendo ahora una función continua, la cual es la contrapartida de lo que llamábamos antes \( c_{j} \), que no eran más que elementos complejos de una sucesión en la que para cada valor de \( j \) obteníamos un número complejo \( c_{j} \). Por otra parte, la generalización de un sumatorio en un espacio continuo es simplemente la integral sobre un cierto dominio perteneciente a \( \mathbb{R} \) que ya definiremos más adelante. Con esto, hemos dado el salto de un vector perteneciente a un espacio discreto, a un vector en un espacio continuo \( \ket{\psi} \in L^{2} \). El vector dual se puede construir con la misma lógica que en (\ref{eq: combinacion_lineal_hilbert_dual})
+    Donde \( c \ (\alpha) \) es una función compleja de variable real, siendo ahora una función continua, la cual es la contrapartida de lo que llamábamos antes \( c_{j} \), que no eran más que elementos complejos de una sucesión en la que para cada valor de \( j \) obteníamos un número complejo \( c_{j} \). Por otra parte, la generalización de un sumatorio en un espacio continuo es simplemente la integral sobre un cierto dominio perteneciente a \( \mathbb{R} \) que ya definiremos más adelante. Con esto, hemos dado el salto de un vector perteneciente a un espacio discreto, a un vector en un espacio continuo \( \ket{\psi} \in L^{2} \). El vector dual se puede construir con la misma lógica que cuando lo definimos para una base finita en (\ref{eq: combinacion_lineal_hilbert_dual})
     \begin{equation}
         \bra{\psi} = \int_{\mathbb{R}} c^{*} (\alpha) \bra{\alpha} d \alpha
     \end{equation}
+
+    \vspace{2.5mm}
+
+    Sin embargo, a la hora de definir el producto escalar de dos vectores de la base \( \alpha, \alpha' \) hay un pequeño cambio, y esto lo podemos ver a través de la proyección \( c (\alpha) \) del vector \( \ket{\psi} \) sobre el vector de la base \( \ket{\alpha} \):
+    \begin{equation*}
+        \braket{\alpha \ | \ \psi} = c (\alpha) 
+    \end{equation*}
+    \begin{equation*}
+        \braket{\alpha \ | \ \psi} = \bra{\alpha} \int_{\mathbb{R}} c \ (\alpha') \ket{\alpha'} d \alpha' = \int_{\mathbb{R}} c (\alpha') \braket{\alpha \ | \ \alpha'} d \alpha' = c (\alpha)
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Para que la expresión anterior sea cierta, \( \braket{\alpha \ | \ \alpha'} \) tiene que ser un función que recibe como parámetros \( \alpha \) y \( \alpha' \), en concreto se establece la \textit{delta de Dirac}, de manera que
+    \begin{equation*}
+        \int_{\mathbb{R}} \ c (\alpha') \ \delta(\alpha - \alpha') d \alpha' = c (\alpha)
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    La \textit{delta de Dirac} es
+    \begin{equation}
+        \delta(x) =
+        \begin{cases}
+            0, & \text{si} \quad x \neq 0 \\
+            +\infty, & \text{si} \quad x = 0
+        \end{cases}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Y esto no es una función, ya que una función asocia a cada \( x \in \mathbb{R} \), otro número real, y sabemos que \( +\infty \notin \mathbb{R} \). Además, como \( \delta \) es cero \( \forall x \in \mathbb{R} \) a excepción del punto cero, la integral debería ser cero y no la unidad. No obstante, la \textit{delta de Dirac} aparece con mucha frecuencia en física, especialmente en mecánica ondulatoria, y no es sorpresa que aparezca en mecánica cuántica, al tener las partículas subatómicas un carácter ondulatorio como vimos en (\ref{sec: historia}).
+
+    \vspace{5mm}
+
+    La \textit{delta de Dirac} es un funcional lineal, y esto es simplemente una aplicación cuyo dominio es un espacio vectorial dado y cuyo recorrido es un conjunto numérico. En nuestro caso, estamos hablando de un funcional lineal en un espacio de Hilbert de dimensión infinita \( L^{2} \) sobre el cuerpo de los números complejos \( \mathbb{C} \)
+
+    \vspace{5mm}
+
+    Entonces, una vez definida la \textit{delta de Dirac}, podemos expresar el producto escalar de dos vectores \( \alpha, \alpha' \) de la base como
+    \begin{equation}
+        \braket{\alpha \ | \ \alpha'} = \delta(\alpha - \alpha')
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Siendo este otro de los cambios notables al ampliar a una dimensión infinita, ya que este producto en una base finita de un espacio de Hilbert \( \mathcal{H} \) era anteriormente la \textit{delta de Kronecker} \( \delta_{ij} \) (\ref{eq: delta_kronecker}). Una vez aclarado esto, podemos expresar el producto de dos vectores \( \ket{\psi}, \ket{\phi} \in L^{2} \) cualesquiera, obteniendo una expresión bastante similar a la que obtuvimos en (\ref{eq: producto_escalar_desarrollado}) en un espacio discreto de Hilbert \( \mathcal{H} \)
+    \begin{equation*}
+        \braket{\phi \ | \ \psi} = \int_{\mathbb{R}} b^{*} (\alpha') \bra{\alpha'} d \alpha' \int_{\mathbb{R}} c (\alpha) \ket{\alpha} d \alpha = \int\int_{\mathbb{R}} b^{*} (\alpha') \ c (\alpha) \braket{\alpha' \ | \ \alpha} d \alpha' \ d \alpha =
+    \end{equation*}
+    \begin{equation*}
+        = \int\int_{\mathbb{R}} b^{*} (\alpha') \ c (\alpha) \ \delta(\alpha' - \alpha) d \alpha' \ d \alpha = \int_{\mathbb{R}} b^{*} (\alpha) \ c (\alpha) d \alpha
+    \end{equation*}
+    \begin{equation}
+        \braket{\phi \ | \ \psi} = \int_{\mathbb{R}} b^{*} (\alpha) \ c (\alpha) d \alpha
+        \label{eq: producto_escalar_infinito}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Teniendo esto en cuenta, podemos obtener un caso particular de la expresión (\ref{eq: producto_escalar_infinito})
+        
+
+
     
 
 

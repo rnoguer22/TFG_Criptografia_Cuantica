@@ -145,8 +145,7 @@
         \begin{figure}[H]
             \centering
             \includegraphics[width=0.2\textwidth]{img/Introduccion/cavidad_cuerpo_negro2.png}
-            \caption{Ilustración del cuerpo negro}
-            \label{fig: f1}
+            \caption{Ilustración del cuerpo negro}\label{fig: f1}
         \end{figure}
         
         \vspace{5mm}
@@ -592,10 +591,11 @@
 
     \vspace{1.5mm}
 
-    Así, el producto escalar de dos vectores de una base ortonormal siempre va a ser cero, y el producto escalar de un vector consigo mismo es la unidad
-    \begin{equation}
-        \braket{e_{1} | e_{2}} = 0, \qquad \forall \ e_{1}, e_{2} \in B 
-    \end{equation}
+    Así, el producto escalar de dos vectores de una base ortonormal siempre va a ser cero, y el producto escalar de un vector cualquiera \( \ket{\psi} \in \mathcal{H} \) consigo mismo es la unidad
+    \begin{align}
+        \braket{e_{1} | e_{2}} = 0, &\qquad \forall \ e_{1}, e_{2} \in B \\[10pt]
+        \| \psi \| = \sqrt{\braket{\psi \ | \ \psi}} = 1, &\qquad \forall \ \ket{\psi} \in \mathcal{H}
+    \end{align}
 
     \vspace{1.5mm}
 
@@ -661,10 +661,11 @@
 
     Encontrándonos en este punto, a partir de (\ref{eq: producto_escalar_desarrollado}) podemos desarrollar la norma de un vector en \( \mathcal{H} \), obteniendo que
     \begin{equation}
-        \| \psi \| ^{2} = \braket{\psi | \psi} = \sum_{i = 0}^{N - 1} d_{i}^{*} c_{i} = \sum_{i = 0}^{N - 1} \| c_{i} \| ^{2} \geq 0, \qquad \forall \psi \in \mathcal{H}
+        \| \psi \| ^{2} = \braket{\psi \ | \ \psi} = \sum_{i = 0}^{N - 1} d_{i}^{*} c_{i} = \sum_{i = 0}^{N - 1} | c_{i} | ^{2} = 1, \qquad \forall \psi \in \mathcal{H}
+        \label{eq: norma_vector_hilbert}
     \end{equation}
 
-    \vspace{2mm}
+    \vspace{2.5mm}
 
     Esto es de vital importancia y nos ayudará a comprender y explicar los \textit{postulados de la mecánica cuántica}, como vamos a ver a continuación.
 
@@ -1106,6 +1107,57 @@
     \mbox{}
     
     \section{El Qubit}
+
+    \vspace{5mm}
+
+    Antes de nada, es importante definir algunos conceptos. Empecemos por el ordenador cuántico, esto es una máquina que se rige por las leyes de la mecánica cuántica, como hemos estudiado anteriormente, de manera que es capaz de aprovechar todas las ventajas de las partículas a nivel subatómico como la superposición, vista en (\ref{eq: superposicion}), o el entrelazamiento, el cual veremos más adelante. Estas propiedades son fundamentales para la reducción de tiempos de cómputo y complejidad de ciertas tareas, poniendo como ejemplo algoritmos de fuerza bruta o de factorización, los cuales se ven mejorados con los algoritmos cuánticos de \textit{Grover} y \textit{Shor}, respectivamente. 
+
+    \vspace{5mm}
+
+    De la misma manera que los computadores cuánticos aprovechan las propiedades de la mecánica cuántica, sus predecesores, los computadores clásicos se apoyan en un cierto sistema numérico, el \textit{sistema binario}. Este sistema se basa únicamente en dos estados, 0 y 1, que se construyen en base a la ausencia o incremento de corriente, respectivamente. Estos estados se conocen como \textit{bits}, que por definición son la unidad de información clásica. Sin embargo, un ordenador cuántico utiliza la unidad de información cuántica, el \textit{qubit}, que representa el estado de una partícula subatómica y que además de poder encontrarse en los estados clásicos \( \ket{0} \) y \( \ket{1} \), también se puede encontrar en una combinación lineal de estos estados, es decir
+
+    \begin{equation}
+        \ket{\psi} = \alpha \ket{0} + \beta \ket{1}, \qquad \forall \ \alpha, \beta \in \mathbb{C}
+        \label{eq: combinacion_lineal_estados_1_qubit}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Además, la norma de este qubit \( \ket{\psi} \) ya la definimos anteriormente en (\ref{eq: norma_vector_hilbert}), por lo que podemos deducir que
+
+    \begin{equation}
+        | \alpha | ^ {2} + | \beta | ^ {2} = 1
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Con esta condición, podemos parametrizar el estado del qubit \( \ket{\psi} \) definido en (\ref{eq: combinacion_lineal_estados_1_qubit}) en función de los ángulos \( \theta \) y \( \phi \) como
+    
+    \begin{equation*}
+        \ket{\psi} = \cos \left( \frac{\theta}{2} \right) \ket{0} + e^{i \phi} \sin \left( \frac{\theta}{2} \right), \qquad 0 \leq \theta \leq \pi, \quad 0 \leq \phi \leq 2 \pi
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Esto nos permite representar el qubit \( \ket{\psi} \) mediante una esfera, la \textit{esfera de Bloch}:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.3\textwidth]{img/bloch_sphere.png}
+        \caption{Esfera de Bloch. Obtenida de [Wikipedia]}\label{fig: bloch_sphere}
+    \end{figure}
+
+    De manera que podemos representar todos los posibles estados de un qubit \( \ket{\psi} \) como un vector dentro de esta esfera. Es importante recalcar que, a la hora de medir un qubit, esta medición colapsa sobre el eje \( Z \), es decir, cuando observemos el estado de un qubit al finalizar un algoritmo cuántico, el estado siempre va a colapsar en \( \ket{0} \) o \( \ket{1} \), como ya veremos más adelante. Estos estados son
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.75\textwidth]{img/bloch_states_0_1.png}
+        \caption{Estados \ket{0} \text{y} \ket{1}\text{. Obtenida de [Qiskit]}}\label{fig: bloch_states_0_1}
+    \end{figure}
+
+
+
+
     \subsection{Bit vs Qubit}
     \subsection{Estados Cuánticos}
     \subsection{Superposición}
@@ -1156,7 +1208,7 @@
     \thispagestyle{empty}
     \mbox{}
 
-    \section{Algoritmos Cuánticos}
+    \section{Algoritmos Cuánticos}\label{sec: algoritmos_cuanticos}
     \subsection{Oracles Cuánticos}
     \subsection{Algoritmo de Grover}
     \subsection{Algoritmo de Shor}
@@ -1213,19 +1265,19 @@
         \vspace{5mm}
 
         TFG Silvia Rodriguez\par
-        \url{https://matematicas.uam.es/~fernando.chamizo/supervision/TFG/past/memoirs/TFG\_silvia\_rodriguez.pdf}
+        \url{https://matematicas.uam.es/~fernando.chamizo/supervision/TFG/past/memoirs/TFG_silvia_rodriguez.pdf}
         \vspace{2mm}
 
         Investigacion Computacion Cuantica --> Seguridad informatica, redes informaticas, IA, etc.\par
-        \url{https://rua.ua.es/dspace/bitstream/10045/124691/1/Estudio\_de\_la\_computacion\_cuantica\_en\_los\_diferent\_Claramunt\_Carriles\_Sergio.pdf}
+        \url{https://rua.ua.es/dspace/bitstream/10045/124691/1/Estudio_de_la_computacion_cuantica_en_los_diferent_Claramunt_Carriles_Sergio.pdf}
         \vspace{2mm}
 
         Universidad de Murcia --> Schrodinguer, Hamiltoniano, Oscilador armonico, Atomo de Hidrogeno\par
-        \url{https://webs.um.es/gustavo.garrigos/tfg/MarinMunoz\_Diego\_TFG\_julio2021.pdf}
+        \url{https://webs.um.es/gustavo.garrigos/tfg/MarinMunoz_Diego_TFG_julio2021.pdf}
         \vspace{2mm}
 
         TFG Pablo --> Algoritmo de Grover y otros algoritmos\par
-        \url{https://rodin.uca.es/bitstream/handle/10498/27218/tfg\_pablo.pdf?sequence=1\&isAllowed=y}
+        \url{https://rodin.uca.es/bitstream/handle/10498/27218/tfg_pablo.pdf}
         \vspace{2mm}
 
         TFM --> Schrodinguer e interpretacion probabilistica de la funcion de onda\par
@@ -1233,7 +1285,7 @@
         \vspace{2mm}
 
         Universidad Autonoma de Madrid --> Interpretacion probabilistica de la funcion de onda e introduccion al atomo de hidrogeno\par
-        \url{https://matematicas.uam.es/~fernando.chamizo/supervision/TFG/past/memoirs/TFG\_luis\_sanchez.pdf}
+        \url{https://matematicas.uam.es/~fernando.chamizo/supervision/TFG/past/memoirs/TFG_luis_sanchez.pdf}
         \vspace{2mm}
 
         TFG --> Espacios de Hilbert y su relacion con la mecanica cuantica\par
@@ -1241,7 +1293,7 @@
         \vspace{2mm}
 
         Claudia Mielgo --> El sistema cuantico es un espacio de Hilbert, y funciones de onda\par
-        \url{https://matematicas.uam.es/~fernando.chamizo/supervision/TFG/past/memoirs/TFG\_claudia\_mielgo.pdf}
+        \url{https://matematicas.uam.es/~fernando.chamizo/supervision/TFG/past/memoirs/TFG_claudia_mielgo.pdf}
         \vspace{2mm}
 
         Algebra Lineal --> Algebra lineal, espacios de Hilbert y criptografia cuantica\par
@@ -1249,7 +1301,7 @@
         \vspace{2mm}
 
         Roberto Gonzalez --> Sistema Bineario e introduccion a los qubits\par
-        \url{https://oa.upm.es/69234/1/TFG\_ROBERTO\_GONZALEZ\_RIVAS.pdf}
+        \url{https://oa.upm.es/69234/1/TFG_ROBERTO_GONZALEZ_RIVAS.pdf}
         \vspace{2mm}
 
         Por que un ordenador cuantico?\par

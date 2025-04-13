@@ -10,3 +10,6 @@ main.ilg
 main.ind
 main.synctex.gz
 .gitignore
+entregas
+code/quantum_venv
+code/README.md

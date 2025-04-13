@@ -319,6 +319,7 @@
 
         \begin{equation}
             \int_{\Omega} \lvert \psi(x, t) \rvert ^ {2} dx = 1, \qquad \forall t \in \mathbb{R}
+            \label{eq: interpretacion_probabilistica}
         \end{equation}
 
         \vspace{5mm}
@@ -994,11 +995,12 @@
     Entonces, tenemos que modificar la nomenclatura vista anteriormente, como cuando establecimos en la expresión (\ref{eq: combinacion_lineal_Hilbert}) que podemos expresar todo vector perteneciente a un espacio de Hilbert, ahora tenemos que generalizar dicha expresión para un espacio de dimensión infinita, quedando que
     \begin{equation}
         \ket{\psi} = \int_{\mathbb{R}} c (\alpha) \ket{\alpha} d \alpha
+        \label{eq: combinacion_lineal_vector_infinito}
     \end{equation}
 
     \vspace{2.5mm}
 
-    Donde \( c \ (\alpha) \) es una función compleja de variable real, siendo ahora una función continua, la cual es la contrapartida de lo que llamábamos antes \( c_{j} \), que no eran más que elementos complejos de una sucesión en la que para cada valor de \( j \) obteníamos un número complejo \( c_{j} \). Por otra parte, la generalización de un sumatorio en un espacio continuo es simplemente la integral sobre un cierto dominio perteneciente a \( \mathbb{R} \) que ya definiremos más adelante. Con esto, hemos dado el salto de un vector perteneciente a un espacio discreto, a un vector en un espacio continuo \( \ket{\psi} \in L^{2} \). El vector dual se puede construir con la misma lógica que cuando lo definimos para una base finita en (\ref{eq: combinacion_lineal_hilbert_dual})
+    Donde \( c \ (\alpha) \) es una función compleja de variable real, siendo ahora una función continua, la cual es la contrapartida de lo que llamábamos antes \( c_{j} \), que no eran más que elementos complejos de una sucesión en la que para cada valor de \( j \) obteníamos un número complejo \( c_{j} \). Por otra parte, la generalización de un sumatorio en un espacio continuo es simplemente la integral sobre un cierto dominio perteneciente a \( \mathbb{R} \) que ya definiremos más adelante. Con esto, hemos dado el salto de un vector perteneciente a un espacio discreto, a un vector en un espacio continuo \( \ket{\psi} \in L^{2} \), el cual ya veremos más adelante, de momento vamos a quedarnos con la idea de que \( L^{2} \) es un espacio de Hilbert muy concreto y de dimensión infinita. De la misma manera que en (\ref{eq: combinacion_lineal_vector_infinito}), el vector dual se puede construir con la misma lógica que cuando lo definimos para una base finita en (\ref{eq: combinacion_lineal_hilbert_dual})
     \begin{equation}
         \bra{\psi} = \int_{\mathbb{R}} c^{*} (\alpha) \bra{\alpha} d \alpha
     \end{equation}
@@ -1062,17 +1064,42 @@
 
     \vspace{2.5mm}
 
-    Teniendo esto en cuenta, podemos obtener un caso particular de la expresión (\ref{eq: producto_escalar_infinito})
-        
+    Teniendo esto en cuenta, podemos obtener un caso particular de la expresión (\ref{eq: producto_escalar_infinito}), y es que el producto escalar de un vector \( \ket{\psi} \in L^{2} \) consigo mismo:
+    \begin{equation}
+        \braket{\psi \ | \ \psi} = \int_{\mathbb{R}} c^{*} (\alpha) \ c (\alpha) \ d \alpha = \int_{\mathbb{R}} | c (\alpha) | ^ {2} \ d \alpha = 1
+        \label{eq: producto_escalar_vector_mismo_l2}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Esta proyección ha de ser igual a la unidad, ya que la proyección de cualquier vector consigo mismo siempre es uno. Además, también cumplimos con la interpretación física del vector \( \ket{\psi} \), ya que el resultado que acabamos de obtener ya lo vimos en (\ref{eq: interpretacion_probabilistica}), cuando \textit{Max Born} introdujo la interpretación probabilística de la función de onda.
+
+    \vspace{5mm}
+
+    Al imponer la condición vista en (\ref{eq: producto_escalar_vector_mismo_l2}), la función \( c(\alpha) \) ha de ser parte de un espacio vectorial muy concreto, el espacio \( L^{2} \), el cual es un \textit{espacio de Lebesgue} \( L^{p} \) para \( p = 2 \), que podemos definir como sigue: Sea \( f: \mathbb{R} \rightarrow \mathbb{C} \), entonces \( f \in L^{p} (\mathbb{R}) \) si
+    \begin{equation}
+        \int_{-\infty}^{+\infty} | f (x) | ^ {p} d x < \infty, \qquad \forall \ x \in \mathbb{R}, \quad p \geq 1
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Es decir, nuestra función compleja de variable real \( c(\alpha) \) ha de ser de cuadrado integrable, perteneciendo así a un espacio \( L^{2} \) el cual es el único \textit{espacio de Lebesgue} \( L^{p} \) que es un espacio de Hilbert \( \mathcal{H} \). Para un espacio \( L^{2} \) se garantizan todas las propiedades vistas anteriormente para un espacio de Hilbert de dimensión infinita, aunque hemos de establecer que la expresión vista en la definición de un espacio cuyo módulo es cuadrado integrable no solo ha de ser \( < \infty \), sino que ha de ser igual a la unidad, como vimos en (\ref{eq: producto_escalar_vector_mismo_l2}):
+    \begin{equation*}
+        \braket{\psi \ | \ \psi} =  \int_{\mathbb{R}} | c (\alpha) | ^ {2} \ d \alpha = 1
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Esto es debido a la interpretación física del vector \( \ket{\psi} \). De hecho, es muy importante conocer que \( c(\alpha) \) es la famosa función de onda de la mecánica cuántica \( \psi(x) \), sobre la cual hemos estado hablando antes de adentrarnos en los espacios de Hilbert \( \mathcal{H} \). Para finalizar, también hemos de recalcar que hemos estado trabajando sobre una única dimensión espacial, para que la explicación sea más sencilla y fácil de entender, pero esto en realidad se debe hacer en las tres dimensiones espaciales del espacio, que se suele compactar con una notación vectorial
+    \begin{equation*}
+        \ket{\psi} = \int_{\mathbb{R}^{3}} \ c(\vec{x}) \ket{\vec{x}} d \vec{x}, \qquad \forall \ \vec{x} \in \mathbb{R}^{3}
+    \end{equation*}
 
 
-    
 
-
-
-    
-    
-    
+    \newpage
+    \thispagestyle{empty}
+    \mbox{}
     
 
     \section{Álgebra Lineal y Puertas Cuánticas}
@@ -1233,6 +1260,10 @@
         \vspace{2mm}
 
         \url{https://idus.us.es/server/api/core/bitstreams/e6e34b3a-fc74-4043-98ae-8244902b96e4/content}
-        \
+        \vspace{2mm}
+
+        Espacio L2 \\
+        \url{https://uvadoc.uva.es/bitstream/handle/10324/44929/TFG-G4732.pdf}
+
     
 \end{document}

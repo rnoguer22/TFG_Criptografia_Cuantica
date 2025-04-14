@@ -1117,7 +1117,7 @@
     De la misma manera que los computadores cuánticos aprovechan las propiedades de la mecánica cuántica, sus predecesores, los computadores clásicos se apoyan en un cierto sistema numérico, el \textit{sistema binario}. Este sistema se basa únicamente en dos estados, 0 y 1, que se construyen en base a la ausencia o incremento de corriente, respectivamente. Estos estados se conocen como \textit{bits}, que por definición son la unidad de información clásica. Sin embargo, un ordenador cuántico utiliza la unidad de información cuántica, el \textit{qubit}, que representa el estado de una partícula subatómica y que además de poder encontrarse en los estados clásicos \( \ket{0} \) y \( \ket{1} \), también se puede encontrar en una combinación lineal de estos estados, es decir
 
     \begin{equation}
-        \ket{\psi} = \alpha \ket{0} + \beta \ket{1}, \qquad \forall \ \alpha, \beta \in \mathbb{C}
+        \ket{\psi} = \alpha \ket{0} + \beta \ket{1}, \qquad \alpha, \beta \in \mathbb{C}
         \label{eq: combinacion_lineal_estados_1_qubit}
     \end{equation}
 
@@ -1127,19 +1127,37 @@
 
     \begin{equation}
         | \alpha | ^ {2} + | \beta | ^ {2} = 1
+        \label{eq: condicion_coeficientes_probabilidad_1}
     \end{equation}
 
     \vspace{2.5mm}
 
-    Con esta condición, podemos parametrizar el estado del qubit \( \ket{\psi} \) definido en (\ref{eq: combinacion_lineal_estados_1_qubit}) en función de los ángulos \( \theta \) y \( \phi \) como
-    
+    Con esta condición, podemos representar el estado del qubit en una esfera, la \textit{esfera de Bloch}, esto nos ayudará a visualizar el estado del qubit de la mejor manera posible, y nos ayudará a comprender los siguientes capítulos. Para ello, podemos parametrizar el estado del qubit \( \ket{\psi} \) definido en (\ref{eq: combinacion_lineal_estados_1_qubit}) en función de dos ángulos \( \theta \ \) y \( \ \varphi \), sustituyendo \( \alpha \) y \( \beta \) por las siguientes funciones trigonométricas:
+
     \begin{equation*}
-        \ket{\psi} = \cos \left( \frac{\theta}{2} \right) \ket{0} + e^{i \phi} \sin \left( \frac{\theta}{2} \right), \qquad 0 \leq \theta \leq \pi, \quad 0 \leq \phi \leq 2 \pi
+        \ket{\psi} = \cos \left( \frac{\theta}{2} \right) \ket{0} + \sin \left( \frac{\theta}{2} \right) \ket{1}
     \end{equation*}
 
     \vspace{2.5mm}
 
-    Esto nos permite representar el qubit \( \ket{\psi} \) mediante una esfera, la \textit{esfera de Bloch}:
+    Pero ya definimos en (\ref{eq: combinacion_lineal_estados_1_qubit}) que \( \alpha, \beta \in \mathbb{C} \), por lo que podemos multiplicar ambos coeficientes por un número complejo de módulo igual a la unidad, de manera que se cumple (\ref{eq: condicion_coeficientes_probabilidad_1}), y desarrollando, llegamos a que 
+
+    \begin{equation*}
+        \ket{\psi} = e^{i \alpha} \cos \left( \frac{\theta}{2} \right) \ket{0} + e^{i \beta} \sin \left( \frac{\theta}{2} \right) \ket{1} = e^{i \alpha} \left[ \cos \left( \frac{\theta}{2} \right) \ket{0} + e^{i (\beta - \alpha)} \sin \left( \frac{\theta}{2} \right) \ket{1} \right]
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Esto es el estado de nuestro qubit \( \ket{\psi} \) multiplicado por una fase global \( e^{i \alpha} \), de manera que no cambia el estado físico del qubit, siendo su módulo al cuadrado equivalente, como vimos en el quinto postulado, de manera que podemos eliminar dicha fase global ya que no aporta significado físico a nuestro qubit. También vamos a establecer el ańgulo \( \varphi = \beta - \alpha \), concluyendo en 
+    
+    \begin{equation}
+        \ket{\psi} = \cos \left( \frac{\theta}{2} \right) \ket{0} + e^{i \varphi} \sin \left( \frac{\theta}{2} \right) \ket{1}, \qquad 0 \leq \theta \leq \pi, \quad 0 \leq \varphi \leq 2 \pi
+        \label{eq: qubit_trigonometrico_esfera_bloch}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Esto nos permite representar el qubit \( \ket{\psi} \) mediante la \textit{esfera de Bloch} mencionada anteriormente
 
     \begin{figure}[H]
         \centering
@@ -1147,13 +1165,48 @@
         \caption{Esfera de Bloch. Obtenida de [Wikipedia]}\label{fig: bloch_sphere}
     \end{figure}
 
-    De manera que podemos representar todos los posibles estados de un qubit \( \ket{\psi} \) como un vector dentro de esta esfera. Es importante recalcar que, a la hora de medir un qubit, esta medición colapsa sobre el eje \( Z \), es decir, cuando observemos el estado de un qubit al finalizar un algoritmo cuántico, el estado siempre va a colapsar en \( \ket{0} \) o \( \ket{1} \), como ya veremos más adelante. Estos estados son
+    Pudiendo representar todos los posibles estados de un qubit \( \ket{\psi} \) como un vector dentro de esta esfera. 
+    Si nos fijamos en la expresión (\ref{eq: qubit_trigonometrico_esfera_bloch}) que acabamos de ver, vemos que hay un número complejo \( e^{i \varphi} \) de módulo uno, similar a una fase global. Sin embargo, esto no es una fase global, ya que para ello ha de multiplicar a todos los posibles estados del qubit, y vemos en este caso que solo aparece en el estado \( \ket{1} \), por lo que es una \textit{fase relativa}, y a diferencia de las fases globales que no cambian el significado físico del qubit, la fase relativa sí lo modifica. Esto es debido a que, aunque los coeficientes que acompañan a \( \ket{0} \) y \( \ket{1} \) sigan cumpliendo que su módulo al cuadrado sea uno, el vector representado en la esfera de Bloch es diferente, ya que puede variar el ángulo \( \varphi \).
 
-    \begin{figure}[H]
+    \vspace{5mm}
+
+    Podemos pensar que aunque cambie la fase relativa no va a cambiar la probabilidad de obtener el estado \( \ket{0} \) o \( \ket{1} \) al medir el qubit, ya que las mediciones se realizan normalmente sobre el eje \( Z \) y dicho vector estaría a la misma distancia de ambos polos de la esfera, manteniendo la probabilidad de obtener ambos estados \( \ket{0}, \ket{1} \) invariante, ya que la probabilidad de obtener un estado viene dada por el módulo al cuadrado de los coeficientes que los acompañan, como se puede apreciar en la expresión (\ref{eq: condicion_coeficientes_probabilidad_1}). Pero, ¿Y si cambiamos de base?
+    
+    \vspace{10mm}
+
+    \subsection{Medida y Cambio de Base de un Qubit}
+
+    \vspace{5mm}
+
+
+
+
+
+
+
+
+
+
+
+    
+    Es importante recalcar que a la hora de medir un qubit, esta medición colapsa sobre el eje \( Z \), es decir, cuando observemos el estado de un qubit al finalizar un algoritmo cuántico, el estado siempre va a colapsar en \( \ket{0} \) o \( \ket{1} \), como ya veremos más adelante. Estos estados son
+
+    \begin{figure}[h!]
         \centering
-        \includegraphics[width=0.75\textwidth]{img/bloch_states_0_1.png}
-        \caption{Estados \ket{0} \text{y} \ket{1}\text{. Obtenida de [Qiskit]}}\label{fig: bloch_states_0_1}
+        \begin{minipage}[b]{0.4\textwidth}
+            \centering
+            \includegraphics[width=0.9\textwidth]{img/bloch_state_0.png}
+            \caption{Estado $|0\rangle$ en la esfera de Bloch}\label{fig: bloch0}
+        \end{minipage}
+        \hspace{0.05\textwidth}
+        \begin{minipage}[b]{0.4\textwidth}
+            \centering
+            \includegraphics[width=0.9\textwidth]{img/bloch_state_1.png}
+            \caption{Estado $|1\rangle$ en la esfera de Bloch}\label{fig: bloch1}
+        \end{minipage}
+    
     \end{figure}
+    
 
 
 

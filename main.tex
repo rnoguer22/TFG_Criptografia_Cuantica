@@ -1102,6 +1102,13 @@
 
 
 
+
+
+
+
+
+
+
     \newpage
     \thispagestyle{empty}
     \mbox{}
@@ -1174,7 +1181,96 @@
     
     \vspace{10mm}
 
-    \subsection{Medida y Cambio de Base de un Qubit}
+    \subsection{Medición del Estado un Qubit}
+
+    \vspace{5mm}
+
+    Antes de hacer cambios de base, tenemos que tratar sobre las mediciones, las cuales ya hemos introducido en los párrafos anteriores y en esta pequeña sección vamos a profundizar sobre este tema. Como bien sabemos, un qubit puede estar en una superposición de \( \ket{0} \) y \( \ket{1} \) debido a las leyes de la mecánica cuántica, pero esto también establece que cuando vamos a leer el resultado de una operación, como al finalizar un algoritmo cuántico, este qubit colapsa a un único estado, de manera que obtenemos \( \ket{0} \) o bien \( \ket{1} \), cada uno con una cierta probabilidad, y esa probabilidad es el módulo al cuadrado de los coeficientes que acompañan a cada posible estado, como vimos en (\ref{eq: condicion_coeficientes_probabilidad_1}). Estos coeficientes se denominan amplitudes, y al tratarse de una probabilidad, la suma del módulo al cuadrado de las amplitudes ha de ser igual a uno. Vamos a ver esto con un ejemplo:
+
+    \vspace{5mm}
+
+    \begin{figure}[h!]
+        \centering
+        \begin{minipage}{0.3\textwidth}
+            \includegraphics[width=\textwidth]{img/bloch_measurement_example.png}  
+            \caption{Medición de un Qubit. Obtenida de [Qiskit]}\label{fig: bloch_ejemplo_medicion} 
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.65\textwidth}
+            Sea el siguiente qubit \( \ket{\psi} \):
+            \begin{equation*}
+                \ket{\psi} = \frac{1 + i \sqrt{3}}{3} \ket{0} + \frac{2 - i}{3} \ket{1}
+            \end{equation*}
+            La probabilidad de obtener el estado \( \ket{0} \) y el estado \( \ket{1} \) viene dada por 
+            \begin{equation*}
+                \left| \frac{1 + i \sqrt{3}}{3} \right| ^ {2} + \left| \frac{2 - i}{3} \right| ^ {2} = \left( \frac{1 + i \sqrt{3}}{3} \right) \left( \frac{1 - i \sqrt{3}}{3} \right) + \left( \frac{2 - i}{3} \right) \left( \frac{2 + i}{3} \right) =
+            \end{equation*}
+            \begin{equation*}
+                \frac{4}{9} + \frac{5}{9} = 1
+            \end{equation*}
+        \end{minipage}
+    \end{figure}
+
+    Siendo la probabilidad de colapsar en \( \ket{0} \) de \( \frac{4}{9} \) y de \( \frac{5}{9} \) en el estado \( \ket{1} \). Esto lo podemos ver gráficamente si representamos el vector correspondiente al estado \( \ket{\psi} \) en la esfera de Bloch, ya que si nos fijamos en (\ref{fig: bloch_ejemplo_medicion}) podemos ver que \( \ket{\psi} \) está un poco más cercano al estado \( \ket{1} \) de dicha esfera, y esto se corresponde con una probabilidad mayor de obtener dicho estado, como hemos podido apreciar en el ejemplo anterior.
+
+    \vspace{5mm}
+
+    Una vez definida correctamente la medición de un qubit, podemos hablar más profundamente sobre el concepto de \textit{colapso} de un qubit. Cuando medimos un qubit, este colapsa a un estado como hemos visto anteriormente, que puede ser \( \ket{0} \) o \( \ket{1} \) según el ejemplo propuesto, de manera que el estado del qubit se vuelve completamente fijo al estado que ha colapsado, por lo que el qubit deja de estar en superposición, y es forzado a tomar un bando, en este caso \( \ket{0} \) o \( \ket{1} \). Esto hace que el estado del qubit esté ya completamente definido, de manera que si volvemos a medir el estado de \( \ket{\psi} \), obtendremos el estado al que ha colapsado con una probabilidad de 1.
+
+    \vspace{5mm}
+
+    Tomando el ejemplo anterior, supongamos que \( \ket{\psi} \) colapsa a \( \ket{1} \). La probabilidad de que \( \ket{\psi} \) haya colapsado en \( \ket{1} \) es de \( \frac{5}{9} \) según la explicación anterior, sin embargo, si medimos el qubit una segunda vez, es decir, después de que haya colapsado, la probabilidad de obtener otra vez el mismo estado \( \ket{1} \) es 1, mientras que la probabilidad de obtener \( \ket{0} \) es 0. Esto es debido a que el qubit ya ha colapsado a un estado, por lo que podemos concluir que las mediciones de los qubits afectan a su estado físico, dejando de estar en superposición e influyendo el resultado de las mediciones posteriores. Es por esto que, generalmente, vamos a realizar las mediciones de los diferentes qubits al final de un algoritmo cuántico.
+
+    \vspace{10mm}
+
+
+
+
+
+    \subsection{Cambio de Base}
+
+    \vspace{5mm}
+
+    Generalmente, vamos a realizar las mediciones en el eje \( Z \), ya que los polos de este eje son los estados \( \ket{0} \) y \( \ket{1} \), que representan la información clásica de un bit, la cual sabemos que puede ser 0 o 1, por lo que efectivamente, toda la información clásica, o mejor dicho, todo algoritmo clásico se puede realizar mediante un algoritmo cuántico, simplemente haciendo una adaptación de puertas lógicas a puertas cuánticas como ya veremos más adelante. 
+
+    \vspace{5mm}
+
+    Ya sabemos la razón por la que vamos a medir en la mayoría de los casos sobre el eje \( Z \), pero como podemos apreciar en la esfera de Bloch, tenemos infinitos ejes sobre los que podríamos hacer la medición, así que la única condición para escoger dos puntos como vectores base de nuestro espacio de Hilbert \( \mathcal{H} \) sobre el que estudiaremos el estado de nuestro qubit \( \ket{\psi} \), es que estos puntos sean completamente opuestos. Vamos a tomar como ejemplo los estados en el eje \( X \) e \( Y \), cuyos polos son \( \ket{+}, \ket{-} \) y \( \ket{i}, \ket{-i} \), respectivamente
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.3\textwidth]{img/bloch_other_bases.png}
+        \caption{Estados principales de la esfera de Bloch. Obtenida de [Qiskit]}\label{fig: bloch_other_bases}
+    \end{figure}
+
+    Estos estados se pueden expresar en base a \( \ket{0} \) y \( \ket{1} \):
+
+    \begin{align}
+        \label{eq: estados_eje_x_y}
+        \ket{+} &= \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) \\[10pt]
+        \ket{-} &= \frac{1}{\sqrt{2}} \left( \ket{0} - \ket{1} \right) \\[10pt]
+        \ket{i} &= \frac{1}{\sqrt{2}} \left( \ket{0} + i\ket{1} \right) \\[10pt]
+        \ket{-i} &= \frac{1}{\sqrt{2}} \left( \ket{0} - i\ket{1} \right)
+    \end{align}
+
+    \vspace{2.5mm}
+
+    Y su representación la podemos ver reflejada en (\ref{fig: bloch_other_bases}). Estos estados sabemos que están en superposición ya que no se encuentran en \( \ket{0} \) o \( \ket{1} \), de hecho, están justamente en el punto medio entre \( \ket{0} \) y \( \ket{1} \), por lo que la probabilidad de obtener \( \ket{0} \) o \( \ket{1} \) es exactamente la misma (\( \frac{1}{2} \)) si nuestro qubit \( \ket{\psi} \) se encuentra en uno de los estados en (\ref{eq: estados_eje_x_y}). No obstante, para poder realizar el cambio de base, necesitamos expresar los estados \( \ket{0} \) y \( \ket{1} \) en función de la base a la queramos aplicar el cambio. Comencemos por \( \ket{+} \) y \( \ket{-} \):
+
+    \begin{equation*}
+        \ket{+} + \ket{-} = y aqui seguir 
+    \end{equation*}
+
+
+
+
+    \vspace{10mm}
+
+
+
+
+
+    \subsection{Puertas Cuánticas de un Qubit}
 
     \vspace{5mm}
 

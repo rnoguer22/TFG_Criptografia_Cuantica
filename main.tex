@@ -619,9 +619,10 @@
     \vspace{1.5mm}
 
     Donde \( \bra{\phi} \) se construye con el conjugado hermítico, el cual se define con el operador \( \dagger \):
-    \begin{equation*}
+    \begin{equation}
         ( \ket{\phi} )^{\dagger} = \bra{\phi}
-    \end{equation*}
+        \label{eq: conjugado_hermitico}
+    \end{equation}
 
     \vspace{1.5mm}
 
@@ -698,9 +699,10 @@
     \vspace{5mm}
 
     Un operador es un objeto que actúa sobre los elementos de un espacio vectorial, en nuestro caso, un espacio de Hilbert \( \mathcal{H} \), transformándolos en otro vector perteneciente al mismo espacio
-    \begin{equation*}
+    \begin{equation}
         \hat{A} \ket{\psi} \overset{\hat{A}}{\longrightarrow} \ket{\psi '}, \qquad \ket{\psi}, \ket{\psi '} \in \mathcal{H}
-    \end{equation*}
+        \label{eq: operador_espacio_hilbert}
+    \end{equation}
 
     \vspace{1.5mm}
 
@@ -1113,7 +1115,7 @@
     \thispagestyle{empty}
     \mbox{}
     
-    \section{El Qubit}
+    \section{El Qubit}\label{sec: el_qubit}
 
     \vspace{5mm}
 
@@ -1168,7 +1170,7 @@
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.3\textwidth]{img/bloch_sphere.png}
+        \includegraphics[width=0.3\textwidth]{img/Bloch/bloch_sphere.png}
         \caption{Esfera de Bloch. Obtenida de [Wikipedia]}\label{fig: bloch_sphere}
     \end{figure}
 
@@ -1177,7 +1179,7 @@
 
     \vspace{5mm}
 
-    Podemos pensar que aunque cambie la fase relativa no va a cambiar la probabilidad de obtener el estado \( \ket{0} \) o \( \ket{1} \) al medir el qubit, ya que las mediciones se realizan normalmente sobre el eje \( Z \) y dicho vector estaría a la misma distancia de ambos polos de la esfera, manteniendo la probabilidad de obtener ambos estados \( \ket{0}, \ket{1} \) invariante, ya que la probabilidad de obtener un estado viene dada por el módulo al cuadrado de los coeficientes que los acompañan, como se puede apreciar en la expresión (\ref{eq: condicion_coeficientes_probabilidad_1}). Pero, ¿Y si cambiamos de base?
+    Podemos pensar que aunque cambie la fase relativa no va a cambiar la probabilidad de obtener el estado \( \ket{0} \) o \( \ket{1} \) al medir el qubit. Esto se debe a que las mediciones se realizan normalmente sobre el eje \( Z \) y dicho vector estaría a la misma distancia de ambos polos de la esfera, manteniendo la probabilidad de obtener ambos estados \( \ket{0}, \ket{1} \) invariante, ya que la probabilidad de obtener un estado viene dada por el módulo al cuadrado de los coeficientes que los acompañan, como se puede apreciar en la expresión (\ref{eq: condicion_coeficientes_probabilidad_1}). Pero, ¿Y si cambiamos de base?
     
     \vspace{10mm}
 
@@ -1192,8 +1194,7 @@
     \begin{figure}[h!]
         \centering
         \begin{minipage}{0.3\textwidth}
-            \includegraphics[width=\textwidth]{img/bloch_measurement_example.png}  
-            \caption{Medición de un Qubit. Obtenida de [Qiskit]}\label{fig: bloch_ejemplo_medicion} 
+            \includegraphics[width=\textwidth]{img/Bloch/bloch_measurement_example.png}  
         \end{minipage}
         \hfill
         \begin{minipage}{0.65\textwidth}
@@ -1209,6 +1210,7 @@
                 \frac{4}{9} + \frac{5}{9} = 1
             \end{equation*}
         \end{minipage}
+        \caption{Medición de un Qubit. Obtenida de [Qiskit]}\label{fig: bloch_ejemplo_medicion} 
     \end{figure}
 
     Siendo la probabilidad de colapsar en \( \ket{0} \) de \( \frac{4}{9} \) y de \( \frac{5}{9} \) en el estado \( \ket{1} \). Esto lo podemos ver gráficamente si representamos el vector correspondiente al estado \( \ket{\psi} \) en la esfera de Bloch, ya que si nos fijamos en (\ref{fig: bloch_ejemplo_medicion}) podemos ver que \( \ket{\psi} \) está un poco más cercano al estado \( \ket{1} \) de dicha esfera, y esto se corresponde con una probabilidad mayor de obtener dicho estado, como hemos podido apreciar en el ejemplo anterior.
@@ -1239,7 +1241,7 @@
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.3\textwidth]{img/bloch_other_bases.png}
+        \includegraphics[width=0.3\textwidth]{img/Bloch/bloch_other_bases.png}
         \caption{Estados principales de la esfera de Bloch. Obtenida de [Qiskit]}\label{fig: bloch_other_bases}
     \end{figure}
 
@@ -1255,14 +1257,108 @@
 
     \vspace{2.5mm}
 
-    Y su representación la podemos ver reflejada en (\ref{fig: bloch_other_bases}). Estos estados sabemos que están en superposición ya que no se encuentran en \( \ket{0} \) o \( \ket{1} \), de hecho, están justamente en el punto medio entre \( \ket{0} \) y \( \ket{1} \), por lo que la probabilidad de obtener \( \ket{0} \) o \( \ket{1} \) es exactamente la misma (\( \frac{1}{2} \)) si nuestro qubit \( \ket{\psi} \) se encuentra en uno de los estados en (\ref{eq: estados_eje_x_y}). No obstante, para poder realizar el cambio de base, necesitamos expresar los estados \( \ket{0} \) y \( \ket{1} \) en función de la base a la queramos aplicar el cambio. Comencemos por \( \ket{+} \) y \( \ket{-} \):
+    Y su representación la podemos ver reflejada en (\ref{fig: bloch_other_bases}). Estos estados sabemos que están en superposición ya que no se encuentran en \( \ket{0} \) o \( \ket{1} \), de hecho, están justamente en el punto medio entre \( \ket{0} \) y \( \ket{1} \), por lo que la probabilidad de obtener \( \ket{0} \) o \( \ket{1} \) es exactamente la misma (\( \frac{1}{2} \)) si nuestro qubit \( \ket{\psi} \) se encuentra en uno de los estados en (\ref{eq: estados_eje_x_y}). No obstante, para poder realizar el cambio de base, necesitamos expresar los estados \( \ket{0} \) y \( \ket{1} \) en función de la base a la que queramos aplicar el cambio. Comencemos por \( \ket{+} \) y \( \ket{-} \):
 
+    \begin{equation}
+        \ket{+} + \ket{-} = \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) + \frac{1}{\sqrt{2}} \left( \ket{0} - \ket{1} \right) = \frac{2}{\sqrt{2}} \ket{0} = \sqrt{2} \ket{0} \ \implies \ \boxed{\ket{0} = \frac{1}{\sqrt{2}} \left( \ket{+} + \ket{-} \right)} 
+        \label{eq: estado_0_en_funcion_mas_menos}
+    \end{equation}
+    \begin{equation}
+        \ket{+} - \ket{-} = \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) - \frac{1}{\sqrt{2}} \left( \ket{0} - \ket{1} \right) = \frac{2}{\sqrt{2}} \ket{1} = \sqrt{2} \ket{1} \ \implies \ \boxed{\ket{1} = \frac{1}{\sqrt{2}} \left( \ket{+} - \ket{-} \right)}
+        \label{eq: estado_1_en_funcion_mas_menos}
+    \end{equation}
+
+    \vspace{5mm}
+
+    Y esto está muy relacionado con la \textit{puerta de Hadamard}, la cual es una de las puertas cuánticas de un qubit más importantes, como veremos en la siguiente sección. Volviendo a retomar el ejemplo (\ref{fig: bloch_ejemplo_medicion}), vamos a aplicar el cambio a la base \( B_{H} = \left\{ \ket{+}, \ket{-} \right\}\) y ver como afecta esto al estado de nuestro qubit \( \ket{\psi} \). Aplicando dicho cambio, nos queda lo siguiente
+
+    \begin{figure}[h!]
+        \centering
+        \begin{minipage}{0.65\textwidth}
+            \begin{align*}
+                &\ket{\psi} = \frac{1 + i \sqrt{3}}{3} \ket{0} + \frac{2 - i}{3} \ket{1} = \frac{1 + i \sqrt{3}}{3 \sqrt{2}} \left( \ket{+} + \ket{-} \right) + \frac{2 - i}{3 \sqrt{2}} \left( \ket{+} - \ket{-} \right) = \\[10pt]
+                &= \frac{3 + \left( \sqrt{3} - 1 \right) i}{3 \sqrt{2}} \ket{+} - \frac{1 - \left( \sqrt{3} + 1 \right) i}{3 \sqrt{2}} \ket{-}
+            \end{align*}
+            Y la probabilidad de obtener \( \ket{+} \) y \( \ket{-} \) es 
+            \begin{align*}
+                \ket{+} \ &\longrightarrow \ \left| \ \frac{3 + \left( \sqrt{3} - 1 \right) i}{3 \sqrt{2}} \ \right| ^ {2} = \frac{9 + \left( \sqrt{3} - 1\right) ^ {2}}{18} \approx 0.53 \\[10pt]
+                \ket{-} \ &\longrightarrow \ \left| \ \frac{1 - \left( \sqrt{3} + 1 \right) i}{3 \sqrt{2}} \ \right| ^ {2} = \frac{1 + \left( \sqrt{3} + 1\right) ^ {2}}{18} \approx 0.47
+            \end{align*}
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.3\textwidth}
+            \includegraphics[width=\textwidth]{img/Bloch/bloch_change_basis_example.png}  
+        \end{minipage}
+        \caption{Cambio de base. Obtenida de [Qiskit]}\label{fig: bloch_ejemplo_medicion_2} 
+    \end{figure}
+
+    \vspace{10mm}
+
+    Podemos ver que esto tiene sentido, ya que el vector que representa el estado de \( \ket{\psi} \) se encuentra ligeramente más próximo al estado \( \ket{+} \) que a \( \ket{-} \), por lo que es lógico obtener una probabilidad en \( \ket{+} \) ligeramente mayor que en \( \ket{-} \), aunque esto no quiere decir que vaya a colapsar siempre a \( \ket{+} \), significa que si midiéramos varios qubits en el mismo estado que \( \ket{\psi} \), por estadísitica, obtendríamos normalmente mayor número de colapsos en \( \ket{+} \), aunque no siempre va a colapsar en \( \ket{+} \) por tener una probabilidad mayor.
+
+    \vspace{5mm}
+
+    De la misma manera que en (\ref{eq: estado_0_en_funcion_mas_menos}) y (\ref{eq: estado_1_en_funcion_mas_menos}), podemos expresar \( \ket{0} \) y \( \ket{1} \) en función de \( \ket{i} \) y \( \ket{-i} \), obteniendo que
+
+    \begin{equation}
+        \ket{0} = \frac{1}{\sqrt{2}} \left( \ket{i} + \ket{-i} \right), \quad \ket{1} = \frac{-i}{\sqrt{2}} \left( \ket{i} - \ket{-i} \right) 
+        \label{eq: estado_0_y_1_en_funcion_i_menosi}
+    \end{equation}
+
+    \vspace{5mm}
+
+    En este caso la diferencia entre ambas probabilidades va a ser mucho mayor, ya que \( \ket{\psi} \) está muy próximo a \( \ket{i} \) en la esfera de Bloch, por lo que la probabilidad de obtener \( \ket{i} \) será muy cercana a uno, y en caso contrario, la probabilidad de obtener \( \ket{-i} \) será prácticamente nula.
+
+    \begin{figure}[h!]
+        \centering
+        \begin{minipage}{0.3\textwidth}
+            \includegraphics[width=\textwidth]{img/Bloch/bloch_change_basis_example_2.png}  
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.65\textwidth}
+            \begin{align*}
+                &\ket{\psi} = \frac{1 + i \sqrt{3}}{3} \ket{0} + \frac{2 - i}{3} \ket{1} = \frac{1 + \sqrt{3}i}{3 \sqrt{2}} \left( \ket{i} + \ket{-i} \right) - \frac{1 + 2i}{3 \sqrt{2}} \left( \ket{i} - \ket{-i} \right) = \\[10pt]
+                &=  \frac{\left( \sqrt{3} - 2 \right)i}{3 \sqrt{2}} \ket{i} + \frac{2 + \left( \sqrt{3} + 2 \right) i}{3 \sqrt{2}} \ket{-i}
+            \end{align*}
+            Y la probabilidad de obtener \( \ket{i} \) y \( \ket{-i} \) es
+            \begin{align*}
+                \ket{i} \ &\longrightarrow \ \left| \ \frac{\left( \sqrt{3} - 2 \right) i}{3 \sqrt{2}} \ \right| ^ {2} = \frac{\left( \sqrt{3} - 2 \right) ^ {2}}{18} \approx 0.004 \\[10pt]
+                \ket{-i} \ &\longrightarrow \ \left| \ \frac{2 + \left( \sqrt{3} + 2 \right) i}{3 \sqrt{2}} \ \right| ^ {2} = \frac{4 + \left( \sqrt{3} + 2 \right) ^ {2}}{18} \approx 0.996
+            \end{align*}
+        \end{minipage}
+        \caption{Cambio de base. Obtenida de [Qiskit]}\label{fig: bloch_ejemplo_medicion_3} 
+    \end{figure}
+
+    Perfecto, vemos que el resultado es el esperado. Ahora, estamos en condiciones de explicar la fase relativa correctamente. Al final de (\ref{sec: el_qubit}), explicamos que una fase global no modifica el estado físico de un qubit, pero dejamos un poco abierta la fase relativa. Vamos a volver a trabajar sobre el estado de un qubit puro definido en (\ref{eq: qubit_trigonometrico_esfera_bloch}), definiendo las probabilidades de medir \( \ket{\psi} \) sobre el eje \( Z \) y posteriormente sobre el eje \( X \), y nos vamos a dar cuenta que las probabilidades no coinciden, concluyendo en que una fase relativa sí que modifica el estado físico de un qubit, a diferencia de una fase global. Comencemos por la probabilidad de obtener \( \ket{0} \) y \( \ket{1} \)
     \begin{equation*}
-        \ket{+} + \ket{-} = y aqui seguir 
+        &\ket{\psi} = \cos \left( \frac{\theta}{2} \right) \ket{0} + e^{i \varphi} \sin \left( \frac{\theta}{2} \right) \ket{1}
+    \end{equation*}
+    \begin{align*}
+        &\ket{0} \ \longrightarrow \ \left| \cos \left( \frac{\theta}{2} \right) \right| ^ {2} = \cos^{2} \left( \frac{\theta}{2} \right) \\[10pt]
+        &\ket{1} \ \longrightarrow \ \left| e^{i \varphi} \sin \left( \frac{\theta}{2} \right) \right| ^ {2} = \left( \cos \left( \frac{\theta}{2} \right) + i \sin \left( \frac{\theta}{2} \right) \right)\right| \left( \cos \left( \frac{\theta}{2} \right) - i \sin \left( \frac{\theta}{2} \right) \right)\right| \sin^{2} \left( \frac{\theta}{2} \right) = \sin^{2} \left( \frac{\theta}{2} \right)
+    \end{align*}
+
+    \vspace{2.5mm}
+
+    Ahora, haciendo el cambio de base a \( \left\{ \ket{0}, \ket{1} \right\} \)
+    \begin{equation*}
+        \ket{\psi} = \frac{1}{\sqrt{2}} \cos \left( \frac{\theta}{2} \right) \left( \ket{+} + \ket{-} \right) + \frac{1}{\sqrt{2}} + \frac{1}{\sqrt{2}} e^{i \varphi} \sin \left( \frac{\theta}{2} \right) \left( \ket{+} - \ket{-} \right) = 
+    \end{equation*}
+    \begin{equation*}
+        = \left[ \frac{1}{\sqrt{2}} \cos \left( \frac{\theta}{2} \right) + \frac{1}{\sqrt{2}} e^{i \varphi} \sin \left( \frac{\theta}{2} \right) \right] \ket{+} + \left[ \frac{1}{\sqrt{2}} \cos \left( \frac{\theta}{2} \right) - \frac{1}{\sqrt{2}} e^{i \varphi} \sin \left( \frac{\theta}{2} \right) \right] \ket{-} 
     \end{equation*}
 
+    \vspace{2.5mm}
 
+    Vemos que las probabilidades no son las mismas que con la base anterior:
+    \begin{align*}
+        \ket{+} \ &\longrightarrow \ \left| \frac{1}{\sqrt{2}} \cos \left( \frac{\theta}{2} \right) + \frac{1}{\sqrt{2}} e^{i \varphi} \sin \left( \frac{\theta}{2} \right) \right| ^ {2} = \frac{1}{2} \left[ \cos \left( \frac{\theta}{2} \right) + \sin \left( \frac{\theta}{2} \right)\right] ^ {2} \\[10pt]
+        \ket{-} \ &\longrightarrow \ \left| \frac{1}{\sqrt{2}} \cos \left( \frac{\theta}{2} \right) - \frac{1}{\sqrt{2}} e^{i \varphi} \sin \left( \frac{\theta}{2} \right) \right| ^ {2} = \frac{1}{2} \left[ \cos \left( \frac{\theta}{2} \right) - \sin \left( \frac{\theta}{2} \right)\right] ^ {2}
+    \end{align*}
 
+    \vspace{5mm}
+
+    Por lo que hemos comprobado que una fase relativa no altera el estado de un qubit \( \ket{\psi} \) en el eje \( Z \), sino que lo hace en el plano azimutal, de manera que al medir el estado de \( \ket{\psi} \) en otra base como \( \{ \ket{+}, \ket{-} \} \), la probabilidad de colapso cambia. Esto no sucede cuando aplicamos una fase global.
 
     \vspace{10mm}
 
@@ -1270,11 +1366,145 @@
 
 
 
+    \newpage
+    \thispagestyle{empty}
+    \mbox{}    
+
+    \section{Puertas Cuánticas}\label{sec: puertas_cuanticas}
+
+    \vspace{5mm}
+
+    Habiendo introducido la unidad de información cuántica y sus respectivas mediciones sobre los ejes \( X \), \( Y \) y \( Z \), estamos ya en condiciones de estudiar las puertas cuánticas. Así como las puertas lógicas en computación clásica son capaces de modificar la información que reside en los distintos bits, las puertas cuánticas actúan sobre el estado físico de los respectivos qubits, siguiendo las leyes de la mecánica cuántica como hemos visto hasta ahora, de manera que se consigue modificar el estado de un qubit \( \ket{\psi} \) como resultado de una operación, por ejemplo, desencriptar las claves públicas y privadas de un cifrado de información, como veremos más adelante.
+    
+    \vspace{5mm}
+
+    Estas puertas cuánticas, las podemos representar como matrices, aprovechando todo el álgebra lineal que llevamos impartido hasta ahora. Realmente, pudimos haber representado el estado de un qubit \( \ket{\psi} \) en la sección anterior como un vector columna, aprovechando la representación matricial de \( \ket{0} \) y \( \ket{1} \) que sigue como
+
+    \begin{equation}
+        \ket{0} = \begin{pmatrix}
+            1 \\
+            0
+        \end{pmatrix}
+        , \quad \ket{1} = \begin{pmatrix}
+            0 \\
+            1
+        \end{pmatrix}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Si tomamos el estado puro de un qubit que definimos en (\ref{eq: combinacion_lineal_estados_1_qubit}), vemos que podemos definir el estado de un qubit cualquiera \( \ket{\psi} \) como un vector columna de dimensión \( 2^{N} \), siendo \( N \) el número de qubits de nuestro computador cuántico:
+
+    \begin{equation}
+        \ket{\psi} = \alpha \ket{0} + \beta \ket{1} = \alpha \begin{pmatrix}
+        1 \\
+        0
+        \end{pmatrix} + \beta \begin{pmatrix}
+        0 \\
+        1
+        \end{pmatrix} = \begin{pmatrix}
+        \alpha \\
+        \beta
+        \end{pmatrix}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    De esta manera, podemos expresar el estado de cualquier qubit como un vector columna de dimensión \( 2^{N} \), siendo \( N \) el número de qubits de nuestro sistema cuántico. Adentrándonos en las puertas cuánticas, éstas no son más que operadores sobre un espacio de Hilbert \( \mathcal{H} \) que transforman el estado de un qubit en otro estado diferente, como vimos en (\ref{eq: operador_espacio_hilbert}):
+
+    \begin{equation*}
+        \hat{A} \ket{\psi} \overset{\hat{A}}{\longrightarrow} \ket{\psi '}, \qquad \ket{\psi}, \ket{\psi '} \in \mathcal{H}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Para estos operadores ser bautizados como puertas cuánticas, han de satisfacer unas ciertas condiciones. La primera es la condición de linealidad, la cual establece que
+
+    \begin{equation*}
+        U \left( \alpha \ket{0} + \beta \ket{1} \right) = \alpha U \ket{0} + \beta U \ket{1}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    La segunda es que la probabilidad total de los estados a obtener en una medición ha de seguir manteniéndose uno, como vimos en el capítulo anterior en (\ref{eq: condicion_coeficientes_probabilidad_1})
+
+    \begin{equation*}
+        | \alpha | ^ {2} + | \beta | ^ {2} = 1
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Para ver qué tipo de matrices satisfacen esta propiedad, vamos a apoyarnos en el conjugado hermítico. Sea la siguiente puerta cuántica \( U \):
+
+    \begin{equation*}
+        U = \begin{pmatrix}
+            a & c \\
+            b & d
+        \end{pmatrix}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Si la aplicamos sobre un qubit \( \ket{\psi} \), nos queda como resultado un qubit diferente, el cual denotaremos como \( \ket{U \psi} \)
+
+    \begin{equation}
+        U \ket{\psi} = \begin{pmatrix}
+            a & c \\
+            b & d
+        \end{pmatrix} \begin{pmatrix}
+            \alpha \\
+            \beta
+        \end{pmatrix} = \begin{pmatrix}
+            a \alpha + c \beta \\
+            b \alpha + d \beta
+        \end{pmatrix} = \ket{U \psi}
+    \label{eq: puerta_cuantica_vector_aplicado}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Si ahora consideramos el conjugado hermítico de \( \ket{U \psi} \), el cual definimos en la introducción de los espacios de Hilbert \( \mathcal{H} \) en (\ref{eq: conjugado_hermitico}), tenemos que
+
+    \begin{equation}
+        \bra{U \psi} = \begin{pmatrix}
+            a^{*} \alpha^{*} + c^{*} \beta^{*} & b^{*} \alpha^{*} + d^{*} \beta^{*} 
+        \end{pmatrix} = \begin{pmatrix}
+            \alpha^{*} & \beta^{*}
+        \end{pmatrix} \begin{pmatrix}
+            a^{*} & d^{*} \\
+            c^{*} & d^{*}
+        \end{pmatrix} = \begin{pmatrix}
+            \alpha^{*} & \beta^{*}
+        \end{pmatrix} \begin{pmatrix}
+            a & c \\
+            b & d
+        \end{pmatrix} ^ {\dagger} = \bra{\psi} U^{\dagger}
+    \label{eq: puerta_cuantica_conjugado_hermitico}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Entonces, apoyándonos en las propiedades que acabamos de ver (\ref{eq: puerta_cuantica_vector_aplicado}) y (\ref{eq: puerta_cuantica_conjugado_hermitico}), obtenemos finalmente la segunda condición que estamos buscando. Esto lo hacemos viendo que el producto escalar de \( \ket{U \psi} \) sobre sí mismo, es decir, la proyección de \( \ket{U \psi} \) sobre sí mismo, es igual a 1:
+    \begin{align}
+        \braket{U \psi \ | \ U \psi} &= 1 \nonumber \\[10pt]
+        \braket{\psi | U^{\dagger} U | \psi} &= \braket{\psi \ | \ \psi} \nonumber \\[10pt]
+        U^{\dagger} U &= I
+        \label{eq: puertas_cuanticas_unitarias}
+    \end{align}
+
+    Y las matrices que satisfacen esta última propiedad (\ref{eq: puertas_cuanticas_unitarias}) se conocen como \textit{unitarias}, y podemos afirmar algo muy importante, y es que toda matriz unitaria es una puerta cuántica, y toda puerta cuántica es una matriz unitaria. Además, como hemos podido ver en (\ref{eq: puertas_cuanticas_unitarias}), \( U^{\dagger} \) es la matriz inversa de \( U \), ya que el producto de estas dos matrices da como resultado la matriz identidad \( I \), por lo que toda puerta cuántica \( U \) es reversible, y su matriz inversa es su conjugado hermítico \( U^{\dagger} \), de manera que si aplicamos una puerta cuántica \( U \) sobre un qubit \( \ket{\psi} \), podemos volver al estado original de \( \ket{\psi} \) aplicando \( U^{\dagger} \)
+
+    \begin{equation*}
+        U^{\dagger} U \ket{\psi} = I \ket{\psi} = \ket{\psi}
+    \end{equation*}
+
+    \vspace{10mm}
+
     \subsection{Puertas Cuánticas de un Qubit}
 
     \vspace{5mm}
 
-
+    
 
 
 
@@ -1291,27 +1521,17 @@
         \centering
         \begin{minipage}[b]{0.4\textwidth}
             \centering
-            \includegraphics[width=0.9\textwidth]{img/bloch_state_0.png}
+            \includegraphics[width=0.9\textwidth]{img/Bloch/bloch_state_0.png}
             \caption{Estado $|0\rangle$ en la esfera de Bloch}\label{fig: bloch0}
         \end{minipage}
         \hspace{0.05\textwidth}
         \begin{minipage}[b]{0.4\textwidth}
             \centering
-            \includegraphics[width=0.9\textwidth]{img/bloch_state_1.png}
+            \includegraphics[width=0.9\textwidth]{img/Bloch/bloch_state_1.png}
             \caption{Estado $|1\rangle$ en la esfera de Bloch}\label{fig: bloch1}
         \end{minipage}
     
     \end{figure}
-    
-
-
-
-
-    \subsection{Bit vs Qubit}
-    \subsection{Estados Cuánticos}
-    \subsection{Superposición}
-    \subsection{Esfera de Bloch}    
-    \subsection{Medir un Qubit}
 
 
 

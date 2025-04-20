@@ -1393,7 +1393,7 @@
 
     \vspace{2.5mm}
 
-    Si tomamos el estado puro de un qubit que definimos en (\ref{eq: combinacion_lineal_estados_1_qubit}), vemos que podemos definir el estado de un qubit cualquiera \( \ket{\psi} \) como un vector columna de dimensión \( 2^{N} \), siendo \( N \) el número de qubits de nuestro computador cuántico:
+    Si tomamos el estado de un qubit puro que definimos en (\ref{eq: combinacion_lineal_estados_1_qubit}), vemos que podemos definir el estado de un qubit cualquiera \( \ket{\psi} \) como un vector columna de dimensión \( 2^{N} \), siendo \( N \) el número de qubits de nuestro computador cuántico:
 
     \begin{equation}
         \ket{\psi} = \alpha \ket{0} + \beta \ket{1} = \alpha \begin{pmatrix}
@@ -1495,10 +1495,111 @@
     Y las matrices que satisfacen esta última propiedad (\ref{eq: puertas_cuanticas_unitarias}) se conocen como \textit{unitarias}, y podemos afirmar algo muy importante, y es que toda matriz unitaria es una puerta cuántica, y toda puerta cuántica es una matriz unitaria. Además, como hemos podido ver en (\ref{eq: puertas_cuanticas_unitarias}), \( U^{\dagger} \) es la matriz inversa de \( U \), ya que el producto de estas dos matrices da como resultado la matriz identidad \( I \), por lo que toda puerta cuántica \( U \) es reversible, y su matriz inversa es su conjugado hermítico \( U^{\dagger} \), de manera que si aplicamos una puerta cuántica \( U \) sobre un qubit \( \ket{\psi} \), podemos volver al estado original de \( \ket{\psi} \) aplicando \( U^{\dagger} \)
 
     \begin{equation*}
-        U^{\dagger} U \ket{\psi} = I \ket{\psi} = \ket{\psi}
+        U^{\dagger} U \ket{\psi} = U U^{\dagger} \ket{\psi} = I \ket{\psi} = \ket{\psi}
     \end{equation*}
 
+    \vspace{2.5mm}
+
+    Esta última condición tiene mucho que ver con que las puertas cuánticas tienen que ser reversibles, es decir, siempre hemos de saber de que estado proviene el resultado. Para ver esto mejor, vamos a apoyarnos en las puertas lógicas clásicas, en este caso la puerta \textit{NOT}, cuya tabla de verdad es
+
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{|c|c|}
+            \hline
+            A & B \\
+            \hline
+            0 & 1 \\
+            1 & 0 \\
+            \hline
+        \end{tabular}
+        \caption{Puerta lógica NOT.}
+        \label{table: puerta_clasica_not}
+    \end{table}
+
+    Si obtenemos el resultado \( B = 1 \), sabemos que el bit antes de aplicar la puerta era \( 0 \), y si obtenemos \( B = 0 \), no queda otra opción que el bit fuese \( 1 \), esto lo podemos representar como una matriz:
+    
+    \begin{equation*}
+        \begin{array}{l}
+            \ket{0} \rightarrow 1 \\
+            \ket{1} \rightarrow 0  
+        \end{array}
+        \left\}
+        \quad
+        \text{NOT} =
+        \begin{pmatrix}
+            0 & 1 \\
+            1 & 0
+        \end{pmatrix}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y esta matriz vemos que es unitaria, ya que su matriz conjugada transpuesta por ella misma es la identidad \( I \)
+
+    \begin{equation*}
+        \begin{pmatrix}
+            0 & 1 \\
+            1 & 0
+        \end{pmatrix} \begin{pmatrix}
+            0 & 1 \\
+            1 & 0
+        \end{pmatrix} ^ {\dagger} = \begin{pmatrix}
+            0 & 1 \\
+            1 & 0
+        \end{pmatrix} \begin{pmatrix}
+            0 & 1 \\
+            1 & 0
+        \end{pmatrix} = I
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Por lo que la puerta clásica \textit{NOT} es una puerta cuántica perfectamente válida, la cual explicaremos en el siguiente apartado. Para ver el caso contrario, vamos a suponer la puerta clásica cuyo resultado es siempre 1:
+    
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{|c|c|}
+            \hline
+            A & B \\
+            \hline
+            0 & 1 \\
+            1 & 1 \\
+            \hline
+        \end{tabular}
+        \caption{Puerta lógica clásica constante a 1.}
+        \label{table: puerta_clasica_todo_1}
+    \end{table}
+
+    Y  podemos verificar que la matriz que representa a esta puerta no es unitaria
+        
+    \begin{equation*}
+        \begin{pmatrix}
+            0 & 0 \\
+            1 & 1
+        \end{pmatrix} \begin{pmatrix}
+            0 & 0 \\
+            1 & 1
+        \end{pmatrix} ^ {\dagger} = \begin{pmatrix}
+            0 & 0 \\
+            1 & 1
+        \end{pmatrix} \begin{pmatrix}
+            0 & 1 \\
+            0 & 1
+        \end{pmatrix} =  \begin{pmatrix}
+            0 & 0 \\
+            0 & 1
+        \end{pmatrix} \neq I
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Por lo que la puerta (\ref{table: puerta_clasica_todo_1}) no es una puerta cuántica. Este pequeño nos ayuda a entender mejor que toda puerta lógica clásica reversible tiene su contrapartida en computación cuántica, y el significado físico de estas puertas cuánticas lo vamos a ver a continuación con las puertas cuánticas de 1 qubit más importantes.
+
     \vspace{10mm}
+
+
+
+
 
     \subsection{Puertas Cuánticas de un Qubit}
 
@@ -1537,20 +1638,18 @@
 
 
 
-
-    \newpage
-    \thispagestyle{empty}
-    \mbox{}
-
-    \section{Puertas Cuánticas}
     \subsection{Producto Tensorial}
 
 
-
+    
 
     \newpage
     \thispagestyle{empty}
     \mbox{}
+
+
+
+
 
     \section{Errores Cuánticos}
     \subsection{Decoherencia}

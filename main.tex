@@ -1363,14 +1363,10 @@
     \vspace{10mm}
 
 
+    
 
 
-
-    \newpage
-    \thispagestyle{empty}
-    \mbox{}    
-
-    \section{Puertas Cuánticas}\label{sec: puertas_cuanticas}
+    \subsection{Puertas Cuánticas}\label{sec: puertas_cuanticas}
 
     \vspace{5mm}
 
@@ -1420,9 +1416,10 @@
 
     Para estos operadores ser bautizados como puertas cuánticas, han de satisfacer unas ciertas condiciones. La primera es la condición de linealidad, la cual establece que
 
-    \begin{equation*}
+    \begin{equation}
         U \left( \alpha \ket{0} + \beta \ket{1} \right) = \alpha U \ket{0} + \beta U \ket{1}
-    \end{equation*}
+        \label{eq: linealidad_puertas_cuanticas}
+    \end{equation}
 
     \vspace{2.5mm}
 
@@ -1601,55 +1598,285 @@
 
 
 
-    \subsection{Puertas Cuánticas de un Qubit}
+    \subsection{Puertas Cuánticas de 1 Qubit}
 
     \vspace{5mm}
 
-    
+    Una vez explicadas las condiciones que ha de cumplir una puerta cuántica, que son la condición de linealidad (\ref{eq: linealidad_puertas_cuanticas}) y que ha de ser unitaria, como vimos en (\ref{eq: puertas_cuanticas_unitarias}), vamos a tomar como ejemplo la puerta \textit{NOT} clásica, que tiene su contrapartida cuántica, la cual se suele denotar como \textit{X}, ya que cumple con los requisitos propuestos anteriormente, de manera que un qubit en el estado \( \ket{0} \) pasa a \( \ket{1} \) y viceversa:
 
+    \begin{equation*}
+        & X \ket{\psi} = \alpha X \ket{0} + \beta  X \ket{1} = \alpha \begin{pmatrix}
+            0 & 1 \\
+            1 & 0 
+        \end{pmatrix} \begin{pmatrix}
+            1 \\
+            0
+        \end{pmatrix} + \beta \begin{pmatrix}
+            0 & 1 \\
+            1 & 0 
+        \end{pmatrix} \begin{pmatrix}
+            0 \\ 
+            1
+        \end{pmatrix} = \alpha \begin{pmatrix}
+            0 \\
+            1
+        \end{pmatrix} + \beta \begin{pmatrix}
+            1 \\
+            0
+        \end{pmatrix} = \beta \ket{0} + \alpha \ket{1} 
+    \end{equation*}
 
+    \vspace{2.5mm}
 
+    De esta manera, si aplicamos la puerta \textit{X} sobre un qubit \( \ket{\psi} \) que se encuentra en el estado \( \ket{0} \), esta puerta rota el estado del qubit \( \ket{\psi} \) al estado \( \ket{1} \)
 
+    \vspace{5mm}
 
-
-
-
-
-    
-    Es importante recalcar que a la hora de medir un qubit, esta medición colapsa sobre el eje \( Z \), es decir, cuando observemos el estado de un qubit al finalizar un algoritmo cuántico, el estado siempre va a colapsar en \( \ket{0} \) o \( \ket{1} \), como ya veremos más adelante. Estos estados son
-
-    \begin{figure}[h!]
+    \begin{minipage}{0.1\textwidth}
+        \hfill
+    \end{minipage}
+    \begin{minipage}{0.3\textwidth}
         \centering
-        \begin{minipage}[b]{0.4\textwidth}
-            \centering
-            \includegraphics[width=0.9\textwidth]{img/Bloch/bloch_state_0.png}
-            \caption{Estado $|0\rangle$ en la esfera de Bloch}\label{fig: bloch0}
-        \end{minipage}
-        \hspace{0.05\textwidth}
-        \begin{minipage}[b]{0.4\textwidth}
-            \centering
-            \includegraphics[width=0.9\textwidth]{img/Bloch/bloch_state_1.png}
-            \caption{Estado $|1\rangle$ en la esfera de Bloch}\label{fig: bloch1}
-        \end{minipage}
+        \includegraphics[width=\textwidth]{img/Bloch/bloch_state_0.png}
+        \caption{Figura 9: Estado $|0\rangle$ en la esfera de Bloch. Obtenida de [Qiskit]}
+    \end{minipage}
+    \hfill
+    \scalebox{2}{\(\overset{X}{\longrightarrow}\)}
+    \hfill
+    \begin{minipage}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/Bloch/bloch_state_1.png}
+        \caption{Figura 10: Estado $|1\rangle$ en la esfera de Bloch. Obtenida de [Qiskit]}
+    \end{minipage}
+    \begin{minipage}{0.1\textwidth}
+        \hfill
+    \end{minipage}
+
+    \vspace{5mm}
+
+    Y esto ocurre también para el caso contrario. Esta puerta \textit{X} es una de las \textit{puertas de Pauli}, en concreto sobre el eje X, como su propio nombre indica, y también podemos definir las puertas de Pauli para el eje \textit{Y} y \textit{Z} de la esfera de Bloch, de la siguiente manera
+
+    \begin{equation}
+        X = \begin{pmatrix}
+            0 & 1 \\
+            1 & 0 
+        \end{pmatrix}, \qquad Y = \begin{pmatrix}
+            0 & -i \\
+            i & 0
+        \end{pmatrix}, \qquad Z = \begin{pmatrix}
+            1 & 0 \\
+            0 & -1
+        \end{pmatrix}
+        \label{eq: puertas_pauli}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Estas \textit{puertas de Pauli}, y de hecho, toda puerta cuántica de un único qubit representa una rotación de \( \ket{\psi} \) en la esfera de Bloch, esto es lógico ya que, como vimos anteriormente, toda puerta cuántica es un operador lineal que actúa sobre un qubit \( \ket{\psi} \), de manera que cambiamos el estado de dicho qubit \( \ket{\psi} \) a otro estado diferente \( \ket{\psi'} \), cuya norma sigue siendo la unidad, por lo que podemos visualizar muy bien la rotación en la esfera de Bloch. Así, las puertas de Pauli que acabamos de ver en (\ref{eq: puertas_pauli}) son rotaciones de \( \pi \) radianes sobre uno de los ejes de la esfera de Bloch. Veamos como actúa \textit{Y} sobre \( \ket{0} \):
+
+    \begin{equation*}
+        Y \ket{\psi} = \begin{pmatrix}
+            0 & -i \\
+            i & 0
+        \end{pmatrix} \begin{pmatrix}
+            1 \\
+            0
+        \end{pmatrix} = \begin{pmatrix}
+            0 \\
+            i
+        \end{pmatrix} = i \begin{pmatrix}
+            0 \\
+            1
+        \end{pmatrix} = i \ket{1}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y esto es el estado \( \ket{1} \) multiplicado por una fase global, en este caso \( i \), por lo que podemos eliminar la fase global, ya que esta no altera el significado físico de \( \ket{1} \), dándose por realizada la rotación esperada sobre el eje \textit{Y}
+
+    \vspace{5mm}
+
+    \begin{minipage}{0.1\textwidth}
+        \hfill
+    \end{minipage}
+    \begin{minipage}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/Bloch/bloch_state_0.png}
+        \caption{Figura 11: Estado $|0\rangle$ en la esfera de Bloch. Obtenida de [Qiskit]}
+    \end{minipage}
+    \hfill
+    \scalebox{2}{\(\overset{Y}{\longrightarrow}\)}
+    \hfill
+    \begin{minipage}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/Bloch/bloch_state_1.png}
+        \caption{Figura 12: Estado $|1\rangle$ en la esfera de Bloch. Obtenida de [Qiskit]}
+    \end{minipage}
+    \begin{minipage}{0.1\textwidth}
+        \hfill
+    \end{minipage}
+
+    \vspace{5mm}
+
+    Vamos a tomar como último ejemplo la puerta \textit{Z}, de manera que si la aplicamos sobre un qubit en \( \ket{0} \)
+    el estado del qubit no cambia, ya que estamos aplicando una rotación sobre el eje \textit{Z}:
+
+    \begin{equation*}
+        Z \ket{0} = \begin{pmatrix}
+            1 & 0 \\
+            0 & -1
+        \end{pmatrix} \begin{pmatrix}
+            1 \\
+            0
+        \end{pmatrix} = \begin{pmatrix}
+            1 \\
+            0
+        \end{pmatrix} = \ket{0}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Como habíamos presupuesto anteriormente. A partir de estas puertas podemos crear todas las demás puertas cuánticas de 1 qubit. Vamos definir una puerta muy importante, la cual es una rotación sobre el eje \( X + Z \), que la podemos obtener únicamente sumando las puertas de Pauli \textit{X} y \textit{Z}
+
+    \begin{equation*}
+        X + Z = \begin{pmatrix}
+            0 & 1 \\
+            1 & 0 
+        \end{pmatrix} + \begin{pmatrix}
+            1 & 0 \\
+            0 & -1
+        \end{pmatrix} = \begin{pmatrix}
+            1 & 1 \\
+            1 & -1
+        \end{pmatrix}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Pero si nos fijamos esta matriz no es unitaria, ya que
+
+    \begin{equation*}
+        \begin{pmatrix}
+            1 & 1 \\
+            1 & -1
+        \end{pmatrix} \begin{pmatrix}
+            1 & 1 \\
+            1 & -1
+        \end{pmatrix} ^ {\dagger} = \begin{pmatrix}
+            1 & 1 \\
+            1 & -1
+        \end{pmatrix} \begin{pmatrix}
+            1 & 1 \\
+            1 & -1
+        \end{pmatrix} = \begin{pmatrix}
+            2 & 0 \\
+            0 & 2
+        \end{pmatrix} = 2 \ I \neq I
+    \end{equation*}
+
+    \vspace{2.5mm} 
+
+    Para que sea unitaria hemos de multiplicar la matriz por \( \frac{1}{\sqrt{2}} \), obteniendo así una nueva puerta cuántica, la cual suele representarse con \textit{H}:
+
+    \begin{equation}
+        H = \frac{1}{\sqrt{2}} \begin{pmatrix}
+            1 & 1 \\
+            1 & -1
+        \end{pmatrix}
+        \label{eq: puerta_hadamard}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Esta es la \textit{puerta de Hadamard} \textit{H}, y es una de las puertas más importantes en computación cuántica porque nos permite colocar el estado de cualquier qubit \( \ket{\psi} \) en superposición, por lo que no es de extrañar que esta puerta \textit{H} se use en la gran mayoría de algoritmos cuánticos como veremos en (\ref{sec: algoritmos_cuanticos}), permitiendo así aprovechar las propiedades de la mecánica cuántica al asegurarnos por completo que el qubit \( \ket{H \psi} \) se encuentra en superposición cuántica. Esto es debido a que si aplicamos la puerta \textit{H} sobre \( \ket{0} \) obtenemos el estado \( \ket{+} \), y si la aplicamos sobre \( \ket{1} \) obtenemos \( \ket{-} \)
+
+    \begin{align*}
+        & H \ket{0} = \frac{1}{\sqrt{2}} \begin{pmatrix}
+            1 & 1 \\
+            1 & -1
+        \end{pmatrix} \begin{pmatrix}
+            1 \\
+            0
+        \end{pmatrix} = \frac{1}{\sqrt{2}} \begin{pmatrix}
+            1 \\
+            1
+        \end{pmatrix} = \frac{1}{\sqrt{2}} \begin{pmatrix}
+            1 \\
+            0
+        \end{pmatrix} + \frac{1}{\sqrt{2}} \begin{pmatrix}
+            0 \\
+            1
+        \end{pmatrix} = \frac{1}{\sqrt{2}} \left( \ket{+} + \ket{-} \right) \\[10pt]
+        & H \ket{1} = \frac{1}{\sqrt{2}} \begin{pmatrix}
+            1 & 1 \\
+            1 & -1
+        \end{pmatrix} \begin{pmatrix}
+            0 \\
+            1
+        \end{pmatrix} = \frac{1}{\sqrt{2}} \begin{pmatrix}
+            1 \\
+            -1
+        \end{pmatrix} = \frac{1}{\sqrt{2}} \begin{pmatrix}
+            1 \\
+            0
+        \end{pmatrix} - \frac{1}{\sqrt{2}} \begin{pmatrix}
+            0 \\
+            1
+        \end{pmatrix} = \frac{1}{\sqrt{2}} \left( \ket{+} - \ket{-} \right)
+    \end{align*}
+
+    \vspace{2.5mm}
+
+    \begin{minipage}{0.1\textwidth}
+        \hfill
+    \end{minipage}
+    \begin{minipage}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/Bloch/bloch_state_+.png}
+        \caption{Figura 13: Estado $|+\rangle$ en la esfera de Bloch. Obtenida de [Qiskit]}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/Bloch/bloch_state_-.png}
+        \caption{Figura 14: Estado $|-\rangle$ en la esfera de Bloch. Obtenida de [Qiskit]}
+    \end{minipage}
+    \begin{minipage}{0.1\textwidth}
+        \hfill
+    \end{minipage}
+
+    \vspace{5mm}
+
+    Esto lo vimos en (\ref{eq: estados_eje_x_y}) cuando definimos los estados \( \ket{+} \) y \( \ket{-} \), y ahora hemos demostrado de donde salen. Estas son las puertas cuánticas de 1 qubit que principalmente vamos a usar, de manera que si aparece alguna otra puerta simple de 1 qubit la definiremos más adelante conforme nos vayan saliendo. Con esto damos por terminada esta sección y damos paso a la siguiente, en la que discutiremos qué sucede cuando tenemos más de 1 qubit\ldots
+
+
+
     
-    \end{figure}
 
 
 
 
 
-    \subsection{Producto Tensorial}
-
-
-    
 
     \newpage
     \thispagestyle{empty}
     \mbox{}
 
+    \section{Múltiples Qubits}
+
+    \vspace{5mm}
 
 
 
+
+
+
+
+
+
+    \newpage
+    \thispagestyle{empty}
+    \mbox{}
 
     \section{Errores Cuánticos}
     \subsection{Decoherencia}

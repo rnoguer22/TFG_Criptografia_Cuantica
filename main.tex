@@ -485,7 +485,7 @@
     \thispagestyle{empty}
     \mbox{}
 
-    \section{El Espacio de Hilbert}
+    \section{El Espacio de Hilbert}\label{sec: el_espacio_de_Hilbert}
 
     \vspace{5mm}
 
@@ -1862,13 +1862,67 @@
     \thispagestyle{empty}
     \mbox{}
 
-    \section{Múltiples Qubits}
+    \section{Múltiples Qubits}\label{sec: multiples_qubits}
 
     \vspace{5mm}
 
+    En esta sección, vamos a ver que se siguen las mismas reglas cuando tenemos más de un qubit que a la hora de tener solo uno, como vimos en la sección pasada (\ref{sec: el_qubit}). En este caso ya no estamos hablando de un qubit y por lo tanto, no nos encontramos en un espacio de Hilbert de dos dimensiones, sino que vamos a lograr generalizar las expresiones vistas en la sección anterior (\ref{sec: el_qubit}) para \( N \) qubits, llegando a las mismas expresiones que vimos en el espacio de Hilbert (\ref{sec: el_espacio_de_Hilbert}), y en este caso al tratarse de \( N \) qubits, tendríamos un espacio de Hilbert de \( 2^{N} \) dimensiones.
 
 
+    \vspace{5mm}
 
+    Para una mejor explicación, vamos a comenzar por un espacio de Hilbert de cuatro dimensiones, es decir, un sistema cuántico de dos qubits. Los estados de este sistema se pueden representar como
+
+    \begin{equation*}
+        \ket{0 0} = \ket{0} \ket{0}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Entonces, el resto de estados los podemos conseguir de la misma manera que sumamos números binarios, obteniendo que la base \( Z \) está formada por los siguientes estados
+
+    \begin{equation*}
+        Z = \{ \ket{0 0}, \ket{0 1}, \ket{1 0}, \ket{1 1} \}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    De manera que el estado de un qubit de carácter genérico es una superposición de estados en el eje \( Z \)
+
+    \begin{equation}
+        \ket{\psi} = c_{0} \ket{0 0} + c_{1} \ket{0 1} + c_{2} \ket{1 0} + c_{3} \ket{1 1}
+        \label{eq: superposicion_qubit_2_estados}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Y las probabilidades de obtener los distintos estados \( \{ \ket{0 0}, \ket{0 1}, \ket{1 0}, \ket{1 1} \} \) al medir sobre el eje \( Z \) son \( | c_{0} |^{2} \), \( | c_{1} |^{2} \), \( | c_{2} |^{2} \) y \( | c_{3} |^{2} \), respectivamente. Hasta aquí no hay nada nuevo, pero ¿Qué sucede cuando queremos dar el paso a \( N \) qubits? Para esto necesitamos pasar los distintos estados de la base \( Z \) de binario a decimal. Suponiendo que los estados del eje \( Z \) se encuentran en la base binaria
+
+    \begin{equation*}
+        \ket{b_{N - 1} \ \cdots \ b_{2} \ b_{1} \ b_{0}}, \qquad \forall \ b_{n} \in \{0, 1\}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Podemos realizar la conversión a decimal como sigue
+    
+    \begin{equation*}
+        \ket{b_{N - 1} \ \cdots \ b_{2} \ b_{1} \ b_{0}} = \ket{ 2^{N - 1} b_{N - 1} + \cdots + 2^{2} b_{2} + 2^{1} b_{1} + 2^{0} b_{0} }
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y esta notación nos permite desarrollar el estado en superposición de un qubit \( \ket{\psi} \) que vimos en (\ref{eq: superposicion_qubit_2_estados}) cuando teníamos dos qubits, pero ahora teniendo \( N \) qubits
+
+    \begin{equation}
+        \ket{\psi} = \sum_{j = 0}^{N - 1} c_{j} \ket{j} = c_{0} \ket{0} + c_{1} \ket{1} + c_{2} \ket{2} + \cdots + c_{N - 1} \ket{N - 1}, \qquad j \in \mathbb{N} 
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Esta expresión nos resulta muy familiar, y es que ya la definimos anteriormente en (\ref{eq: combinacion_lineal_Hilbert}) cuando tratábamos los espacios de Hilbert (\ref{sec: el_espacio_de_Hilbert}), por lo que todo encaja muy bien y nos indica que vamos por buen camino.
+
+    \vspace{10mm}
 
 
 

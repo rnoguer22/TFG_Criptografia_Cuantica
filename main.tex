@@ -1389,7 +1389,7 @@
 
     \vspace{2.5mm}
 
-    Si tomamos el estado de un qubit puro que definimos en (\ref{eq: combinacion_lineal_estados_1_qubit}), vemos que podemos definir el estado de un qubit cualquiera \( \ket{\psi} \) como un vector columna de dimensión \( 2^{N} \), siendo \( N \) el número de qubits de nuestro computador cuántico:
+    Si tomamos el estado de un qubit puro que definimos en (\ref{eq: combinacion_lineal_estados_1_qubit}), vemos que podemos definir el estado de un qubit cualquiera \( \ket{\psi} \) como un vector columna de dimensión \( 2^{N} \), siendo \( N \) el número de qubits de nuestro computador cuántico, por lo que para un sistema cuántico de un único qubit tenemos el siguiente vector:
 
     \begin{equation}
         \ket{\psi} = \alpha \ket{0} + \beta \ket{1} = \alpha \begin{pmatrix}
@@ -1402,11 +1402,12 @@
         \alpha \\
         \beta
         \end{pmatrix}
+        \label{eq: vector_sistema_un_qubit}
     \end{equation}
 
     \vspace{2.5mm}
 
-    De esta manera, podemos expresar el estado de cualquier qubit como un vector columna de dimensión \( 2^{N} \), siendo \( N \) el número de qubits de nuestro sistema cuántico. Adentrándonos en las puertas cuánticas, éstas no son más que operadores sobre un espacio de Hilbert \( \mathcal{H} \) que transforman el estado de un qubit en otro estado diferente, como vimos en (\ref{eq: operador_espacio_hilbert}):
+    De esta manera, podemos expresar el estado de cualquier qubit como un vector columna de dimensión 2, y ya veremos la generalización de esta representación vectorial para \( N \) qubits en la siguiente sección (\ref{sec: multiples_qubits}). Por otra parte, vamos ya a afrontar las puertas cuánticas, las cuales no son más que operadores sobre un espacio de Hilbert \( \mathcal{H} \) que transforman el estado de un qubit en otro estado diferente, como vimos en (\ref{eq: operador_espacio_hilbert}):
 
     \begin{equation*}
         \hat{A} \ket{\psi} \overset{\hat{A}}{\longrightarrow} \ket{\psi '}, \qquad \ket{\psi}, \ket{\psi '} \in \mathcal{H}
@@ -1598,7 +1599,7 @@
 
 
 
-    \subsection{Puertas Cuánticas de 1 Qubit}
+    \subsection{Puertas Cuánticas de 1 Qubit}\label{subsection: puertas_cuanticas_de_1_qubit}
 
     \vspace{5mm}
 
@@ -1874,7 +1875,7 @@
     Para una mejor explicación, vamos a comenzar por un espacio de Hilbert de cuatro dimensiones, es decir, un sistema cuántico de dos qubits. Los estados de este sistema se pueden representar como
 
     \begin{equation*}
-        \ket{0 0} = \ket{0} \ket{0}
+        \ket{0 0} = \ket{0} \otimes \ket{0} = \ket{0} \ket{0}
     \end{equation*}
 
     \vspace{2.5mm}
@@ -1906,9 +1907,10 @@
 
     Podemos realizar la conversión a decimal como sigue
     
-    \begin{equation*}
+    \begin{equation}
         \ket{b_{N - 1} \ \cdots \ b_{2} \ b_{1} \ b_{0}} = \ket{ 2^{N - 1} b_{N - 1} + \cdots + 2^{2} b_{2} + 2^{1} b_{1} + 2^{0} b_{0} }
-    \end{equation*}
+        \label{eq: conversion_qubits_binario_decimal}
+    \end{equation}
 
     \vspace{2.5mm}
 
@@ -1916,11 +1918,190 @@
 
     \begin{equation}
         \ket{\psi} = \sum_{j = 0}^{N - 1} c_{j} \ket{j} = c_{0} \ket{0} + c_{1} \ket{1} + c_{2} \ket{2} + \cdots + c_{N - 1} \ket{N - 1}, \qquad j \in \mathbb{N} 
+        \label{eq: estado_qubit_dimension_N}
     \end{equation}
 
     \vspace{2.5mm}
 
-    Esta expresión nos resulta muy familiar, y es que ya la definimos anteriormente en (\ref{eq: combinacion_lineal_Hilbert}) cuando tratábamos los espacios de Hilbert (\ref{sec: el_espacio_de_Hilbert}), por lo que todo encaja muy bien y nos indica que vamos por buen camino.
+    Esta expresión nos resulta muy familiar, y es que ya la definimos anteriormente en (\ref{eq: combinacion_lineal_Hilbert}) cuando tratábamos los espacios de Hilbert (\ref{sec: el_espacio_de_Hilbert}), por lo que todo encaja muy bien y nos indica que vamos por buen camino. 
+
+    \vspace{5mm}
+
+    A continuación vamos a ver como es la representacón matricial de estos estados, y esto se hace con el denominado \textit{producto de Kronecker}, el cual no vamos a definirlo formalmente, sino que vamos a ver directamente como funciona, por ejemplo, para el estado \( \ket{0 0} \) en un sistema de dos qubits:
+
+    \begin{equation*}
+        \ket{0 0} = \ket{0} \ket{0} = \ket{0} \otimes \ket{0} = \begin{pmatrix}
+            1 \\
+            0
+        \end{pmatrix} \otimes \begin{pmatrix}
+            1 \\
+            0
+        \end{pmatrix} = \begin{pmatrix}
+            1 \begin{pmatrix} 1 \\ 0 \end{pmatrix} \\
+            0 \begin{pmatrix} 1 \\ 0 \end{pmatrix}
+        \end{pmatrix} = \begin{pmatrix}
+            1 \\
+            0 \\
+            0 \\
+            0
+        \end{pmatrix}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Si esto lo aplicamos para el resto de estados que definen el eje \( Z \) en un sistema cuántico de dos qubits, obtenemos que
+
+    \begin{equation}
+        \ket{0 0} = \begin{pmatrix}
+            1 \\
+            0 \\
+            0 \\
+            0 
+        \end{pmatrix}, \quad \ket{0 1} = \begin{pmatrix}
+            0 \\
+            1 \\
+            0 \\
+            0 
+        \end{pmatrix}, \quad \ket{1 0} = \begin{pmatrix}
+            0 \\
+            0 \\
+            1 \\
+            0 
+        \end{pmatrix}, \quad \ket{1 1} = \begin{pmatrix}
+            0 \\
+            0 \\
+            0 \\
+            1 
+        \end{pmatrix}
+        \label{eq: estados_matricial_2_qubits}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    De manera que podemos expresar el estado de un sistema cuántico de dos qubits mediante un vector columna como vimos en (\ref{eq: vector_sistema_un_qubit}), ampliando la expresión para dos qubits y aplicando lo que acabamos de ver
+
+    \begin{equation}
+        \ket{\psi} = c_{0} \ket{0 0} + c_{1} \ket{0 1} + c_{2} \ket{1 0} + c_{3} \ket{1 1} = \begin{pmatrix}
+            c_{0} \\
+            c_{1} \\
+            c_{2} \\
+            c_{3}
+        \end{pmatrix}
+        \label{eq: estado_qubit_dimension_2_matriz}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Entonces, podemos representar la expresión (\ref{eq: estado_qubit_dimension_N}) como un vector columna de dimension \( N \), siendo \( N \) el número de qubits de nuestro sistema cuántico:
+
+    \begin{equation}
+        \ket{\psi} = \sum_{j = 0}^{N - 1} c_{j} \ket{j} = c_{0} \ket{0} + c_{1} \ket{1} + c_{2} \ket{2} + \cdots + c_{N - 1} \ket{N - 1} = \begin{pmatrix}
+            c_{0} \\
+            c_{1} \\
+            c_{2} \\
+            \vdots \\
+            c_{N - 1}
+        \end{pmatrix}
+        \label{eq: estados_qubit_dimension_N_matriz}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Toda esta notación funciona exactamente igual para los bra, como por ejemplo \( \bra{0 0} \):
+
+    \begin{equation*}
+        \bra{0 0} = \bra{0} \otimes \bra{0} = \begin{pmatrix}
+            1 & 0
+        \end{pmatrix} \otimes \begin{pmatrix}
+            1 & 0
+        \end{pmatrix} = \begin{pmatrix}
+            1 \begin{pmatrix} 1 & 0 \end{pmatrix} & 0 \begin{pmatrix} 1 & 0 \end{pmatrix}
+        \end{pmatrix} = \begin{pmatrix}
+            1 & 0 & 0 & 0
+        \end{pmatrix}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Entonces, de la misma manera que acabamos de ver en (\ref{eq: estados_qubit_dimension_N_matriz}) un ket generalizado para \( N \) qubits, ahora tenemos un bra generalizado para \( N \) qubits:
+
+    \begin{equation}
+        \bra{\psi} = \sum_{j = 0}^{N - 1} c_{j}^{*} \bra{j} = c_{0}^{*} \bra{0} + c_{1}^{*} \bra{1} + c_{2}^{*} \bra{2} + \cdots + c_{N - 1}^{*} \bra{N - 1} = \begin{pmatrix}
+            c_{0}^{*} & c_{1}^{*} & c_{2}^{*} & \cdots & c_{N - 1}^{*}
+        \end{pmatrix}
+        \label{eq: bra_qubit_dimension_N_matriz}
+    \end{equation}
+
+    \vspace{10mm}
+
+    
+
+
+    \subsection{Puertas Cuánticas de Múltiples Qubits}
+
+    \vspace{5mm}
+
+    De la misma manera que vimos en las puertas cuánticas de un único qubit, las puertas cuánticas aplicadas a más de un qubit siguen siendo transformaciones del estado del qubit \( \ket{\psi} \) en otro \( \ket{\psi'} \), solo que ahora al tener más de una unidad de información cuántica no son rotaciones en la esfera de Bloch, y esto es porque no se pueda representar algo que esté más allá de las tres dimensiones, como vimos anteriormente en los estados de \( Z \) que eran vectores columna de cuatro elementos.
+
+    \vspace{5mm}
+
+    Vamos a comenzar creando algunas puertas de dos qubits. Aunque esto suene tedioso, es algo bastante sencillo si tenemos en cuenta lo que hemos visto anteriormente para puertas de un qubit en (\ref{subsection: puertas_cuanticas_de_1_qubit}), con la idea de que podemos aplicar cualquiera de estas transformaciones a los distintos qubits de \( \ket{\psi} \). Tomemos como ejemplo la puerta de Hadamard \textit{H} y la \textit{NOT} para un qubit, podemos aplicarlas a los distintos qubits de \( \ket{\psi} \), los cuales vamos a suponer que se encuentran en \( \ket{0 0} \)
+
+    \begin{equation*}
+        (H \otimes X) \ket{\psi} = (H \otimes X) \ket{0 0} = (H \otimes X) \ket{0} \otimes \ket{0} = H \ket{0} \otimes X \ket{0} = \ket{+} \otimes \ket{1} = \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) \otimes \ket{1} =
+    \end{equation*}
+    \begin{equation*}
+        = \frac{1}{\sqrt{2}} \left( \ket{0} \otimes \ket{1} + \ket{1} \otimes \ket{1} \right) = \frac{1}{\sqrt{2}} \left( \ket{0 1} + \ket{1 1} \right)
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y de esta manera podemos ver perfectamente que se ha aplicado una puerta \textit{H} al qubit en la izquierda y una puerta \textit{X} al qubit de la derecha. Este resultado también lo podemos obtener matricialmente ya que \( \otimes \) es el producto de Kronecker. Vamos a definir primero la matriz que representa esta puerta cuántica
+
+    \begin{equation*}
+        H \otimes X = \frac{1}{\sqrt{2}} \begin{pmatrix}
+            1 & 1 \\
+            1 & -1 
+        \end{pmatrix} \otimes \begin{pmatrix}
+            0 & 1 \\
+            1 & 0 
+        \end{pmatrix} = \frac{1}{\sqrt{2}} \begin{pmatrix}
+            1 \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} & 1 \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \\  
+            1 \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} & -1 \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}
+        \end{pmatrix} = \frac{1}{\sqrt{2}} \begin{pmatrix}
+            0 & 1 & 0 & 1 \\
+            1 & 0 & 1 & 0 \\
+            0 & 1 & 0 & -1 \\
+            1 & 0 & -1 & 0
+        \end{pmatrix}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Vemos que esta matriz es unitaria, por lo que se verifica que es una puerta cuántica perfectamente válida. Entonces, si multiplicamos esta matriz por el estado \( \ket{0 0} \) de \( \ket{\psi} \) obtenemos, como debería de ser, el mismo resultado
+
+    \begin{equation*}
+        \left( H \otimes X \right) \ket{0 0} =  \frac{1}{\sqrt{2}} \begin{pmatrix}
+            0 & 1 & 0 & 1 \\
+            1 & 0 & 1 & 0 \\
+            0 & 1 & 0 & -1 \\
+            1 & 0 & -1 & 0
+        \end{pmatrix} \begin{pmatrix}
+            1 \\
+            0 \\
+            0 \\
+            0
+        \end{pmatrix} = \frac{1}{\sqrt{2}} \begin{pmatrix}
+            0 \\ 
+            1 \\
+            0 \\
+            1
+        \end{pmatrix} = \frac{1}{\sqrt{2}} \left( \ket{0 1} + \ket{1 1} \right)
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y así podemos crear nuestras propias puertas cuánticas a nuestro gusto, según nuestras propias necesidades, asegurándonos siempre que sean puertas válidas. Volveremos a este ejemplo más adelante, ya que como veremos, aplicar puertas cuánticas simples de un qubit a un estado con múltiples qubits no puede crear el famoso entrelazamiento cuántico, el cual explicaremos detenidamente en (\ref{sec: entrelazamiento_cuantico}). Sin embargo, podemos tener puertas cuánticas que cambien directamente el estado de dos qubits al mismo tiempo, al contrario de las puertas que hemos visto hasta ahora, y estas son de vital importancia ya que sí permiten crear entrelazamiento. 
 
     \vspace{10mm}
 
@@ -1944,7 +2125,7 @@
     \thispagestyle{empty}
     \mbox{}
 
-    \section{Entrelazamiento Cuántico}
+    \section{Entrelazamiento Cuántico}\label{sec: entrelazamiento_cuantico}
     \subsection{Estados de Bell}
     \subsection{Codificación Superdensa}
     \subsection{Teleportación Cuántica}

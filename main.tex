@@ -15,6 +15,13 @@
 \usepackage{xcolor} % Para definir colores personalizados
 \usepackage{hyperref}
 \usepackage{braket}
+\usepackage[braket, qm]{qcircuit}
+\usepackage{subcaption}
+
+
+\documentclass[border=2px]{standalone}
+
+
 
 % \setlength{\parindent}{0pt} % Elimina la sangría en todo el documento
 
@@ -1330,12 +1337,13 @@
     \end{figure}
 
     Perfecto, vemos que el resultado es el esperado. Ahora, estamos en condiciones de explicar la fase relativa correctamente. Al final de (\ref{sec: el_qubit}), explicamos que una fase global no modifica el estado físico de un qubit, pero dejamos un poco abierta la fase relativa. Vamos a volver a trabajar sobre el estado de un qubit puro definido en (\ref{eq: qubit_trigonometrico_esfera_bloch}), definiendo las probabilidades de medir \( \ket{\psi} \) sobre el eje \( Z \) y posteriormente sobre el eje \( X \), y nos vamos a dar cuenta que las probabilidades no coinciden, concluyendo en que una fase relativa sí que modifica el estado físico de un qubit, a diferencia de una fase global. Comencemos por la probabilidad de obtener \( \ket{0} \) y \( \ket{1} \)
+
     \begin{equation*}
-        &\ket{\psi} = \cos \left( \frac{\theta}{2} \right) \ket{0} + e^{i \varphi} \sin \left( \frac{\theta}{2} \right) \ket{1}
+        \ket{\psi} = \cos \left( \frac{\theta}{2} \right) \ket{0} + e^{i \varphi} \sin \left( \frac{\theta}{2} \right) \ket{1}
     \end{equation*}
     \begin{align*}
-        &\ket{0} \ \longrightarrow \ \left| \cos \left( \frac{\theta}{2} \right) \right| ^ {2} = \cos^{2} \left( \frac{\theta}{2} \right) \\[10pt]
-        &\ket{1} \ \longrightarrow \ \left| e^{i \varphi} \sin \left( \frac{\theta}{2} \right) \right| ^ {2} = \left( \cos \left( \frac{\theta}{2} \right) + i \sin \left( \frac{\theta}{2} \right) \right)\right| \left( \cos \left( \frac{\theta}{2} \right) - i \sin \left( \frac{\theta}{2} \right) \right)\right| \sin^{2} \left( \frac{\theta}{2} \right) = \sin^{2} \left( \frac{\theta}{2} \right)
+        \ket{0} \ &\longrightarrow \ \left| \cos \left( \frac{\theta}{2} \right) \right| ^ {2} = \cos^{2} \left( \frac{\theta}{2} \right) \\[10pt]
+        \ket{1} \ &\longrightarrow \ \left| e^{i \varphi} \sin \left( \frac{\theta}{2} \right) \right| ^ {2} = \left( \cos \left( \frac{\theta}{2} \right) + i \sin \left( \frac{\theta}{2} \right) \right) \left( \cos \left( \frac{\theta}{2} \right) - i \sin \left( \frac{\theta}{2} \right) \right) \sin^{2} \left( \frac{\theta}{2} \right) = \sin^{2} \left( \frac{\theta}{2} \right)
     \end{align*}
 
     \vspace{2.5mm}
@@ -2103,19 +2111,271 @@
 
     Y así podemos crear nuestras propias puertas cuánticas a nuestro gusto, según nuestras propias necesidades, asegurándonos siempre que sean puertas válidas. Volveremos a este ejemplo más adelante, ya que como veremos, aplicar puertas cuánticas simples de un qubit a un estado con múltiples qubits no puede crear el famoso entrelazamiento cuántico, el cual explicaremos detenidamente en (\ref{sec: entrelazamiento_cuantico}). Sin embargo, podemos tener puertas cuánticas que cambien directamente el estado de dos qubits al mismo tiempo, al contrario de las puertas que hemos visto hasta ahora, y estas son de vital importancia ya que sí permiten crear entrelazamiento. 
 
-    \vspace{10mm}
+    \vspace{5mm}
 
 
 
 
 
-    \newpage
-    \thispagestyle{empty}
-    \mbox{}
+    \subsubsection{La Puerta CNOT}\label{subsubsection: la_puerta_cnot}
 
-    \section{Errores Cuánticos}
-    \subsection{Decoherencia}
-    \subsection{Shor Code}
+    \vspace{5mm}
+
+    Vamos a ver únicamente dos ejemplos de puertas cuánticas que actúan directamente sobre más de un qubit ya que estas son las más importantes. No obstante, de la misma manera que para las puertas de un único qubit, si en algún otro momento necesitamos definir más puertas cuánticas con algún fin, las definiremos sin problema. Dicho esto, la primera puerta es la famosa \textit{CNOT} (o \textit{controlled-NOT}), la cual actúa sobre un estado de dos qubits como sigue
+
+    \begin{align*}
+        \textit{CNOT} \ket{0 0} &= \ket{0 0} \\[5pt]
+        \textit{CNOT} \ket{0 1} &= \ket{0 1} \\[5pt]
+        \textit{CNOT} \ket{1 0} &= \ket{1 1} \\[5pt]
+        \textit{CNOT} \ket{1 1} &= \ket{1 0}
+    \end{align*}
+
+    \vspace{2.5mm}
+
+    Podemos ver que en efecto esta puerta es una puerta \textit{NOT} con un qubit de control, de ahí su nombre \textit{CNOT}. Por defecto el qubit de control es el izquierdo, de manera que si dicho qubit es \( \ket{0} \), el estado permanece igual tras aplicar la puerta. Sin embargo si el qubit de control es \( \ket{1} \), se aplica una puerta \textit{NOT} sobre el qubit derecho, de manera que se invierte el estado del qubit. La representación matricial de esta puerta es muy sencilla, ya que al aplicar esta puerta a los estados \( \ket{0 0} \) y \( \ket{0 1} \) estos permanecen igual, y si la aplicamos sobre \( \ket{1 0} \) obtenemos \(1 1\) y viceversa. Esto se traduce en que la última y penúltima columna de la matriz identidad \( I \) están cambiadas, obteniendo la matriz de la puerta \textit{CNOT}
+    
+    \begin{equation}
+        \textit{CNOT} = \begin{pmatrix}
+            1 & 0 & 0 & 0 \\
+            0 & 1 & 0 & 0 \\
+            0 & 0 & 0 & 1 \\
+            0 & 0 & 1 & 0
+        \end{pmatrix}
+        \label{eq: cnot_matriz}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Y esta puerta tiene su representación en un circuito cuántico, la cual es la siguiente
+
+    \vspace{5mm}
+
+    \begin{figure}[!h]
+        \centering
+        \scalebox{1.0}{
+            $\Qcircuit @C=1.0em @R=0.8em @!R {
+                \lstick{\ket{0}} & \targ & \qw & {|1\rangle} \\
+                \lstick{\ket{1}} & \ctrl{-1} & \qw & {|1\rangle}
+            }$
+        }
+        \caption{Puerta \textit{CNOT} en un circuito cuántico}
+        \label{fig:puerta_cnot_circuito_cuantico}
+    \end{figure}
+    
+    
+
+    \vspace{2.5mm}
+
+    De manera que hemos indicado \( q_{1} \) como el qubit de control y \( q_{0} \) como el resultado de aplicar la puerta \textit{NOT} en los casos que corresponda. También puede darse un segundo caso cuando ambos qubits están intercambiados, por lo que \( q_{0} \) sería el qubit de control en este caso. Esto en un circuito cuántico no tiene mayor complejidad que intercambiar \( q_{0} \) con \( q_{1} \)
+
+    \vspace{5mm}
+
+    \begin{figure}[!h]
+        \centering
+        \scalebox{1.0}{
+            $\Qcircuit @C=1.0em @R=0.8em @!R {
+                \lstick{\ket{0}} & \ctrl{1} & \qw & {|0\rangle} \\
+                \lstick{\ket{1}} & \targ & \qw & {|1\rangle}
+            }$
+        }        
+        \caption{Puerta \(\textit{CNOT}_{01} \) en un circuito cuántico}
+        \label{fig: puerta_cnot_01_circuito_cuantico}
+    \end{figure}
+
+    \vspace{2.5mm}
+
+    Y esto se denota como \(\textit{CNOT}_{01} \), cuya representación matricial lógicamente cambia:
+
+    \begin{equation}
+        \textit{CNOT}_{01} = \begin{pmatrix}
+            1 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 1 \\
+            0 & 0 & 1 & 0 \\
+            0 & 1 & 0 & 0
+        \end{pmatrix}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Actuando sobre los estados de dos qubits como sigue
+
+    \begin{align*}
+        \textit{CNOT}_{01} \ket{0 0} &= \ket{0 0} \\[5pt]
+        \textit{CNOT}_{01} \ket{0 1} &= \ket{1 1} \\[5pt]
+        \textit{CNOT}_{01} \ket{1 0} &= \ket{1 0} \\[5pt]
+        \textit{CNOT}_{01} \ket{1 1} &= \ket{0 1}
+    \end{align*}
+
+    \vspace{2.5mm}
+
+    Esta es una de las puertas más importantes que vamos a ver ya que permite entrelazar dos qubits. De momento, vamos a definir informalmente el entrelazamiento como una conexión que se establece entre ambos, de manera que si el estado de uno de los qubits cambia, también se verá afectado el estado del otro qubit entrelazado. Esto se traduce como que el estado de ambos qubits dependen el uno con el otro, y será el principio fundamental para enviar información cuántica. Todo esto ya lo veremos mucho más detenidamente en (\ref{sec: entrelazamiento_cuantico}), pero ahora vamos a continuar con la segunda puerta cuántica de múltiples qubits que vamos a ver.
+
+    \vspace{5mm}
+
+
+
+
+
+    \subsubsection{La Puerta de Toffoli}\label{subsubsection: la_puerta_de_toffoli}
+
+    \vspace{5mm}
+
+    Esta puerta es muy similar a la \textit{CNOT} que acabamos de ver, con la diferencia de que esta puerta actúa sobre tres qubits, siendo dos qubits de control. Esto quiere decir que solo se aplica una puerta \textit{NOT} sobre el qubit que no es de control en el caso que estos sean ambos \( \ket{1} \), lo que se suele definir como:
+
+    \begin{equation*}
+        \text{Toffoli} \ket{a} \ket{b} \ket{c} = \ket{a} \ket{b} \ket{a b \oplus c}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Al actuar sobre tres qubits, la matriz que representa esta puerta es una matriz cuadrada de dimensión \( 2^{3} \), lo que resulta en una matriz con ocho filas y columnas:
+
+    \begin{equation}
+        \text{Toffoli} = \begin{pmatrix}
+            1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+            0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+            0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+            0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 
+        \end{pmatrix}
+        \label{eq: toffoli_matriz}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Que se puede comprobar que cumple con las condiciones para ser una puerta cuántica, como vimos en (\ref{subsection: puertas_cuanticas_de_1_qubit}). En un circuito cuántico esto se representa simplemente añadiendo un tercer qubit de control a una puerta \textit{CNOT}
+
+    \vspace{2.5mm}
+
+    \begin{figure}[!h]
+        \centering
+        \scalebox{1.0}{
+            $\Qcircuit @C=1.0em @R=0.8em @!R {
+                \lstick{\ket{0}} & \ctrl{2} & \rstick{\ket{0}} \qw \\
+                \lstick{\ket{1}} & \ctrl{1} & \rstick{\ket{1}} \qw \\
+                \lstick{\ket{1}} & \targ    & \rstick{\ket{1}} \qw
+            }$
+        }
+        \caption{Puerta de Toffoli Ejemplo. Obtenida de [QCircuit]}\label{fig: puerta_toffoli_circuito_clasico}
+    \end{figure}
+
+    Este resultado lo verificar operando directamente con matrices como sigue
+
+    \begin{equation*}
+        \text{Toffoli} \ket{0 1 1} = \begin{pmatrix}
+            1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+            0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+            0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+            0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 
+        \end{pmatrix} \begin{pmatrix}
+            0 \\
+            0 \\
+            0 \\
+            1 \\
+            0 \\
+            0 \\
+            0 \\
+            0
+        \end{pmatrix} = \begin{pmatrix}
+            0 \\
+            0 \\
+            0 \\
+            1 \\
+            0 \\
+            0 \\
+            0 \\
+            0
+        \end{pmatrix} = \ket{0 1 1}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y vemos que se corresponde a lo previamente explicado. Sin embargo, esto no es todo. Dependiendo del resultado que queramos obtener, vamos a establecer el qubit objetivo (aquel que no es de control) como \( \ket{0} \) o \( \ket{1} \) según la operación que corresponda. Esto es debido a que en la puerta de Toffoli se encuentran intrínsecas muchas de las operaciones que utilizan los ordenadores convencionales.
+    
+    \vspace{5mm}
+
+    Para ver esto mejor, vamos a definir los qubits de control como \( A \) y \( B \) para introducir un caso genérico, y vamos a analizar el comportamiento de esta puerta, que depende del qubit objetivo, que puede ser \( \ket{0} \) o \( \ket{1} \) como hemos mencionado anteriormente
+
+    \vspace{2.5mm}
+    
+    \begin{figure}[!h]
+        \centering
+        \begin{subfigure}[t]{0.45\textwidth}
+            \centering
+            \scalebox{1.0}{
+                $\Qcircuit @C=1em @R=0.8em @!R {
+                    \lstick{\ket{A}} & \ctrl{2} & \rstick{\ket{A}} \qw \\
+                    \lstick{\ket{B}} & \ctrl{1} & \rstick{\ket{B}} \qw \\
+                    \lstick{\ket{0}} & \targ    & \rstick{\ket{A B}} \qw
+                }$
+            }
+            \caption{Puerta AND cuántica}\label{fig: puerta_and_cuantica}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[t]{0.45\textwidth}
+            \centering
+            \scalebox{1.0}{
+                $\Qcircuit @C=1em @R=0.8em @!R {
+                    \lstick{\ket{A}} & \ctrl{2} & \rstick{\ket{A}} \qw \\
+                    \lstick{\ket{B}} & \ctrl{1} & \rstick{\ket{B}} \qw \\
+                    \lstick{\ket{1}} & \targ    & \rstick{\ket{\overline{A B}}} \qw
+                }$
+            }
+            \caption{Puerta NAND cuántica}\label{fig: puerta_nand_cuantica}
+        \end{subfigure}
+        \caption{Puerta de Toffoli. Obtenida de [QCircuit]}\label{fig: puerta_toffoli}
+    \end{figure}
+
+    Estas son, en efecto, las puertas \textit{AND} y \textit{NAND} de la computación clásica. Sin quitarle importancia a la puerta \textit{AND}, la puerta \textit{NAND} tiene una pequeña particularidad, y es que con el conjunto de puertas \textit{NAND} podemos obtener todo el resto de puertas lógicas, y por lo tanto, podríamos obtener un ordenador clásico que utilice únicamente esta puerta. Esto se conoce como un conjunto universal de puertas lógicas, ya que a partir de este conjunto (aunque sea una sola puerta) podemos obtener las demás. 
+    
+    \vspace{5mm}
+    
+    Vamos a ver que esto es realmente así con algunos ejemplos. En la práctica, para que un conjunto sea universal, tenemos que ser capaces de expresar cada puerta lógica (\textit{AND}, \textit{NOT}, \textit{XOR}) mediante puertas que estén dentro del conjunto universal. Para esto vamos a apoyarnos en el \textit{Álgebra de Boole}, el cual nos va a ayudar a explicar el funcionamiento de las puertas lógicas a través de operaciones booleanas. Comencemos por la puerta \textit{NOT}, la cual se representa como \( \overline{\textit{A}} \)
+
+    \begin{equation*}
+        \overline{A} = \overline{A A}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Este resultado es muy intuitivo ya que si tenemos un bit \( A \), el cual puede ser \( 0 \) o \( 1 \), el resultado de multiplicar \( A \) consigo mismo, es decir, aplicar una puerta \textit{AND}, siempre va a ser igual a \( A \) ya que \( A = AA \). El segundo caso va ser la puerta \textit{AND}, la cual podemos expresar en términos de varias \textit{NAND} como sigue
+
+    \begin{equation*}
+        A B = \overline{ \overline{A B} \cdot \overline{A B} }
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Este caso puede parecer menos intuitivo que el anterior, pero sigue siendo muy sencillo. Si aplicamos dos puertas \textit{NOT} sobre un bit \( A \) obtenemos el mismo bit, \( A = \overline{\overline{A}}\), entonces, aplicando también el principio anterior obtenemos que \( \overline{ \overline{A B} \cdot \overline{A B} } = \overline{\overline{A B}} = AB \), como queríamos demostrar. El último caso que vamos a ver va a ser la puerta \textit{OR} de la computación clásica
+
+    \begin{equation*}
+        A + B =  \overline{ \overline{A A} \ \cdot \ \overline{B B} }
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    La cual vemos que también está compuesta por varias puertas \textit{NAND}. Esto lo hemos logrado aplicando la primera demostración, \( \overline{A} = \overline{A A} \), y posteriormente una de las famosas \textit{Leyes de De Morgan}, la cual establece que \( A + B = \overline{\overline{A} \cdot \overline{B}} \). Estos son únicamente algunos de los ejemplos que se han decidido incluir para darnos cuenta que podemos expresar cualquier puerta clásica a partir de puertas de Toffoli, las cuales son la contrapartida cuántica de la puerta \textit{NAND} que forma un conjunto universal, verificando así que toda información clásica puede ser también descrita mediante un ordenador cuántico.
+
+    \vspace{5mm}
+
+    Sin embargo, no vamos a utilizar únicamente puertas de Toffoli para describir información clásica. Esto lo hemos hecho para demostrar la hipótesis anterior, pero en la realidad no se usan únicamente puertas de Toffoli, ya que nos interesa tener el mínimo de puertas lógicas en un algoritmo o proceso cuántico, para reducir su complejidad al mínimo y mejorar al máximo su rendimiento. Tomando como ejemplo uno de los vistos anteriormente, podemos expresar una puerta \textit{AND} clásica utilizando tres puertas de Toffoli con el qubit objetivo en \( \ket{1} \). Sin embargo, nos interesa mucho más expresar dicha puerta mediante una única puerta de Toffoli, esta vez con el qubit objetivo en \( \ket{0} \), de manera que hemos utilizado una única puerta cuántica en lugar de tres, minimizando el número de puertas como acabamos de explicar.
+
+    \vspace{5mm}
+
+    Con esto damos paso a la siguiente sección, en la que trataremos el entrelazamiento cuántico, el cual es uno de los pilares fundamentales de la computación cuántica y puede crearse a partir de puertas cuánticas que actuán sobre múltiples qubits a la vez, como la \textit{CNOT} vista anteriormente en (\ref{subsubsection: la_puerta_cnot}).
+
+        
+        
+        
+        
+
 
 
 

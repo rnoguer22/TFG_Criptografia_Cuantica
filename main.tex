@@ -1882,9 +1882,9 @@
 
     Para una mejor explicación, vamos a comenzar por un espacio de Hilbert de cuatro dimensiones, es decir, un sistema cuántico de dos qubits. Los estados de este sistema se pueden representar como
 
-    \begin{equation*}
+    \begin{equation}
         \ket{0 0} = \ket{0} \otimes \ket{0} = \ket{0} \ket{0}
-    \end{equation*}
+    \end{equation}
 
     \vspace{2.5mm}
 
@@ -2297,7 +2297,7 @@
 
     \vspace{2.5mm}
 
-    Y vemos que se corresponde a lo previamente explicado. Sin embargo, esto no es todo. Dependiendo del resultado que queramos obtener, vamos a establecer el qubit objetivo (aquel que no es de control) como \( \ket{0} \) o \( \ket{1} \) según la operación que corresponda. Esto es debido a que en la puerta de Toffoli se encuentran intrínsecas muchas de las operaciones que utilizan los ordenadores convencionales.
+    Y vemos que se corresponde a lo previamente explicado. Sin embargo, esto no es todo. Dependiendo del resultado que queramos obtener, vamos a establecer el qubit objetivo (aquel que no es de control) como \( \ket{0} \) o \( \ket{1} \) según la operación que corresponda. Esto es debido a que en la puerta de Toffoli se encuentran intrínsecas muchas de las operaciones que utilizan los ordenadores convencionales, por no decir todas y cada una de ellas.
     
     \vspace{5mm}
 
@@ -2373,7 +2373,7 @@
 
         
         
-        
+    
         
 
 
@@ -2386,7 +2386,128 @@
     \mbox{}
 
     \section{Entrelazamiento Cuántico}\label{sec: entrelazamiento_cuantico}
+
+    \vspace{5mm}
+    En esta sección vamos a introducirnos mucho más detalladamente en el \textit{entrelazamiento cuántico}, el cual es uno de los fenómenos más importantes de esta revolución cuántica. Ya dimos al definir la puerta \textit{CNOT} en (\ref{subsubsection: la_puerta_cnot}) una definición muy informal de entrelazamiento cuántico, en la que decíamos que si tenemos dos qubits entrelazados entre sí, un cambio en el estado de uno de ellos afectaba al otro y viceversa. Esto es una propiedad muy potente, ya que nos permite enviar información cuántica, lo cual veremos al final de este capítulo, o en el ámbito de la criptografía generar claves que sean indescifrables, además de otras muchas explotaciones que podemos conseguir con este fenómeno. Para entender mucho mejor esto, vamos a partir de un estado de dos qubits como ya vimos en (\ref{eq: superposicion_qubit_2_estados})
+
+    \begin{equation*}
+        \ket{\psi} = c_{0} \ket{0 0} + c_{1} \ket{0 1} + c_{2} \ket{1 0} + c_{3} \ket{1 1}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Ya vimos que la probabilidad de obtener \( \ket{0 0} \) en la medición de \( \ket{\psi} \) es \( | c_{0} |^{2} \), midiendo \( \ket{0 1} \) sería \( | c_{1} |^{2} \), y así sucesivamente, siendo la suma del módulo cuadrado de estos coeficientes igual a la unidad. Ahora viene lo nuevo, y es que podemos medir uno de los qubits de \( \ket{\psi} \) individualmente. Si medimos por ejemplo el qubit izquierdo, obtendremos los estados \( \ket{0} \) o \( \ket{1} \) con una cierta probabilidad, las cuales son, en el caso de obtener \( \ket{0} \) 
+
+    \begin{equation*}
+        | c_{0} |^{2} + | c_{1} |^{2}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    En definitiva, la probabilidad de obtener \( \ket{0} \) es igual a la suma del módulo cuadrado de los coeficientes que tienen el qubit que estamos midiendo en \( \ket{0} \). Esto se aplica de la misma manera si medimos \( \ket{1} \), siendo la probabilidad de
+
+    \begin{equation*}
+        | c_{2} |^{2} + | c_{3} |^{2}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Pero ahora nos puede surgir una duda, ¿A qué estado colapsa \( \ket{\psi} \)? Simplemente colapsa a la superposición de estados cuyo qubit izquierdo es \( \ket{0} \). En nuestro caso, si al medir el qubit de la izquierda este ha colpasado a \( \ket{0} \), nos quedamos con los estados cuyo qubit izquierdo es \( \ket{0} \) y sus respectivos coeficientes, por lo que obtendríamos
+    
+    \begin{equation*}
+        \ket{\psi} = A \left( c_{0} \ket{0 0} + c_{1} \ket{0 1} \right)
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Siendo \textit{A} una constante de normalización, para que el producto escalar de \( \ket{\psi} \) consigo mismo sea la unidad \( \braket{\psi \ | \ \psi} = 1 \), como debería de ser. Esto aplica de igual manera en el caso de obtener \( \ket{1} \) como resultado de la medición, colapsando \( \ket{\psi} \) en 
+
+    \begin{equation*}
+        \ket{\psi} = B \left( c_{2} \ket{1 0} + c_{3} \ket{1 1} \right)
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Calculando estas constantes, obtenemos ambos estados normalizados
+
+    \begin{equation}
+        \frac{c_{0} \ket{0 0} + c_{1} \ket{0 1}}{\sqrt{| c_{0} |^{2} + | c_{1} |^{2}}}, \qquad \frac{c_{2} \ket{1 0} + c_{3} \ket{1 1}}{\sqrt{| c_{2} |^{2} + | c_{3} |^{2}}}
+        \label{eq: estados_normalizados}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Pero, ¿Qué ocurre si vamos un paso más allá? Efectivamente, ahora vamos a medir el qubit derecho, partiendo de uno de los estados que acabamos de ver en (\ref{eq: estados_normalizados}), demostrando así que podemos medir los qubits secuencialmente, uno después del otro, y esto se puede aplicar para un sistema de \textit{N} qubits, pero de momento vamos a seguir con nuestro ejemplo de dos qubits para simplificar cálculos.
+
+    \vspace{5mm}
+
+    Vamos a demostrar que si ahora medimos \( \ket{\psi} \), obtenemos las mismas probabilidades de colapsar en \( \ket{0 0} \), \( \ket{0 1} \), \( \ket{1 0} \) o \( \ket{1 1} \). Hemos de tener en cuenta para este cálculo que primero hemos obtenido un estado con una cierta probabilidad, por lo que la probabilidad total será el producto de la probabilidad de haber obtenido la primera medición por la segunda, quedando
+
+    \begin{align*}
+        \ket{0 0} &\rightarrow \left(| c_{0} |^{2} + | c_{1} |^{2}\right) \frac{| c_{0} |^{2}}{\left( \sqrt{| c_{0} |^{2} + | c_{1} |^{2}} \right)^{2}} = | c_{0} |^{2} \\[5pt]
+        \ket{0 1} &\rightarrow \left(| c_{0} |^{2} + | c_{1} |^{2}\right) \frac{| c_{1} |^{2}}{\left( \sqrt{| c_{0} |^{2} + | c_{1} |^{2}} \right)^{2}} = | c_{1} |^{2} \\[5pt]
+        \ket{1 0} &\rightarrow \left(| c_{2} |^{2} + | c_{3} |^{2}\right) \frac{| c_{2} |^{2}}{\left( \sqrt{| c_{2} |^{2} + | c_{3} |^{2}} \right)^{2}} = | c_{2} |^{2} \\[5pt]
+        \ket{1 1} &\rightarrow \left(| c_{2} |^{2} + | c_{3} |^{2}\right) \frac{| c_{3} |^{2}}{\left( \sqrt{| c_{2} |^{2} + | c_{3} |^{2}} \right)^{2}} = | c_{3} |^{2} \\[5pt]
+    \end{align*}
+
+    \vspace{2.5mm}
+
+    Y vemos que en efecto estas son las probabilidades iniciales, por lo que acabamos de demostrar que medir el estado de una partícula \( \ket{\psi} \) es lo mismo que medir cada uno de sus qubits secuencialmente, o al menos eso es lo que parece. Esto generalmente es cierto para cualquier \( \ket{\psi} \) siempre y cuando sus qubits no estén entrelazados, ya que si realmente lo están, esto cambia completamente. Supongamos el siguiente estado
+
+    \begin{equation*}
+        \ket{\Phi^{+}} = \frac{1}{\sqrt{2}} \left( \ket{0 0} + \ket{1 1} \right)
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    La probabilidad de obtener \( \ket{0} \) o \( \ket{1} \) en la medición del primer qubit es de \( \frac{1}{2} \), siendo la misma probabilidad para ambos estados. Siguiendo (\ref{eq: estados_normalizados}), si obtenemos \( \ket{0} \), el estado \( \ket{\psi} \) colapsa a 
+
+    \begin{equation*}
+        \ket{\psi} = A \left( \frac{1}{\sqrt{2}} \ket{0 0} \right)
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    De donde sabemos que la constante de normalización \textit{A} es
+
+    \begin{equation*}
+        A = \frac{1}{\sqrt{| c_{0} |^{2}}} = \frac{1}{c_{0}} = \sqrt{2}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Por lo tanto el estado de nuestro sistema es
+
+    \begin{equation*}
+        \ket{\psi} = \ket{0 0}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y la segunda medición es trivial, ya que hemos obtenido directamente el estado \( \ket{0 0} \). Aplicando lo mismo pero en este caso suponiendo que hemos obtenido \( \ket{1} \) tras la primera medición, tenemos de manera análoga que
+
+    \begin{equation*}
+        \ket{\psi} = \ket{1 1}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y esto es nuestro primer caso de entrelazamiento, ya que hemos medido el estado de uno de los qubits de \( \ket{\Phi^{+}} \), y el resultado de la primera medición afecta directamente a la anterior. En este caso, decimos que \( \ket{\Phi^{+}} \) es un \textit{estado máximo entrelazado}, ya que tras la primera medición obtenemos directamente el resultado final con una probabilidad de 1. Esto no siempre tiene por qué ser así, como veremos más adelante, un estado parcialmente entrelazado es muy parecido a esto que acabamos de ver, simplemente que la probabilidad después de la primera medición no es 1, sino que obtendremos unas probabilidades de medición para distintos estados que, por supuesto, al tratarse de qubits entrelazados, estas probabilidades se encuentran condicionadas por el resultado de la medición anterior.
+
+    \vspace{5mm}
+
+
+
+
+    
     \subsection{Estados de Bell}
+
+    \vspace{5mm}
+
+    
+
+    \vspace{5mm}
+
     \subsection{Codificación Superdensa}
     \subsection{Teleportación Cuántica}
 
@@ -2448,7 +2569,6 @@
     \newpage
     \thispagestyle{empty}
     \mbox{}
-    \newpage
 
     \section{Bibliografía}
 

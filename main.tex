@@ -2523,6 +2523,7 @@
         \textit{CNOT} \ket{-} \ket{0} &= \textit{CNOT} \frac{1}{\sqrt{2}} \left( \ket{0 0} - \ket{1 0} \right) = \frac{1}{\sqrt{2}} \left( \ket{0 0} - \ket{1 1} \right) = \ket{\Phi^{-}}, \\[5pt]
         \textit{CNOT} \ket{+} \ket{1} &= \textit{CNOT} \frac{1}{\sqrt{2}} \left( \ket{0 1} + \ket{1 1} \right) = \frac{1}{\sqrt{2}} \left( \ket{0 1} + \ket{1 0} \right) = \ket{\Psi^{+}}, \\[5pt]
         \textit{CNOT} \ket{-} \ket{1} &= \textit{CNOT} \frac{1}{\sqrt{2}} \left( \ket{0 1} - \ket{1 1} \right) = \frac{1}{\sqrt{2}} \left( \ket{0 1} - \ket{1 0} \right) = \ket{\Psi^{-}}.
+        \label{eq: estados_bell}
     \end{align}
 
     \vspace{2.5mm}
@@ -2555,7 +2556,59 @@
 
     \vspace{5mm}
 
+    Como hemos introducido anteriormente, no todos los estados en entrelazamiento nos garantizan con total certeza el estado de la siguiente medición secuencial como hemos estado viendo hasta ahora con los estados de Bell, existen otros muchos estados en entrelazamiento (la gran mayoría) que se denominan estados parcialmente entrelazados, y esto en definitiva es, que no se garantiza el estado de la siguiente medición secuencial al medir qubits entrelazados. Para ver esto, vamos a considerar el siguiente estado:
 
+    \begin{equation*}
+        \ket{\psi} = \frac{\sqrt{3}}{2 \sqrt{2}} \ket{0 0} + \frac{\sqrt{3}}{2 \sqrt{2}} \ket{0 1} + \frac{\sqrt{3}}{4} \ket{1 0} + \frac{1}{4} \ket{1 1} 
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Si medimos el qubit izquierdo, obtenemos \( \ket{0} \) con una probabilidad de \( \frac{3}{4} \) ya que
+
+    \begin{equation*}
+        \left| \frac{\sqrt{3}}{2 \sqrt{2}} \right|^{2} + \left| \frac{\sqrt{3}}{2 \sqrt{2}} \right|^{2} = 2 \ \frac{3}{8} = \frac{3}{4}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y el estado colapsa a 
+
+    \begin{equation*}
+        \ket{\psi} = A \left( \frac{\sqrt{3}}{2 \sqrt{2}} \ket{0 0} + \frac{\sqrt{3}}{2 \sqrt{2}} \ket{0 1} \right)
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y la constante de normalización \textit{A} la podemos obtener de múltiples maneras. La más intuitiva es sabiendo que la probabilidad total ha de ser igual a 1, obteniendo el valor de \textit{A}
+
+    \begin{equation*}
+        \left| A \ \frac{\sqrt{3}}{2 \sqrt{2}} \right|^{2} + \left| A \ \frac{\sqrt{3}}{2 \sqrt{2}} \right|^{2} = 1 \quad \rightarrow \quad A^{2} \ \frac{3}{4} = 1 \quad \rightarrow \quad A = \frac{2}{\sqrt{3}}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y por lo tanto el estado de nuestro qubit colapsa a
+
+    \begin{equation*}
+        \ket{\psi} = \frac{1}{\sqrt{2}} \left( \ket{0 0} + \ket{0 1} \right)  
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Con probabilidades de \( \frac{1}{2} \) de obtener \( \ket{0 0} \) y \( \ket{0 1} \) al medir el segundo qubit. Como podemos observar esto no se trata de un estado máximo entrelazado, ya que la medición del primer qubit no determina instantáneamente el resultado del segundo, sino que obtenemos una probabilidad perfectamente equiparable de \( \frac{1}{2} \), aunque estas probabilidades pueden tener cualquier valor. Para ver esto, vamos a ver el segundo caso, en el que la primera medición da como resultado \( \ket{1} \) con \( \frac{1}{4} \) de probabilidad, colapsando en
+
+    \begin{equation*}
+        \ket{\psi} = \frac{\sqrt{3}}{2} \ket{1 0} + \frac{1}{2} \ket{1 1}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Cuya constante de normalización ya ha sido calculada de la misma manera que en el caso anterior. Esto nos muestra que la probabilidad de obtener \( \ket{1 0} \) es ahora de \( \frac{3}{4} \) y la de obtener \( \ket{1 1} \) de \( \frac{1}{4} \), probando así que los resultados de las mediciones no son los mismos, ya que estamos ante un caso parcialmente entrelazado, ya que el estado de la segunda medición secuencial de \( \ket{\psi} \) depende del resultado de la primera medición, pero no sabemos el resultado tras la primera medición con total certeza, ya que no estamos ante un caso de entrelazamiento de máximo nivel.
+
+    \vspace{5mm}
+
+    Todo esto nos ayudará a entender mucho mejor las aplicaciones de este fenómeno, como lo es el caso de la teleportación cuántica, en el que nos apoyaremos en los estados de Bell vistos en (\ref{eq: estados_bell}) para enviar información cuántica desde un emisor, el cual recibirá el nombre de Alice, y un receptor, que llamaremos Bob. Todo esto lo vamos a ver a continuación.
 
     \vspace{5mm}
 
@@ -2564,6 +2617,12 @@
 
 
     \subsection{Teleportación Cuántica}
+
+    \vspace{5mm}
+
+
+
+    \vspace{5mm}
 
 
 

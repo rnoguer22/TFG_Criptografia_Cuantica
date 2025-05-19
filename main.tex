@@ -2504,11 +2504,65 @@
 
     \vspace{5mm}
 
-    
+    Para crear entrelazamiento, necesitamos una puerta cuántica que actúe sobre más de un qubit al mismo tiempo. Esto no es posible con las puertas cuánticas de un único qubit, vistas en (\ref{subsection: puertas_cuanticas_de_1_qubit}), ya que al aplicar estas puertas el qubit se transforma pero de una manera independiente del resto, al contrario de las puertas que actúan sobre múltiples qubits, cuyas transformaciones generan en algunos casos una relación de dependencia entre pares de qubits, lo que conocemos como entrelazamiento.
 
     \vspace{5mm}
 
-    \subsection{Codificación Superdensa}
+    Un ejemplo que puede crear entrelazamiento y que ya vimos anteriormente es la puerta \textit{CNOT}, y podemos obtener el estado \( \ket{\Phi^{+}} \) que ya demostramos en la sección anterior (\ref{sec: entrelazamiento_cuantico}) que es uno de los cuatro estados máximos entrelazados, aplicando una puerta \textit{CNOT} sobre \( \ket{+} \) y \( \ket{0} \):
+    
+    \begin{equation*}
+        \textit{CNOT} \ket{+} \ket{0} = \textit{CNOT} \frac{1}{\sqrt{2}} \left( \ket{0 0} + \ket{1 0} \right) = \frac{1}{\sqrt{2}} \left( \ket{0 0} + \ket{1 1} \right) = \ket{\Phi^{+}}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Esto ocurre para todas las combinaciones entre la base sobre el eje \( \textit{X} = \{ \ket{+}, \ket{-} \} \) y sobre el eje \( \textit{Z} = \{ \ket{0}, \ket{1} \} \), obteniendo los cuatro estados máximos entrelazados, conocidos como \textit{Estados de Bell}:
+
+    \begin{align}
+        \textit{CNOT} \ket{+} \ket{0} &= \textit{CNOT} \frac{1}{\sqrt{2}} \left( \ket{0 0} + \ket{1 0} \right) = \frac{1}{\sqrt{2}} \left( \ket{0 0} + \ket{1 1} \right) = \ket{\Phi^{+}}, \\[5pt]
+        \textit{CNOT} \ket{-} \ket{0} &= \textit{CNOT} \frac{1}{\sqrt{2}} \left( \ket{0 0} - \ket{1 0} \right) = \frac{1}{\sqrt{2}} \left( \ket{0 0} - \ket{1 1} \right) = \ket{\Phi^{-}}, \\[5pt]
+        \textit{CNOT} \ket{+} \ket{1} &= \textit{CNOT} \frac{1}{\sqrt{2}} \left( \ket{0 1} + \ket{1 1} \right) = \frac{1}{\sqrt{2}} \left( \ket{0 1} + \ket{1 0} \right) = \ket{\Psi^{+}}, \\[5pt]
+        \textit{CNOT} \ket{-} \ket{1} &= \textit{CNOT} \frac{1}{\sqrt{2}} \left( \ket{0 1} - \ket{1 1} \right) = \frac{1}{\sqrt{2}} \left( \ket{0 1} - \ket{1 0} \right) = \ket{\Psi^{-}}.
+    \end{align}
+
+    \vspace{2.5mm}
+
+    Y podemos demostrar de manera análoga a la vista para \( \ket{\Phi^{+}} \) que si medimos uno de los dos qubits y secuencialmente medimos el otro, el estado que obtenemos al medir por segunda vez esta directamente relacionado con la medición anterior, confirmando que estos estados son estados máximamente entrelazados. Otra propiedad de un estado entrelazado es que no se pueden expresar como un producto de otros estados. Para ello vamos a tomar como ejemplo el estado de Bell \( \ket{\Phi^{+}} \) y lo vamos a intentar expresar en función del producto de dos estados \( \ket{\psi_{1}} \ket{\psi_{0}} \):
+
+    \begin{equation}
+        \ket{\psi_{1}} \ket{\psi_{0}} = \left( \alpha_{1} \ket{0} \beta_{1} \ket{0} \right) \left( \alpha_{1} \ket{0} \beta_{1} \ket{0} \right) = \alpha_{1} \alpha_{0} \ket{0 0} + \alpha_{1} \beta_{0} \ket{0 1} + \beta_{1} \alpha_{0} \ket{1 0} + \beta_{1} \beta_{0} \ket{1 1}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Y aplicando esto a \( \ket{\Psi^{+}} \) llegamos a 
+
+    \begin{equation*}
+        \alpha_{1} \alpha_{0} = \frac{1}{\sqrt{2}}, \quad \alpha_{1} \beta_{0} = 0, \quad \beta_{1} \alpha_{0} = 0, \quad \beta_{1} \beta_{0} = \frac{1}{\sqrt{2}}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y vemos que estas soluciones son muy inconsistentes y se contradicen unas con otras. Esto tambíen nos indica que \( \ket{\Psi^{+}} \) no se puede expresar como un producto de estados \( \ket{\psi_{1}} \ket{\psi_{0}} \) y que por lo tanto, es un estado en entrelazamiento. De manera análoga podemos demostrar que cada uno de los distintos estados de Bell son efectivamente estados entrelazados. A continuación vamos a ver estados que se encuentran parcialmente en entrelazamiento, ya que en esta sección hemos visto únicamente los estados de Bell que son todos estados máximos entrelazados, de esta manera tendremos una visión mucho más clara de como funciona este fenómeno de la computación cuántica y posteriormente veremos algunas de las aplicaciones más importantes que tienen.
+
+    \vspace{5mm}
+
+
+
+
+
+    \subsubsection{Estados Parcialmente Entrelazados}
+
+    \vspace{5mm}
+
+
+
+    \vspace{5mm}
+
+
+
+
+
     \subsection{Teleportación Cuántica}
 
 

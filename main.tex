@@ -1,10 +1,10 @@
-\documentclass{article}
+\documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
-
-% Necesario para usar fuentes del sistema
-% \usepackage{fontspec} 
-% \setmainfont{Arial} 
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+%\usepackage{fontspec}
+% \setmainfont{Arial}
 
 \usepackage{graphicx} % Required for inserting images
 \usepackage{imakeidx}
@@ -53,7 +53,7 @@
 
 % Encabezado y pie de página guapo
 \usepackage{fancyhdr}
-\setlength{\headheight}{12.5pt}
+\setlength{\headheight}{14.5pt}
 \pagestyle{fancy} 
 \fancyhf{} % Limpia los valores predeterminados     
 \fancyhead[R]{\textit{\rightmark}} % Sección o subsección actual en la parte superior derecha
@@ -2617,6 +2617,143 @@
 
 
     \subsection{Teleportación Cuántica}
+
+    \vspace{5mm}
+
+    En esta sección vamos a explicar la teleportación cuántica, el cual es un fenómeno muy importante que surge a partir del entrelazamiento cuántico visto anteriormente en (\ref{sec: entrelazamiento_cuantico}). Este es un proceso en el que utilizaremos bits para enviar información cuántica, y con esto nos referimos al estado de un qubit en superposición \( \ket{\psi} = \alpha \ket{0} + \beta \ket{1} \) de un punto a otro, en el que pondremos nombre propio al emisor, Alice, y también al receptor, comúnmente conocido como Bob.
+
+    \vspace{5mm}
+
+    Llegados a este punto puede surgirnos una duda, ¿Por qué no enviamos la información cuántica directamente desde Alice hasta Bob? De esta manera nos ahorraríamos el uso de bits, sin embargo, esto no es posible, y para explicar esto nos vamos a basar en dos principios básicos que impiden esto, el \textit{Teorema de no-clonación} y la \textit{decoherencia}. Comencemos por el \textit{Teorema de no-clonación}.
+
+    \vspace{5mm}
+
+    \subsubsection{Teorema de No-Clonación}
+
+    \vspace{5mm}
+
+    Supongamos que tengamos una partícula \( \ket{\psi} \) cuyo estado es conocido, como por ejemplo \( \ket{+} \). Esto nos permite clonar el estado de \( \ket{\psi} \) simplemente aplicando una puerta de Hadamard sobre \( \ket{0} \), creando tantas copias de \( \ket{\psi} \) como queramos:
+
+    \begin{equation*}
+        \ket{+} \ket{0} \ \overset{I \otimes H}{\longrightarrow} \ \ket{+} \ket{+}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    De manera que clonar el estado de un qubit conocido no es problema, el problema viene cuando no es conocido, como en el caso que acabamos de ver de enviar el estado de un qubit en superposición de Alice a Bob
+
+    \begin{equation}
+        \ket{\psi} = \alpha \ket{0} + \beta \ket{1}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Para conseguir duplicar el estado de \( \ket{\psi} \) necesitamos una puerta cuántica que satisfaga
+
+    \begin{equation*}
+        \ket{\psi} \ket{0} \ \overset{U}{\longrightarrow} \ \ket{\psi} \ket{\psi}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Esta puerta cuántica la vamos a denotar como \textit{U}, de unitario, una de las propiedades que han de cumplir estas puertas y que ya vimos en (\ref{eq: puertas_cuanticas_unitarias}). Entonces, se ha de satisfacer lo siguiente:
+    
+    \begin{equation*}
+        U \ket{\psi} \ket{0} = \ket{\psi} \ket{\psi}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y apoyándonos en el álgebra lineal, podemos obtener un sistema de ecuaciones que satisfaga la condición anterior:
+
+    \begin{gather*}
+        \begin{pmatrix}
+            U_{11} & U_{12} & U_{13} & U_{14} \\
+            U_{21} & U_{22} & U_{23} & U_{24} \\
+            U_{31} & U_{32} & U_{33} & U_{34} \\
+            U_{41} & U_{42} & U_{43} & U_{44}
+        \end{pmatrix} \begin{pmatrix}
+            \alpha \\
+            \beta
+        \end{pmatrix} \otimes \begin{pmatrix}
+            1 \\
+            0
+        \end{pmatrix} = \begin{pmatrix}
+            \alpha \\
+            \beta
+        \end{pmatrix} \otimes \begin{pmatrix}
+            \alpha \\
+            \beta
+        \end{pmatrix} \\[5pt]
+        \begin{pmatrix}
+            U_{11} & U_{12} & U_{13} & U_{14} \\
+            U_{21} & U_{22} & U_{23} & U_{24} \\
+            U_{31} & U_{32} & U_{33} & U_{34} \\
+            U_{41} & U_{42} & U_{43} & U_{44}
+        \end{pmatrix} \begin{pmatrix}
+            \alpha \\
+            0 \\
+            \beta
+            0 \\
+        \end{pmatrix} = \begin{pmatrix}
+            \alpha^{2} \\
+            \alpha \beta \\
+            \alpha \beta \\
+            \beta^{2}
+        \end{pmatrix} \\[5pt]
+        \begin{pmatrix}
+            U_{11} \alpha + U_{13} \beta \\
+            U_{21} \alpha + U_{23} \beta \\
+            U_{31} \alpha + U_{33} \beta \\
+            U_{41} \alpha + U_{43} \beta 
+        \end{pmatrix} = \begin{pmatrix}
+            \alpha^{2} \\
+            \alpha \beta \\
+            \alpha \beta \\
+            \beta^{2}
+        \end{pmatrix}
+    \end{gather*}
+
+    \vspace{2.5mm}
+
+    Y con esto podemos ver perfectamente que las soluciones de este sistema dependen de \( \alpha \) y \( \beta \), por lo que acabamos de demostrar que no podemos clonar ningún estado desconocido, ya que para ello necesitamos saber el valor de \( \alpha \) y de \( \beta \).
+
+    \vspace{5mm}
+
+    \subsubsection{Decoherencia}
+
+    \vspace{5mm}
+
+    El otro fenómeno que hace imposible duplicar el estado de \( \ket{\psi} \) se conoce como decoherencia. La decoherencia es un fenómeno que sucede cuando un sistema cuántico interactúa con las propiedades del entorno, y como resultado podemos perder información, ya que lo que sucede es que el estado nuestro sistema cuántico \( \ket{\psi} \) se ve alterado, por lo que si tenemos un qubit en \( \ket{0} \), este puede verse ligeramente afectado por la decoherencia, cambiando su valor, como podemos ver en el siguiente ejemplo:
+
+    \vspace{2.5mm}
+
+    \begin{figure}[!h]
+        \centering
+        \begin{subfigure}[t]{0.45\textwidth}
+            \centering
+            \includegraphics[width=0.70\textwidth]{./img/Bloch/bloch_state_0.png}
+            \caption{Estado \( \ket{0} \)}\label{fig: estado_0}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[t]{0.45\textwidth}
+            \centering
+            \includegraphics[width=0.70\textwidth]{./img/Bloch/bloch_state_0.png}
+            \caption{Estado alterado por la decoherencia}\label{fig: estado_alterado_decoherencia}
+        \end{subfigure}
+    \end{figure}
+
+    \vspace{2.5mm}
+
+    Y esto puede ocurrir en múltiples escenarios, por ejemplo en casos de ruido térmico, ya que en este suceso las partículas tienen un cierto ruido térmico, siendo esto una de las principales causas de las alteraciones del estado de los qubits (decoherencia). Es por esto que los ordenadores cuánticos actuales se enfrían los máximo posible, hasta temperaturas del cero absoluto para evitar esta decoherencia producida por el ruido térmico. Otros hechos que pueden provocar decoherencia son la interferencia electromagnética, producida por ejemplo por ondas de microondas, o simplemente defectos en la fabricación de un ordenador cuántico. 
+
+    \vspace{5mm}
+
+    Es por esto que los ordenadores cuánticos son realmente especiales y han de ser tratados con mucha delicadeza, y tenemos que mantenerlos alejados de cualquier interacción que puedan tener con su entorno. Incluso la medición de un qubit puede causar decoherencia, lo que nos ha llevado a la necesidad de métodos y sistemas de corrección de errores cuánticos, causados por estos problemas.
+
+    \vspace{5mm}
+
+    \subsubsection{Teleportación Cuántica}
 
     \vspace{5mm}
 

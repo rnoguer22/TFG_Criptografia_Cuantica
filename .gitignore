@@ -9,6 +9,7 @@ main.fls
 main.ilg
 main.ind
 main.synctex.gz
+main.bbl
 .gitignore
 entregas
 code/quantum_venv

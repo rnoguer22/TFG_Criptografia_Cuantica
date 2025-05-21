@@ -41,8 +41,9 @@
     citecolor=blue,      % Color de los enlaces de citas
     filecolor=magenta,   % Color de los enlaces a archivos
     urlcolor=darkblue,      % Color de los enlaces a URLs
-    urlfont=\sffamily % Esto fuerza los URLs a usar la fuente sans-serif (Helvetica)
 }
+
+\renewcommand{\UrlFont}{\sffamily\small}
 
 \makeindex
 \setlength{\parindent}{12pt}
@@ -2050,7 +2051,7 @@
     
 
 
-    \subsection{Puertas Cuánticas de Múltiples Qubits}
+    \subsection{Puertas Cuánticas de Múltiples Qubits}\label{subsection: puertas_cuanticas_multiples_qubits}
 
     \vspace{5mm}
 
@@ -2621,7 +2622,7 @@
 
 
 
-    \subsection{Teleportación Cuántica}
+    \subsection{Teleportación Cuántica}\label{subsection: teleportacion_cuantica}
 
     \vspace{5mm}
 
@@ -2633,7 +2634,7 @@
 
     \vspace{5mm}
 
-    \subsubsection{Teorema de No-Clonación}
+    \subsubsection{Teorema de No-Clonación}\label{subsubsection: teorema_no_clonacion}
 
     \vspace{5mm}
 
@@ -2762,9 +2763,95 @@
 
     \vspace{5mm}
 
-
+    Una vez ya hemos aclarado por qué no podemos enviar información cuántica directamente y la razón por la que tenemos que apoyarnos en información clásica (bits), vamos a entrar de lleno en la teleportación cuántica. Como ya introdujimos anteriormente en (\ref{subsection: teleportacion_cuantica}), vamos enviar el estado de un qubit cuántico \( \ket{\psi} = \alpha \ket{0} + \beta \ket{1} \) de Alice a Bob, apoyándonos en información clásica y en el entrelazamiento, aplicando todas las propiedades que el entrelazamiento tiene sobre \( \ket{\psi} \).
 
     \vspace{5mm}
+
+    Como no conocemos el estado de \( \ket{\psi} \), Alice no puede duplicarlo sobre un qubit de Bob, como ya vimos en el \textit{Teorema de no-clonación} (\ref{subsubsection: teorema_no_clonacion}), por lo que no podemos comunicarle directamente a Bob el estado de \( \ket{\psi} \). Es este caso uno de los muchos usos del entrelazamiento, en el que le podremos decir a Bob el estado de \( \ket{\psi} \) utilizando únicamente dos bits. Imaginemos que Alice y Bob comparten dos qubits entrelazados en el estado \( \ket{\Phi^{+}} \), de manera que Alice posee dos qubits, \( \ket{\psi} \) el cual es el que queremos transmitir a Bob, y uno de los dos qubits de \( \ket{\Phi^{+}} \), mientras que Bob posee el otro qubit de \( \ket{\Phi^{+}} \), quedando los tres qubits en
+
+    \begin{gather*}
+        \ket{\psi} \ket{\Phi^{+}} = \alpha \ket{0} \ket{\Phi^{+}} + \beta \ket{1} \ket{\Phi^{+}} = \alpha \ket{0} \frac{1}{\sqrt{2}} \left( \ket{0 0} + \ket{1 1} \right) + \beta \ket{1} \frac{1}{\sqrt{2}} \left( \ket{0 0} + \ket{1 1} \right) = \\[5pt]
+        = \frac{1}{\sqrt{2}} \left[ \alpha \left( \ket{0 0 0} + \ket{0 1 1} \right) + \beta \left( \ket{1 0 0} + \ket{1 1 1} \right)\right]
+    \end{gather*}
+
+    \vspace{2.5mm}
+
+    Entonces, el objetivo que tenemos ahora es expresar el estado del qubit de Bob en función de \( \alpha \) y \( \beta \), y debido a que se encuentra entrelazado con uno de los qubits de Alice, Bob va a poder saber el estado de \( \ket{\psi} \) antes de la medición, ya que tendremos que medir el qubit entrelazado de Alice, lo cual afectará directamente al qubit entrelazado de Bob al encontrarse ambos en un estado máximo de entrelazamiento, y Bob podrá conocer de esta manera el estado de \( \ket{\psi} \). Comencemos aplicando una puerta \textit{CNOT} sobre los dos qubits de Alice, los cuales son el qubit izquierdo y el central, obteniendo el siguiente resultado:
+
+    \begin{equation*}
+        \frac{1}{\sqrt{2}} \left[ \alpha \left( \ket{0 0 0} + \ket{0 1 1} \right) + \beta \left( \ket{1 0 0} + \ket{1 1 1} \right)\right] \ \overset{\textit{CNOT}}{\longrightarrow} \ \frac{1}{\sqrt{2}} \left[ \alpha \left( \ket{0 0 0} + \ket{0 1 1} \right) + \beta \left( \ket{1 1 0} + \ket{1 0 1} \right)\right]
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y a continuación aplicamos una puerta de Hadamard sobre el qubit izquierdo de Alice, y operando obtenemos el siguiente resultado:
+
+    \begin{gather*}
+        \frac{1}{\sqrt{2}} \left[ \alpha \left( \ket{0 0 0} + \ket{0 1 1} \right) + \beta \left( \ket{1 1 0} + \ket{1 0 1} \right)\right] \ \overset{H}{\longrightarrow} \ \frac{1}{\sqrt{2}} \left[ \alpha \left( \ket{+ 0 0} + \ket{+ 1 1} \right) + \beta \left( \ket{- 1 0} + \ket{- 0 1} \right)\right] = \\[5pt]
+        = \frac{1}{2} \left[ \alpha \left( \ket{0} + \ket{1} \right) \left( \ket{0 0} + \ket{1 1} \right) + \beta \left( \ket{0} - \ket{1} \right) \left( \ket{1 0} + \ket{0 1} \right) \right] = \\[5pt]
+        = \frac{1}{2} \left[ \ket{0 0} \left( \alpha \ket{0} + \beta \ket{1} \right) + \ket{0 1} \left( \beta \ket{0} + \alpha \ket{1} \right) + \ket{1 0} \left( \alpha \ket{0} - \beta \ket{1} \right) + \ket{1 1} \left( - \beta \ket{0} + \alpha \ket{1} \right) \right]
+    \end{gather*}
+
+    \vspace{2.5mm}
+
+    En esto se resume, a falta del procedimiento a seguir tras la medición, la teleportación cuántica, cuyo circuito viene recogido de la siguiente manera:
+
+    \begin{figure}[h!]
+        \centering
+        \[
+        \Qcircuit @C=1em @R=1.5em {
+        & \qw & \qw      & \qw      & \qw       & \qw & \qw & \qw & \gate{X} \cwx & \qw & \gate{Z} \qw & \rstick{|\psi\rangle} \qw \\
+                                & \qw & \targ    & \qw & \qw & \qw & \meter  & \cw & \control \cwx \cw & \cw & \cwx \cw & \cw & \\
+        \lstick{|\psi\rangle}   & \qw & \ctrl{-1}    & \qw & \gate{H} & \qw & \meter  & \cw & \cw & \cw & \control \cwx \cw & \cw & \\
+        \inputgroupv{1}{2}{0.8em}{1.5em}{\ket{\Phi^+}} \ 
+        }
+        \]
+        \caption{Teleportación cuántica. Circuito cuántico. Obtenida de [QCircuit]}\label{fig: circuito_teleportacion}
+        \end{figure}
+
+    \vspace{2.5mm}
+
+    Ahora es cuando viene el momento de la medición. Si Alice mide sus dos qubits, estos colapsarán a uno de los siguientes estados con una probabilidad equiparable de \( \frac{1}{4} \):
+
+    \begin{align}
+        \ket{0 0} &\left( \alpha \ket{0} + \beta \ket{1} \right)\label{eq: medicion_1} \\[5pt]
+        \ket{0 1} &\left( \beta \ket{0} + \alpha \ket{1} \right)\label{eq: medicion_2} \\[5pt]
+        \ket{1 0} &\left( \alpha \ket{0} - \beta \ket{1} \right)\label{eq: medicion_3} \\[5pt]
+        \ket{1 1} &\left( - \beta \ket{0} + \alpha \ket{1} \right)\label{eq: medicion_4}
+    \end{align}
+
+    \vspace{2.5mm}
+    Y aquí ya tenemos los qubits de Alice, los cuales ya vemos que han colapsado a \( \ket{0 0} \), \( \ket{0 1} \), \( \ket{1 0} \) o \( \ket{1 1} \), y tenemos también el qubit de Bob expresado en función de \( \alpha \) y \( \beta \), de manera que Alice solo tiene que comunicarle a Bob el resultado de la medición de sus dos qubits, y dependiendo del resultado, Bob tendrá que aplicar una determinada puerta cuántica a su qubit, obteniendo finalmente \( \ket{\psi} \):
+
+    \begin{itemize}
+        \item Si la medición colapsó a \( \ket{0 0} \) (\ref{eq: medicion_1}), Bob ya tiene directamente su qubit en el mismo que estado que \( \ket{\psi} \), por lo que no tendríamos que aplicar ninguna puerta cuántica.
+        \item Si tras la medición obtenemos \( \ket{0 1} \) (\ref{eq: medicion_2}), Bob aplicará una puerta \textit{NOT} (o puerta \textit{X}) para obtener \( \ket{\psi} \).
+        \item Si obtenemos \( \ket{1 0} \) (\ref{eq: medicion_3}) tras la medición, simplemente Bob aplica una puerta \textit{Z} a su qubit, llegando finalmente a \( \ket{\psi} \).
+        \item Y si por último Alice obtiene \( \ket{1 1} \) (\ref{eq: medicion_4}) tras la medición, Bob aplicaría una puerta \textit{X} seguida de una \textit{Z} para obtener \( \ket{\psi} \).
+    \end{itemize}
+
+    \vspace{5mm}
+
+    Y esta es la magia de la teleportación cuántica, la cual surge ante el problema de no poder enviar físicamente información cuántica debido a problemas como el teorema de no-clonación o la decoherencia. Es por esto que aprovechamos las propiedades del entrelazamiento cuántico para asentar las bases que nos permiten describir el estado de un qubit de un emisor, en este caso Alice, a un receptor, Bob, tomando de la mano el uso de puertas cuánticas vistas en (\ref{subsection: puertas_cuanticas_multiples_qubits}) como la \textit{CNOT} y la puerta de Hadamard \textit{H}.
+
+    \vspace{5mm}
+
+
+
+
+
+    \subsection{Encriptación Cuántica. BB84}
+
+    \vspace{5mm}
+
+
+
+    \vspace{10mm}
+
+
+
+
+
 
 
 

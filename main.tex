@@ -2844,7 +2844,107 @@
 
     \vspace{5mm}
 
+    Digamos ahora que Alice y Bob quieren mandar un mensaje, pero de manera segura, ya que la información enviada entre ambos pueden ser datos confidenciales, contraseñas, etc. Es por esto ciertas personas nos van a intentar robar esta información, y a estas personas se suelen nombrar comúnmente como Eve, y de la misma manera que en la computación clásica se establece una clave pública y privada para que Bob descifre la información enviada por Alice. Es en esto en lo que se basa el protocolo que vamos a ver en este capítulo, BB84.
 
+    \vspace{5mm}
+
+    Aunque es cierto que BB84 no necesita entrelazamiento, nos servirá para asentar las bases de un sistema de encriptación más complejo, E91 (\ref{subsection: e91}), el cual sí usa entrelazamiento y es un protocolo muy seguro y usado hoy día en computación cuántica. Estos son solo un par de ejemplos de QKD (Quantum Key Distribution), métodos o protocolos en el que por medio de una encriptación cuántica aseguramos la la seguridad e integridad de la información transmitida. Comencemos por el primer paso de BB84, en el que el emisor, en este caso Alice, selecciona un conjunto de bits, y para cada bit se escoge aleatoriamente una base, que puede ser la base en el eje \textit{Z} \( \{ \ket{0}, \ket{1} \} \) o en el eje \textit{X} \( \{ \ket{+}, \ket{-} \} \), como se puede ver recogido en la siguiente tabla:
+
+    \vspace{2.5mm}
+
+    \begin{figure}[H]
+        \centering
+        \renewcommand{\arraystretch}{1.25} 
+        \begin{tabular}{|l|ccccccccc|}
+            \hline
+            Bits de Alice & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 1 \\
+            Bases de Alice & X & Z & Z & X & X & Z & X & Z & Z \\ \hline
+        \end{tabular}
+        \caption{Primer paso de BB84.}\label{fig: primer_paso_bb84}
+    \end{figure}
+
+    \vspace{2.5mm}
+
+    El siguiente paso es muy sencillo, y es que dependiendo del bit inicial y la base escogida, Alice va a enviar un estado u otro. Comenzando por la base \textit{Z}, si el bit inicial es 0, Alice le enviará a Bob el estado \( \ket{0} \), y si inicialmente se escogió 1, se envía \( \ket{1} \). Esto aplica de la misma manera para la base en el eje \textit{X}, en el que enviaremos \( \ket{+} \) o \( \ket{-} \) dependiendo si inicialmente se escogió 0 o 1, respectivamente, como podemos ver en la siguiente tabla:
+
+    \vspace{2.5mm}
+
+    \begin{figure}[H]
+        \centering
+        \renewcommand{\arraystretch}{1.25} 
+        \begin{tabular}{|l|ccccccccc|}
+            \hline
+            Bits de Alice \ & 1       & 0       & 0       & 1       & 0       & 0       & 0       & 1       & 1 \\
+            Base            & X       & Z       & Z       & X       & X       & Z       & X       & Z       & Z \\
+            Se envía        & \ket{+} & \ket{0} & \ket{0} & \ket{+} & \ket{-} & \ket{-} & \ket{-} & \ket{1} & \ket{1} \\ \hline
+        \end{tabular}
+        \caption{Segundo paso de BB84.}\label{fig: segundo_paso_bb84}
+    \end{figure}
+
+    \vspace{2.5mm}
+
+    A continuación Bob recibe la información enviada por Alice, y Bob mide el resultado que Alice le acaba de enviar en una de las dos bases que estamos utilizando, \textit{Z} o \textit{X}, de manera que si la base elegida por Bob coincide con la escogida por Alice, el resultado será el mismo que Alice, ya que la información que estamos enviando se encuentra en los polos de los ejes con los que estamos trabajando, por lo que no tenemos ninguna incertidumbre en la medición y sabemos el resultado. Por el contrario, si la base es distinta, tendremos \( \frac{1}{2} \) de probabilidad de acertar el resultado o de errarlo, siendo el resultado de Bob completamente aleatorio ya que la probabilidad es la misma, quedando en
+
+    \vspace{2.5mm}
+
+    \begin{figure}[H]
+        \centering
+        \renewcommand{\arraystretch}{1.25} 
+        \begin{tabular}{|l|ccccccccc|}
+            \hline
+            Bits de Alice \ & 1       & 0       & 0       & 1       & 0       & 0       & 0       & 1       & 1 \\
+            Base            & X       & Z       & Z       & X       & X       & Z       & X       & Z       & Z \\
+            Se envía        & \ket{+} & \ket{0} & \ket{0} & \ket{+} & \ket{-} & \ket{-} & \ket{-} & \ket{1} & \ket{1} \\ \hline
+            Base de Bob     & Z       & Z       & X       & X       & X       & Z       & Z       & X       & X \\
+            Medición        & \ket{0} & \ket{0} & \ket{-} & \ket{+} & \ket{-} & \ket{-} & \ket{1} & \ket{-} & \ket{+} \\
+            Bit final       & 0       & 0       & 1       & 0       & 1       & 1       & 1       & 1       & 0 \\ \hline
+        \end{tabular}
+        \caption{Obtención del bit final BB84.}\label{fig: obtencion_bit_final_bb84}
+    \end{figure}
+
+    \vspace{2.5mm}
+
+    En este momento es cuando determinamos la clave privada para comunicarnos con total seguridad, aunque siempre puede existir una pequeña probabilidad de que nos intercepten la clave, por muy pequeña que sea, lo cual veremos muy proximamente. Para establecer la clave, Alice y Bob revelan públicamente las bases que ambos han usado, y si ambas bases coinciden, saben perfectamente que su resultado es el mismo, obteniendo así los bits de la clave privada:
+
+    \vspace{2.5mm}
+
+    \begin{figure}[H]
+        \centering
+        \renewcommand{\arraystretch}{1.25} 
+        \begin{tabular}{|l|ccccccccc|}
+            \hline
+            Bits de Alice \ & 1       & 0       & 0       & 1       & 0       & 0       & 0       & 1       & 1 \\
+            Base            & X       & Z       & Z       & X       & X       & Z       & X       & Z       & Z \\
+            Se envía        & \ket{+} & \ket{0} & \ket{0} & \ket{+} & \ket{-} & \ket{-} & \ket{-} & \ket{1} & \ket{1} \\
+            Base de Bob     & Z       & Z       & X       & X       & X       & Z       & Z       & X       & X \\
+            Medición        & \ket{0} & \ket{0} & \ket{-} & \ket{+} & \ket{-} & \ket{-} & \ket{1} & \ket{-} & \ket{+} \\
+            Bit final       & 0       & 0       & 1       & 0       & 1       & 1       & 1       & 1       & 0 \\ \hline
+            Clave Privada   &         & 0       &         & 0       & 1       & 1       &         &         & \\ \hline
+        \end{tabular}
+        \caption{Obtención de la clave privada mediante BB84.}\label{fig: obtencion_clave_privada_bb84}
+    \end{figure}
+
+    \vspace{2.5mm}
+
+    Por lo que la clave es 0011. Sin embargo, podemos tener un problema, y es que haya una tercera partida, Eve, que esté intentando robarnos los datos. Supongamos que Alice selecciona la base \textit{Z} y envía \( \ket{0} \) a Bob, pero Eve intercepta el estado \( \ket{0} \). Ahora Eve tiene dos opciones, seleccionar la base \textit{Z} por lo que al medir el resultado seguiría siendo \( \ket{0} \), o el caso contrario, en el que escoja una base distinta de Alice. En este caso, sería la base \textit{X}, por lo que al medir \( \ket{0} \) podría obtener o bien \( \ket{0} \) o \( \ket{1} \), y en caso de medir \( \ket{1} \), Alice y Bob se darían cuenta que hay una tercera persona robando los datos, ya que los casos que nos interesan son en el que las bases de Alice y Bob coinciden, estableciendo así la clave. En definitiva, la probabilidad de detectar a Eve en un único qubit es de \( \frac{1}{4} \), y entonces, la probabilidad de que Eve pase desapercibido es \( \frac{3}{4} \). Esto lo podemos generalizar para \textit{n} bits, siendo la probabilidad de detectar a Eve de
+
+    \begin{equation*}
+        \text{Probabilidad de detectar a Eve} = 1 - \left( \frac{3}{4} \right)^{n}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Siendo esta probabilidad de 0.99999943 para 50 bits, por lo que la probabilidad de que Eve acceda a la información sin ser detectada es prácticamente nula. No obstante, al medir Eve los qubits enviados de Alice, el estado de estos puede colapasar a un estado que no es el que teníamos previsto, alterando la información. Para solucionar este problema simplemente añadimos unos bits de prueba a nuestra cadena de bits original, y de esta manera primero comprobaríamos si hay algún fallo al obtener la clave de la cadena de bits de prueba, la cual no es una parte de nuestra clave real, es una pequeña comprobación para verificar que todo va en orden.
+
+    
+
+    \vspace{5mm}
+
+
+
+    \vspace{5mm}
+
+    \subsection{E91}\label{subsection: e91}
 
     \vspace{10mm}
 
@@ -2915,5 +3015,13 @@
     \nocite{*} % Esto incluye todas las referencias aunque no se citen
     \bibliographystyle{ieeetr} % Estilo IEEE
     \bibliography{referencias} % Nombre de tu archivo .bib
+
+    \\
+
+    S. Laverde & S. N. González Estudio comparativo y evaluación de utilidad de protocolos de transmisión de datos usando criptografía cuántica. [online]. Available in: http://hdl.handle.net/10554/21443
+
+    \\
+
+    \url{https://www.academia.edu/102791510/Análisis_de_algoritmos_criptográficos_clásicos_vs_algoritmos_cuánticos}
 
 \end{document}

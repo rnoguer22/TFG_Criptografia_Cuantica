@@ -2978,7 +2978,7 @@
 
 
 
-    \subsection{Oráculos Cuánticos}
+    \subsection{Oráculos Cuánticos}\label{subsection: oraculos_cuanticos}
 
     \vspace{5mm}
 
@@ -3025,6 +3025,7 @@
             \lstick{\ket{y}} & \qw & \ghost{\text{$ U_{f} $}}        & \qw & \rstick{\ket{y \oplus f(x)}} \qw \\
         }
         \]
+        \caption{Oráculo cuántico. Obtenida de [QCircuit]}
     \end{figure}
 
     \vspace{2.5mm}
@@ -3089,7 +3090,72 @@
 
     \vspace{5mm}
 
-    
+    El primer ámbito de la criptografía que vamos a recorrer son los ataques mediante el uso de fuerza bruta. Esto ya lo explicamos anteriormente cuando definimos los oráculos cuánticos en (\ref{subsection: oraculos_cuanticos}) y básicamente se resume en que, según el algoritmo clásico, hemos de ir comprobando registro a registro si la información contenida es la que buscamos. Esto tiene una complejidad de \textit{O(N)} ya que, en el peor de los casos, la información que estamos buscando se encuentra en el último registro. Sin embargo, con el \textit{algoritmo de Grover} vamos a lograr reducir dicha complejidad hasta \textit{O($ \sqrt{N} $)}.
+
+    \vspace{5mm}
+
+    Este algoritmo consta de \textit{n} qubits en el estado \( \ket{+} \), lo cual denotaremos por \( \ket{+}^{\otimes n} \), y el qubit que nos dará la respuesta, el cual se encontrará inicialmente en \( \ket{-} \). Vamos a comenzar denotando todos estos estos qubits en \( \ket{+}^{\otimes n} \) como \( \ket{s} \):
+
+    \begin{gather*}
+        \ket{0}^{\otimes n} \ \overset{H \otimes n}{\longrightarrow} \ \ket{+}^{\otimes n} \\[5pt]
+        \ket{s} = \ket{+}^{\otimes n} = \left( \frac{1}{\sqrt{2}} \right)^{n} \left( \ket{0} + \ket{1} \right)^{\otimes n} = \frac{1}{\sqrt{2^{n}}} \sum_{x \in \{ 0,1 \}^{n}} \ket{x}
+    \end{gather*}
+
+    \vspace{2.5mm}
+
+    Y \( 2^{n} \) es el número total de registros que vamos a tener en nuestra base de datos, ya que \textit{n} es el número de bits que tienen nuestras cadenas de datos. Es por esto que vamos a denotar \( 2^{n} = N \), quedando
+
+    \begin{equation}
+        \ket{s} = \frac{1}{\sqrt{N}} \sum_{x \in \{ 0,1 \}^{n}} \ket{x}
+        \label{eq: estado_s_algoritmo_grover}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Entonces, el dato que estamos buscando será una de las posibles cadenas que estamos consultando. A este dato el cual es nuestro objetivo ya que es el que queremos encontrar, lo vamos a denotar como \( \ket{w} \), y al resto de cadenas que son irrelevantes, \( \ket{i} \). Esto lo podemos llevar a (\ref{eq: estado_s_algoritmo_grover}), y desarrollando la expresión, llegamos a
+
+    \begin{align}
+        \ket{s} &= \frac{1}{\sqrt{N}} \left( \ket{w} + \sum_{i \neq w} \ket{i} \right) = \frac{1}{\sqrt{N}} \ket{w} + \frac{1}{\sqrt{N}} \sum_{i \neq w} \ket{i} = \nonumber \\[5pt]
+        &= \frac{1}{\sqrt{N}} \ket{w} + \sqrt{\frac{N - 1}{N}} \frac{1}{\sqrt{N - 1}} \sum_{i \neq w} \ket{i} = \frac{1}{\sqrt{N}} \ket{w} + \sqrt{\frac{N - 1}{N}} \ket{r}
+        \label{eq: desarrollo_s_algoritmo_grover}
+    \end{align}
+
+    \vspace{2.5mm}
+
+    De donde
+
+    \begin{equation*}
+        \ket{r} = \frac{1}{\sqrt{N - 1}} \sum_{i \neq w} \ket{i} 
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    De donde podemos deducir que \( \ket{r} \) es una superposición de todos los estados \( \ket{i} \) que no son la solución que estamos buscando. Además \( \ket{r} \) es una superposición que está normalizada, ya que hemos dividido entre \( \sqrt{N - 1} \) al haber \( N - 1 \) términos en el sumatorio. Sin embargo podemos desarollar la expresión (\ref{eq: desarrollo_s_algoritmo_grover}) aún un poquito más, y es que si nos fijamos dicha expresión es muy similar a la descomposición de un vector en componentes ortogonales, las cuales son \( \ket{w} \) y \( \ket{r} \). Es por esto que podemos extrapolar dicha expresión a un plano de coordenadas en función de un ángulo $ \theta $, donde los ejes son \( \ket{w} \) y \( \ket{r} \):
+
+    \begin{equation}
+        \ket{s} = \frac{1}{\sqrt{N}} \ket{w} + \sqrt{\frac{N - 1}{N}} \ket{r} = \sin \theta \ket{w} + \cos \theta \ket{r}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Con \( \sin \theta \) y \( \cos \theta \) definidos como
+
+    \begin{equation*}
+        \sin \theta = \frac{1}{\sqrt{N}}, \qquad \cos \theta = \sqrt{\frac{N - 1}{N}}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Lo cual es consistente con las entidades trigonométricas:
+
+    \begin{gather*}
+        \sin^{2} \theta + \cos^{2} \theta = 1 \\[5pt]
+        \left( \frac{1}{\sqrt{N}} \right)^{2} + \left( \sqrt{\frac{N - 1}{N}} \right)^{2} = \frac{1 + N - 1}{N} = 1
+    \end{gather*}
+
+    \vspace{2.5mm}
+
+    Entonces, podemos llevarnos todo esto al plano que acabamos de definir en función de \( \ket{w} \) y \( \ket{r} \) y aplicar el oráculo de fases, como sigue
 
     \vspace{5mm}
 

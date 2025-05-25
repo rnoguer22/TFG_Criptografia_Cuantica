@@ -21,6 +21,7 @@
 \usepackage{natbib}
 \usepackage{bibentry}
 \usepackage[nottoc]{tocbibind} % Para mostrar bibliografía no citada
+\usepackage{array}
 
 
 \documentclass[border=2px]{standalone}
@@ -2844,7 +2845,7 @@
 
     \vspace{5mm}
 
-    Digamos ahora que Alice y Bob quieren mandar un mensaje, pero de manera segura, ya que la información enviada entre ambos pueden ser datos confidenciales, contraseñas, etc. Es por esto ciertas personas nos van a intentar robar esta información, y a estas personas se suelen nombrar comúnmente como Eve, y de la misma manera que en la computación clásica se establece una clave pública y privada para que Bob descifre la información enviada por Alice. Es en esto en lo que se basa el protocolo que vamos a ver en este capítulo, BB84.
+    Digamos ahora que Alice y Bob quieren mandar un mensaje, pero de manera segura, ya que la información enviada entre ambos pueden ser datos confidenciales, contraseñas, etc. Es por esto que ciertas personas nos van a intentar robar esta información, y nos solemos referir a estas personas en el aḿbito de la criptografía cuántica como Eve, y de la misma manera que en la computación clásica se estableceremos una clave pública y privada para que Bob descifre la información enviada por Alice. Es en esto en lo que se basa el protocolo que vamos a ver en este capítulo, BB84.
 
     \vspace{5mm}
 
@@ -2962,9 +2963,141 @@
     \mbox{}
 
     \section{Algoritmos Cuánticos}\label{sec: algoritmos_cuanticos}
-    \subsection{Oracles Cuánticos}
-    \subsection{Algoritmo de Grover}
-    \subsection{Algoritmo de Shor}
+
+    \vspace{5mm}
+
+    En este punto llegamos a una de las últimas secciones de este trabajo, en el que vamos a explicar y desarrollar por qué los ordenadores cuánticos son tan importantes. Todo se reduce a los algoritmos cuánticos, y es que, aprovechando las propiedades que ya sabemos como la superposición (\ref{eq: superposicion}) o entrelazamiento (\ref{sec: entrelazamiento_cuantico}) podemos mejorar la eficiencia de ciertos algoritmos, optimizándolos lo máximo posible, de manera que obtenemos algoritmos que en muchos casos son infinitamente más rápidos que la versión tradicional de estos procesos.
+
+    \vspace{5mm}
+
+    Cabe destacar que no todo algoritmo cuántico por ser cuántico, valga la redundancia, es más rápido, esto no siempre sucede así, pero como vimos anteriormente, toda información clásica se puede representar mediante un ordenador cuántico, por lo que únicamente tendríamos que clonar dichos procesos. En esta sección vamos a centrarnos en dos algoritmos: El algoritmo de Grover y el de Shor, los cuales mejoran la búsqueda por fuerza bruta y se optimiza de exponencial manera el problema de factorización, rompiendo con las claves públicas y privadas de ciertos cifrados como veremos próximamente.
+
+    \vspace{5mm}
+
+
+
+
+
+    \subsection{Oráculos Cuánticos}
+
+    \vspace{5mm}
+
+    Antes de comenzar por los oráculos, tenemos que explicar un par de conceptos. El primero es el de \textit{complejidad de circuitos}, ya que no todos los circuitos son iguales, podemos encontrar circuitos más o menos complejos que otros, y esto se mide contando el número mínimo de puertas cuánticas, tomando como referenca un conjunto de puertas cuánticas universales, como explicamos anteriormente al final de (\ref{subsubsection: la_puerta_de_toffoli}). Tomando como ejemplo el sumador cuántico require \( 32n - 14 \) puertas cuánticas, siendo \textit{n} el número de qubits que represetan a cada sumando en el sumador, y esto al depender de \textit{n}, decimos que tiene una complejidad lineal \textit{O(N)}.
+
+    \vspace{5mm}
+
+    Esto es lo que buscamos, ya que para que un algoritmo cuántico sea considerado eficiente ha de tener esta complejidad \textit{O(n)}. Sin embargo, hallar la complejidad de circuitos es una tarea muy difícil en muchos casos, y es por esto que se usan otros métodos, como el uso de \textit{oráculos cuánticos}. Esto es un método basado en la \textit{complejidad de consultas} (query complexity), de manera que tendremos una función, \( f(x) \) a la cual llamaremos un cierto número de veces, determinando así la complejidad \textit{O(N)}. 
+
+    \vspace{5mm}
+
+    Pongamos como ejemplo uno de los algoritmos que veremos a continuación, el \textit{algoritmo de Grover}. Este algoritmo mejora el problema de búsqueda por fuerza bruta de los computadores tradicionales, ya que en un computador clásico tenemos que explorar cada elemento uno a uno, y vemos si cumple con nuestros criterios. Si es el elemento que estamos buscando, el oráculo será \( f(x) = 1 \), y de lo contrario, si el oráculo es \( f(x) = 0 \) significa que no es el objeto que deseamos encontrar y que por lo tanto hemos de seguir buscando, siendo \( x \) el elemento consultado. Esto significa que, como hemos de consultar cada elemento uno a uno, tendremos una complejidad de \textit{O(N)} ya que en el peor de los casos tendremos que consultar la función oráculo \textit{N} veces, siendo \textit{N} el número total de elementos. Veremos posteriormente en (\ref{subsection: algoritmo_grover}) como reducimos la complejidad hasta \textit{O($\sqrt{N}$)}.
+
+    \vspace{5mm}
+
+    Esta idea aparece y se aplica en otros muchos otros algoritmos cuánticos, por lo que podemos asentar este concepto. Un oráculo cuántico no es más que una función booleana, es decir, su valor solo puede ser 0 o 1, lo que significa que puede definirse por medio de puertas lógicas convencionales. Si queremos tener un oráculo cuántico, tenemos que convertir este oráculo, el cual es un conjunto de puertas lógicas, en una puerta cuántica, y para ello debemos hacerla reversible como vimos en (\ref{subsection: puertas_cuanticas_de_1_qubit}). Esto se traduce a hacer que el oráculo sea reversible, y esto lo podemos hacer muy fácilmente, apoyándonos en una de las puertas lógicas más importantes, la puerta \textit{XOR}, cuya tabla de verdad es la siguiente:
+
+    \vspace{2.5mm}
+
+    \begin{figure}[H]
+        \centering
+        \renewcommand{\arraystretch}{1.5} % Espacio vertical aumentado
+        \begin{tabular}{|>{\centering\arraybackslash}m{0.5cm}|>{\centering\arraybackslash}m{0.5cm}|>{\centering\arraybackslash}m{1.5cm}|}
+            \hline
+            A & B & A $\oplus$ B \\ \hline
+            0 & 0 & 0 \\ \hline
+            0 & 1 & 1 \\ \hline
+            1 & 0 & 1 \\ \hline
+            1 & 1 & 0 \\ \hline
+        \end{tabular}
+        \caption{Tabla de verdad de la puerta XOR}\label{fig:tabla_verdad_xor}
+    \end{figure}
+
+    \vspace{2.5mm}
+
+    En definitiva, si añadimos un bit adicional \textit{y}, además del bit \textit{x} del oráculo, y pasamos ambos bits por una \textit{XOR}, obtendremos un resultado reversible que es lo que buscamos para que esto sea una puerta cuántica. Este nuevo oráculo reversible, lo hemos denotado como \( U_{f} \) en el siguiente circuito:
+
+    \vspace{2.5mm}
+
+    \begin{figure}[H]
+        \[
+        \Qcircuit @C=1em @R=1em {
+            \lstick{\ket{x}} & \qw & \multigate{1}{\text{$ U_{f} $}} & \qw & \rstick{\ket{x}} \qw \\
+            \lstick{\ket{y}} & \qw & \ghost{\text{$ U_{f} $}}        & \qw & \rstick{\ket{y \oplus f(x)}} \qw \\
+        }
+        \]
+    \end{figure}
+
+    \vspace{2.5mm}
+
+    Actuando sobre \( \ket{x} \) y \( \ket{y} \) como sigue
+
+    \begin{equation}
+        \ket{x} \ket{y} \ \overset{U_{f}}{\longrightarrow} \ \ket{x} \ket{y \otimes f(x)}
+        \label{eq: oraculo_cuantico}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Y este oráculo lo utilizaremos posteriormente en el algoritmo de Shor (\ref{subsection: algoritmo_shor}).
+
+    \vspace{5mm}
+
+
+
+
+
+    \subsection{Oráculo de Fase}
+
+    \vspace{5mm}
+
+    Lo siguiente que vamos a ver es el oráculo de fase, y está muy ligado a los oráculos cuánticos que acabamos de ver. Si nos fijamos en el oráculo de la sección anterior en (\ref{eq: oraculo_cuantico}), \( \ket{x} \) permanece intacto mientras que \( \ket{y} \) queda como \( \ket{y \otimes f(x)} \). En este caso queremos que el qubit que quede intacto sea \( \ket{y} \), quedando \( \ket{x} \) multiplicado por una fase, de ahí el nombre, oráculo de fase. Esto lo podemos lograr transformando \( \ket{y} \) en \( \ket{-} \), que lo podemos hacer inicializando \( \ket{y} \) en \( \ket{0} \), aplicando una puerta \textit{X}, es decir una puerta \textit{NOT}, y finalmente aplicando una puerta de Hadamard como sigue
+
+    \begin{equation*}
+        \ket{x} \ket{0} \ \overset{I \otimes X}{\longrightarrow} \ \ket{x} \ket{1} \ \overset{I \otimes H}{\longrightarrow} \ \ket{x} \ket{-}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Entonces, si aplicamos el oráculo obtenemos lo que estábamos buscando, una fase multiplicando a \( \ket{x} \) y \( \ket{-} \) que permanece igual:
+
+    \begin{align}
+        \ket{x} \ket{-} &= \frac{1}{\sqrt{2}} \left( \ket{x} \ket{0} - \ket{x} \ket{1} \right) \overset{U_{f}}{\longrightarrow} \frac{1}{\sqrt{2}} \left( \ket{x} \ket{0 \oplus f(x)} - \ket{x} \ket{1 \oplus f(x)} \right) = \nonumber \\
+        &= \begin{cases}
+            \frac{1}{\sqrt{2}} \left( \ket{x} \ket{0} - \ket{x} \ket{1} \right), & f(x) = 0 \\[5pt]
+            \frac{1}{\sqrt{2}} \left( \ket{x} \ket{1} - \ket{x} \ket{0} \right), & f(x) = 1 
+        \end{cases} \nonumber \\
+        &= \begin{cases}
+            \ket{x} \ket{-}, & f(x) = 0 \\[5pt]
+            -\ket{x} \ket{-}, & f(x) = 1
+        \end{cases} \nonumber \\[5pt]
+        &= (-1)^{f(x)} \ket{x} \ket{-}
+        \label{eq: oraculo_fase}
+    \end{align}
+
+    \vspace{2.5mm}
+
+    Y aquí tenemos el oráculo de fase en la expresión (\ref{eq: oraculo_fase}), en el que vemos que \( \ket{x} \) se encuentra multiplicado por la fase \( (-1)^{f(x)} \), la cual vemos que depende de \( f(x) \), mientras que el segundo qubit \( \ket{-} \) permanece igual. Esto lo vamos a usar en el siguiente apartado, en el que comenzaremos ya a explicar los algoritmos cuánticos que vamos a ver y su relación con la criptografía. 
+
+    \vspace{5mm}
+
+
+
+
+
+
+    \subsection{Algoritmo de Grover}\label{subsection: algoritmo_grover}
+
+    \vspace{5mm}
+
+    
+
+    \vspace{5mm}
+
+
+
+
+
+    \subsection{Algoritmo de Shor}\label{subsection: algoritmo_shor}
 
 
 

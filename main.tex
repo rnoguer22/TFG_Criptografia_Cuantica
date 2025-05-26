@@ -1,8 +1,13 @@
 \documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
+
+% --- Fuente Helvetica ---
 \usepackage[scaled]{helvet}
 \renewcommand{\familydefault}{\sfdefault}
+\usepackage{sansmath} % Paquete clave para matemáticas en sans-serif
+\sansmath % Activa el modo sans-serif para matemáticas
+
 %\usepackage{fontspec}
 % \setmainfont{Arial}
 
@@ -22,6 +27,8 @@
 \usepackage{bibentry}
 \usepackage[nottoc]{tocbibind} % Para mostrar bibliografía no citada
 \usepackage{array}
+\usepackage{tikz}
+\usetikzlibrary{angles, arrows.meta}
 
 
 \documentclass[border=2px]{standalone}
@@ -3130,7 +3137,7 @@
 
     \vspace{2.5mm}
 
-    De donde podemos deducir que \( \ket{r} \) es una superposición de todos los estados \( \ket{i} \) que no son la solución que estamos buscando. Además \( \ket{r} \) es una superposición que está normalizada, ya que hemos dividido entre \( \sqrt{N - 1} \) al haber \( N - 1 \) términos en el sumatorio. Sin embargo podemos desarollar la expresión (\ref{eq: desarrollo_s_algoritmo_grover}) aún un poquito más, y es que si nos fijamos dicha expresión es muy similar a la descomposición de un vector en componentes ortogonales, las cuales son \( \ket{w} \) y \( \ket{r} \). Es por esto que podemos extrapolar dicha expresión a un plano de coordenadas en función de un ángulo $ \theta $, donde los ejes son \( \ket{w} \) y \( \ket{r} \):
+    Siendo \( \ket{r} \) una superposición de todos los estados \( \ket{i} \) que no son la solución que estamos buscando. Además \( \ket{r} \) es una superposición que está normalizada, ya que hemos dividido entre \( \sqrt{N - 1} \) al haber \( N - 1 \) términos en el sumatorio. Sin embargo podemos desarollar la expresión (\ref{eq: desarrollo_s_algoritmo_grover}) aún un poquito más, y es que si nos fijamos dicha expresión es muy similar a la descomposición de un vector en componentes ortogonales, las cuales son \( \ket{w} \) y \( \ket{r} \). Es por esto que podemos extrapolar dicha expresión a un plano de coordenadas en función de un ángulo $ \theta $, donde los ejes son \( \ket{w} \) y \( \ket{r} \):
 
     \begin{equation}
         \ket{s} = \frac{1}{\sqrt{N}} \ket{w} + \sqrt{\frac{N - 1}{N}} \ket{r} = \sin \theta \ket{w} + \cos \theta \ket{r}
@@ -3138,10 +3145,11 @@
 
     \vspace{2.5mm}
 
-    Con \( \sin \theta \) y \( \cos \theta \) definidos como
+    Con \( \theta \) definido como
 
     \begin{equation*}
         \sin \theta = \frac{1}{\sqrt{N}}, \qquad \cos \theta = \sqrt{\frac{N - 1}{N}}
+        \label{eq: theta_grover}
     \end{equation*}
 
     \vspace{2.5mm}
@@ -3155,7 +3163,241 @@
 
     \vspace{2.5mm}
 
-    Entonces, podemos llevarnos todo esto al plano que acabamos de definir en función de \( \ket{w} \) y \( \ket{r} \) y aplicar el oráculo de fases, como sigue
+    Entonces, podemos llevarnos todo esto al plano que acabamos de definir en función de \( \ket{w} \) y \( \ket{r} \):
+
+    \vspace{2.5mm}
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[>=Stealth, scale=2.5]
+            % Configuración global
+            \def\axislength{1.5}   % Longitud de los ejes (para |r⟩ y |w⟩)
+            \def\thetangle{10}     % Ángulo θ entre |s⟩ y |r⟩ (sin mostrar valor)
+            
+            % Ejes (vectores |r⟩ y |w⟩)
+            \draw[->, thick, black] (0,0) -- (\axislength,0) node[right]{$ \ket{r} $};
+            \draw[->, thick, black] (0,0) -- (0,\axislength) node[above]{$ \ket{w} $};
+            
+            % Vector |s⟩ (unitario, ángulo θ)
+            \draw[->, thick, red] (0,0) -- ({\thetangle}:1.5) node[above right]{$ \ket{s} $};
+            
+            % Ángulo θ (arco sin valor numérico)
+            \draw (0.5,0) arc (0:\thetangle:0.5);
+            \node at ({\thetangle/2}:0.7) {$\theta$};    
+        \end{tikzpicture}
+        \caption{Representación de $ \ket{s} $ en el plano. Obtenida de [tikz]}\label{fig: s_plano}
+    \end{figure}
+
+    \vspace{2.5mm}
+
+    Ahora es cuando viene el momento de aplicar el oráculo de fase. Para ello necesitamos el qubit objetivo, el que nos dará la respuesta final, el cual asumiremos que se encuentra directamente en \( \ket{-} \). Entonces, aplicando el oráculo, obtenemos:
+
+    \begin{gather*}
+        \ket{s} \ket{-} \ \overset{U_{f}}{\longrightarrow} \ \left[ (-1)^{f(x)} \ket{s} \right] \ket{-} = \left[ (-1)^{f(x)} \left( \sin \theta \ket{w} + \cos \theta \ket{r} \right) \right] \ket{-} = \\[5pt]
+        = \left( (-1)^{f(x)} \sin \theta \ket{w} + (-1)^{f(x)} \cos \theta \ket{r} \right) \ket{-}
+    \end{gather*}
+
+    \vspace{2.5mm}
+
+    Y el valor de \( f(x) \) sabemos que es un valor binario al ser una función booleana, y su valor es 1 cuando verificamos que el dato que estamos analizando es la solución que estamos buscando \( \ket{x} = \ket{w} \), y 0 en caso contrario. Sabiendo esto, llegamos a
+
+    \begin{equation*}
+        \left( (-1)^{1} \sin \theta \ket{w} + (-1)^{0} \cos \theta \ket{r} \right) \ket{-} = \left( - \sin \theta \ket{w} + \cos \theta \ket{r} \right) \ket{-}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    De donde \( \ket{s} \) tras aplicar el oráculo de fase es
+
+    \begin{equation}
+        U_{f} \ket{s} = - \sin \theta \ket{w} + \cos \theta \ket{r}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Y esto en definitiva es una reflexión \( U_{f} \ket{s} \) de \( \ket{s} \) sobre \( \ket{r} \):
+
+    \vspace{2.5mm}
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[>=Stealth, scale=2.5]
+            % Configuración global
+            \def\axislength{1.5}   % Longitud de los ejes (para |r⟩ y |w⟩)
+            \def\thetangle{10}     % Ángulo θ entre |s⟩ y |r⟩ (sin mostrar valor)
+            
+            % Ejes (vectores |r⟩ y |w⟩)
+            \draw[->, thick, black] (0,0) -- (\axislength,0) node[right]{$ \ket{r} $};
+            \draw[->, thick, black] (0,0) -- (0,\axislength) node[above]{$ \ket{w} $};
+            
+            % Vector |s⟩ (unitario, ángulo θ)
+            \draw[->, thick, red] (0,0) -- ({\thetangle}:1.5) node[above right]{$ \ket{s} $};
+            \draw[->, thick, red] (0,0) -- (-{\thetangle}:1.5) node[below right]{$ U_{f} \ket{s} $};
+            
+            % Ángulo θ (arco sin valor numérico)
+            \draw (0.5,0) arc (0:\thetangle:0.5);
+            \node at ({\thetangle/2}:0.7) {$\theta$}; 
+            \draw (0.5,0) arc (0:-\thetangle:0.5);
+            \node at (-{\thetangle/2}:0.7) {$\theta$};    
+        \end{tikzpicture}
+        \caption{Reflexión $ U_{f} \ket{s} $ de $ \ket{s} $ sobre $ \ket{r} $ en el plano. Obtenida de [tikz]}\label{fig: ufs_plano}
+    \end{figure}
+
+    \vspace{2.5mm}
+
+    Ahora viene una parte muy interesante de este algoritmo. Para poder explicarla correctamente vamos a definir el operador de reflexión sobre \( \ket{s} \), el cual es una puerta cuántica \( R_{s} \) que tiene la siguiente forma:
+
+    \begin{equation}
+        R_{s} = 2 \ket{s} \bra{s} - I
+        \label{eq: reflexion_sobre_s}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Esta es la reflexión sobre \( \ket{s} \). Para iluminarnos un poco más, si aplicamos esta puerta cuántica sobre \( \ket{s} \) nos debería dar como resultado el propio estado \( \ket{s} \)
+
+    \begin{equation*}
+        R_{s} \ket{s} = \left( 2 \ket{s} \bra{s} - I \right) \ket{s} =  2 \ket{s} \braket{s | s} - \ket{s} = 2 \ket{s} - \ket{s} = \ket{s} 
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Donde \( \braket{s | s} = 1 \), como vimos en (\ref{eq: producto_escalar_vector_mismo_l2}). De la misma manera si aplicamos \( R_{s} \) sobre un vector un vector ortogonal a \( \ket{s} \), \( \ket{s^{\perp}} \), el resultado debería ser el mismo vector ortogonal \( \ket{s^{\perp}} \) cambiado de signo, es decir \( - \ket{s^{\perp}} \)
+
+    \begin{equation*}
+        R_{s} \ket{s^{\perp}} = \left( 2 \ket{s} \bra{s} - I \right) \ket{s^{\perp}} =  2 \ket{s} \braket{s | s^{\perp}} - \ket{s^{\perp}} = - \ket{s^{\perp}} 
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Por lo que ya podemos deducir de una manera intuitiva que efectivamente \( R_{s} \) es un operador de reflexión sobre \( \ket{s} \). Nos queda demostrar que se trata de una puerta cuántica, y para ello vamos a ver que es una matriz unitaria, definiendo en primer lugar que el conjugado hermítico \( R_{s}^{\dagger} \) es igual a \( R_{s} \):
+    
+    \begin{equation*}
+        R_{s}^{\dagger} = \left( 2 \ket{s} \bra{s} - I \right)^{\dagger} = 2 \ket{s} \bra{s} - I = R_{s}  
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Entonces ya podemos aplicar la expresión vista en (\ref{eq: puertas_cuanticas_unitarias}), en la que vamos a ver que \( R_{s}^{\dagger} R_{s} \) es la matriz identidad:
+
+    \begin{align*}
+        R_{s}^{\dagger} R_{s} &= R_{s} R_{s} = \left( 2 \ket{s} \bra{s} - I \right) \left( 2 \ket{s} \bra{s} - I \right) = 4 \ket{s} \braket{s | s} \bra{s} - 4 \ket{s} \bra{s} + I = \\[5pt] 
+        &= 4 \ket{s} \bra{s} - 4 \ket{s} \bra{s} + I = I
+    \end{align*}
+
+    \vspace{2.5mm}
+
+    Por lo que \( R_{s} \) es una puerta cuántica, como queríamos demostrar. Siguiendo con el algoritmo, vamos a aplicar el operador de reflexión \( R_{s} \) (\ref{eq: reflexion_sobre_s}) sobre \( U_{f} \ket{s} \), lo cual podemos ver el plano de la siguiente manera, denotado como \( R_{s} U_{f} \ket{s} \):
+
+    \vspace{2.5mm}
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[>=Stealth, scale=2.5]
+            % Configuración global
+            \def\axislength{1.5}   % Longitud de los ejes (para |r⟩ y |w⟩)
+            \def\thetangle{10}     % Ángulo θ entre |s⟩ y |r⟩ (sin mostrar valor)
+            \def\doubletheangle{30}
+            \def\nodeangle{40}
+            
+            % Ejes (vectores |r⟩ y |w⟩)
+            \draw[->, thick, black] (0,0) -- (\axislength,0) node[right]{$ \ket{r} $};
+            \draw[->, thick, black] (0,0) -- (0,\axislength) node[above]{$ \ket{w} $};
+            
+            % Vector |s⟩ (unitario, ángulo θ)
+            \draw[->, thick, red] (0,0) -- ({\thetangle}:1.5) node[above right]{$ \ket{s} $};
+            \draw[->, thick, red] (0,0) -- (-{\thetangle}:1.5) node[below right]{$ U_{f} \ket{s} $};
+
+            \draw[->, thick, blue] (0,0) -- ({\doubletheangle}:1.5) node[above right]{$ R_{s} U_{f} \ket{s} $};
+            
+            % Ángulo θ (arco sin valor numérico)
+            \draw (0.5,0) arc (0:\thetangle:0.5);
+            \node at ({\thetangle/2}:0.7) {$\theta$}; 
+            \draw (0.5,0) arc (0:-\thetangle:0.5);
+            \node at (-{\thetangle/2}:0.7) {$\theta$};   
+            \draw (0.5,0) arc (0:\doubletheangle:0.5);
+            \node at ({\nodeangle/2}:0.7) {$2 \theta$};  
+        \end{tikzpicture}
+        \caption{Reflexión $ R_{s} U_{f} \ket{s} $ de $ U_{f} \ket{s} $ en el plano. Obtenida de [tikz]}\label{fig: rsufs_plano}
+    \end{figure}    
+
+    \vspace{2.5mm}
+
+    Y si vamos aplicando el oráculo \( U_{f} \) y la reflexión \( R_{s} \), seguimos rotando con un ángulo de \( 2 \theta \) hasta converger a la solución \( \ket{w} \)
+
+    \vspace{2.5mm}
+
+    \begin{figure}[H]        
+        \centering
+        \begin{tikzpicture}[>=Stealth, scale=2.5]
+            % Configuración global
+            \def\axislength{1.5}   % Longitud de los ejes (para |r⟩ y |w⟩)
+            \def\thetangle{10}     % Ángulo θ entre |s⟩ y |r⟩ (sin mostrar valor)
+            \def\doubletheangle{30}
+            \def\nodeangle{40}            
+            \def\tripletheangle{50}
+            \def\triplenodeangle{80}
+
+        
+            % Ejes (vectores |r⟩ y |w⟩)
+            \draw[->, thick, black] (0,0) -- (\axislength,0) node[right]{$ \ket{r} $};
+            \draw[->, thick, black] (0,0) -- (0,\axislength) node[above]{$ \ket{w} $};
+            
+            % Vector |s⟩ (unitario, ángulo θ)
+            \draw[->, thick, red] (0,0) -- ({\thetangle}:1.5) node[above right]{$ \ket{s} $};
+            \draw[->, thick, red] (0,0) -- (-{\thetangle}:1.5) node[below right]{$ U_{f} \ket{s} $};
+
+            \draw[->, thick, blue] (0,0) -- ({\doubletheangle}:1.5) node[above right]{$ R_{s} U_{f} \ket{s} $};
+            \draw[->, thick, blue] (0,0) -- ({\tripletheangle}:1.5) node[above right]{$ (R_{s} U_{f})^{2} \ket{s} $};
+            
+            % Ángulo θ (arco sin valor numérico)
+            \draw (0.5,0) arc (0:\thetangle:0.5);
+            \node at ({\thetangle/2}:0.7) {$\theta$}; 
+            \draw (0.5,0) arc (0:-\thetangle:0.5);
+            \node at (-{\thetangle/2}:0.7) {$\theta$};   
+            \draw (0.5,0) arc (0:\doubletheangle:0.5);
+            \node at ({\nodeangle/2}:0.7) {$2 \theta$}; 
+            \draw (0.5,0) arc (0:\tripletheangle:0.5);
+            \node at ({\triplenodeangle/2}:0.7) {$2 \theta$};  
+        \end{tikzpicture}
+        \caption{Segunda reflexión $ (R_{s} U_{f})^{2} \ket{s} $ en el plano. Obtenida de [tikz]}\label{fig: rsuf2s_plano}
+    \end{figure}  
+
+    \vspace{2.5mm}
+
+    Vamos a suponer que tenemos que aplicar esta reflexión un total de \( t \) veces, podemos hallar este valor \( t \) en función de \( \theta \), de la siguiente manera, sabiendo que el ángulo definido entre \( \ket{w} \) y \( r \) es \( \frac{\pi}{2} \):
+
+    \begin{gather*}
+        \theta + t \left( 2 \theta \right) = \frac{\pi}{2} \\[5pt]
+        t \left( 2 \theta \right) = \frac{\pi}{2} - \theta \\[5pt]   
+        t = \frac{\pi}{4 \theta} - \frac{1}{2}  
+    \end{gather*}
+
+    \vspace{2.5mm}
+
+    Y a su vez \( \theta \) depende del número total de registros a los que estamos aplicando este algoritmo de fuerza bruta \textit{N}:
+
+    \begin{gather*}
+        \theta = \sin^{-1} \left( \frac{1}{\sqrt{N}} \right) \approx \frac{1}{\sqrt{N}}
+    \end{gather*}
+
+    \vspace{2.5mm}
+
+    Esto lo hemos obtenido de (\ref{eq: theta_grover}), y hemos asumido que \textit{N} es grande, obteniendo el resultado, que aunque sea una aproximación, es bastante firme y que no necesita depender de un valor tan elevado de \textit{N}. Entonces, podemos concluir que el número de iteraciones o llamadas sobre el oráculo de fases es:
+
+    \begin{equation}
+        t \approx \frac{\pi}{4} \sqrt{N} - \frac{1}{2} \approx \frac{\pi}{4} \sqrt{N}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Lo cual es lo que estábamos buscando, determinándose una complejidad de \( O(\sqrt{N}) \) para este algoritmo ya que precisamos de un número dependiente de \( \sqrt{N} \) llamadas al oráculo de fases, hasta converger en \( \ket{w} \). Es con este algoritmo que conseguimos reducir la complejidad del algoritmo de fuerza bruta clásico, 
+
+
+
+
+
+
 
     \vspace{5mm}
 

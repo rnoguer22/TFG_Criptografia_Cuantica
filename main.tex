@@ -3,10 +3,10 @@
 \usepackage[spanish]{babel}
 
 % --- Fuente Helvetica ---
-\usepackage[scaled]{helvet}
-\renewcommand{\familydefault}{\sfdefault}
-\usepackage{sansmath} % Paquete clave para matemáticas en sans-serif
-\sansmath % Activa el modo sans-serif para matemáticas
+% \usepackage[scaled]{helvet}
+% \renewcommand{\familydefault}{\sfdefault}
+% \usepackage{sansmath} % Paquete clave para matemáticas en sans-serif
+% \sansmath % Activa el modo sans-serif para matemáticas
 
 %\usepackage{fontspec}
 % \setmainfont{Arial}
@@ -3101,7 +3101,7 @@
 
     \vspace{5mm}
 
-    Este algoritmo consta de \textit{n} qubits en el estado \( \ket{+} \), lo cual denotaremos por \( \ket{+}^{\otimes n} \), y el qubit que nos dará la respuesta, el cual se encontrará inicialmente en \( \ket{-} \). Vamos a comenzar denotando todos estos estos qubits en \( \ket{+}^{\otimes n} \) como \( \ket{s} \):
+    Este algoritmo consta de \textit{n} qubits en el estado \( \ket{+} \), lo cual denotaremos por \( \ket{+}^{\otimes n} \), y el qubit \( \ket{y} \) para poder aplicar el oráculo de fase, el cual se encontrará inicialmente en \( \ket{-} \). Vamos a comenzar denotando todos estos estos qubits en \( \ket{+}^{\otimes n} \) como \( \ket{s} \):
 
     \begin{gather*}
         \ket{0}^{\otimes n} \ \overset{H \otimes n}{\longrightarrow} \ \ket{+}^{\otimes n} \\[5pt]
@@ -3190,7 +3190,7 @@
 
     \vspace{2.5mm}
 
-    Ahora es cuando viene el momento de aplicar el oráculo de fase. Para ello necesitamos el qubit objetivo, el que nos dará la respuesta final, el cual asumiremos que se encuentra directamente en \( \ket{-} \). Entonces, aplicando el oráculo, obtenemos:
+    Ahora es cuando viene el momento de aplicar el oráculo de fase. Para ello necesitamos el qubit \( \ket{y} \), el cual asumiremos que se encuentra directamente en \( \ket{-} \). Entonces, aplicando el oráculo, obtenemos:
 
     \begin{gather*}
         \ket{s} \ket{-} \ \overset{U_{f}}{\longrightarrow} \ \left[ (-1)^{f(x)} \ket{s} \right] \ket{-} = \left[ (-1)^{f(x)} \left( \sin \theta \ket{w} + \cos \theta \ket{r} \right) \right] \ket{-} = \\[5pt]
@@ -3365,7 +3365,7 @@
 
     \vspace{2.5mm}
 
-    Vamos a suponer que tenemos que aplicar esta reflexión un total de \( t \) veces, podemos hallar este valor \( t \) en función de \( \theta \), de la siguiente manera, sabiendo que el ángulo definido entre \( \ket{w} \) y \( r \) es \( \frac{\pi}{2} \):
+    Vamos a suponer que tenemos que aplicar esta reflexión un total de \( t \) veces, podemos hallar este valor \( t \) en función de \( \theta \), de la siguiente manera, sabiendo que el ángulo definido entre \( \ket{w} \) y \( \ket{r} \) es \( \frac{\pi}{2} \):
 
     \begin{gather*}
         \theta + t \left( 2 \theta \right) = \frac{\pi}{2} \\[5pt]
@@ -3375,7 +3375,7 @@
 
     \vspace{2.5mm}
 
-    Y a su vez \( \theta \) depende del número total de registros a los que estamos aplicando este algoritmo de fuerza bruta \textit{N}:
+    Y a su vez \( \theta \) depende del número total de registros \textit{N} a los que estamos aplicando este algoritmo de fuerza bruta:
 
     \begin{gather*}
         \theta = \sin^{-1} \left( \frac{1}{\sqrt{N}} \right) \approx \frac{1}{\sqrt{N}}
@@ -3391,13 +3391,7 @@
 
     \vspace{2.5mm}
 
-    Lo cual es lo que estábamos buscando, determinándose una complejidad de \( O(\sqrt{N}) \) para este algoritmo ya que precisamos de un número dependiente de \( \sqrt{N} \) llamadas al oráculo de fases, hasta converger en \( \ket{w} \). Es con este algoritmo que conseguimos reducir la complejidad del algoritmo de fuerza bruta clásico, 
-
-
-
-
-
-
+    Lo cual es lo que estábamos buscando, determinándose una complejidad de \( O(\sqrt{N}) \) para este algoritmo ya que precisamos de un número dependiente de \( \sqrt{N} \) llamadas al oráculo de fases, hasta converger en \( \ket{w} \). Es con este algoritmo que conseguimos reducir la complejidad del algoritmo de fuerza bruta clásico, y el salto de \textit{N} a \( \sqrt{N} \) llamadas al oráculo se denomina como \textit{aceleración cuadrática}, y esto es posible gracias a un proceso iterativo, en el vamos aplicando el operador de reflexión \( R_{s} \), con el que conseguimos una rotación en el espacio de Hilbert \( \mathcal{H} \) hasta converger a la solución \( \ket{w} \), lo cual es posible gracias a un oráculo muy eficiente y con el que aprovechamos las propiedades de la mecánica cuántica.
 
     \vspace{5mm}
 
@@ -3405,10 +3399,89 @@
 
 
 
-    \subsection{Algoritmo de Shor}\label{subsection: algoritmo_shor}
+    \subsection{El Algoritmo de Shor}\label{subsection: algoritmo_shor}
+
+    \vspace{5mm}
+
+    \subsubsection{RSA}
+
+    \vspace{5mm}
+
+    Clásicamente, el sistema que se suele seguir para encriptar y desencriptar mensajes se basa en claves públicas y privadas, con las que encriptamos y desencriptamos la información, respectivamente. Hay muchos sistemas basados en este principio, aunque nos vamos a centrar en el criptosistema \textit{RSA}, el cual surgió en 1977 y se aprovecha de este enfoque. 
+
+    \vspace{5mm}
+
+    Este sistema se basa en la factorización de números muy grandes, ya que este es uno de los problemas de los computadores convencionales al ser una tarea computacionalmente bastante costosa, resultando prácticamente imposible la factorización de ciertos números para un ordenador clásico. Este es un protocolo de vital importancia y que se usa hoy día, sin embargo, con el \textit{algoritmo de Shor} (\ref{subsubsection: algoritmo_shor}) veremos que esta tarea, para un ordenador cuántico, es mucho menos costosa.
+
+    \vspace{5mm}
+
+    Aunque esto no es un algoritmo cuántico, está incluido en esta sección para explicar y comprender de una mejor manera el algoritmo de Shor, el cual veremos posteriormente. Imaginemos un emisor, Alice, que quiere enviar un mensaje a un receptor Bob. Para ello, Bob prepara una clave pública, la cual será accesible para todo el mundo y que permitirá a cualquier emisor enviarle un mensaje, y de la misma manera, Bob crea una clave privada, la cual es accesible únicamente por Bob, para desencriptar los mensajes de Alice.
+
+    \vspace{5mm}
+
+    El primer paso es escoger dos números primos, \textit{p} y \textit{q}, los cuales han de seguir ciertas condiciones, entre las cuales vamos a resumir que han de ser dos números primos con aproximadamente 1024 bits en lenguaje binario. Esto es, para que al multiplicarlos entre ellos, obtengamos un resultado \textit{n} de 2048 bits, el cual será la primera de las dos claves públicas de Bob. Esto se rige en base al estándar RSA actual, en el cual se establece que para que nuestra información sea completamente segura, el producto de los dos números primos escogidos por Bob ha de tener 2048 bits en binario, para que sea un sistema inquebrantable por un ordenador clásico, aunque deje bastante que desear para un computador cuántico. 
+
+    \begin{equation}
+        n = p q
+        \label{eq: obtencion_n_RSA}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    A continuación vamos a establecer la segunda clave pública. Para ello calculamos 
+
+    \begin{equation}
+        \phi = (p - 1) (q - 1)
+        \label{eq: phi_RSA}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Y posteriormente hemos de encontrar un entero \textit{e} cuyo máximo común divisor con \( \phi \) sea igual a 1, sto significa que \textit{e} y \( \phi \) son coprimos:
+
+    \begin{equation}
+        \text{gcd} (e, \phi) = 1, \qquad e \in \mathbb{Z}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Hay muchos métodos que nos permiten obtener un valor de \textit{e}, como el algoritmo de euclides. En definitiva, \textit{e} es la segunda clave pública de Bob. Continuando con este protocolo, vamos a hallar la clave privada de Bob, la cual es 
+
+    \begin{equation}
+        e \cdot d \equiv 1 \ \text{mod} \ \phi
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Esta será nuestra clave privada \textit{d}, cual multiplicada por una de las claves públicas \textit{e}, da como resultado la unidad módulo \( \phi \). Esta clave \textit{d} permitirá a Bob desencriptar cualquier mensaje encriptado por Alice, y será una clave muy segura ya que para hallar \textit{d} hemos de conocer el valor de \( \phi \), el cual se estableció en (\ref{eq: phi_RSA}) y que depende de dos números primos \textit{p} y \textit{q}, por lo que si queremos conocer el valor de \textit{d}, es necesario aplicar un algoritmo de factorización, y los ordenadores clásicos en esta tarea son muy ineficientes.
+
+    \vspace{5mm}
+
+    Es ahora el momento en el que Alice envía un mensaje a Bob, el cual denotaremos como \textit{M} y será un mensaje binario menor que la primera clave pública de Bob, \textit{N}, por lo que \( 0 < M < n \). Para enviar el mensaje cifrado a Bob, utiliza sus claves públicas \textit{n} y \textit{e} de manera que el mensaje codificado \textit{C} queda como
+
+    \begin{equation*}
+        C = M^{e} \ \text{mod} \ n
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y, una vez el mensaje es enviado cifrado a Bob, este solo tiene que desencriptarlo utilizando su clave privada \textit{d}, a través del siguiente proceso:
+
+    \begin{equation*}
+        C^{d} \ \text{mod} \ n = (M^{e})^{d} \ \text{mod} \ n = M^{ed} \ \text{mod} \ n = M^{1} \ \text{mod} \ n = M 
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Por lo que Bob ha recibido el mensaje de Alice correctamente. Este protocolo nos ayuda a entender de una mejor manera por qué un algoritmo de factorización eficiente es tan importante, ya que podríamos hallar el valor de \( \phi \) muy rápidamente, y por lo tanto, tendríamos la clave privada \textit{d} en nuestro poder, descifrando cualquier información enviada a Bob. Vamos a ver una forma de romper esta factorización con el algoritmo de Shor (\ref{subsubsection: algoritmo_shor}), el cual vamos a ver a continuación en el siguiente apartado.
+
+    \vspace{5mm}
 
 
 
+    
+
+    \subsubsection{Algoritmo de Shor}\label{subsubsection: algoritmo_shor}
 
 
     \newpage

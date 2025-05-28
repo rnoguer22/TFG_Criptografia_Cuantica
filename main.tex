@@ -3479,9 +3479,42 @@
 
 
 
-    
+
 
     \subsubsection{Algoritmo de Shor}\label{subsubsection: algoritmo_shor}
+
+
+    \vspace{5mm}
+
+
+
+
+
+    \subsubsection{Estimación de Autovalores}
+
+    \vspace{5mm}
+
+    Una de las partes clave del algoritmo de Shor es determinar el periodo de una expresión modular (\ref{subsubsection: periodo_expresion_modular}), y para ello necesitamos obtener los autovalores, los cuales tienen la forma \( e^{2 \pi i s / r} \), de un determinado operador el cual denotaremos \textit{U} ya que en efecto se trata de una puerta cuántica. 
+
+    \vspace{5mm}
+
+    Ya se estableció la definición de autovector y autovalor en el tercer postulado (\ref{eq: autovectores_y_autovalores}), en el que se observa que si aplicamos un operador \( \hat{A} \) sobre un cierto estado \( \ket{\psi} \), el resultado es el mismo estado \( \ket{\psi} \) multiplicado por un escalar \( \lambda \ \in \ \mathbb{R} \). A diferencia de esto, \textit{U} es una puerta cuántica, lo que quiere decir que es unitario (\ref{eq: puertas_cuanticas_unitarias}) y por lo tanto sus autovalores son complejos de módulo 1:
+
+    \begin{equation*}
+        U \ket{\mathcal{\nu}} = e^{i \theta} \ket{\nu}, \qquad \theta \ \in \mathbb{R} 
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+
+
+
+
+
+    \subsubsection{El Periodo de una Expresión Modular}\label{subsubsection: periodo_expresion_modular}
+
+
+
 
 
     \newpage

@@ -3500,12 +3500,100 @@
 
     Ya se estableció la definición de autovector y autovalor en el tercer postulado (\ref{eq: autovectores_y_autovalores}), en el que se observa que si aplicamos un operador \( \hat{A} \) sobre un cierto estado \( \ket{\psi} \), el resultado es el mismo estado \( \ket{\psi} \) multiplicado por un escalar \( \lambda \ \in \ \mathbb{R} \). A diferencia de esto, \textit{U} es una puerta cuántica, lo que quiere decir que es unitario (\ref{eq: puertas_cuanticas_unitarias}) y por lo tanto sus autovalores son complejos de módulo 1:
 
-    \begin{equation*}
+    \begin{equation}
         U \ket{\mathcal{\nu}} = e^{i \theta} \ket{\nu}, \qquad \theta \ \in \mathbb{R} 
+        \label{eq: puerta_U_controlada_autovalores}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Donde el autovector \( \ket{\nu} \) es un vector columna de dimensión \( N = 2^{n} \), ya que se asume que estamos en un sistema de \textit{n} qubits, donde de la misma manera \textit{U} tiene dimensión \( N \times N \). Adicionalmente, vamos a tener \textit{m} qubits inicializados en el estado \( \ket{0} \), por lo que partimos del siguiente estado:
+
+    \begin{equation*}
+        \ket{0}^{\otimes m} \ket{\nu}
     \end{equation*}
 
     \vspace{2.5mm}
 
+    Donde vamos a denotar \( \ket{0}^{\otimes m} \) como \textit{registro de autovalores}, que finalmente será una aproximación de \textit{m} bits del autovalor asociado al autovector, y \( \ket{\nu} \) como \textit{registro de autoestados}. Para obtener esta aproximación en primer lugar aplicamos una puerta de Hadamard \textit{H} sobre el registro de autovalores:
+
+    \begin{gather*}
+        \ket{0}^{\otimes m} \ket{\nu} = \ket{0 0 0 \ \cdots \ 0} \ket{\nu} = \ket{+ + + \ \cdots \ +} \ket{\nu} = \\[5pt]
+        = \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) \cdots \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) \ket{\nu} = \\[5pt]
+        = \frac{1}{\sqrt{2^{m}}} \left( \ket{0} + \ket{1} \right) \left( \ket{0} + \ket{1} \right) \cdots \left( \ket{0} + \ket{1} \right) \ket{\nu}
+    \end{gather*}
+
+    \vspace{2.5mm}
+
+    A continuación aplicamos una puerta \textit{U} controlada (\textit{controlled-U}) sobre el primer estado del registro de autovalores, esto se resume en la aplicación de la puerta \textit{U}, definida en (\ref{eq: puerta_U_controlada_autovalores}), sobre este primer estado, adquiriendo una fase de \( e^{i \theta} \) cuando el qubit de control es \( \ket{1} \):
+
+    \begin{equation*}
+        \frac{1}{\sqrt{2^{m}}} \left( \ket{0} + \ket{1} \right) \cdots \left( \ket{0} + \ket{1} \right) \left( \ket{0} + e^{i \theta} \ket{1} \right) \ket{\nu}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y seguiríamos aplicando la puerta \( U^{2} \) controlada sobre el segundo qubit del registro de autovalores, por lo que este adquiere una fase de \( e^{2 i \theta} \), y sucesivamente seguiríamos hasta llegar al último estado del registro de autovalores, para el cual aplicamos \( U^{2m - 1} \):
+
+    \begin{equation*}
+        \frac{1}{\sqrt{2^{m}}} \left( \ket{0} + e^{(2^{m - 1}) i \theta} \ket{1} \right) \cdots \left( \ket{0} + e^{2i\theta}\ket{1} \right) \left( \ket{0} + e^{i \theta} \ket{1} \right) \ket{\nu}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Ahora vamos a modificar esta expresión buscando la \textit{transformada cuántica de Fourier} (QFT). Para ello, hacemos el cambio de variable \( \theta = 2 \pi j \) en el estado anterior, obteniendo
+
+    \begin{equation*}
+        \frac{1}{\sqrt{2^{m}}} \left( \ket{0} + e^{2 \pi i 2^{m - 1} j} \ket{1} \right) \cdots \left( \ket{0} + e^{2 \pi i 4 j}\ket{1} \right) \left( \ket{0} + e^{2 \pi i j} \ket{1} \right) \ket{\nu}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Con \( 0 \leq j < 1 \), ya que \( 0 \leq \theta < 2 \pi \). Como \( j < 1 \), vamos a expresarlo como una cadena binaria de dimensión \textit{m} cuya forma es \( 0, j_{1} j_{2} \cdots j_{m} \), y aplicándolo a nuestro estado, queda lo siguiente:
+
+    \begin{equation}
+        \frac{1}{\sqrt{2^{m}}} \left( \ket{0} + e^{2 \pi i (j_{1} j_{2} \cdots j_{m-1}, j_{m})} \ket{1} \right) \cdots \left( \ket{0} + e^{2 \pi i (j_{1}, j_{2} \cdots j_{m})} \ket{1} \right) \left( \ket{0} + e^{2 \pi i (0, j_{1} \cdots j_{m})} \ket{1} \right) \ket{\nu}
+        \label{eq: casi_transformada_cuantica_fourier}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Y los términos a la izquierda de la coma los podemos ignorar, ya que \( e^{2 \pi i} = 1 \). Por ejemplo, supongamos que \textit{j} tiene un valor de \( j = 2,1 \). Aplicando las propiedades de las potencias tenemos que
+
+    \begin{equation*}
+        e^{2 \pi i (2,1)} = e^{2 \pi i (1 + 1 + 0,1)} = e^{2 \pi i} e^{2 \pi i} e^{2 \pi i (0,1)} = e^{2 \pi i (0,1)}  
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Entonces, la expresión (\ref{eq: casi_transformada_cuantica_fourier}) queda de la siguiente manera:
+
+    \begin{equation}
+        \frac{1}{\sqrt{2^{m}}} \left( \ket{0} + e^{2 \pi i (0, j_{m})} \ket{1} \right) \cdots \left( \ket{0} + e^{2 \pi i (0, j_{2} \cdots j_{m})} \ket{1} \right) \left( \ket{0} + e^{2 \pi i (0, j_{1} \cdots j_{m})} \ket{1} \right) \ket{\nu}
+        \label{eq: transformada_cuantica_fourier}
+    \end{equation} 
+    
+    \vspace{2.5mm}
+
+    Esto es exactamente la \textit{transformada cuántica de Fourier} de \( \ket{j_{1} j_{2} \cdots j_{m}} \), y podemos hallar el término \( \ket{j_{1} j_{2} \cdots j_{m}} \) aplicando la \textit{transformada de Fourier inversa} sobre el registro de autovalores, obteniendo el siguiente resultado:
+
+    \begin{equation*}
+        \ket{j_{1} j_{2} \cdots j_{m}} \ket{\nu}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Y a continuación medimos los distintos qubits, obteniendo \( j_{1} j_{2} \cdots j_{m} \). Entonces, el valor de \textit{j} es 
+
+    \begin{equation*}
+        j = 0, j_{1} j_{2} \cdots j_{m} = \frac{j_{1}}{2} + \frac{j_{2}}{4} + \cdots + \frac{j_{m}}{2^{m}}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Lo cual simplemente es un proceso clásico para pasar de la base binaria a la base decimal. Con esto ya sabemos el valor de \textit{j} y por lo tanto de \( \theta \) ya que \( \theta = 2 \pi j \), por lo que hemos hallado el autovalor final \( e^{i \theta} \) con \textit{m} bits de precisión, para lo cual hemos precisado de \textit{m} puertas de Hadamard \textit{H} y \textit{m} puertas \( U^{p} \) controladas, además de la transformada de Fourier inversa. Esto hace que la complejidad de este algoritmo sea de \( O(m^{2}) \), ya que aplicar las puertas de Hadamard tiene una complejidad lineal a la misma vez que al aplicar las puertas \( U^{p} \) controladas, sin embargo, la transformada de fourier inversa es cuadŕatica \( O(m^{2}) \), por lo que la complejidad total de este algoritmo es también cuadrática \( O(m^{2}) \). Esto es un gran avance sobre el algoritmo clásico, cuya complejidad es de \( O(N) \), lo cual es una complejidad exponencial al ser \( N = 2^{n} \).
+    
+    
 
 
 

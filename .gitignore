@@ -12,6 +12,7 @@ main.synctex.gz
 main.bbl
 main-blx.bib
 main.run.xml
+main.blg
 .gitignore
 entregas
 code/quantum_venv

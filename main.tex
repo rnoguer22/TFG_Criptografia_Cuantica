@@ -2,14 +2,17 @@
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
 
-% --- Fuente Helvetica ---
-% \usepackage[scaled]{helvet}
-% \renewcommand{\familydefault}{\sfdefault}
-% \usepackage{sansmath} % Paquete clave para matemáticas en sans-serif
-% \sansmath % Activa el modo sans-serif para matemáticas
+% Fuente y formato
+\usepackage[T1]{fontenc} % Para las ñ y letras con tilde
+\usepackage{times}
+\usepackage{microtype} % Mejora el espaciado de las palabras
 
-%\usepackage{fontspec}
-% \setmainfont{Arial}
+% --- Fuente Helvetica en la pagina de titulo ---
+\usepackage[scaled]{helvet}
+\usepackage{titlesec}  % Paquete para personalizar secciones
+\newcommand{\helveticatitle}{%
+    \fontfamily{phv}\selectfont % Cambia a Helvetica (phv = PostScript Helvetica)
+}
 
 \usepackage{graphicx} % Required for inserting images
 \usepackage{imakeidx}
@@ -60,11 +63,6 @@
 % Márgenes de página
 \usepackage[left=2.5cm, right=2.5cm, top=3cm, bottom=3cm]{geometry}
 
-% Fuente y formato
-\usepackage[T1]{fontenc} % Para las ñ y letras con tilde
-\usepackage{times}
-\usepackage{microtype} % Mejora el espaciado de las palabras
-
 % Encabezado y pie de página guapo
 \usepackage{fancyhdr}
 \setlength{\headheight}{14.5pt}
@@ -73,7 +71,6 @@
 \fancyhead[R]{\textit{\rightmark}} % Sección o subsección actual en la parte superior derecha
 \fancyfoot[C]{\thepage} % Número de página centrado en el pie de página
 
-\usepackage{titlesec}  % Paquete para personalizar secciones
 \usepackage{tikz}      % Paquete para gráficos y formato personalizado
 % Modificar el formato de las secciones
 \titleformat{\section}[block]
@@ -90,21 +87,21 @@
 
     \begin{titlepage}
         \centering
-        {\fontsize{18pt}{22pt}\selectfont \textbf{UNIVERSIDAD ALFONSO X EL SABIO}\par}
+        {\fontsize{18pt}{22pt}\selectfont \textbf{\helveticatitle UNIVERSIDAD ALFONSO X EL SABIO}\par}
         \vspace{1cm}
-        {\fontsize{16pt}{22pt}\selectfont \textbf{ESCUELA POLITÉCNICA SUPERIOR}\par}
+        {\fontsize{16pt}{22pt}\selectfont \textbf{\helveticatitle ESCUELA POLITÉCNICA SUPERIOR}\par}
         \vspace{1cm}
-        {\fontsize{14pt}{22pt}\selectfont \textbf{GRADO EN INGENIERÍA MATEMÁTICA}\par}
+        {\fontsize{14pt}{22pt}\selectfont \textbf{\helveticatitle GRADO EN INGENIERÍA MATEMÁTICA}\par}
         \vspace{2cm}
         {\includegraphics[width=1\textwidth]{img/portada.png}\par}
         \vspace{0.5cm}
-        {\fontsize{20pt}{22pt}\selectfont \textbf{TRABAJO DE FIN DE GRADO}\par}
+        {\fontsize{20pt}{22pt}\selectfont \textbf{\helveticatitle TRABAJO DE FIN DE GRADO}\par}
         \vspace{1cm}
-        {\fontsize{14pt}{22pt}\selectfont \textbf{Computación Cuántica aplicada a la Criptografía}\par}
+        {\fontsize{14pt}{22pt}\selectfont \textbf{\helveticatitle Computación Cuántica aplicada a la Criptografía}\par}
         \vfill
-        {\fontsize{14pt}{22pt}\selectfont \textbf{Rubén Nogueras González}\par}
+        {\fontsize{14pt}{22pt}\selectfont \textbf{\helveticatitle Rubén Nogueras González}\par}
         \vspace{1cm}
-        {\fontsize{14pt}{22pt}\selectfont \textbf{Junio de 2025}\par}
+        {\fontsize{14pt}{22pt}\selectfont \textbf{\helveticatitle Junio de 2025}\par}
     \end{titlepage}
     
     % Pagina en blanco
@@ -119,7 +116,6 @@
     \newpage
     \thispagestyle{empty}
     \mbox{}
-    \newpage
 
     \listoffigures
 
@@ -667,15 +663,14 @@
     \vspace{1.5mm}
 
     Por lo tanto, la actuación de un \textit{bra} \( \bra{\phi} \in \mathcal{H}^{*} \) sobre un \textit{ket} \( \ket{\psi} \in \mathcal{H} \) es el producto escalar hermítico de los \textit{kets}, y debido a la propiedad de linealidad en \( \mathcal{H} \), este producto queda perfectamente definido en \( \mathcal{H} \)
-    \begin{equation*}
-        \braket{\phi \ | \ \psi} = \ket{\phi} \cdot \ket{\psi} = \left( \sum_{i = 0}^{N - 1} d_{i}^{*} \bra{e_{i}} \right) \left( \sum_{j = 0}^{N - 1} c_{j} \ket{e_{j}} \right) = \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} d_{i}^{*} \ c_{j} \ \braket{e_{i} \ | \ e_{j}} = \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} d_{i}^{*} \ c_{j} \ \delta_{e_{i}, e_{j}} = \sum_{i = 0}^{N - 1} d_{i}^{*} \ c_{i}
-    \end{equation*}
-    \begin{equation}
-        \boxed{\braket{\phi \ | \ \psi} = \sum_{i = 0}^{N - 1} d_{i}^{*} \ c_{i}}
-        \label{eq: producto_escalar_desarrollado}
-    \end{equation}
 
-    \vspace{1.5mm}
+    \begin{align}
+        \braket{\phi \ | \ \psi} = \ket{\phi} \cdot \ket{\psi} &= \left( \sum_{i = 0}^{N - 1} d_{i}^{*} \bra{e_{i}} \right) \left( \sum_{j = 0}^{N - 1} c_{j} \ket{e_{j}} \right) = \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} d_{i}^{*} \ c_{j} \ \braket{e_{i} \ | \ e_{j}} = \nonumber \\[5pt]
+        &= \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} d_{i}^{*} \ c_{j} \ \delta_{e_{i}, e_{j}} = \sum_{i = 0}^{N - 1} d_{i}^{*} \ c_{i} \ \implies \ \boxed{\braket{\phi \ | \ \psi} = \sum_{i = 0}^{N - 1} d_{i}^{*} \ c_{i}}
+        \label{eq: producto_escalar_desarrollado}
+    \end{align}
+
+    \vspace{2.5mm}
 
     Por lo que, el producto escalar hermítico \( \braket{\phi \ | \ \psi} \) es simplemente multiplicar los complejos conjugados \( d_{i}^{*} \) provenientes del \textit{bra} \( \bra{\phi} \) por los distintos elementos \( c_{i} \) de los vectores \( \ket{\psi} \) del espacio de Hilbert \( \mathcal{H} \). 
 
@@ -1192,7 +1187,7 @@
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.3\textwidth]{img/Bloch/bloch_sphere.png}
-        \caption{Esfera de Bloch. Obtenida de [Wikipedia]}\label{fig: bloch_sphere}
+        \caption{Esfera de Bloch. Obtenida de~\cite{wikiblochsphere}}\label{fig: bloch_sphere}
     \end{figure}
 
     Pudiendo representar todos los posibles estados de un qubit \( \ket{\psi} \) como un vector dentro de esta esfera. 
@@ -1210,12 +1205,14 @@
 
     Antes de hacer cambios de base, tenemos que tratar sobre las mediciones, las cuales ya hemos introducido en los párrafos anteriores y en esta pequeña sección vamos a profundizar sobre este tema. Como bien sabemos, un qubit puede estar en una superposición de \( \ket{0} \) y \( \ket{1} \) debido a las leyes de la mecánica cuántica, pero esto también establece que cuando vamos a leer el resultado de una operación, como al finalizar un algoritmo cuántico, este qubit colapsa a un único estado, de manera que obtenemos \( \ket{0} \) o bien \( \ket{1} \), cada uno con una cierta probabilidad, y esa probabilidad es el módulo al cuadrado de los coeficientes que acompañan a cada posible estado, como vimos en (\ref{eq: condicion_coeficientes_probabilidad_1}). Estos coeficientes se denominan amplitudes, y al tratarse de una probabilidad, la suma del módulo al cuadrado de las amplitudes ha de ser igual a uno. Vamos a ver esto con un ejemplo:
 
-    \vspace{5mm}
+    \vspace{2.5mm}
 
-    \begin{figure}[h!]
+    \begin{figure}[H]
+        \small
         \centering
         \begin{minipage}{0.3\textwidth}
             \includegraphics[width=\textwidth]{img/Bloch/bloch_measurement_example.png}  
+            \caption{Medición de un Qubit.}\label{fig: bloch_ejemplo_medicion} 
         \end{minipage}
         \hfill
         \begin{minipage}{0.65\textwidth}
@@ -1224,15 +1221,14 @@
                 \ket{\psi} = \frac{1 + i \sqrt{3}}{3} \ket{0} + \frac{2 - i}{3} \ket{1}
             \end{equation*}
             La probabilidad de obtener el estado \( \ket{0} \) y el estado \( \ket{1} \) viene dada por 
-            \begin{equation*}
-                \left| \frac{1 + i \sqrt{3}}{3} \right| ^ {2} + \left| \frac{2 - i}{3} \right| ^ {2} = \left( \frac{1 + i \sqrt{3}}{3} \right) \left( \frac{1 - i \sqrt{3}}{3} \right) + \left( \frac{2 - i}{3} \right) \left( \frac{2 + i}{3} \right) =
-            \end{equation*}
-            \begin{equation*}
-                \frac{4}{9} + \frac{5}{9} = 1
-            \end{equation*}
+            \begin{gather*}
+                \left| \frac{1 + i \sqrt{3}}{3} \right| ^ {2} + \left| \frac{2 - i}{3} \right| ^ {2} = \left( \frac{1 + i \sqrt{3}}{3} \right) \left( \frac{1 - i \sqrt{3}}{3} \right) + \\[5pt]
+                + \left( \frac{2 - i}{3} \right) \left( \frac{2 + i}{3} \right) = \frac{4}{9} + \frac{5}{9} = 1
+            \end{gather*}
         \end{minipage}
-        \caption{Medición de un Qubit. Obtenida de [Qiskit]}\label{fig: bloch_ejemplo_medicion} 
     \end{figure}
+
+    \vspace{2.5mm}
 
     Siendo la probabilidad de colapsar en \( \ket{0} \) de \( \frac{4}{9} \) y de \( \frac{5}{9} \) en el estado \( \ket{1} \). Esto lo podemos ver gráficamente si representamos el vector correspondiente al estado \( \ket{\psi} \) en la esfera de Bloch, ya que si nos fijamos en (\ref{fig: bloch_ejemplo_medicion}) podemos ver que \( \ket{\psi} \) está un poco más cercano al estado \( \ket{1} \) de dicha esfera, y esto se corresponde con una probabilidad mayor de obtener dicho estado, como hemos podido apreciar en el ejemplo anterior.
 
@@ -1280,26 +1276,31 @@
 
     Y su representación la podemos ver reflejada en (\ref{fig: bloch_other_bases}). Estos estados sabemos que están en superposición ya que no se encuentran en \( \ket{0} \) o \( \ket{1} \), de hecho, están justamente en el punto medio entre \( \ket{0} \) y \( \ket{1} \), por lo que la probabilidad de obtener \( \ket{0} \) o \( \ket{1} \) es exactamente la misma (\( \frac{1}{2} \)) si nuestro qubit \( \ket{\psi} \) se encuentra en uno de los estados en (\ref{eq: estados_eje_x_y}). No obstante, para poder realizar el cambio de base, necesitamos expresar los estados \( \ket{0} \) y \( \ket{1} \) en función de la base a la que queramos aplicar el cambio. Comencemos por \( \ket{+} \) y \( \ket{-} \):
 
-    \begin{equation}
-        \ket{+} + \ket{-} = \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) + \frac{1}{\sqrt{2}} \left( \ket{0} - \ket{1} \right) = \frac{2}{\sqrt{2}} \ket{0} = \sqrt{2} \ket{0} \ \implies \ \boxed{\ket{0} = \frac{1}{\sqrt{2}} \left( \ket{+} + \ket{-} \right)} 
+    \begin{align}
+        \ket{+} + \ket{-} &= \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) + \frac{1}{\sqrt{2}} \left( \ket{0} - \ket{1} \right) = \frac{2}{\sqrt{2}} \ket{0} = \sqrt{2} \ket{0} \nonumber \\[5pt] 
+        & \implies \ \boxed{\ket{0} = \frac{1}{\sqrt{2}} \left( \ket{+} + \ket{-} \right)} 
         \label{eq: estado_0_en_funcion_mas_menos}
-    \end{equation}
-    \begin{equation}
-        \ket{+} - \ket{-} = \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) - \frac{1}{\sqrt{2}} \left( \ket{0} - \ket{1} \right) = \frac{2}{\sqrt{2}} \ket{1} = \sqrt{2} \ket{1} \ \implies \ \boxed{\ket{1} = \frac{1}{\sqrt{2}} \left( \ket{+} - \ket{-} \right)}
+    \end{align}
+    \begin{align}
+        \ket{+} - \ket{-} &= \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) - \frac{1}{\sqrt{2}} \left( \ket{0} - \ket{1} \right) = \frac{2}{\sqrt{2}} \ket{1} = \sqrt{2} \ket{1} \nonumber \\[5pt]
+        & \implies \ \boxed{\ket{1} = \frac{1}{\sqrt{2}} \left( \ket{+} - \ket{-} \right)}
         \label{eq: estado_1_en_funcion_mas_menos}
-    \end{equation}
+    \end{align}
 
     \vspace{5mm}
 
     Y esto está muy relacionado con la \textit{puerta de Hadamard}, la cual es una de las puertas cuánticas de un qubit más importantes, como veremos en la siguiente sección. Volviendo a retomar el ejemplo (\ref{fig: bloch_ejemplo_medicion}), vamos a aplicar el cambio a la base \( B_{H} = \left\{ \ket{+}, \ket{-} \right\}\) y ver como afecta esto al estado de nuestro qubit \( \ket{\psi} \). Aplicando dicho cambio, nos queda lo siguiente
 
-    \begin{figure}[h!]
+    \vspace{2.5mm}
+
+    \begin{figure}[H]
+        \small
         \centering
         \begin{minipage}{0.65\textwidth}
-            \begin{align*}
-                &\ket{\psi} = \frac{1 + i \sqrt{3}}{3} \ket{0} + \frac{2 - i}{3} \ket{1} = \frac{1 + i \sqrt{3}}{3 \sqrt{2}} \left( \ket{+} + \ket{-} \right) + \frac{2 - i}{3 \sqrt{2}} \left( \ket{+} - \ket{-} \right) = \\[10pt]
-                &= \frac{3 + \left( \sqrt{3} - 1 \right) i}{3 \sqrt{2}} \ket{+} - \frac{1 - \left( \sqrt{3} + 1 \right) i}{3 \sqrt{2}} \ket{-}
-            \end{align*}
+            \begin{gather*}
+                \ket{\psi} = \frac{1 + i \sqrt{3}}{3} \ket{0} + \frac{2 - i}{3} \ket{1} = \frac{1 + i \sqrt{3}}{3 \sqrt{2}} \left( \ket{+} + \ket{-} \right) + \frac{2 - i}{3 \sqrt{2}} \left( \ket{+} - \ket{-} \right) = \\[5pt]
+                = \frac{3 + \left( \sqrt{3} - 1 \right) i}{3 \sqrt{2}} \ket{+} - \frac{1 - \left( \sqrt{3} + 1 \right) i}{3 \sqrt{2}} \ket{-}
+            \end{gather*}
             Y la probabilidad de obtener \( \ket{+} \) y \( \ket{-} \) es 
             \begin{align*}
                 \ket{+} \ &\longrightarrow \ \left| \ \frac{3 + \left( \sqrt{3} - 1 \right) i}{3 \sqrt{2}} \ \right| ^ {2} = \frac{9 + \left( \sqrt{3} - 1\right) ^ {2}}{18} \approx 0.53 \\[10pt]
@@ -1308,12 +1309,12 @@
         \end{minipage}
         \hfill
         \begin{minipage}{0.3\textwidth}
-            \includegraphics[width=\textwidth]{img/Bloch/bloch_change_basis_example.png}  
+            \includegraphics[width=\textwidth]{img/Bloch/bloch_change_basis_example.png} 
+            \caption{Cambio a la base $ \{ \ket{+}, \ket{-} \} $.}\label{fig: bloch_ejemplo_medicion_2}  
         \end{minipage}
-        \caption{Cambio de base. Obtenida de [Qiskit]}\label{fig: bloch_ejemplo_medicion_2} 
     \end{figure}
 
-    \vspace{10mm}
+    \vspace{2.5mm}
 
     Podemos ver que esto tiene sentido, ya que el vector que representa el estado de \( \ket{\psi} \) se encuentra ligeramente más próximo al estado \( \ket{+} \) que a \( \ket{-} \), por lo que es lógico obtener una probabilidad en \( \ket{+} \) ligeramente mayor que en \( \ket{-} \), aunque esto no quiere decir que vaya a colapsar siempre a \( \ket{+} \), significa que si midiéramos varios qubits en el mismo estado que \( \ket{\psi} \), por estadísitica, obtendríamos normalmente mayor número de colapsos en \( \ket{+} \), aunque no siempre va a colapsar en \( \ket{+} \) por tener una probabilidad mayor.
 
@@ -1330,25 +1331,30 @@
 
     En este caso la diferencia entre ambas probabilidades va a ser mucho mayor, ya que \( \ket{\psi} \) está muy próximo a \( \ket{i} \) en la esfera de Bloch, por lo que la probabilidad de obtener \( \ket{i} \) será muy cercana a uno, y en caso contrario, la probabilidad de obtener \( \ket{-i} \) será prácticamente nula.
 
-    \begin{figure}[h!]
+    \vspace{2.5mm}
+
+    \begin{figure}[H]
+        \small
         \centering
         \begin{minipage}{0.3\textwidth}
             \includegraphics[width=\textwidth]{img/Bloch/bloch_change_basis_example_2.png}  
+            \caption{Cambio a la base $ \{ \ket{i}, \ket{-i} \} $.}\label{fig: bloch_ejemplo_medicion_3} 
         \end{minipage}
         \hfill
         \begin{minipage}{0.65\textwidth}
-            \begin{align*}
-                &\ket{\psi} = \frac{1 + i \sqrt{3}}{3} \ket{0} + \frac{2 - i}{3} \ket{1} = \frac{1 + \sqrt{3}i}{3 \sqrt{2}} \left( \ket{i} + \ket{-i} \right) - \frac{1 + 2i}{3 \sqrt{2}} \left( \ket{i} - \ket{-i} \right) = \\[10pt]
-                &=  \frac{\left( \sqrt{3} - 2 \right)i}{3 \sqrt{2}} \ket{i} + \frac{2 + \left( \sqrt{3} + 2 \right) i}{3 \sqrt{2}} \ket{-i}
-            \end{align*}
+            \begin{gather*}
+                \ket{\psi} = \frac{1 + i \sqrt{3}}{3} \ket{0} + \frac{2 - i}{3} \ket{1} = \frac{1 + \sqrt{3}i}{3 \sqrt{2}} \left( \ket{i} + \ket{-i} \right) - \\[5pt]
+                - \frac{1 + 2i}{3 \sqrt{2}} \left( \ket{i} - \ket{-i} \right) =  \frac{\left( \sqrt{3} - 2 \right)i}{3 \sqrt{2}} \ket{i} + \frac{2 + \left( \sqrt{3} + 2 \right) i}{3 \sqrt{2}} \ket{-i}
+            \end{gather*}
             Y la probabilidad de obtener \( \ket{i} \) y \( \ket{-i} \) es
             \begin{align*}
                 \ket{i} \ &\longrightarrow \ \left| \ \frac{\left( \sqrt{3} - 2 \right) i}{3 \sqrt{2}} \ \right| ^ {2} = \frac{\left( \sqrt{3} - 2 \right) ^ {2}}{18} \approx 0.004 \\[10pt]
                 \ket{-i} \ &\longrightarrow \ \left| \ \frac{2 + \left( \sqrt{3} + 2 \right) i}{3 \sqrt{2}} \ \right| ^ {2} = \frac{4 + \left( \sqrt{3} + 2 \right) ^ {2}}{18} \approx 0.996
             \end{align*}
         \end{minipage}
-        \caption{Cambio de base. Obtenida de [Qiskit]}\label{fig: bloch_ejemplo_medicion_3} 
     \end{figure}
+
+    \vspace{2.5mm}
 
     Perfecto, vemos que el resultado es el esperado. Ahora, estamos en condiciones de explicar la fase relativa correctamente. Al final de (\ref{sec: el_qubit}), explicamos que una fase global no modifica el estado físico de un qubit, pero dejamos un poco abierta la fase relativa. Vamos a volver a trabajar sobre el estado de un qubit puro definido en (\ref{eq: qubit_trigonometrico_esfera_bloch}), definiendo las probabilidades de medir \( \ket{\psi} \) sobre el eje \( Z \) y posteriormente sobre el eje \( X \), y nos vamos a dar cuenta que las probabilidades no coinciden, concluyendo en que una fase relativa sí que modifica el estado físico de un qubit, a diferencia de una fase global. Comencemos por la probabilidad de obtener \( \ket{0} \) y \( \ket{1} \)
 
@@ -1485,7 +1491,7 @@
 
     Si ahora consideramos el conjugado hermítico de \( \ket{U \psi} \), el cual definimos en la introducción de los espacios de Hilbert \( \mathcal{H} \) en (\ref{eq: conjugado_hermitico}), tenemos que
 
-    \begin{equation}
+    \begin{gather}
         \bra{U \psi} = \begin{pmatrix}
             a^{*} \alpha^{*} + c^{*} \beta^{*} & b^{*} \alpha^{*} + d^{*} \beta^{*} 
         \end{pmatrix} = \begin{pmatrix}
@@ -1493,14 +1499,15 @@
         \end{pmatrix} \begin{pmatrix}
             a^{*} & d^{*} \\
             c^{*} & d^{*}
-        \end{pmatrix} = \begin{pmatrix}
+        \end{pmatrix} = \nonumber \\[5pt]
+        = \begin{pmatrix}
             \alpha^{*} & \beta^{*}
         \end{pmatrix} \begin{pmatrix}
             a & c \\
             b & d
         \end{pmatrix} ^ {\dagger} = \bra{\psi} U^{\dagger}
     \label{eq: puerta_cuantica_conjugado_hermitico}
-    \end{equation}
+    \end{gather}
 
     \vspace{2.5mm}
 
@@ -1653,29 +1660,24 @@
 
     De esta manera, si aplicamos la puerta \textit{X} sobre un qubit \( \ket{\psi} \) que se encuentra en el estado \( \ket{0} \), esta puerta rota el estado del qubit \( \ket{\psi} \) al estado \( \ket{1} \)
 
-    \vspace{5mm}
+    \vspace{2.5mm}
 
-    \begin{minipage}{0.1\textwidth}
-        \hfill
-    \end{minipage}
-    \begin{minipage}{0.3\textwidth}
+    \begin{figure}[H]
         \centering
-        \includegraphics[width=\textwidth]{img/Bloch/bloch_state_0.png}
-        \caption{Figura 9: Estado $|0\rangle$ en la esfera de Bloch. Obtenida de [Qiskit]}
-    \end{minipage}
-    \hfill
-    \scalebox{2}{\(\overset{X}{\longrightarrow}\)}
-    \hfill
-    \begin{minipage}{0.3\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{img/Bloch/bloch_state_1.png}
-        \caption{Figura 10: Estado $|1\rangle$ en la esfera de Bloch. Obtenida de [Qiskit]}
-    \end{minipage}
-    \begin{minipage}{0.1\textwidth}
-        \hfill
-    \end{minipage}
+        \begin{subfigure}[t]{0.45\textwidth}
+            \centering
+            \includegraphics[width=0.675\textwidth]{img/Bloch/bloch_state_0.png}
+            \caption{Estado $|0\rangle$ en la esfera de Bloch.}
+        \end{subfigure}
+        \scalebox{2}{\(\overset{X}{\longrightarrow}\)}
+        \begin{subfigure}[t]{0.45\textwidth}
+            \centering
+            \includegraphics[width=0.675\textwidth]{img/Bloch/bloch_state_1.png}
+            \caption{Estado $|1\rangle$ en la esfera de Bloch.}
+        \end{subfigure}
+    \end{figure}
 
-    \vspace{5mm}
+    \vspace{2.5mm}
 
     Y esto ocurre también para el caso contrario. Esta puerta \textit{X} es una de las \textit{puertas de Pauli}, en concreto sobre el eje X, como su propio nombre indica, y también podemos definir las puertas de Pauli para el eje \textit{Y} y \textit{Z} de la esfera de Bloch, de la siguiente manera
 
@@ -1717,29 +1719,22 @@
 
     Y esto es el estado \( \ket{1} \) multiplicado por una fase global, en este caso \( i \), por lo que podemos eliminar la fase global, ya que esta no altera el significado físico de \( \ket{1} \), dándose por realizada la rotación esperada sobre el eje \textit{Y}
 
-    \vspace{5mm}
+    \vspace{2.5mm}
 
-    \begin{minipage}{0.1\textwidth}
-        \hfill
-    \end{minipage}
-    \begin{minipage}{0.3\textwidth}
+    \begin{figure}[H]
         \centering
-        \includegraphics[width=\textwidth]{img/Bloch/bloch_state_0.png}
-        \caption{Figura 11: Estado $|0\rangle$ en la esfera de Bloch. Obtenida de [Qiskit]}
-    \end{minipage}
-    \hfill
-    \scalebox{2}{\(\overset{Y}{\longrightarrow}\)}
-    \hfill
-    \begin{minipage}{0.3\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{img/Bloch/bloch_state_1.png}
-        \caption{Figura 12: Estado $|1\rangle$ en la esfera de Bloch. Obtenida de [Qiskit]}
-    \end{minipage}
-    \begin{minipage}{0.1\textwidth}
-        \hfill
-    \end{minipage}
+        \begin{subfigure}[t]{0.45\textwidth}
+            \centering
+            \includegraphics[width=0.675\textwidth]{img/Bloch/bloch_state_0.png}
+        \end{subfigure}
+        \scalebox{2}{\(\overset{Y}{\longrightarrow}\)}
+        \begin{subfigure}[t]{0.45\textwidth}
+            \centering
+            \includegraphics[width=0.675\textwidth]{img/Bloch/bloch_state_1.png}
+        \end{subfigure}
+    \end{figure}
 
-    \vspace{5mm}
+    \vspace{2.5mm}
 
     Vamos a tomar como último ejemplo la puerta \textit{Z}, de manera que si la aplicamos sobre un qubit en \( \ket{0} \)
     el estado del qubit no cambia, ya que estamos aplicando una rotación sobre el eje \textit{Z}:
@@ -1850,25 +1845,22 @@
 
     \vspace{2.5mm}
 
-    \begin{minipage}{0.1\textwidth}
-        \hfill
-    \end{minipage}
-    \begin{minipage}{0.3\textwidth}
+    \begin{figure}[H]
         \centering
-        \includegraphics[width=\textwidth]{img/Bloch/bloch_state_+.png}
-        \caption{Figura 13: Estado $|+\rangle$ en la esfera de Bloch. Obtenida de [Qiskit]}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.3\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{img/Bloch/bloch_state_-.png}
-        \caption{Figura 14: Estado $|-\rangle$ en la esfera de Bloch. Obtenida de [Qiskit]}
-    \end{minipage}
-    \begin{minipage}{0.1\textwidth}
-        \hfill
-    \end{minipage}
+        \begin{subfigure}[t]{0.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{img/Bloch/bloch_state_+.png}
+            \caption{Estado $|+\rangle$ en la esfera de Bloch}
+        \end{subfigure}
+        \hspace{30mm}
+        \begin{subfigure}[t]{0.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{img/Bloch/bloch_state_-.png}
+            \caption{Estado $|-\rangle$ en la esfera de Bloch}
+        \end{subfigure}
+    \end{figure}
 
-    \vspace{5mm}
+    \vspace{2.5mm}
 
     Esto lo vimos en (\ref{eq: estados_eje_x_y}) cuando definimos los estados \( \ket{+} \) y \( \ket{-} \), y ahora hemos demostrado de donde salen. Estas son las puertas cuánticas de 1 qubit que principalmente vamos a usar, de manera que si aparece alguna otra puerta simple de 1 qubit la definiremos más adelante conforme nos vayan saliendo. Con esto damos por terminada esta sección y damos paso a la siguiente, en la que discutiremos qué sucede cuando tenemos más de 1 qubit\ldots
 
@@ -2070,10 +2062,10 @@
     Vamos a comenzar creando algunas puertas de dos qubits. Aunque esto suene tedioso, es algo bastante sencillo si tenemos en cuenta lo que hemos visto anteriormente para puertas de un qubit en (\ref{subsection: puertas_cuanticas_de_1_qubit}), con la idea de que podemos aplicar cualquiera de estas transformaciones a los distintos qubits de \( \ket{\psi} \). Tomemos como ejemplo la puerta de Hadamard \textit{H} y la \textit{NOT} para un qubit, podemos aplicarlas a los distintos qubits de \( \ket{\psi} \), los cuales vamos a suponer que se encuentran en \( \ket{0 0} \)
 
     \begin{equation*}
-        (H \otimes X) \ket{\psi} = (H \otimes X) \ket{0 0} = (H \otimes X) \ket{0} \otimes \ket{0} = H \ket{0} \otimes X \ket{0} = \ket{+} \otimes \ket{1} = \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) \otimes \ket{1} =
+        (H \otimes X) \ket{\psi} = (H \otimes X) \ket{0 0} = (H \otimes X) \ket{0} \otimes \ket{0} = H \ket{0} \otimes X \ket{0} = \ket{+} \otimes \ket{1} =
     \end{equation*}
     \begin{equation*}
-        = \frac{1}{\sqrt{2}} \left( \ket{0} \otimes \ket{1} + \ket{1} \otimes \ket{1} \right) = \frac{1}{\sqrt{2}} \left( \ket{0 1} + \ket{1 1} \right)
+        = \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) \otimes \ket{1} = \frac{1}{\sqrt{2}} \left( \ket{0} \otimes \ket{1} + \ket{1} \otimes \ket{1} \right) = \frac{1}{\sqrt{2}} \left( \ket{0 1} + \ket{1 1} \right)
     \end{equation*}
 
     \vspace{2.5mm}
@@ -2184,7 +2176,7 @@
 
     \vspace{5mm}
 
-    \begin{figure}[!h]
+    \begin{figure}[H]
         \centering
         \scalebox{1.0}{
             $\Qcircuit @C=1.0em @R=0.8em @!R {
@@ -2273,7 +2265,7 @@
                 \lstick{\ket{1}} & \targ    & \rstick{\ket{1}} \qw
             }$
         }
-        \caption{Puerta de Toffoli Ejemplo. Obtenida de [QCircuit]}\label{fig: puerta_toffoli_circuito_clasico}
+        \caption{Caso de ejemplo de la puerta de Toffoli}\label{fig: puerta_toffoli_circuito_clasico}
     \end{figure}
 
     Este resultado lo verificar operando directamente con matrices como sigue
@@ -2319,7 +2311,7 @@
 
     \vspace{2.5mm}
     
-    \begin{figure}[!h]
+    \begin{figure}[H]
         \centering
         \begin{subfigure}[t]{0.45\textwidth}
             \centering
@@ -2344,7 +2336,7 @@
             }
             \caption{Puerta NAND cuántica}\label{fig: puerta_nand_cuantica}
         \end{subfigure}
-        \caption{Puerta de Toffoli. Obtenida de [QCircuit]}\label{fig: puerta_toffoli}
+        \caption{Puerta de Toffoli}\label{fig: puerta_toffoli}
     \end{figure}
 
     Estas son, en efecto, las puertas \textit{AND} y \textit{NAND} de la computación clásica. Sin quitarle importancia a la puerta \textit{AND}, la puerta \textit{NAND} tiene una pequeña particularidad, y es que con el conjunto de puertas \textit{NAND} podemos obtener todo el resto de puertas lógicas, y por lo tanto, podríamos obtener un ordenador clásico que utilice únicamente esta puerta. Esto se conoce como un conjunto universal de puertas lógicas, ya que a partir de este conjunto (aunque sea una sola puerta) podemos obtener las demás. 
@@ -2814,7 +2806,7 @@
         \inputgroupv{1}{2}{0.8em}{1.5em}{\ket{\Phi^+}} \ 
         }
         \]
-        \caption{Teleportación cuántica. Circuito cuántico. Obtenida de [QCircuit]}\label{fig: circuito_teleportacion}
+        \caption{Teleportación cuántica. Circuito cuántico}\label{fig: circuito_teleportacion}
         \end{figure}
 
     \vspace{2.5mm}
@@ -3032,7 +3024,7 @@
             \lstick{\ket{y}} & \qw & \ghost{\text{$ U_{f} $}}        & \qw & \rstick{\ket{y \oplus f(x)}} \qw \\
         }
         \]
-        \caption{Oráculo cuántico. Obtenida de [QCircuit]}
+        \caption{Oráculo cuántico}
     \end{figure}
 
     \vspace{2.5mm}
@@ -3097,7 +3089,7 @@
 
     \vspace{5mm}
 
-    El primer ámbito de la criptografía que vamos a recorrer son los ataques mediante el uso de fuerza bruta. Esto ya lo explicamos anteriormente cuando definimos los oráculos cuánticos en (\ref{subsection: oraculos_cuanticos}) y básicamente se resume en que, según el algoritmo clásico, hemos de ir comprobando registro a registro si la información contenida es la que buscamos. Esto tiene una complejidad de \textit{O(N)} ya que, en el peor de los casos, la información que estamos buscando se encuentra en el último registro. Sin embargo, con el \textit{algoritmo de Grover} vamos a lograr reducir dicha complejidad hasta \textit{O($ \sqrt{N} $)}.
+    El primer ámbito de la criptografía que vamos a recorrer son los ataques mediante el uso de fuerza bruta. Esto ya lo explicamos anteriormente cuando definimos los oráculos cuánticos en (\ref{subsection: oraculos_cuanticos}) y básicamente se resume en que, según el algoritmo clásico, hemos de ir comprobando registro a registro si la información contenida es la que buscamos. Esto tiene una complejidad de \textit{O(N)} ya que, en el peor de los casos, la información que estamos buscando se encuentra en el último registro. Sin embargo, con el \textit{algoritmo de Grover}~\cite{grover_Original} vamos a lograr reducir dicha complejidad hasta \textit{O($ \sqrt{N} $)}.
 
     \vspace{5mm}
 
@@ -3185,7 +3177,7 @@
             \draw (0.5,0) arc (0:\thetangle:0.5);
             \node at ({\thetangle/2}:0.7) {$\theta$};    
         \end{tikzpicture}
-        \caption{Representación de $ \ket{s} $ en el plano. Obtenida de [tikz]}\label{fig: s_plano}
+        \caption{Representación de $ \ket{s} $ en el plano}\label{fig: s_plano}
     \end{figure}
 
     \vspace{2.5mm}
@@ -3240,7 +3232,7 @@
             \draw (0.5,0) arc (0:-\thetangle:0.5);
             \node at (-{\thetangle/2}:0.7) {$\theta$};    
         \end{tikzpicture}
-        \caption{Reflexión $ U_{f} \ket{s} $ de $ \ket{s} $ sobre $ \ket{r} $ en el plano. Obtenida de [tikz]}\label{fig: ufs_plano}
+        \caption{Reflexión $ U_{f} \ket{s} $ en el plano}\label{fig: ufs_plano}
     \end{figure}
 
     \vspace{2.5mm}
@@ -3318,7 +3310,7 @@
             \draw (0.5,0) arc (0:\doubletheangle:0.5);
             \node at ({\nodeangle/2}:0.7) {$2 \theta$};  
         \end{tikzpicture}
-        \caption{Reflexión $ R_{s} U_{f} \ket{s} $ de $ U_{f} \ket{s} $ en el plano. Obtenida de [tikz]}\label{fig: rsufs_plano}
+        \caption{Reflexión $ R_{s} U_{f} \ket{s} $ en el plano}\label{fig: rsufs_plano}
     \end{figure}    
 
     \vspace{2.5mm}
@@ -3360,7 +3352,7 @@
             \draw (0.5,0) arc (0:\tripletheangle:0.5);
             \node at ({\triplenodeangle/2}:0.7) {$2 \theta$};  
         \end{tikzpicture}
-        \caption{Segunda reflexión $ (R_{s} U_{f})^{2} \ket{s} $ en el plano. Obtenida de [tikz]}\label{fig: rsuf2s_plano}
+        \caption{Segunda reflexión $ (R_{s} U_{f})^{2} \ket{s} $ en el plano}\label{fig: rsuf2s_plano}
     \end{figure}  
 
     \vspace{2.5mm}
@@ -3403,7 +3395,7 @@
 
     \vspace{5mm}
 
-    \subsubsection{RSA}
+    \subsubsection{RSA}\label{subsubsection: rsa}
 
     \vspace{5mm}
 
@@ -3483,12 +3475,15 @@
 
     \subsubsection{Algoritmo de Shor}\label{subsubsection: algoritmo_shor}
 
+    \vspace{5mm}
+
+    En 1994 llegó una revolución para la criptografía cuántica. Fue gracias a \textit{Peter Shor} y a su revolucionario algoritmo cuántico~\cite{shor_Original} con el que se rompen las bases de la criptografía pública y privada mediante la mejora del algoritmo de factorización por números primos clásico. Es por esto que ciertos sistemas, como el protocolo \textit{RSA} (\ref{subsubsection: rsa}), ya no son tan robustos frente a un ordenador cuántico. Para comenzar con el algoritmo, se parte de la tarea de factorizar el entero \( N \). 
 
     \vspace{5mm}
 
 
 
-
+    \vspace{5mm}
 
     \subsubsection{Estimación de Autovalores}
 

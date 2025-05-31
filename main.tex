@@ -51,7 +51,7 @@
     linkcolor=blue,      % Color de los enlaces internos (por ejemplo, índice)
     citecolor=blue,      % Color de los enlaces de citas
     filecolor=magenta,   % Color de los enlaces a archivos
-    urlcolor=darkblue,      % Color de los enlaces a URLs
+    urlcolor=blue,      % Color de los enlaces a URLs
 }
 
 \renewcommand{\UrlFont}{\sffamily\small}
@@ -70,6 +70,15 @@
 \fancyhf{} % Limpia los valores predeterminados     
 \fancyhead[R]{\textit{\rightmark}} % Sección o subsección actual en la parte superior derecha
 \fancyfoot[C]{\thepage} % Número de página centrado en el pie de página
+
+% Redefinir \rightmark para mostrar jerarquía específica
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\sectionmark}{\markright{\thesection\ #1}}{}{}{} % Elimina la marca de sección por defecto
+\renewcommand{\sectionmark}[1]{\markright{\ifnum\value{subsection}=0 \thesection\ #1 \else \ifnum\value{subsubsection}=0 \thesection\ #1 \else \rightmark \fi \fi}}
+\renewcommand{\subsectionmark}[1]{\markright{\ifnum\value{subsubsection}=0 \thesubsection\ #1 \else \rightmark \fi}}
+\renewcommand{\subsubsectionmark}[1]{\markright{\thesubsubsection\ #1}}
+\makeatother
 
 \usepackage{tikz}      % Paquete para gráficos y formato personalizado
 % Modificar el formato de las secciones
@@ -361,53 +370,88 @@
 
     \vspace{5mm}
 
-    Todas las ideas vistas anteriormente, la función de onda (\ref{eq: funcion_de_onda}), la superposición cuántica (\ref{eq: superposicion}) y la interpretacion probabilística de la función de onda (\ref{eq: densidad_probabilidad_onda}) dieron lugar a la necesidad de decribir la evolución de la función de onda \( \psi(x, t) \) en función del tiempo \textit{t}. Es en este momento cuando aparece \textit{Erwin Schrödinguer} en \textit{1926}, presentando su famosa ecuación, obtenida de derivar y desarrollar la ecuación  (\ref{eq: funcion_de_onda}). 
-    
-    En primer lugar, derivamos (\ref{eq: funcion_de_onda}) con respecto al tiempo \textit{t}:
+    Todas las ideas vistas anteriormente, la función de onda (\ref{eq: funcion_de_onda}), la superposición cuántica (\ref{eq: superposicion}) y la interpretacion probabilística de la función de onda (\ref{eq: densidad_probabilidad_onda}) dieron lugar a la necesidad de decribir la evolución de la función de onda \( \psi(x, t) \) en función del tiempo \textit{t}. Es en este momento cuando aparece \textit{Erwin Schrödinguer} en \textit{1926}, presentando su famosa ecuación, obtenida de derivar y desarrollar la ecuación  (\ref{eq: funcion_de_onda}). En primer lugar, derivamos dicha expresión (\ref{eq: funcion_de_onda}) con respecto al tiempo \textit{t}:
+
     \begin{align*}
         \frac{\partial}{\partial t} \psi(x, t) &= \frac{\partial}{\partial t} e^{i(px - Et) / \hbar} \\[8pt]
         \frac{\partial}{\partial t} \psi(x, t) &= e^{i(px - Et) / \hbar} \left(- \frac{iE}{\hbar} \right)
     \end{align*}
+
+    \vspace{2.5mm}
+
     Podemos observar que vuelve a aparecer la función de onda (\ref{eq: funcion_de_onda}), al tratarse de una función exponencial:
+
     \begin{equation*}
         \frac{\partial}{\partial t} \psi(x, t) = - \frac{iE}{\hbar} \psi(x, t)
     \end{equation*}
+
+    \vspace{2.5mm}
+
     A continuación multiplicamos ambos miembros por \( i\hbar \), para eliminar los denominadores y substrayendos de la expresión:
+
     \begin{equation}
         i \hbar \frac{\partial}{\partial t} \psi(x, t) = E \psi(x, t)
         \label{eq: obtencion_schrodinguer}
     \end{equation}
+
+    \vspace{2.5mm}
+
     Esta expresión la reservaremos para más adelante, ya que, en los siguientes cálculos, necesitaremos el producto de la energía del sistema \( E \) y la función de onda \( \psi \). Como siguiente paso, vamos a continuar derivando la función de onda (\ref{eq: funcion_de_onda}) con respecto de \textit{x}:
+
     \begin{align*}
         \frac{\partial}{\partial x} \psi(x, t) &= \frac{\partial}{\partial x} e^{i(px - Et) / \hbar} \\[10pt]
         \frac{\partial}{\partial x} \psi(x, t) &= e^{i(px - Et) / \hbar} \left( \frac{ip}{\hbar} \right) \\[10pt]
         \frac{\partial}{\partial x} \psi(x, t) &= \frac{ip}{\hbar} \psi(x, t)
     \end{align*}
+
+    \vspace{2.5mm}
+
     Derivamos por segunda vez respecto de la variable espacial:
+
     \begin{align*}
         \frac{\partial}{\partial x^{2}} \psi(x, t) &= \frac{\partial}{\partial x} \left( \frac{ip}{\hbar} \psi(x, t) \right) \\[10pt]
         \frac{\partial}{\partial x^{2}} \psi(x, t) &= - \frac{p^{2}}{\hbar^{2}} \psi(x, t)
     \end{align*}
+
+    \vspace{2.5mm}
+
     Multiplicamos por (\( - \frac{\hbar^{2}}{2m} \)) para obtener lo siguiente:
+
     \begin{equation*}
         - \frac{\hbar^{2}}{2m} \frac{\partial}{\partial x^{2}} \psi(x, t) = \frac{p^{2}}{2m} \psi(x, t)
         \\[2mm]
     \end{equation*}
+
+    \vspace{2.5mm}
+
     Conociéndose que la energía cinética es \( E = \frac{p^{2}}{2m} \), obtenemos la siguiente expresión
+
     \begin{equation*}
         - \frac{\hbar^{2}}{2m} \frac{\partial}{\partial x^{2}} \psi(x, t) = E \psi(x, t)
     \end{equation*}
+
+    \vspace{2.5mm}
+
     Sustituyendo el valor que acabamos de obtener \( E \psi(x, t) \) en (\ref{eq: obtencion_schrodinguer}), llegamos prácticamente a la ecuación que estamos buscando:
+
     \begin{equation*}
         i \hbar \frac{\partial}{\partial t} \psi(x, t) = - \frac{\hbar^{2}}{2m} \frac{\partial}{\partial x^{2}} \psi(x, t)
         \\[2mm]
     \end{equation*}
+
+    \vspace{2.5mm}
+
     Para terminar, si agregamos la energía potencial y generalizamos la ecuación para más de una dimensión espacial, obtenemos la famosa \textbf{\textit{ecuación de Schrödinguer}}:
+
     \begin{equation}
         \boxed{i \hbar \frac{\partial}{\partial t} \psi(x, t) = (- \frac{\hbar^{2}}{2m} \Delta + V(x, t)) \psi(x, t)} 
         \label{eq: ecuacion_schrodinguer}     
     \end{equation}
+
+    \vspace{2.5mm}
+
     Siendo \( \Delta \) el operador Laplaciano en coordenadas canónicas, que se define como
+
     \begin{equation*}
         \Delta = \frac{\partial}{\partial^{2} x_{1}} + \cdots + \frac{\partial}{\partial^{2} x_{n}}, \qquad \forall n \in \mathbb{N}
     \end{equation*}
@@ -428,17 +472,23 @@
         \Psi(x, t) = \psi(x) \tau(t) \\[5pt]
     \end{equation*}
 
+    \vspace{2.5mm}
+
     Sustituyendo en (\ref{eq: ecuacion_schrodinguer}) nos queda como
 
     \begin{equation*}
         i \hbar \frac{\partial}{\partial t} \psi(x) \tau(t) = \left( - \frac{\hbar^{2}}{2m} \Delta + V(x) \right) \psi(x) \tau(t) \\[5pt]
     \end{equation*}
 
+    \vspace{2.5mm}
+
     Podemos dividir entre \( \psi(x) \tau(t) \) y ordenar ambos miembros, de manera que un miembro nos quede únicamente en función de \textit{x} y otro en función de \textit{t}:
 
     \begin{equation*}
         i \hbar \frac{1}{\tau(t)} \frac{\partial}{\partial t} \tau(t) = V(x) - \frac{\hbar^{2}}{2m} \frac{1}{\psi(x)} \frac{\partial}{\partial x^{2}} \psi(x) \\[5pt]
     \end{equation*}
+
+    \vspace{2.5mm}
 
     Hemos de recalcar que hemos tomado el laplaciano \( \Delta \) como \( \frac{\partial}{\partial x^{2}} \), siendo este el laplaciano en una dimensión espacial, con el fin de simplificar los cálculos. Llegados a este punto, para que se cumpla la igualdad, cada miembro de la ecuación ha de ser igual a una constante \( E \), al demostrarse que se trata de una ecuación separable
     
@@ -450,6 +500,8 @@
         \label{eq: separacion_variables}
     \end{equation}
 
+    \vspace{2.5mm}
+
     Tomando como base la primera ecuación del sistema, podemos obtener una solución exponencial de la siguiente manera:
         
     \begin{align*}
@@ -457,11 +509,15 @@
         \tau(t) &= e ^ { \left( - \frac{Ei}{\hbar} \right) t}
     \end{align*}
 
+    \vspace{2.5mm}
+
     Esto nos proporciona una evolución temporal del sistema en el que se encuentra la partícula. Sin embargo, para obtener la ecuación que estamos buscando, hemos de fijarnos en la segunda ecuación de (\ref{eq: separacion_variables}):
 
     \begin{equation*}
         V(x) - \frac{\hbar^{2}}{2m} \frac{1}{\psi(x)} \frac{\partial}{\partial x^{2}} \psi(x) = E
     \end{equation*}
+
+    \vspace{2.5mm}
 
     La cual podemos reescribir como
 
@@ -470,12 +526,16 @@
         \label{eq: schrodinguer_independiente_tiempo}
     \end{equation}
 
+    \vspace{2.5mm}
+
     En muchas referencias, la ecuación (\ref{eq: schrodinguer_independiente_tiempo}) es ya la ecuación que estamos buscando. Sin embargo, nosotros la vamos a denotar en función del operador \textit{Hamiltoniano} \( H \), el cual representa la energía total de nuestro sistema cuando ésta permanece constante en el tiempo, que en nuestro caso sucede al establecer que \( V(x, t) = V(x) \). Así, la \textbf{\textit{ecuación de Schrödinguer independiente del tiempo}} queda como
     
     \begin{equation}
         \boxed{ H \psi(x) = E \psi(x)}
         \label{eq: schrodinguer_independiente_tiempo_hamiltoniano}
     \end{equation}
+
+    \vspace{2.5mm}
 
     Siendo \( H = \left( - \frac{\hbar^{2}}{2m} \frac{\partial}{\partial x^{2}} + V(x) \right) \) el operador \textit{Hamiltoniano}. Finalmente, podemos concluir que la solución completa queda como
 
@@ -527,73 +587,77 @@
         \alpha \ket{\psi} \in \mathcal{H}, \qquad &\forall \ket{\psi} \in \mathcal{H} \quad \text{y} \quad \forall \alpha \in \mathbb{C}
     \end{align*}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Además, dicho espacio vectorial \( \mathcal{H} \) cuenta con un producto escalar hermítico, el cual es una aplicación
+
     \begin{align*}
         \mathcal{H} \times \mathcal{H} &\longrightarrow \mathbb{C} \\
         \ket{\phi}, \ket{\psi} &\longrightarrow \braket{\phi \ | \ \psi}
     \end{align*}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Que cumple con las propiedades de linealidad y hermiticidad, respectivamente:
+
     \begin{align*}
         \braket{\phi \ | \ \lambda_{1}\psi_{1} + \lambda_{2}\psi_{2}} &= \lambda_{1} \braket{\phi \ | \ \psi_{1}} + \lambda_{2} \braket{\phi \ | \ \psi_{2}}, \qquad \forall \lambda_{1}, \lambda{2} \in \mathbb{C} \\[10pt]
         \braket{\phi \ | \ \psi} &= \braket{\psi \ | \ \phi}^{*}
     \end{align*}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Siendo \( \braket{\psi \ | \ \phi}^{*} \) la expresión conjugada compleja de \( \braket{\phi \ | \ \psi} \). Esta aplicación ha de ser definida positiva, de manera que
+
     \begin{equation*}
         \braket{\psi \ | \ \psi} \geq 0 \quad \text{y} \quad \braket{\psi \ | \ \psi} = 0 \ \Leftrightarrow \ \ket{\psi} = 0
     \end{equation*}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Si \( \mathcal{H} \) satisface estas propiedades, podemos concluir que \( \mathcal{H} \) es un espacio de Hilbert. Con esto podemos definir la norma de un vector \( \psi \) como
+
     \begin{equation}
         \| \psi \| = \sqrt{\braket{\psi \ | \ \psi}} \qquad \in \mathbb{R} \geq 0
         \label{eq: norma_producto_escalar}
     \end{equation}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Podemos observar que \( \| \psi \| \in \mathbb{R} \geq 0 \), ya que al tratarse de la longitud de un vector, ha de ser un número real no negativo. Con esto podemos introducir la desigualdad de Schwartz, la cual establece lo siguiente:
+
     \begin{equation}
         \| \braket{\phi \ | \ \psi} \| ^{2} \leq \| \phi \| ^{2} \| \psi \|^{2}
         \label{eq: desigualdad_schwartz}
     \end{equation}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Al complirse esta expresión, el producto interno está bien definido, de donde obtenemos la norma como ya vimos en (\ref{eq: norma_producto_escalar}), pasando a ser un espacio normado cuya norma cumple con la \textit{sucesión de Cauchy}:
+
     \begin{equation*}
         \forall \epsilon > 0, \quad \exists N \in \mathbb{N} \ \text{tal que} \ m, n \geq N \implies \| x_{n} - x_{m} \| < \epsilon
     \end{equation*}
     
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
-    por lo que además es un espacio completo.
+    Por lo que además es un espacio completo. Con esto ya podemos llegar a la conclusión de que, un espacio de Hilbert, en resumidas cuentas, es un espacio vectorial \( \mathcal{H} \) con un producto escalar hermítico, y por lo tanto sobre el cuerpo de los números complejos \( \mathbb{C} \). Aún así, vamos a profundizar más en la definición de \textit{producto escalar hermítico} en \( \mathcal{H} \). Para ello, vamos a trabajar sobre el concepto de \textit{espacio dual} y \textit{ortonormalidad} definiendo una base ortonormal de nuestro espacio vectorial \( \mathcal{H} \), como
 
-    \vspace{5mm}
-
-    Con esto ya podemos llegar a la conclusión de que, un espacio de Hilbert, en resumidas cuentas, es un espacio vectorial \( \mathcal{H} \) con un producto escalar hermítico, y por lo tanto sobre el cuerpo de los números complejos \( \mathbb{C} \). Aún así, vamos a profundizar más en la definición de \textit{producto escalar hermítico} en \( \mathcal{H} \). Para ello, vamos a trabajar sobre el concepto de \textit{espacio dual} y \textit{ortonormalidad} definiendo una base ortonormal de nuestro espacio vectorial \( \mathcal{H} \), como
     \begin{equation}
         B = \{ \ket{e_{j}} \} _{j = 0}^{N - 1}
         \label{eq: base_ortonormal_H}
     \end{equation}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Donde \( N \) es la dimensión de \( \mathcal{H} \). No obstante, esto no deja de ser una base común y corriente. Para que esta base sea ortonormal, se tienen que dar las condiciones de ortonormalidad, en las que se establece que el producto escalar de dos vectores distintos de dicha base es cero, y la norma de ambos vectores ha de ser igual a la unidad. Esto lo podemos formalizar de la siguiente manera
+
     \begin{align}
         \braket{e_{1} | e_{2}} = \delta_{e_{1}, e_{2}}, \qquad &\forall \ \ket{e_{1}}, \ket{e_{2}} \in B \label{eq: ortonormalidad} \\
         \| e_{j} \| = 1,  \qquad &\forall \ \ket{e_{j}} \in B \label{eq: linealidad}
     \end{align}
     
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Donde \( \delta_{n, m} \) en (\ref{eq: ortonormalidad}) es la función \textit{delta de Kronecker}, que se define como
     \begin{equation}
@@ -605,61 +669,67 @@
         \label{eq: delta_kronecker}
     \end{equation}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Así, el producto escalar de dos vectores de una base ortonormal siempre va a ser cero, y el producto escalar de un vector cualquiera \( \ket{\psi} \in \mathcal{H} \) consigo mismo es la unidad
+
     \begin{align}
         \braket{e_{1} | e_{2}} = 0, &\qquad \forall \ e_{1}, e_{2} \in B \\[10pt]
         \| \psi \| = \sqrt{\braket{\psi \ | \ \psi}} = 1, &\qquad \forall \ \ket{\psi} \in \mathcal{H}
     \end{align}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Entonces, podemos expresar cualquier vector de nuestro espacio vectorial \( \mathcal{H} \) como una combinación lineal de los vectores de la base:
+
     \begin{equation}
         \ket{\psi} = \sum_{j = 0}^{N - 1} c_{j} \ket{e_{j}}, \qquad \forall \ \ket{\psi} \in \mathcal{H} \quad \text{y} \quad \ \forall c_{j} \in \mathbb{C}
         \label{eq: combinacion_lineal_Hilbert}
     \end{equation}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Esto es muy importante ya que vamos a usar estos vectores para ver el estado en el que se encuentra nuestro sistema cuantico. Esto está directamente ligado con la superposición de la función de onda, como ya vimos en (\ref{eq: superposicion}), ya que, cada uno de los posibles estados de una partícula en una superposición de funciones de onda, no son más que los vectores de una base ortonormal perteneciente a un espacio de Hilbert \( \mathcal{H} \). Esto es de vital importancia y lo seguiremos viendo cuando introduzcamos los estados de un \textit{qubit}, como ya veremos más adelante.
 
     \vspace{5mm}
 
     Ahora vamos a dar las primeras nociones del \textit{espacio dual} \( \mathcal{H} ^ {*} \) de \( \mathcal{H} \). Si tenemos un espacio de Hilbert \( \mathcal{H} \) sobre el cuerpo de los número complejos \( \mathbb{C} \), definimos su \textit{espacio dual} \( \mathcal{H} ^ {*} \) como el conjunto de todas las aplicaciones lineales que transforman elementos de \( \mathcal{H} \), es decir, \textit{kets}, en un número complejo \( \mathbb{C} \)
+
     \begin{equation*}
         \mathcal{H} ^ {*} = \{ \bra{\phi}: \mathcal{H} \longrightarrow \mathbb{C} \}
     \end{equation*}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Donde \( \bra{\phi} \) se construye con el conjugado hermítico, el cual se define con el operador \( \dagger \):
+
     \begin{equation}
         ( \ket{\phi} )^{\dagger} = \bra{\phi}
         \label{eq: conjugado_hermitico}
     \end{equation}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Aprovechamos para explicar la notación, en la tenemos los elementos pertenecientes al espacio dual \( \mathcal{H} ^ {*} \) conocidos como \textit{bra} \( \bra{\phi} \), vectores pertenecientes al espacio de Hilbert \( \mathcal{H} \) que son llamados como \textit{kets} \( \ket{\psi} \), y el resultado de aplicar un producto escalar hermítico sobre un \textit{bra} y un \textit{ket}, al que haremos referencia como \textit{bracket} \( \braket{\phi \ | \ \psi} \).
 
     \vspace{5mm}
 
     El espacio dual \( \mathcal{H} ^ {*} \) tiene una base dual asociada
+
     \begin{equation}
         B ^ {*} = \{ \bra{e_{i}} \} _{i = 0}^{N - 1}
     \end{equation}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     mediante la que, de la misma manera que con la base \( B \) definida en (\ref{eq: base_ortonormal_H}) sobre un espacio de Hilbert \( \mathcal{H} \), podemos expresar cualquier \textit{bra} \( \bra{\phi} \in \mathcal{H} ^ {*} \) como una combinación lineal de los \textit{bra} de la base \( B ^ {*} \):
+
     \begin{equation}
         \bra{\phi} = \sum_{i = 0}^{N - 1} d_{i}^{*} \bra{e_{i}}, \qquad \forall \ \bra{\phi} \in B^{*} \quad y \quad \forall \ c_{i}^{*} \in \mathbb{C}
         \label{eq: combinacion_lineal_hilbert_dual}
     \end{equation}    
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Por lo tanto, la actuación de un \textit{bra} \( \bra{\phi} \in \mathcal{H}^{*} \) sobre un \textit{ket} \( \ket{\psi} \in \mathcal{H} \) es el producto escalar hermítico de los \textit{kets}, y debido a la propiedad de linealidad en \( \mathcal{H} \), este producto queda perfectamente definido en \( \mathcal{H} \)
 
@@ -685,7 +755,6 @@
 
     Esto es de vital importancia y nos ayudará a comprender y explicar los \textit{postulados de la mecánica cuántica}, como vamos a ver a continuación.
 
-
     \vspace{5mm}
 
     \subsection{Postulados de la Mecánica Cuántica}\label{sec: postulados}
@@ -709,41 +778,42 @@
     
     \vspace{5mm}
 
-    En mecánica cuántica, a las magnitudes se les asigna un operador en concreto, un \textit{observable}, y este \textit{observable} no es más que un operador lineal hermítico. Vamos a ir desglosando punto por punto para enteder todo de la mejor manera posible.
+    En mecánica cuántica, a las magnitudes se les asigna un operador en concreto, un \textit{observable}, y este \textit{observable} no es más que un operador lineal hermítico. Vamos a ir desglosando punto por punto para enteder todo de la mejor manera posible. Un operador es un objeto que actúa sobre los elementos de un espacio vectorial, en nuestro caso, un espacio de Hilbert \( \mathcal{H} \), transformándolos en otro vector perteneciente al mismo espacio
 
-    \vspace{5mm}
-
-    Un operador es un objeto que actúa sobre los elementos de un espacio vectorial, en nuestro caso, un espacio de Hilbert \( \mathcal{H} \), transformándolos en otro vector perteneciente al mismo espacio
     \begin{equation}
         \hat{A} \ket{\psi} \overset{\hat{A}}{\longrightarrow} \ket{\psi '}, \qquad \ket{\psi}, \ket{\psi '} \in \mathcal{H}
         \label{eq: operador_espacio_hilbert}
     \end{equation}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Pongamos como ejemplo el producto externo \( \ket{\phi} \bra{\psi} \) multiplicado a un vector \( \ket{\varphi} \in \mathcal{H} \), esto es:
+
     \begin{equation*}
         \left( \ket{\phi} \bra{\psi} \right) \left( \ket{\varphi} \right) = \ket{\phi} \braket{\psi \ | \ \varphi} = \ket{\phi} k = k \ket{\phi}, \qquad k \in \mathbb{C}
     \end{equation*}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Con esto hemos probado que \( \ket{\phi} \bra{\psi} \) es un \textit{operador}, ya que 
+
     \begin{equation}
         \hat{A} \ket\varphi = k \ket{\phi}, \qquad k \in \mathbb{C}
     \end{equation}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Esto resulta en que un operador fruto de un producto externo se puede expresar como una combinación lineal de productos externos de vectores de la base
+
     \begin{equation}
         \hat{A} = \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} A_{ij} \ket{i} \bra{j}, \qquad \forall \ \ket{i}, \ket{j} \in B
         \label{eq: operador_combinacion_lineal}
     \end{equation}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Podemos ver fácilmente que estos operadores se pueden representar como matrices cuadradas de dimensión \( N \times N \). Además, partiendo de la expresión anterior, existe una condición suficiente y necesaria para que un conjunto de vectores sea base. Esta condición se denomina \textit{relación de cierre}, y se obtiene de particularizar la expresión (\ref{eq: operador_combinacion_lineal}) para el operador identidad \( I \), el cual se define como 
+
     \begin{equation}
         I_{ij} =
         \left\{
@@ -755,58 +825,62 @@
         = \delta_{ij}
     \end{equation}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Entonces, esta relación establece que, si la suma de los \textit{ketbras} \( \ket{i} \bra{j} \) de los elementos de la base es igual al operador identidad \( I \), todos los elementos de dicha base pueden generar el espacio de Hilbert \( \mathcal{H} \), de la siguiente manera
-    \begin{align*}
-        I &= \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N -1} \delta_{ij} \ket{i} \bra{j} = \sum_{i = 0}^{N -1} \ket{i} \bra{i} \\[10pt]
-        I \ket{\psi} &= \sum_{i = 0}^{N - 1} \ket{i} \braket{i \ | \ \psi} = \sum_{i = 0}^{N - 1} c_{i} \ket{i} = \ket{\psi} \\[10pt]
-    \end{align*}
-    \begin{equation}
+
+    \begin{gather}
+        I = \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N -1} \delta_{ij} \ket{i} \bra{j} = \sum_{i = 0}^{N -1} \ket{i} \bra{i} \nonumber \\[5pt]
+        I \ket{\psi} = \sum_{i = 0}^{N - 1} \ket{i} \braket{i \ | \ \psi} = \sum_{i = 0}^{N - 1} c_{i} \ket{i} = \ket{\psi} \nonumber \\[5pt]
         I \ket{\psi} = \psi
         \label{eq: operador_identidad}
-    \end{equation}
+    \end{gather}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     De donde hemos obtenido que \( \braket{i \ | \ \psi} = c_{i} \). Esto lo podemos obtener a partir de (\ref{eq: combinacion_lineal_Hilbert}), de manera que
+
     \begin{align}
         \braket{i \ | \ \psi} &= \sum_{j = 0}^{N - 1} c_{j} \braket{i \ | \ j} \\[10pt]
         \braket{i \ | \ \psi} &= \sum_{j = 0}^{N - 1} c_{j} \delta_{ij} = c_{i}\label{eq: ci}
     \end{align}
     
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     El resultado que acabamos de obtener en (\ref{eq: ci}), \( c_{i} \), por definición, es la proyección del vector \( \ket{\psi} \in \mathcal{H} \) sobre el vector \( \ket{i} \) de la base. Así, podemos observar que (\ref{eq: operador_identidad}) es efectivamente la identidad \( I \), y que dejará al vector \( \ket{\psi}\) exactamente igual, cumpliéndose así la \textit{relación de cierre}. A continuación, el concepto de linealidad en un operador no es más que
+
     \begin{equation}
         \hat{A} \left( a \ket{\psi} + b \ket{\phi} \right) = a \hat{A} \ket{\psi} + b \hat{A} \ket{\phi}, \qquad \psi, \phi \in  \mathcal{H} \ \text{y} \ \forall \ a,b \in \mathbb{C} 
         \label{eq: linealidad_operador}
     \end{equation}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Y, finalmente, nos queda definir la condición de hermiticidad en un operador, resultando en un \textit{operador hermítico} que, como podemos imaginar, cumple con
+
     \begin{equation}
         \hat{A} ^ {\dagger} = \hat{A}
         \label{eq: hermiticidad_operador}
     \end{equation}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     De manera que tras aplicar el operador \( \dagger \) sobre \( \hat{A} \), se vuelve a obtener \( \hat{A} \). Esto conlleva a otra condición, que se obtiene como resultado de (\ref{eq: hermiticidad_operador}):
+
     \begin{equation*}
         \hat{A} ^ {\dagger} = \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} A_{ij}^{\dagger} \left( \ket{i} \bra{j} \right) ^ {\dagger} = \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} A_{ij}^{*} \ket{j} \bra{i} = \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} A_{ji}^{*} \ket{i} \bra{j}
     \end{equation*}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Entonces, como vimos en (\ref{eq: hermiticidad_operador}), para que un operador sea hermítico, su traspuesto conjugado \( \hat{A}^{\dagger} \) ha de ser igual a él mismo \( \hat{A} \), resultando en la siguiente condición
+
     \begin{align}
         \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} A_{ji}^{*} \ket{i} \bra{j} &= \sum_{i = 0}^{N - 1} \sum_{j = 0}^{N - 1} A_{ij} \ket{i} \bra{j} \\[10pt]
         A_{ji}^{*} &= A_{ij} \label{eq: hermiticidad_componentes_operador}
     \end{align}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Y esta condición (\ref{eq: hermiticidad_componentes_operador}) se ha de cumplir en todo observable.
     
@@ -819,44 +893,49 @@
     \vspace{5mm}
 
     Comencemos con la definición de \textit{autovector} y \textit{autovalor}. Imaginemos un operador \( \hat{A} \) actuando sobre un vector \( \psi \), de manera que, tras aplicar el operador, obtenemos el mismo vector \( \psi \) multiplicado por un escalar \( \lambda \). Esto es el autovector \( \psi \) asociado al autovalor \( \lambda \), respectivamente:
+
     \begin{equation}
         \hat{A} \ket{\psi} = \lambda \ket{\psi}, \qquad \lambda \in \mathbb{R}
         \label{eq: autovectores_y_autovalores}
     \end{equation}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Y podemos verificar que \( \lambda \in \mathbb{R} \), partiendo de (\ref{eq: autovectores_y_autovalores}) y tomando el producto interno en ambos miembros, como sigue a continuación
+
     \begin{align*}
         \bra{\psi} \hat{A} \ket{\psi} &= \lambda \braket{\psi | \psi} \\[10pt]
         \bra{\psi} \hat{A} \ket{\psi} &= \bra{\psi} {\hat{A ^ {\dagger}}} \ket{\psi} = \lambda ^ {*} \braket{\psi | \psi} 
     \end{align*}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Por lor que hemos demostrado que \( \ \lambda \in \mathbb{R} \ \) ya que \( \ \lambda ^ {*} = \lambda \ \). Por último vamos a ver que los autovectores asociados a autovalores distintos entre sí son ortogonales, es decir, su producto escalar es igual a cero:
+
     \begin{align*}
         (\hat{A} \ket{\psi_{i}})^{\dagger} &= (\lambda_{i} \ket{\psi_{i}})^{\dagger} \\[10pt]
         \bra{\psi_{i}} \hat{A} &= \lambda_{i}^{*} \bra{\psi_{i}} = \lambda_{i} \bra{\psi_{i}} \\[10pt]
         \bra{\psi_{i}} \hat{A} \ket{\psi_{j}} &= \lambda_{i} \braket{\psi_{i} | \psi_{j}}
     \end{align*}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Dado que \( \hat{A} \ket{\psi_{j}} = \lambda_{j} \ket{\psi_{j}} \), obtenemos la siguiente igualdad:
+
     \begin{align*}
         \bra{\psi_{i}} \lambda_{j} \ket{\psi_{j}} &= \lambda_{i} \braket{\psi_{i} | \psi_{j}} \\[10pt]
         ( \lambda_{j} - \lambda_{i} ) \braket{\psi_{i} | \psi_{j}} &= 0
     \end{align*}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Y debido a que \( \lambda_{j} \neq \lambda_{i} \), obtenemos que ambos autovectores \( \psi_{i} \text{,} \psi_{j} \)
+
     \begin{equation}
         \braket{\psi_{i} | \psi_{j}} = 0
     \end{equation}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Son ortogonales. Entonces, podemos concluir que, en un espacio de Hilbert \( \mathcal{H} \), un operador hermítico \( \hat{A} \) tiene \( N \) autovectores \( \ket{\psi_{i}} \) asociados a los autovalores \( \lambda_{i} \), que como hemos demostrado, pertenecen al conjunto de los números reales \( \mathbb{R} \) y son ortogonales entre sí, por lo que únicamente tendríamos que normalizar dichos autovectores para obtener una base ortonormal de autovectores, cumpliendo con el \textit{Teorema Espectral}, el cual establece que todo operador hermítico \( \hat{A} \) definido en un espacio de Hilbert \( \mathcal{H} \) de dimensión finita es diagonalizable, es decir, existe una base ortonormal \( B_{\hat{A}} \in \mathcal{H} \) formada por los autovectores \( \ket{\psi_{i}} \) del operador \( \hat{A} \).
 
@@ -869,20 +948,20 @@
     \textbf{Postulado 4}: \textbf{Regla de Born}. \textit{Cuando medimos la magnitud \( \mathcal{A} \) en un sistema
     cuántico que se encuentra en el estado \( \ket{\psi} \), la probabilidad \( \mathcal{P}(\lambda_{n})\) de obtener el
     autovalor no degenerado \( \lambda_{n}\) del observable A será}
+
     \begin{equation}
         \mathcal{P}(\lambda_{n}) = \| \braket{\lambda_{n} \ | \ \psi} \| ^{2}
         \label{eq: regla_born}
     \end{equation}
 
+    \vspace{2.5mm}
+
     \textit{donde \( \ket{\lambda_{n}} \) es el autovector normalizado asociado al autovalor \( \lambda_{n} \)}.
     
     \vspace{5mm}
 
-    Como bien ya sabemos, el resultado de una medición en en mecánica cuántica se rige bajo una función de probabilidad, y esta probabilidad se define como en (\ref{eq: regla_born}).
+    Como bien ya sabemos, el resultado de una medición en en mecánica cuántica se rige bajo una función de probabilidad, y esta probabilidad se define como en (\ref{eq: regla_born}). En este punto puede surgirnos una pregunta interesante, y es que la media de estas probabilidades puede darnos una pequeña orientación, con cierto riesgo, del valor esperado de dicha medición. Podemos obtener la media, al ser la suma ponderada de los posibles estados que podemos obtener al medir la magnitud \( \mathcal{A} \):
 
-    \vspace{5mm}
-
-    En este punto puede surgirnos una pregunta interesante, y es que la media de estas probabilidades puede darnos una pequeña orientación, con cierto riesgo, del valor esperado de dicha medición. Podemos obtener la media, al ser la suma ponderada de los posibles estados que podemos obtener al medir la magnitud \( \mathcal{A} \):
     \begin{equation*}
         < \hat{A} >_{\ket{\psi}} = \sum_{i = 0}^{N - 1} \lambda_{i} \mathcal{P}_{i} = \sum_{i = 0}^{N - 1} \lambda_{i} \| \braket{\lambda_{i} \ | \ \psi} \| ^ {2} = \sum_{i = 0}^{N - 1} \lambda_{i} \braket{\psi \ | \ \lambda_{i}} \braket{\lambda_{i} \ | \ \psi} =
     \end{equation*}
@@ -890,38 +969,43 @@
         = \bra{\psi} \left( \sum_{i = 0}^{N - 1} \lambda_{i} \ket{\lambda_{i}} \bra{\lambda_{i}} \right) \ket{\psi} = \bra{\psi} \hat{A} \ket{\psi}
     \end{equation*}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Así queda que ya tenemos la media, una orientación del valor \( \lambda_{n} \) que puede tomar el resultado, pero, ¿Y el resultado, qué pasa con él?
 
     \vspace{10mm}
 
     \textbf{Postulado 5}: \textit{Si en la medición de la magnitud \( \mathcal{A} \) en un sistema en el estado \( \ket{\psi} \) obtenemos el resultado \( \lambda_{i} \), inmediatamente después de la medición, el estado del sistema será la proyección del estado \( \ket{\psi} \) sobre el subespacio asociado a \( \lambda_{i} \)}:
+
     \begin{equation}
         \ket{\psi} \overset{\lambda_{i}}{\longrightarrow} \frac{\hat{\Pi_{i}} \ket{\psi}}{\sqrt{\bra{\psi} \hat{\Pi_{i}} \ket{\psi}}}
     \end{equation}
 
-    \vspace{2mm}
+    \vspace{2.5mm}
+
     \textit{Donde \( \hat{\Pi_{i}} \) es el operador proyección sobre el subespacio asociado a \( \lambda_{i} \)}.
     
     \vspace{5mm}
 
     Después de medir y obtener el resultado \( \lambda_{i} \), que, como sabemos por el tercer postulado, es un autovalor, el estado se proyecta sobre el autovector asociado al resultado \( \lambda_{i} \). Matemáticamente, esto lo podemos expresar mediante el producto del estado de la partícula por su proyector:
+
     \begin{equation}
         \ket{\psi_{i}} = \hat{\Pi_{i}} \ket{\psi}
         \label{eq: proyeccion_estado}
     \end{equation}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Definiéndose así el operador de proyección sobre un vector como el producto externo del autovector \( \ket{\lambda_{i}} \) sobre el que queremos proyectar nuestro estado \( \ket{\psi} \)
+
     \begin{equation*}
         \hat{\Pi_{i}} = \ket{\lambda_{i}} \bra{\lambda_{i}}
     \end{equation*} 
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Que, por definición, su cuadrado es igual a sí mismo, y es ortogonal al resto de proyectores
+
     \begin{equation*}
         \hat{\Pi_{i}} ^ {2} = \ket{\lambda_{i}} \braket{\lambda_{i} \ | \ \lambda_{i}} \bra{\lambda_{i}} = \ket{\lambda_{i}} \bra{\lambda_{i}} = \hat{\Pi_{i}}
     \end{equation*}
@@ -929,10 +1013,10 @@
         \hat{\Pi_{i}} \hat{\Pi_{j}} = 0
     \end{equation*}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Siguiendo en la expresión (\ref{eq: proyeccion_estado}), como el módulo del estado \( \ket{\psi_{i}} \) debe ser igual a la unidad, lo dividimos entre su módulo para normalizarlo, y desarrollando la expresión que nos queda, llegamos al autovector asociado al resultado de la medición
-    \vspace{1mm}
+
     \begin{equation*}
         \ket{\psi_{i}} = \frac{\hat{\Pi_{i}} \ket{\psi}}{| \hat{\Pi_{i}} \ket{\psi} |} = \frac{\ket{\lambda_{i}} \braket{\lambda_{i} \ | \ \psi}}{\sqrt{| \ket{\lambda_{i}} \braket{\lambda_{i} \ | \ \psi} | ^ {2}}} = \frac{\ket{\lambda_{i}} \braket{\lambda_{i} \ | \ \psi}}{\sqrt{| \braket{\psi \ | \ \lambda_{i}} \braket{\lambda_{i} \ | \ \lambda_{i}} \braket{\lambda_{i} \ | \ \psi} | ^ {2}}} = 
     \end{equation*}
@@ -940,9 +1024,10 @@
         = \frac{\ket{\lambda_{i}} \braket{\lambda_{i} \ | \ \psi}}{\sqrt{| \braket{\psi \ | \ \lambda_{i}} \braket{\lambda_{i} \ | \ \psi} | ^ {2}}} = \frac{\ket{\lambda_{i}} \braket{\lambda_{i} \ | \ \psi}}{\sqrt{| \braket{\lambda_{i} \ | \ \psi} | ^ {2}}} = \frac{\braket{\lambda_{i} \ | \ \psi}}{| \braket{\lambda_{i} \ | \ \psi} |} \ket{\lambda_{i}} = e^{i \theta} \ket{\lambda_{i}}
     \end{equation*}
 
-    \vspace{1.5mm}
+    \vspace{2.5mm}
 
     Siendo
+
     \begin{equation}
         e ^ {i \theta} = \frac{\braket{\lambda_{i} \ | \ \psi}}{| \braket{\lambda_{i} \ | \ \psi} |}
     \end{equation}
@@ -950,6 +1035,7 @@
     \vspace{2.5mm}
 
     La conocida como \textit{fase global}, la cual es un número complejo de módulo igual a la unidad, de manera que si multiplicamos dicha fase por un estado cuántico, dicho estado va a corresponder al mismo estado físico. Esto se debe a que si calculamos el módulo al cuadrado del producto de dos vectores arbitrarios con una fase global \( e ^ {i \theta} \)
+
     \begin{equation*}
         \ket{\psi'} = e^{i \theta} \ket{\psi}
     \end{equation*}
@@ -960,6 +1046,7 @@
     \vspace{2.5mm}
 
     El resultado sigue siendo el mismo que si no la tuviera
+
     \begin{equation*}
         | \braket{\phi' \ | \ \psi'} | ^ {2} = | e^{i \theta} e^{-i \rho} \braket{\phi \ | \ \psi} | ^ {2} = | e^{i (\theta - \rho)} | ^ {2} \ | \braket{\phi \ | \ \psi} | ^ {2} =
     \end{equation*}
@@ -970,6 +1057,7 @@
     \vspace{2.5mm}
 
     Por lo que podemos concluir que la proyección normalizada de un estado \( \ket{\psi_{i}} \) es su autovector \( \lambda_{i} \):
+
     \begin{equation}
         \ket{\psi_{i}} = \frac{\hat{\Pi_{i}} \ket{\psi}}{\sqrt{\hat{\Pi_{i}} \ket{\psi}}} \equiv \ket{\lambda_{i}}
     \end{equation}
@@ -977,10 +1065,13 @@
     \vspace{10mm}
 
     \textbf{Postulado 6}: \textit{La evolución temporal del estado de un sistema \( |\psi(t)\rangle \) está gobernada por la ecuación de Schrödinger},
+
     \begin{equation}
         i\hbar \frac{\partial}{\partial t} \ket{\psi(t)} = H(t) \ket{\psi(t)},
         \label{eq:schrodinger}
     \end{equation}
+
+    \vspace{2.5mm}
     
     \textit{donde \( H(t) \) es el observable asociado a la energía total del sistema}.
     
@@ -1007,6 +1098,7 @@
     \vspace{5mm}
 
     Sin embargo, podemos pensar que, cuando \( N \) tiende al infinito (\( N \rightarrow \infty \)), todo el trabajo que llevamos hasta ahora es válido, y no vamos por mal camino, simplemente hemos de hacer algunos cambios en las expresiones vistas anteriormente. Comencemos por la base, que ahora tendrá infinitas componentes:
+
     \begin{equation}
         B = \{ \ket{\alpha} \} _{\alpha \in \mathbb{R}}
         \label{eq: base_ortonormal_L2}
@@ -1015,6 +1107,7 @@
     \vspace{2.5mm}
 
     Entonces, tenemos que modificar la nomenclatura vista anteriormente, como cuando establecimos en la expresión (\ref{eq: combinacion_lineal_Hilbert}) que podemos expresar todo vector perteneciente a un espacio de Hilbert, ahora tenemos que generalizar dicha expresión para un espacio de dimensión infinita, quedando que
+
     \begin{equation}
         \ket{\psi} = \int_{\mathbb{R}} c (\alpha) \ket{\alpha} d \alpha
         \label{eq: combinacion_lineal_vector_infinito}
@@ -1023,6 +1116,7 @@
     \vspace{2.5mm}
 
     Donde \( c \ (\alpha) \) es una función compleja de variable real, siendo ahora una función continua, la cual es la contrapartida de lo que llamábamos antes \( c_{j} \), que no eran más que elementos complejos de una sucesión en la que para cada valor de \( j \) obteníamos un número complejo \( c_{j} \). Por otra parte, la generalización de un sumatorio en un espacio continuo es simplemente la integral sobre un cierto dominio perteneciente a \( \mathbb{R} \) que ya definiremos más adelante. Con esto, hemos dado el salto de un vector perteneciente a un espacio discreto, a un vector en un espacio continuo \( \ket{\psi} \in L^{2} \), el cual ya veremos más adelante, de momento vamos a quedarnos con la idea de que \( L^{2} \) es un espacio de Hilbert muy concreto y de dimensión infinita. De la misma manera que en (\ref{eq: combinacion_lineal_vector_infinito}), el vector dual se puede construir con la misma lógica que cuando lo definimos para una base finita en (\ref{eq: combinacion_lineal_hilbert_dual})
+
     \begin{equation}
         \bra{\psi} = \int_{\mathbb{R}} c^{*} (\alpha) \bra{\alpha} d \alpha
     \end{equation}
@@ -1030,6 +1124,7 @@
     \vspace{2.5mm}
 
     Sin embargo, a la hora de definir el producto escalar de dos vectores de la base \( \alpha, \alpha' \) hay un pequeño cambio, y esto lo podemos ver a través de la proyección \( c (\alpha) \) del vector \( \ket{\psi} \) sobre el vector de la base \( \ket{\alpha} \):
+
     \begin{equation*}
         \braket{\alpha \ | \ \psi} = c (\alpha) 
     \end{equation*}
@@ -1040,6 +1135,7 @@
     \vspace{2.5mm}
 
     Para que la expresión anterior sea cierta, \( \braket{\alpha \ | \ \alpha'} \) tiene que ser un función que recibe como parámetros \( \alpha \) y \( \alpha' \), en concreto se establece la \textit{delta de Dirac}, de manera que
+    
     \begin{equation*}
         \int_{\mathbb{R}} \ c (\alpha') \ \delta(\alpha - \alpha') d \alpha' = c (\alpha)
     \end{equation*}
@@ -1047,6 +1143,7 @@
     \vspace{2.5mm}
 
     La \textit{delta de Dirac} es
+    
     \begin{equation}
         \delta(x) =
         \begin{cases}
@@ -1066,6 +1163,7 @@
     \vspace{5mm}
 
     Entonces, una vez definida la \textit{delta de Dirac}, podemos expresar el producto escalar de dos vectores \( \alpha, \alpha' \) de la base como
+    
     \begin{equation}
         \braket{\alpha \ | \ \alpha'} = \delta(\alpha - \alpha')
     \end{equation}
@@ -1073,6 +1171,7 @@
     \vspace{2.5mm}
 
     Siendo este otro de los cambios notables al ampliar a una dimensión infinita, ya que este producto en una base finita de un espacio de Hilbert \( \mathcal{H} \) era anteriormente la \textit{delta de Kronecker} \( \delta_{ij} \) (\ref{eq: delta_kronecker}). Una vez aclarado esto, podemos expresar el producto de dos vectores \( \ket{\psi}, \ket{\phi} \in L^{2} \) cualesquiera, obteniendo una expresión bastante similar a la que obtuvimos en (\ref{eq: producto_escalar_desarrollado}) en un espacio discreto de Hilbert \( \mathcal{H} \)
+    
     \begin{equation*}
         \braket{\phi \ | \ \psi} = \int_{\mathbb{R}} b^{*} (\alpha') \bra{\alpha'} d \alpha' \int_{\mathbb{R}} c (\alpha) \ket{\alpha} d \alpha = \int\int_{\mathbb{R}} b^{*} (\alpha') \ c (\alpha) \braket{\alpha' \ | \ \alpha} d \alpha' \ d \alpha =
     \end{equation*}
@@ -1087,6 +1186,7 @@
     \vspace{2.5mm}
 
     Teniendo esto en cuenta, podemos obtener un caso particular de la expresión (\ref{eq: producto_escalar_infinito}), y es que el producto escalar de un vector \( \ket{\psi} \in L^{2} \) consigo mismo:
+    
     \begin{equation}
         \braket{\psi \ | \ \psi} = \int_{\mathbb{R}} c^{*} (\alpha) \ c (\alpha) \ d \alpha = \int_{\mathbb{R}} | c (\alpha) | ^ {2} \ d \alpha = 1
         \label{eq: producto_escalar_vector_mismo_l2}
@@ -1099,6 +1199,7 @@
     \vspace{5mm}
 
     Al imponer la condición vista en (\ref{eq: producto_escalar_vector_mismo_l2}), la función \( c(\alpha) \) ha de ser parte de un espacio vectorial muy concreto, el espacio \( L^{2} \), el cual es un \textit{espacio de Lebesgue} \( L^{p} \) para \( p = 2 \), que podemos definir como sigue: Sea \( f: \mathbb{R} \rightarrow \mathbb{C} \), entonces \( f \in L^{p} (\mathbb{R}) \) si
+    
     \begin{equation}
         \int_{-\infty}^{+\infty} | f (x) | ^ {p} d x < \infty, \qquad \forall \ x \in \mathbb{R}, \quad p \geq 1
     \end{equation}
@@ -1106,6 +1207,7 @@
     \vspace{2.5mm}
 
     Es decir, nuestra función compleja de variable real \( c(\alpha) \) ha de ser de cuadrado integrable, perteneciendo así a un espacio \( L^{2} \) el cual es el único \textit{espacio de Lebesgue} \( L^{p} \) que es un espacio de Hilbert \( \mathcal{H} \). Para un espacio \( L^{2} \) se garantizan todas las propiedades vistas anteriormente para un espacio de Hilbert de dimensión infinita, aunque hemos de establecer que la expresión vista en la definición de un espacio cuyo módulo es cuadrado integrable no solo ha de ser \( < \infty \), sino que ha de ser igual a la unidad, como vimos en (\ref{eq: producto_escalar_vector_mismo_l2}):
+    
     \begin{equation*}
         \braket{\psi \ | \ \psi} =  \int_{\mathbb{R}} | c (\alpha) | ^ {2} \ d \alpha = 1
     \end{equation*}
@@ -1113,6 +1215,7 @@
     \vspace{2.5mm}
 
     Esto es debido a la interpretación física del vector \( \ket{\psi} \). De hecho, es muy importante conocer que \( c(\alpha) \) es la famosa función de onda de la mecánica cuántica \( \psi(x) \), sobre la cual hemos estado hablando antes de adentrarnos en los espacios de Hilbert \( \mathcal{H} \). Para finalizar, también hemos de recalcar que hemos estado trabajando sobre una única dimensión espacial, para que la explicación sea más sencilla y fácil de entender, pero esto en realidad se debe hacer en las tres dimensiones espaciales del espacio, que se suele compactar con una notación vectorial
+    
     \begin{equation*}
         \ket{\psi} = \int_{\mathbb{R}^{3}} \ c(\vec{x}) \ket{\vec{x}} d \vec{x}, \qquad \forall \ \vec{x} \in \mathbb{R}^{3}
     \end{equation*}

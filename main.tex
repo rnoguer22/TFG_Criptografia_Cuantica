@@ -3583,11 +3583,96 @@
 
     \vspace{5mm}
 
+    Para este algoritmo se van a aplicar muchas de las condiciones vistas en otros métodos de cifrado clásicos, como \textit{RSA} (\ref{subsubsection: rsa}) en el que se explicó el máximo común divisor \textit{gcd}, expresiones modulares, y se estudió con un leve nivel de detalle las propiedades de la teoría de números aplicadas a los números coprimos. Es en esto, y con la ayuda de ciertos algoritmos cuánticos, en lo que se basa el algoritmo de Shor para factorizar un \( N \in \mathbb{Z} \) en dos números primos \textit{p} y \textit{q}. Según el libro escrito por \textit{Thomas G. Wong}~\cite{wong}, este proceso puede dividirse en tres partes:
 
+    \vspace{2.5mm}
+
+    \begin{enumerate}
+
+        \item Escogemos un número \( a \in \mathbb{Z} \) tal que \( 1 < a < N \), siendo \( N \) el número que deseamos factorizar. A continuación calculamos el máximo común divisor entre \textit{a} y \textit{N} y, si \( gcd(a, N) \neq 1 \), esto quiere decir que \textit{a} y \textit{N} comparten un divisor no trivial, por lo que uno de los factores que estamos buscando es \( p = gcd(a, N) \), y el otro lo podemos obtener en base a este factor, ya que este es \( q = N / p \), y finalizaría el algoritmo.  Si por el contrario \( gcd(a, N) = 1 \) quiere decir que \textit{a} y \textit{N} son coprimos, por lo que no comparten ningún divisor en común. En este caso no podemos encontrar los factores directamente y hemos de proceder con el siguiente paso del algoritmo.
+        
+        \vspace{5mm}
+
+        En definitiva el objetivo de este primer paso es inicializar \textit{a} y ver si se da la casualidad de que este número comparta algún divisor no trivial con \textit{N}, lo cual no suele ser algo común ya que se asume que \textit{N} es un número muy grande, y por tanto no podemos aplicar ningún método clásico para obtener \textit{a} de manera que \( gcd(a, N) \neq 1 \). Lo más normal es que tengamos que recurrir al siguiente paso. 
+
+        \vspace{5mm}
+
+        \item Encontrar el periodo modular \textit{r} de \( a^{x} \ \text{mod} \ N \). Supongamos que \textit{a} tiene un valor de 7, y \textit{N = 15}. La variable \textit{x} toma valores \(x \in \{ 0, 1, 2, \cdots \} \) de manera que
+        
+        \begin{align*}
+            7^{0} \ \text{mod} 15 &= 1 \ \text{mod} \ 15 = 1\\[5pt]
+            7^{1} \ \text{mod} 15 &= 7 \ \text{mod} \ 15 = 7\\[5pt]
+            7^{2} \ \text{mod} 15 &= 49 \ \text{mod} \ 15 = 4\\[5pt]
+            7^{3} \ \text{mod} 15 &= 354 \ \text{mod} \ 15 = 13 \\[5pt]
+            7^{4} \ \text{mod} 15 &= 2401 \ \text{mod} \ 15 = 1
+        \end{align*}
+
+        \vspace{2.5mm}
+
+        Y si seguimos incrementando el valor de \textit{x}, este ciclo se repite, ya que 7 y 15 son coprimos. El periodo \textit{r} es el menor entero positivo (mayor que cero) con el que se verifica esta secuencia, por lo que en este caso, el periodo es \textit{r = 4} como podemos ver. Esta operación resulta ser muy ineficiente para un ordenador clásico, pero bastante más eficiente para un ordenador que se apoye en las leyes de la mecánica cuántica, y el algoritmo cuántico que resuelve esta operación necesita estimar el autovalor de ciertos autovectores, lo cual cubrimos en (\ref{subsubsection: estimacion_autovalores}).
+
+        \vspace{5mm}
+
+        Una vez hemos averiguado el valor de \textit{r}, este ha de cumplir una serie de condiciones. La primera es que \textit{r} ha de ser un número par, y la segunda es \( a^{r / 2} \ \text{mod} \ N \neq N - 1 \). En el caso incumplirse alguna de estas restricciones, volvemos al primer paso, escogemos un valor distinto para \textit{a} y repetimos el proceso desde el principio.
+        
+        \vspace{5mm}
+
+        \item A continuación explicamos el último paso, con el cual vamos a obtener los factores primos \textit{p} y \textit{q} de \textit{N}. En primer lugar, necesitamos expresar \textit{r} en función de un múltiplo de \textit{N}, esto lo podemos conseguir muy fácilmente
+        
+        \begin{gather*}
+            a^{r} = 1 \ \text{mod} \ N \\[5pt]
+            a^{r} - 1 = 0 \ \text{mod} \ N \\[5pt]
+            a^{r} - 1 = k N
+        \end{gather*}
+
+        \vspace{2.5mm}
+
+        Donde \( k \in \mathbb{Z} \) es un múltiplo de \textit{N}. No obstante el objetivo de este problema es hallar \textit{p} y \textit{q}, por lo que expresamos \textit{N} en función de ellos, y además, podemos factorizar el término \( a^{r} - 1 \) como sigue
+
+        \begin{equation*}
+            \left( a^{r / 2} + 1 \right) \left( a^{r / 2} - 1 \right) = k p q
+        \end{equation*}
+
+        \vspace{2.5mm}
+
+        Esto lo podemos hacer porque hemos definido anteriormente en el segundo paso que \textit{r} ha de ser un número par, para que los factores \( a^{r / 2} + 1 \) y \( a^{r / 2} - 1 \) sean números enteros, ya que si no pertenecen a este conjunto, sería mucho más difícil, por no decir imposible, esta factorización. Llegados a este punto, \textit{p} o \textit{q} deben estar incluidos en al menos uno de los términos \( a^{r / 2} + 1 \) o \( a^{r / 2} - 1 \), lo que nos conduce a estas tres posibilidades:
+
+        \begin{gather}
+            \underbrace{ \left( a^{r / 2} + 1 \right)}_{c} \underbrace{ \left( a^{r / 2} - 1 \right)}_{dpq} = k p q \nonumber \\[5pt]
+            \underbrace{ \left( a^{r / 2} + 1 \right)}_{cp} \underbrace{ \left( a^{r / 2} - 1 \right)}_{dq} = k p q\label{eq: posible_caso_shor} \\[5pt]
+            \underbrace{ \left( a^{r / 2} + 1 \right)}_{cpq} \underbrace{ \left( a^{r / 2} - 1 \right)}_{d} = k p q \nonumber
+        \end{gather}
+
+        \vspace{2.5mm}
+
+        Donde \( k = cd \). Sin embargo, el primer y el tercer caso son imposibles ya que \( a^{r / 2} + 1 \) y \( a^{r / 2} - 1 \) no son en ningún caso múltiplos de \textit{N}. Esto es posible gracias a las condiciones definidas en el segundo paso, con las cuales obtenemos que \( a^{r / 2} \neq N - 1 \ \text{mod} \ N \) además de \( a^{r / 2} \neq 1 \ \text{mod} \ N \) gracias a la definición del periodo \textit{r}. Es por esto que descartamos la primera y tercera opción, quedándonos únicamente con (\ref{eq: posible_caso_shor}):
+
+        \begin{equation*}
+            \underbrace{ \left( a^{r / 2} + 1 \right)}_{cp} \underbrace{ \left( a^{r / 2} - 1 \right)}_{dq} = k p q \\[5pt]
+        \end{equation*}
+
+        \vspace{2.5mm}
+
+        Entonces, ambos términos \( a^{r / 2} + 1 \) y \( a^{r / 2} - 1 \) contienen un factor no trivial de \textit{N}, y los podemos calcular con el máximo común divisor (\textit{gcd}):
+        
+        \begin{align*}
+            p &= gcd(a^{r / 2} + 1, N) \\[5pt]
+            q &= gcd(a^{r / 2} + 1, N)
+        \end{align*}
+
+        \vspace{2.5mm}
+
+    \end{enumerate}
+
+    Obteniendo así la descomposición de \textit{N} en los factores primos \textit{p} y \textit{q}. Este algoritmo es posible gracias a la obtención del periodo \textit{r}, ya que este proceso es exponencialmente más rápido mediante un ordenador cuántico que con un computador clásico, lo que muestra muy claramente el poder de la computación cuántica en la rama de la seguridad informática, surgiendo la necesidad de nuevos protocolos de seguridad para este campo.
 
     \vspace{5mm}
 
-    \subsubsection{Estimación de Autovalores}
+
+
+
+
+    \subsubsection{Estimación de Autovalores}\label{subsubsection: estimacion_autovalores}
 
     \vspace{5mm}
 

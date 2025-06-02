@@ -2,12 +2,16 @@ from qiskit.circuit import QuantumCircuit
 from qiskit_ibm_runtime import QiskitRuntimeService
 from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
 from qiskit.visualization import plot_histogram
-from qiskit import QuantumRegister, ClassicalRegister, QuantumCircuit
+from qiskit import QuantumRegister, ClassicalRegister, QuantumCircuit, transpile
 from qiskit_ibm_runtime import SamplerV2
+from qiskit_aer.noise import NoiseModel, depolarizing_error
+from qiskit_aer import AerSimulator
 
-from numpy import pi
+import os
 from dotenv import load_dotenv
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+import numpy as np
 
 
 
@@ -75,7 +79,7 @@ class Quantum_Simulation:
 
     # Metodo para seguir con un job que se ha quedado pendiente
     def continue_Job(self, job_id):
-        service=QiskitRuntimeService(channel="ibm_quantum")
+        service = QiskitRuntimeService(channel="ibm_quantum")
         job = service.job(job_id)
         return job
     
@@ -103,18 +107,115 @@ class Quantum_Simulation:
             plt.savefig(path)
     
 
+    '''def plot_Noise_Model(self, job, alphas: list = [0, 0.5, 1], path: str = None):
+        def create_noise_model(alpha):
+            noise_model = NoiseModel()
+            # Ejemplo: Error de depolarización (ajusta según tus necesidades)
+            error = depolarizing_error(alpha, 1)  # alpha = probabilidad de error para 1 qubit
+            noise_model.add_all_qubit_quantum_error(error, ['u1', 'u2', 'u3', 'cx'])  # Puertas afectadas
+            return noise_model
+    
+        counts_list = []
+        for alpha in alphas:
+            # Configuramos el simulator con el ruido en especifico
+            noise_model = create_noise_model(alpha)
+            simulator = AerSimulator(noise_model = noise_model)
+            
+            # Transpilamos y ejecutamos
+            print(job.inputs)
+            transpiled_circuit = transpile(job.inputs['pubs'][0][0], simulator)
+            result = simulator.run(transpiled_circuit, shots = 1000).result()
+            counts = result.get_counts()
+            counts_list.append(counts)
+        
+        plot_histogram(counts_list, legend = ['α=0', 'α=0.5', 'α=1'], title="Frecuencias de medición vs. nivel de ruido")
+        if path is not None:
+            plt.savefig(path)
+        plt.show()'''
+
+    
+    def plot_Noise_Model(self, circuit: QuantumCircuit, alphas: list = [0, 0.10, 0.20], shots: int = 4096, path: str = None):
+        """
+        Simulates the given circuit with different noise levels (alpha values)
+        and plots the resulting measurement frequencies.
+
+        Args:
+            circuit (QuantumCircuit): The quantum circuit to simulate.
+            alphas (list): A list of alpha values (error probabilities) for the depolarizing error.
+            shots (int): The number of shots for each noisy simulation.
+            path (str): Optional path to save the plot. If None, displays the plot.
+        """
+        # We are now directly receiving the simple 2-qubit circuit
+        original_circuit = circuit
+
+        counts_list = []
+        legends = []
+
+        print(f"Simulating circuit with {original_circuit.num_qubits} qubits under different noise levels...")
+
+        # --- COLOR SCHEME CHANGE HERE ---
+        # Define a colormap to pick colors from
+        # 'viridis', 'plasma', 'inferno', 'magma', 'cividis' are good perceptual colormaps
+        # 'Blues', 'Greens', 'Reds' are sequential for single hues
+        cmap = cm.get_cmap('viridis') # You can change 'viridis' to another colormap
+        # Create a list of colors from the colormap, scaled by the number of alphas
+        colors = [cmap(i) for i in np.linspace(0, 1, len(alphas))]
+        # --- END COLOR SCHEME CHANGE ---
+
+        for alpha in alphas:
+            print(f"\n--- Simulating with alpha = {alpha} ---")
+            
+            noise_model = NoiseModel()
+            
+            single_qubit_error = depolarizing_error(alpha, 1)
+            noise_model.add_all_qubit_quantum_error(single_qubit_error, ['h', 'x', 'y', 'z', 's', 'sdg', 't', 'tdg', 'u', 'u1', 'u2', 'u3', 'rx', 'ry', 'rz'])
+            
+            two_qubit_error = depolarizing_error(alpha, 2) 
+            noise_model.add_all_qubit_quantum_error(two_qubit_error, ['cx', 'cz', 'iswap', 'rxx', 'ryy', 'rzz', 'ecr'])
+            
+            simulator = AerSimulator(noise_model=noise_model)
+            
+            try:
+                # Transpile the original 2-qubit circuit for the AerSimulator
+                transpiled_circuit = transpile(original_circuit, backend=simulator, optimization_level=0)
+
+                result = simulator.run(transpiled_circuit, shots=shots).result()
+                counts = result.get_counts(0) 
+                counts_list.append(counts)
+                legends.append(f'α={alpha}')
+                print(f"Simulation for alpha={alpha} completed. Counts: {counts}")
+
+            except Exception as e:
+                print(f"Error simulating for alpha={alpha}: {e}")
+                counts_list.append({}) 
+                legends.append(f'α={alpha} (Error)')
+                continue 
+
+        if counts_list: 
+            fig = plot_histogram(counts_list, legend=legends, title="Frecuencias de Medición vs. Nivel de Ruido", color=colors)
+            if path is not None:
+                plt.savefig(path)
+            plt.show()
+            plt.close(fig)
+        else:
+            print("No simulations completed successfully to plot.")
+        
+
+    
+
 
 if __name__ == '__main__':
 
     simulation = Quantum_Simulation()
     circuit = simulation.define_Circuit()
-    simulation.draw_Circuit(circuit=circuit)
+    '''simulation.draw_Circuit(circuit=circuit)
 
     backend, circuit_isa = simulation.get_Backend_ISA(circuit=circuit)
     simulation.get_Characteristics(circuit_isa=circuit_isa)
     
     job = simulation.execute(backend=backend, circuit_isa=circuit_isa)
-    print('\n', job.job_id())
-    # job = simulation.continue_Job()
+    print('\n', job.job_id())'''
+    job = simulation.continue_Job(os.getenv('JOB_ID'))
 
-    simulation.plot_Results(job=job)
+    # simulation.plot_Results(job=job)
+    simulation.plot_Noise_Model(circuit=circuit)

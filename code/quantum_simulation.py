@@ -89,7 +89,7 @@ class Quantum_Simulation:
         # Imprimimos los resultados obtenidos
         resultado = job.result()
         distribucion = resultado[0].data.c.get_counts()
-        print(distribucion)
+        print('\n', distribucion, '\n')
         maximo = max(distribucion.items(), key=lambda x: x[1])
         print("Maximo :", maximo)
 
@@ -97,74 +97,28 @@ class Quantum_Simulation:
             # Ploteamos la distribución de probabilidades obtenida
             shots = sum(distribucion.values())
             distribucion_probas = {key: val/shots for key, val in distribucion.items()}
-            plot_histogram(distribucion_probas, title= 'Distribución de Probabilidades') 
-            plt.show()
+            plot_histogram(distribucion_probas, title = 'Distribución de Probabilidades') 
         else:
-            plot_histogram(distribucion, title= 'Distribución de los Resultados')
-            plt.show()
+            plot_histogram(distribucion, title = 'Distribución de los Resultados')
         
-        if path is not None:
+        if path:
             plt.savefig(path)
-    
-
-    '''def plot_Noise_Model(self, job, alphas: list = [0, 0.5, 1], path: str = None):
-        def create_noise_model(alpha):
-            noise_model = NoiseModel()
-            # Ejemplo: Error de depolarización (ajusta según tus necesidades)
-            error = depolarizing_error(alpha, 1)  # alpha = probabilidad de error para 1 qubit
-            noise_model.add_all_qubit_quantum_error(error, ['u1', 'u2', 'u3', 'cx'])  # Puertas afectadas
-            return noise_model
-    
-        counts_list = []
-        for alpha in alphas:
-            # Configuramos el simulator con el ruido en especifico
-            noise_model = create_noise_model(alpha)
-            simulator = AerSimulator(noise_model = noise_model)
-            
-            # Transpilamos y ejecutamos
-            print(job.inputs)
-            transpiled_circuit = transpile(job.inputs['pubs'][0][0], simulator)
-            result = simulator.run(transpiled_circuit, shots = 1000).result()
-            counts = result.get_counts()
-            counts_list.append(counts)
-        
-        plot_histogram(counts_list, legend = ['α=0', 'α=0.5', 'α=1'], title="Frecuencias de medición vs. nivel de ruido")
-        if path is not None:
-            plt.savefig(path)
-        plt.show()'''
+        plt.show()
 
     
-    def plot_Noise_Model(self, circuit: QuantumCircuit, alphas: list = [0, 0.10, 0.20], shots: int = 4096, path: str = None):
-        """
-        Simulates the given circuit with different noise levels (alpha values)
-        and plots the resulting measurement frequencies.
-
-        Args:
-            circuit (QuantumCircuit): The quantum circuit to simulate.
-            alphas (list): A list of alpha values (error probabilities) for the depolarizing error.
-            shots (int): The number of shots for each noisy simulation.
-            path (str): Optional path to save the plot. If None, displays the plot.
-        """
-        # We are now directly receiving the simple 2-qubit circuit
-        original_circuit = circuit
-
+    # Metodo para mostrar el nivel de depolarizacion de error 
+    def plot_Noise_Model(self, circuit: QuantumCircuit, alphas: list = [0, 0.25, 0.50], shots: int = 4096, path: str = None):
         counts_list = []
         legends = []
 
-        print(f"Simulating circuit with {original_circuit.num_qubits} qubits under different noise levels...")
-
-        # --- COLOR SCHEME CHANGE HERE ---
-        # Define a colormap to pick colors from
-        # 'viridis', 'plasma', 'inferno', 'magma', 'cividis' are good perceptual colormaps
-        # 'Blues', 'Greens', 'Reds' are sequential for single hues
-        cmap = cm.get_cmap('viridis') # You can change 'viridis' to another colormap
-        # Create a list of colors from the colormap, scaled by the number of alphas
+        # Esquema de colores
+        cmap = cm.get_cmap('viridis')
+        # Creamos un color distinto para cada alpha
         colors = [cmap(i) for i in np.linspace(0, 1, len(alphas))]
-        # --- END COLOR SCHEME CHANGE ---
 
         for alpha in alphas:
-            print(f"\n--- Simulating with alpha = {alpha} ---")
-            
+            print(f"\nSimulación alpha = {alpha}")
+
             noise_model = NoiseModel()
             
             single_qubit_error = depolarizing_error(alpha, 1)
@@ -176,8 +130,8 @@ class Quantum_Simulation:
             simulator = AerSimulator(noise_model=noise_model)
             
             try:
-                # Transpile the original 2-qubit circuit for the AerSimulator
-                transpiled_circuit = transpile(original_circuit, backend=simulator, optimization_level=0)
+                # Transpilamos el circuito original de 2 qubits para el AerSimulator
+                transpiled_circuit = transpile(circuit, backend=simulator, optimization_level=0)
 
                 result = simulator.run(transpiled_circuit, shots=shots).result()
                 counts = result.get_counts(0) 
@@ -186,7 +140,7 @@ class Quantum_Simulation:
                 print(f"Simulation for alpha={alpha} completed. Counts: {counts}")
 
             except Exception as e:
-                print(f"Error simulating for alpha={alpha}: {e}")
+                print(f"Error en la simulación de alpha = {alpha}: {e}")
                 counts_list.append({}) 
                 legends.append(f'α={alpha} (Error)')
                 continue 
@@ -198,7 +152,53 @@ class Quantum_Simulation:
             plt.show()
             plt.close(fig)
         else:
-            print("No simulations completed successfully to plot.")
+            print("Error en la simulación")
+
+    
+    def plot_QBER_vs_Alpha(self, circuit: QuantumCircuit, alphas: list = np.linspace(0, 1, 11), shots: int = 1000, path: str = None):
+        # Los valores ideales, sin ruido, son un 50, 50 para cada estado en nuestro caso
+        ideal_counts = {'00': shots/2, '11': shots/2}  # Para un circuito Bell perfecto
+        qber_values = []
+        
+        for alpha in alphas:
+            # Configuramos el modelo de ruido
+            noise_model = NoiseModel()
+            single_qubit_error = depolarizing_error(alpha, 1)
+            two_qubit_error = depolarizing_error(alpha, 2)
+            
+            noise_model.add_all_qubit_quantum_error(single_qubit_error, 
+                                                ['h', 'u1', 'u2', 'u3'])
+            noise_model.add_all_qubit_quantum_error(two_qubit_error, ['cx'])
+            
+            # Hacemos la simulacion
+            simulator = AerSimulator(noise_model = noise_model)
+            transpiled_circuit = transpile(circuit, simulator)
+            result = simulator.run(transpiled_circuit, shots = shots).result()
+            counts = result.get_counts()
+            
+            # Calculamos el QBER
+            # Solo consideramos errores si no son 00 o 11
+            correct_states = ['00', '11']
+            errors = sum([counts.get(state, 0) for state in counts if state not in correct_states])
+            qber = errors / shots
+            qber_values.append(qber)
+        
+        # Creamos el gráfico
+        plt.figure(figsize=(10, 6))
+        plt.plot(alphas, qber_values, 'bo-', linewidth=2, markersize=8)
+        plt.xlabel('Nivel de ruido (α)', fontsize=12)
+        plt.ylabel('QBER', fontsize=12)
+        plt.title('Tasa de Error de Bit Cuántico (QBER) vs Nivel de Ruido', fontsize=14)
+        plt.grid(True, alpha=0.3)
+    
+        # Añadimos la línea teórica para comparar los resultados que hemos obtenido
+        theoretical_qber = [alpha * 0.75 for alpha in alphas]  # el QUBER teoricamente es 3α/4
+        plt.plot(alphas, theoretical_qber, 'r--', label='QBER teórico (3α/4)')
+        plt.legend()
+
+        if path:
+            plt.savefig(path, dpi=300, bbox_inches='tight')
+        plt.show()
         
 
     
@@ -217,5 +217,7 @@ if __name__ == '__main__':
     print('\n', job.job_id())'''
     job = simulation.continue_Job(os.getenv('JOB_ID'))
 
-    # simulation.plot_Results(job=job)
-    simulation.plot_Noise_Model(circuit=circuit)
+    simulation.plot_Results(job=job)
+    # simulation.plot_Results(job=job, probs=True)
+    # simulation.plot_Noise_Model(circuit=circuit)
+    # simulation.plot_QBER_vs_Alpha(circuit=circuit, alphas=np.linspace(0, 1, 21), shots=5000)

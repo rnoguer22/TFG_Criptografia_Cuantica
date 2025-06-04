@@ -2942,7 +2942,7 @@
 
 
 
-    \subsection{Encriptación Cuántica. BB84}
+    \subsection{Encriptación Cuántica. BB84}\label{subsection: bb84}
 
     \vspace{5mm}
 
@@ -2950,7 +2950,7 @@
 
     \vspace{5mm}
 
-    Aunque es cierto que BB84 no necesita entrelazamiento, nos servirá para asentar las bases de un sistema de encriptación más complejo, E91 (\ref{subsection: e91}), el cual sí usa entrelazamiento y es un protocolo muy seguro y usado hoy día en computación cuántica. Estos son solo un par de ejemplos de QKD (Quantum Key Distribution), métodos o protocolos en el que por medio de una encriptación cuántica aseguramos la la seguridad e integridad de la información transmitida. Comencemos por el primer paso de BB84, en el que el emisor, en este caso Alice, selecciona un conjunto de bits, y para cada bit se escoge aleatoriamente una base, que puede ser la base en el eje \textit{Z} \( \{ \ket{0}, \ket{1} \} \) o en el eje \textit{X} \( \{ \ket{+}, \ket{-} \} \), como se puede ver recogido en la siguiente tabla:
+    Aunque es cierto que BB84 no necesita entrelazamiento, nos servirá para asentar las bases de un sistema de encriptación más complejo, como EPR (\ref{subsection: epr}) o E91 (\ref{subsection: e91}), los cuales sí usan entrelazamiento y son protocolos más seguros. Estos son solo algunos ejemplos de QKD (Quantum Key Distribution), métodos o protocolos en el que por medio de una encriptación cuántica aseguramos la la seguridad e integridad de la información transmitida. Comencemos por el primer paso de BB84, en el que el emisor, en este caso Alice, selecciona un conjunto de bits, y para cada bit se escoge aleatoriamente una base, que puede ser la base en el eje \textit{Z} \( \{ \ket{0}, \ket{1} \} \) o en el eje \textit{X} \( \{ \ket{+}, \ket{-} \} \), como se puede ver recogido en la siguiente tabla:
 
     \vspace{2.5mm}
 
@@ -3046,7 +3046,52 @@
 
     \vspace{5mm}
 
-    \subsection{E91}\label{subsection: e91}
+    \subsection{El Protocolo E91}\label{subsection: e91}
+
+    \vspace{5mm}
+
+    El protocolo BB84 (\ref{subsection: bb84}) es una de las principales bases de la encriptación cuántica, ya que la mayoría de protocolos de este ámbito se basan en él, y el protocolo que vamos a ver a continuación, \textit{E91}, cuyas siglas hacen referencia a su autor, \textit{Artur Ekert} en 1991~cite{}, no va a ser menos. La principal diferencia es que este sistema sí utiliza qubits entrelazados, añadiendo así una capa de seguridad adicional contra Eve.
+
+    CITAR ARTICULO ORIGINAL DE EKERT!!!
+    Cambiar todo 
+
+    \vspace{5mm}
+
+    Supongamos que una tercera persona proporciona a Alice y Bob pares de qubits entrelazados entre sí, enviando uno de los qubits entrelazados a Alice y el otro a Bob, los cuales se encuentran en uno de los estados de Bell \( \ket{\Phi^{+}} \):
+
+    \begin{equation*}
+        \ket{\Phi^{+}} = \frac{1}{\sqrt{2}} \left( \ket{0 0} + \ket{1 1} \right)
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Una vez han recibido correctamente cada uno de sus qubits entrelazados y están listos para la comunicación, ambos eligen una base entre las dos posibles opciones con la que medir el qubit, las cuales son la base en el eje \( X = \{ +, - \} \) y la base en el eje \( Z = \{ 0, 1 \} \). Una vez escogidas las bases, Alice y Bob miden sus respectivos qubits, y como se encuentran entrelazados en el estado \( \ket{\Phi^{+}} \), el resultado siempre va a ser el mismo en el caso que coincidan sus bases escogidas. Este proceso es similar a \textit{BB84}, ya que Alice y Bob comparten públicamente la base que usaron para su medición, y si la base coincide, nos quedamos con dicho qubit para hacer la clave de cifrado, suponiendo que todo este proceso ha funcionado correctamente.
+
+    \vspace{2.5mm}
+
+    \begin{figure}[H]
+        \centering
+        \renewcommand{\arraystretch}{1.25} 
+        \begin{tabular}{|l|ccccccccc|}
+            \hline
+            Qubit entrelazado de Alice \ & q_{1}   & q_{2}   & q_{3}   & q_{4}   & q_{5}   & q_{6}   & q_{7}   & q_{8}   & q_{9} \\
+            Base de Alice              \ & X       & Z       & Z       & X       & X       & X       & Z       & Z       & X \\
+            Resultado de Alice         \ & \ket{+} & \ket{1} & \ket{0} & \ket{-} & \ket{+} & \ket{+} & \ket{1} & \ket{0} & \ket{+} \\
+            Valor Final de Alice       \ & 0       & 1       & 0       & 1       & 0       & 0       & 1       & 0       & 0 \\ \hline
+            Qubit entrelazado de Alice \ & q_{1}'  & q_{2}'  & q_{3}'  & q_{4}'  & q_{5}'  & q_{6}'  & q_{7}'  & q_{8}'  & q_{9}' \\
+            Base de Bob                \ & Z       & Z       & X       & X       & Z       & X       & Z       & X       & X \\
+            Resultado de Bob           \ & \ket{0} & \ket{1} & \ket{-} & \ket{-} & \ket{1} & \ket{+} & \ket{1} & \ket{-} & \ket{+} \\
+            Valor Final de Bob         \ & 0       & 1       & 1       & 1       & 1       & 0       & 1       & 1       & 0 \\ \hline
+        \end{tabular}
+        \caption{Ejemplo del Protocolo EPR.}\label{fig: ejemplo_epr}
+    \end{figure}
+    
+    \vspace{2.5mm}
+
+    Sin embargo llegados a este punto no hay una gran diferencia entre \textit{BB84} y este sistema. La ventaja viene a la hora de detectar a Eve. Como sabemos, se puede dar el caso de tener a una tercera persona interceptando nuestros qubits y realizando mediciones sobre ellos, y es aquí la gran diferencia con respecto a \textit{BB84}, la cual viene por parte del entrelazamiento. Esto se basa en que si Eve mide los qubits durante el proceso de este protocolo, el entrelazamiento entre los qubits de Alice y Bob se rompe, siendo el entrelazamiento la clave de este protocolo, ya que podemos detectar si nuestros qubits se encontraban en entrelazamiento antes de las mediciones de Eve, o si por el contrario el entrelazamiento de los qubits se ha visto perturbado por dicha persona, aunque esto también se puede romper con alto índice de ruido cuántico.
+
+    \vspace{5mm}
+
 
     \vspace{10mm}
 
@@ -3656,8 +3701,8 @@
         Entonces, ambos términos \( a^{r / 2} + 1 \) y \( a^{r / 2} - 1 \) contienen un factor no trivial de \textit{N}, y los podemos calcular con el máximo común divisor (\textit{gcd}):
         
         \begin{align*}
-            p &= gcd(a^{r / 2} + 1, N) \\[5pt]
-            q &= gcd(a^{r / 2} + 1, N)
+            p &= \gcd(a^{r / 2} + 1, N) \\[5pt]
+            q &= \gcd(a^{r / 2} + 1, N)
         \end{align*}
 
         \vspace{2.5mm}

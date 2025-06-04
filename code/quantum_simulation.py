@@ -23,14 +23,25 @@ class Quantum_Simulation:
 
     # Metodo para definir el circuito
     def define_Circuit(self):
-        qreg_q = QuantumRegister(2, 'q')
-        creg_c = ClassicalRegister(2, 'c')
-        circuit = QuantumCircuit(qreg_q, creg_c)
+        # Crear registros cuántico y clásico
+        qreg = QuantumRegister(2, 'q')  # q[0] = Alice, q[1] = Bob
+        creg = ClassicalRegister(2, 'c')  # c[0] = Alice, c[1] = Bob
+        circuit = QuantumCircuit(qreg, creg)
 
-        circuit.h(qreg_q[0])
-        circuit.cx(qreg_q[0], qreg_q[1])
-        circuit.measure(qreg_q[0], creg_c[0])
-        circuit.measure(qreg_q[1], creg_c[1])
+        # Preparar el estado Bell (entrelazado)
+        circuit.h(qreg[0])        # Hadamard en qubit de Alice
+        circuit.cx(qreg[0], qreg[1])  # CNOT: Alice controla a Bob
+
+        # Aquí se aplicarían las rotaciones (bases aleatorias) de Alice y Bob
+        # Ejemplo (puedes sustituir por cualquier elección de base):
+        # Base de Alice
+        circuit.ry(-np.pi/8, qreg[0])  # o cualquier otro ángulo de medición
+        # Base de Bob
+        circuit.ry(np.pi/4, qreg[1])   # o cualquier otro ángulo de medición
+
+        # Medida en base Z después de rotar
+        circuit.measure(qreg[0], creg[0])
+        circuit.measure(qreg[1], creg[1])
 
         return circuit
     
@@ -45,7 +56,7 @@ class Quantum_Simulation:
     
     # Obtenemos el backend y el ISA
     def get_Backend_ISA(self, circuit):
-        service=QiskitRuntimeService(channel="ibm_quantum")
+        service = QiskitRuntimeService(channel="ibm_quantum")
         # El backend sera el procesador menos ocupado en el momento
         backend = service.least_busy(min_num_qubits=100, operational=True)
         # pass_manager
@@ -208,16 +219,16 @@ if __name__ == '__main__':
 
     simulation = Quantum_Simulation()
     circuit = simulation.define_Circuit()
-    '''simulation.draw_Circuit(circuit=circuit)
+    simulation.draw_Circuit(circuit=circuit)
 
-    backend, circuit_isa = simulation.get_Backend_ISA(circuit=circuit)
+    '''backend, circuit_isa = simulation.get_Backend_ISA(circuit=circuit)
     simulation.get_Characteristics(circuit_isa=circuit_isa)
     
     job = simulation.execute(backend=backend, circuit_isa=circuit_isa)
-    print('\n', job.job_id())'''
+    print('\n', job.job_id())
     job = simulation.continue_Job(os.getenv('JOB_ID'))
 
     simulation.plot_Results(job=job)
     # simulation.plot_Results(job=job, probs=True)
     # simulation.plot_Noise_Model(circuit=circuit)
-    # simulation.plot_QBER_vs_Alpha(circuit=circuit, alphas=np.linspace(0, 1, 21), shots=5000)
+    # simulation.plot_QBER_vs_Alpha(circuit=circuit, alphas=np.linspace(0, 1, 21), shots=5000)'''

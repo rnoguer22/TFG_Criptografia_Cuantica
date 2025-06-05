@@ -3050,14 +3050,15 @@
 
     \vspace{5mm}
 
-    El protocolo BB84 (\ref{subsection: bb84}) es una de las principales bases de la encriptación cuántica, ya que la mayoría de protocolos de este ámbito se basan en él, y el protocolo que vamos a ver a continuación, \textit{E91}, cuyas siglas hacen referencia a su autor, \textit{Artur Ekert} en 1991~cite{}, no va a ser menos. La principal diferencia es que este sistema sí utiliza qubits entrelazados, añadiendo así una capa de seguridad adicional contra Eve.
-
-    CITAR ARTICULO ORIGINAL DE EKERT!!!
-    Cambiar todo 
+    El protocolo BB84 (\ref{subsection: bb84}) es una de las principales bases de la encriptación cuántica, ya que la mayoría de protocolos de este ámbito se basan en él, y el protocolo que vamos a ver a continuación, \textit{E91}, cuyas siglas hacen referencia a su autor, \textit{Artur Ekert} en 1991~\cite{ekert_Original}, no va a ser menos. La principal diferencia es que este sistema sí utiliza qubits entrelazados, añadiendo así una capa de seguridad adicional contra Eve.
 
     \vspace{5mm}
 
-    Supongamos que una tercera persona proporciona a Alice y Bob pares de qubits entrelazados entre sí, enviando uno de los qubits entrelazados a Alice y el otro a Bob, los cuales se encuentran en uno de los estados de Bell \( \ket{\Phi^{+}} \):
+    Una vez se reparten los pares de qubits entrelazados \( q_{j}, q_{j}' \) entre Alice y Bob, cada uno eligen una base con la que medir sus qubits entrelazados, \( \{ \vec{a_{1}}, \vec{a_{2}}, \vec{a_{3}} \} \) y \( \{ \vec{b_{1}}, \vec{b_{2}}, \vec{b_{3}} \} \) respectivamente, y estas bases tienen que cumplir unas ciertas condiciones que veremos más adelante. Estas bases usadas para medir cada uno de los qubits se mantienen en secreto hasta que se cumple con todas las mediciones. Posteriormente Alice y Bob comparten públicamente las bases que han utilizado para cada qubit, de manera que si estas bases coinciden, el resultado de ambos será el mismo ya que los qubits se encuentran máximamente entrelazados en el estado de Bell \( \ket{\Phi^{+}} \), determinando así la clave privada, y los casos en los que las bases no coincidan, serán reservados para averiguar si la comunicación ha sido interceptada por Eve, o si por el contrario ha habido algún problema de ruido o decoherencia, dificultando así la comunicación.
+
+    \vspace{5mm}
+
+    En primer lugar, supongamos que una tercera persona proporciona a Alice y Bob pares de qubits entrelazados entre sí, enviando uno de los qubits entrelazados a Alice y el otro a Bob, los cuales se encuentran en uno de los estados de Bell \( \ket{\Phi^{+}} \):
 
     \begin{equation*}
         \ket{\Phi^{+}} = \frac{1}{\sqrt{2}} \left( \ket{0 0} + \ket{1 1} \right)
@@ -3065,7 +3066,90 @@
 
     \vspace{2.5mm}
 
-    Una vez han recibido correctamente cada uno de sus qubits entrelazados y están listos para la comunicación, ambos eligen una base entre las dos posibles opciones con la que medir el qubit, las cuales son la base en el eje \( X = \{ +, - \} \) y la base en el eje \( Z = \{ 0, 1 \} \). Una vez escogidas las bases, Alice y Bob miden sus respectivos qubits, y como se encuentran entrelazados en el estado \( \ket{\Phi^{+}} \), el resultado siempre va a ser el mismo en el caso que coincidan sus bases escogidas. Este proceso es similar a \textit{BB84}, ya que Alice y Bob comparten públicamente la base que usaron para su medición, y si la base coincide, nos quedamos con dicho qubit para hacer la clave de cifrado, suponiendo que todo este proceso ha funcionado correctamente.
+    Una vez han recibido correctamente cada uno de sus qubits entrelazados y están listos para la comunicación, ambos eligen una base entre las dos posibles opciones con la que medir el qubit. Las bases que vamos a usar las vamos a denotar como \( \{ \vec{a_{1}}, \vec{a_{2}}, \vec{a_{3}} \} \) para Alice y \( \{ \vec{b_{1}}, \vec{b_{2}}, \vec{b_{3}} \} \) en el caso de Bob, para hacer un postprocesamiento de los resultados obtenidos con el fin de detectar a Eve o un excesivo ruido cuántico. En definitiva, estas bases son
+
+    \begin{minipage}[t]{0.45\textwidth}
+        \begin{align*}
+            \vec{a_{1}} &= Z, \\[5pt]
+            \vec{a_{2}} &= \frac{1}{\sqrt{2}} \left( X + Z \right), \\[5pt]
+            \vec{a_{3}} &= X,
+        \end{align*}
+    \end{minipage}
+    \hspace{0mm}
+    \begin{minipage}[t]{0.45\textwidth}
+        \begin{align*}
+            \vec{b_{1}} &= \frac{1}{\sqrt{2}} \left( X + Z \right) \\[5pt]
+            \vec{b_{2}} &= X \\[5pt]
+            \vec{b_{3}} &= \frac{1}{\sqrt{2}} \left( X - Z \right)
+        \end{align*}
+    \end{minipage}
+
+    \vspace{2.5mm}
+
+    Esto lo podemos ver gráficamente con los siguientes ángulos en el plano \textit{XZ}:
+
+    \begin{figure}[H]
+        \hspace{7,5mm}
+        \begin{subfigure}[t]{0.40\textwidth}
+            \centering
+            \begin{tikzpicture}[>=Stealth, scale=2.5]
+                % z
+                \draw[black] (0, -1) -- (0, 1) node[above] {z};
+                % x
+                \draw[black] (-1, 0) -- (1, 0) node[right] {x};
+                % Base a1
+                \draw[->, thick, blue] (0, -1) -- (0, 1) node[below left] {$\vec{a_{1}}$};
+                \draw[->, thick, blue] (0, 1) -- (0, -1);
+                % Base a2 a 45 grados
+                \draw[->, thick, red] (0,0) -- (cos{45},sin{45}) node[above right] {$\vec{a_{2}}$}; % 45 degrees
+                \draw[->, thick, red] (0,0) -- (cos{225},sin{225}); % Vector opuesto a a2        
+                % Base a3
+                \draw[->, thick, orange] (-1 ,0) -- (1 ,0) node[below left] {$\vec{a_{3}}$};
+                \draw[->, thick, orange] (1 ,0) -- (-1 ,0);
+                % Círculo de radio 1
+                \draw[dashed] (0,0) circle (1cm);
+                % Angulos
+                \draw (0.5,0) arc (0:45:0.5);
+                \node at (22.5:0.7) {$\frac{\pi}{4}$};       
+                \draw (0.5,0) arc (0:90:0.5);
+                \node at (67.5:0.7) {$\frac{\pi}{4}$}; 
+            \end{tikzpicture}              
+            \caption{Bases de Alice relativas al plano XZ}
+        \end{subfigure}
+        \hspace{5mm}
+        \begin{subfigure}[t]{0.40\textwidth}
+            \centering
+            \begin{tikzpicture}[>=Stealth, scale=2.5]
+                % Eje z
+                \draw[->, thick, black] (0, -1) -- (0, 1) node[above] {z};
+                \draw[->, thick, black] (0, 1) -- (0, -1);
+                % x
+                \draw[black] (-1, 0) -- (1, 0) node[right] {x};
+                % b1
+                \draw[->, thick, blue] (0,0) -- (cos{45},sin{45}) node[above right] {$\vec{b_{1}}$};
+                \draw[->, thick, blue] (0,0) -- (cos{225},sin{225});     
+                % b3
+                \draw[->, thick, red] (-1 ,0) -- (1 ,0) node[below left] {$\vec{b_{2}}$};
+                \draw[->, thick, red] (1 ,0) -- (-1 ,0);
+                % b3
+                \draw[->, thick, orange] (0,0) -- (cos{45},-sin{45})  node[below right] {$\vec{b_{3}}$};
+                \draw[->, thick, orange] (0,0) -- (cos{225},-sin{225});
+                % Círculo de radio 1
+                \draw[dashed] (0,0) circle (1cm);
+                % Angulos
+                \draw (0.5,0) arc (0:45:0.5);
+                \node at (22.5:0.7) {$\frac{\pi}{4}$};       
+                \draw (0.5,0) arc (0:-45:0.5);
+                \node at (-22.5:0.7) {$\frac{\pi}{4}$}; 
+            \end{tikzpicture}              
+            \caption{Bases de Bob relativas al plano XZ}
+        \end{subfigure}
+        \hspace{7.5mm}
+    \end{figure}
+
+    \vspace{2.5mm}
+
+    Estas bases en concreto están escogidas para satisfacer la \textit{desigualdad CHSH}, con la que detectaremos a Eve, la cual veremos más adelante. Una vez escogidas las bases, Alice y Bob miden sus respectivos qubits, y como se encuentran entrelazados en el estado \( \ket{\Phi^{+}} \), el resultado siempre va a ser el mismo en el caso que coincidan sus bases escogidas. Este proceso es relativamente similar a \textit{BB84}, ya que Alice y Bob comparten públicamente la base que usaron para su medición, y si la base coincide, nos quedamos con dicho qubit para hacer la clave de cifrado, suponiendo que todo este proceso ha funcionado correctamente.
 
     \vspace{2.5mm}
 
@@ -3074,27 +3158,37 @@
         \renewcommand{\arraystretch}{1.25} 
         \begin{tabular}{|l|ccccccccc|}
             \hline
-            Qubit entrelazado de Alice \ & q_{1}   & q_{2}   & q_{3}   & q_{4}   & q_{5}   & q_{6}   & q_{7}   & q_{8}   & q_{9} \\
-            Base de Alice              \ & X       & Z       & Z       & X       & X       & X       & Z       & Z       & X \\
-            Resultado de Alice         \ & \ket{+} & \ket{1} & \ket{0} & \ket{-} & \ket{+} & \ket{+} & \ket{1} & \ket{0} & \ket{+} \\
-            Valor Final de Alice       \ & 0       & 1       & 0       & 1       & 0       & 0       & 1       & 0       & 0 \\ \hline
-            Qubit entrelazado de Alice \ & q_{1}'  & q_{2}'  & q_{3}'  & q_{4}'  & q_{5}'  & q_{6}'  & q_{7}'  & q_{8}'  & q_{9}' \\
-            Base de Bob                \ & Z       & Z       & X       & X       & Z       & X       & Z       & X       & X \\
-            Resultado de Bob           \ & \ket{0} & \ket{1} & \ket{-} & \ket{-} & \ket{1} & \ket{+} & \ket{1} & \ket{-} & \ket{+} \\
-            Valor Final de Bob         \ & 0       & 1       & 1       & 1       & 1       & 0       & 1       & 1       & 0 \\ \hline
+            Qubit entrelazado de Alice     & $q_{1}$ & $q_{2}$ & $q_{3}$ & $q_{4}$ & $q_{5}$ & $q_{6}$ & $q_{7}$ & $q_{8}$ & $q_{9}$ \\
+            Base de Alice $\vec{a_j}$      & $\vec{a_1}$ & $\vec{a_2}$ & $\vec{a_3}$ & $\vec{a_3}$ & $\vec{a_1}$ & $\vec{a_2}$ & $\vec{a_2}$ & $\vec{a_1}$ & $\vec{a_3}$ \\
+            Resultado de Alice             & $\ket{1}$ & $\ket{+}$ & $\ket{-}$ & $\ket{-}$ & $\ket{0}$ & $\ket{-}$ & $\ket{+}$ & $\ket{1}$ & $\ket{+}$ \\
+            Valor Final de Alice           & 1 & 0 & 1 & 1 & 0 & 1 & 0 & 1 & 0 \\ \hline
+            Qubit entrelazado de Bob       & $q_{1}'$ & $q_{2}'$ & $q_{3}'$ & $q_{4}'$ & $q_{5}'$ & $q_{6}'$ & $q_{7}'$ & $q_{8}'$ & $q_{9}'$ \\
+            Base de Bob $\vec{b_j}$        & $\vec{b_1}$ & $\vec{b_3}$ & $\vec{b_2}$ & $\vec{b_1}$ & $\vec{b_2}$ & $\vec{b_3}$ & $\vec{b_1}$ & $\vec{b_2}$ & $\vec{b_3}$ \\
+            Resultado de Bob               & $\ket{+}$ & $\ket{-}$ & $\ket{-}$ & $\ket{+}$ & $\ket{+}$ & $\ket{-}$ & $\ket{+}$ & $\ket{-}$ & $\ket{+}$ \\
+            Valor Final de Bob             & 0 & 1 & 1 & 0 & 0 & 1 & 0 & 1 & 0 \\ \hline
+            ¿Clave secreta?                &         &         & \checkmark &         &         &         &         &         & \checkmark \\ 
+            ¿Usado para calcular $S$?     &         & \checkmark &          & \checkmark &         & \checkmark & \checkmark &         & \\
+            \hline
         \end{tabular}
-        \caption{Ejemplo del Protocolo EPR.}\label{fig: ejemplo_epr}
+        \caption{Ejemplo del Protocolo E91.}\label{fig: ejemplo_e91}
     \end{figure}
     
     \vspace{2.5mm}
 
-    Sin embargo llegados a este punto no hay una gran diferencia entre \textit{BB84} y este sistema. La ventaja viene a la hora de detectar a Eve. Como sabemos, se puede dar el caso de tener a una tercera persona interceptando nuestros qubits y realizando mediciones sobre ellos, y es aquí la gran diferencia con respecto a \textit{BB84}, la cual viene por parte del entrelazamiento. Esto se basa en que si Eve mide los qubits durante el proceso de este protocolo, el entrelazamiento entre los qubits de Alice y Bob se rompe, siendo el entrelazamiento la clave de este protocolo, ya que podemos detectar si nuestros qubits se encontraban en entrelazamiento antes de las mediciones de Eve, o si por el contrario el entrelazamiento de los qubits se ha visto perturbado por dicha persona, aunque esto también se puede romper con alto índice de ruido cuántico.
+    Y con esta tabla (\ref{fig: ejemplo_e91}) podemos ver que la clave privada que obtenemos está formada por los qubits \( q_{3} \) y \( q_{9} \), y esta es el número binario \( 10 \). Sin embargo,si comparamos este método frente a \textit{BB84}, vemos que no tenemos ninguna ventaja aparente, ya que hemos conseguido la clave privada partiendo de coincidencias en las bases utilizadas. De hecho, este protocolo es bastante más ineficiente que \textit{BB84}, ya que con el mismo número de 9 unidades de información, obtenemos una clave de 2 bits frente a la clave de 4 bits obtenida en (\ref{fig: obtencion_clave_privada_bb84}), por lo que necesitaríamos un ordenador cuántico mucho más potente para obtener una clave privada utilizando este método, lo cual es una desventaja.
+
+    \vspace{5mm}
+
+    La gran ventaja de \textit{E91} viene a la hora de detectar a Eve. Como sabemos, se puede dar el caso de tener a una tercera persona interceptando nuestros qubits y realizando mediciones sobre ellos, y es aquí la gran diferencia con respecto a \textit{BB84}, ya que si Eve mide los qubits durante el proceso de este protocolo, el entrelazamiento entre los qubits de Alice y Bob se rompe, y esto lo podemos calcular gracias al parámetro \textit{S} de la desigualdad de Bell \textit{CHSH}.
+
+    \vspace{5mm}
+
+    Para hacer el cálculo de \textit{S}, primero necesitamos explicar el concepto de correlación \( E(a, b) \).
 
     \vspace{5mm}
 
 
     \vspace{10mm}
-
 
 
 

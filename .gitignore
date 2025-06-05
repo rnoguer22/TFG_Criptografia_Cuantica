@@ -13,6 +13,7 @@ main.bbl
 main-blx.bib
 main.run.xml
 main.blg
+main.synctex(busy)
 .gitignore
 entregas
 code/quantum_venv

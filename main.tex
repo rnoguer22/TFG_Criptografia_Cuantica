@@ -2043,9 +2043,9 @@
 
     \vspace{5mm}
 
-    A continuación vamos a ver como es la representacón matricial de estos estados, y esto se hace con el denominado \textit{producto de Kronecker}, el cual no vamos a definirlo formalmente, sino que vamos a ver directamente como funciona, por ejemplo, para el estado \( \ket{0 0} \) en un sistema de dos qubits:
+    A continuación vamos a ver como es la representacón matricial de estos estados, y esto se hace con el denominado \textit{producto de Kronecker}, el cual no vamos a definir formalmente, sino que vamos a ver directamente como funciona, por ejemplo, para el estado \( \ket{0 0} \) en un sistema de dos qubits:
 
-    \begin{equation*}
+    \begin{equation}
         \ket{0 0} = \ket{0} \ket{0} = \ket{0} \otimes \ket{0} = \begin{pmatrix}
             1 \\
             0
@@ -2061,7 +2061,8 @@
             0 \\
             0
         \end{pmatrix}
-    \end{equation*}
+        \label{eq: producto_kronecker}
+    \end{equation}
 
     \vspace{2.5mm}
 
@@ -3145,7 +3146,7 @@
             \caption{Bases de Bob relativas al plano XZ}
         \end{subfigure}
         \hspace{7.5mm}
-    \end{figure}
+    \end{figure}\label{fig: bases_e91}
 
     \vspace{2.5mm}
 
@@ -3179,13 +3180,119 @@
 
     \vspace{5mm}
 
-    La gran ventaja de \textit{E91} viene a la hora de detectar a Eve. Como sabemos, se puede dar el caso de tener a una tercera persona interceptando nuestros qubits y realizando mediciones sobre ellos, y es aquí la gran diferencia con respecto a \textit{BB84}, ya que si Eve mide los qubits durante el proceso de este protocolo, el entrelazamiento entre los qubits de Alice y Bob se rompe, y esto lo podemos calcular gracias al parámetro \textit{S} de la desigualdad de Bell \textit{CHSH}.
+
+
+
+    \subsubsection{La Desigualdad de Bell CHSH}
 
     \vspace{5mm}
 
-    Para hacer el cálculo de \textit{S}, primero necesitamos explicar el concepto de correlación \( E(a, b) \).
+    La gran ventaja de \textit{E91} viene a la hora de detectar a Eve. Como sabemos, se puede dar el caso de tener a una tercera persona interceptando nuestros qubits y realizando mediciones sobre ellos, y es aquí la gran diferencia con respecto a \textit{BB84}, ya que si Eve mide los qubits durante el proceso de este protocolo, el entrelazamiento entre los qubits de Alice y Bob se rompe, y esto lo podemos calcular gracias al parámetro \textit{S}~\cite{dem_CHSH} de la desigualdad de Bell \textit{CHSH}.
 
     \vspace{5mm}
+
+    Para hacer el cálculo de \textit{S}, primero necesitamos explicar el concepto de correlación \( E(a, b) \). La correlación \( E(a, b) \) de dos bases \( a \) y \( b \), cuantifica la relación entre los resultados obtenidos de medir en la base \( a \), la cual en nuestro caso será la base de Alice, con los resultados de medir en la base \( b \) (base de Bob) en un par entrelazado de qubits. De esta manera, si los resultados entre la base \( a \) y \( b \) son siempre los mismos, obtendremos un valor de \( E(a, b) = 1 \), lo cual sucede para las bases \( \vec{a_{2}} \) y \( \vec{b_{1}} \), además de \( \vec{a_{3}} \) y \( \vec{b_{2}} \), como se puede ver en (\ref{fig: bases_e91}).
+
+    \vspace{5mm}
+
+    Según la definición teórica de \( E(a, b) \), este valor varía según los ángulos \( \theta_{A} \) de la base de Alice y \( \theta_{B} \) de la base de Bob, como el coseno de la diferencia de los ángulos \( \theta_{A} \) y \( \theta_B \), y se define según el operador de medición \( \hat{O} \) sobre los ángulos \( \theta_{A} \) y \( \theta_{B} \)
+
+    \begin{equation}
+        E(a,b) = \braket{\Phi^{+} \ | \hat{O}_{\theta_{A}} \otimes \hat{O}_{\theta_{A}} | \ \Phi^{+}}
+        \label{eq: correlacion_CHSH}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Para demostrar este valor, hemos de definir el operador de medición \( \hat{O} \) en una base rotada sobre el eje \textit{Z} por un cierto ángulo \( \theta \):
+
+    \begin{equation}
+        \hat{O}_{\theta} = \cos(\theta) Z + \sin(\theta) X, \qquad \theta \in \left[ 0, 2\pi \right]
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Donde \textit{Z} y \textit{X} son las matrices de Pauli, las cuales definimos en (\ref{eq: puertas_pauli}). Entonces, el operador \( \hat{O}_{\theta} \) se puede expresar como
+
+    \begin{gather*}
+        \hat{O}_{\theta} = \cos(\theta) \begin{pmatrix}
+            1 & 0 \\[5pt]
+            0 & -1 
+        \end{pmatrix} + \ \sin(\theta) \begin{pmatrix}
+            0 & 1 \\[5pt]
+            1 & 0 \\
+        \end{pmatrix} = \begin{pmatrix}
+            \cos(\theta) & 0 \\[5pt]
+            0 & -\cos(\theta)
+        \end{pmatrix} + \begin{pmatrix}
+            0 & \sin(\theta) \\[5pt]
+            \sin(\theta) & 0 
+        \end{pmatrix} = \\[5pt]
+        = \begin{pmatrix}
+            \cos(\theta) & \sin(\theta) \\[5pt]
+            \sin(\theta) & -\cos(\theta)
+        \end{pmatrix}
+    \end{gather*}
+
+    \vspace{2.5mm}
+
+    Entonces, aplicando el producto de Kronecker \( \otimes \) (\ref{eq: producto_kronecker}) nos queda lo siguiente:
+
+    \begin{align*}
+        O_{\theta_A} \otimes O_{\theta_B} = \begin{pmatrix}
+        \cos(\theta_A) \begin{pmatrix} 
+            \cos(\theta_B) & \sin(\theta_B) \\[5pt]
+            \sin(\theta_B) & -\cos(\theta_B)
+         \end{pmatrix} & \sin(\theta_A) &\begin{pmatrix} 
+            \cos(\theta_B) & \sin(\theta_B) \\[5pt]
+            \sin(\theta_B) & -\cos(\theta_B) 
+        \end{pmatrix} \\[5pt]
+        \sin(\theta_A) \begin{pmatrix} 
+            \cos(\theta_B) & \sin(\theta_B) \\[5pt]
+            \sin(\theta_B) & -\cos(\theta_B) 
+        \end{pmatrix} & -\cos(\theta_A) &\begin{pmatrix} 
+            \cos(\theta_B) & \sin(\theta_B) \\[5pt]
+            \sin(\theta_B) & -\cos(\theta_B) 
+        \end{pmatrix}
+        \end{pmatrix}
+    \end{align*}
+
+    \begin{align*}
+        = \begin{pmatrix}
+            \cos(\theta_A)\cos(\theta_B) & \cos(\theta_A)\sin(\theta_B) & \sin(\theta_A)\cos(\theta_B) & \sin(\theta_A)\sin(\theta_B) \\[5pt]
+            \cos(\theta_A)\sin(\theta_B) & -\cos(\theta_A)\cos(\theta_B) & \sin(\theta_A)\sin(\theta_B) & -\sin(\theta_A)\cos(\theta_B) \\[5pt]
+            \sin(\theta_A)\cos(\theta_B) & \sin(\theta_A)\sin(\theta_B) & -\cos(\theta_A)\cos(\theta_B) & -\cos(\theta_A)\sin(\theta_B) \\[5pt]
+            \sin(\theta_A)\sin(\theta_B) & -\sin(\theta_A)\cos(\theta_B) & -\cos(\theta_A)\sin(\theta_B) & \cos(\theta_A)\cos(\theta_B)
+            \end{pmatrix}
+    \end{align*}
+
+    \vspace{2.5mm}
+
+    Si sustituimos esto en la expresión (\ref{eq: correlacion_CHSH}), obtenemos la expresión trigonométrica que estábamos buscando:
+
+    \begin{gather}
+        E(a,b) = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 & 0 & 0 & 1 \end{pmatrix} \begin{pmatrix}
+            \cos(\theta_A)\cos(\theta_B) & \cdots & \cdots & \sin(\theta_A)\sin(\theta_B) \\[5pt]
+            \vdots & \ddots & \ddots & \vdots \\[5pt]
+            \vdots & \ddots & \ddots & \vdots \\[5pt]
+            \sin(\theta_A)\sin(\theta_B) & \cdots & \cdots & \cos(\theta_A)\cos(\theta_B)
+        \end{pmatrix} \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\[5pt] 0 \\[5pt] 0 \\[5pt] 1 
+        \end{pmatrix} = \nonumber \\[5pt]
+        = \frac{1}{2} \begin{pmatrix} 1 & 0 & 0 & 1 \end{pmatrix} \begin{pmatrix}
+            \cos(\theta_A)\cos(\theta_B) + \sin(\theta_A)\sin(\theta_B) \\[5pt]
+            \cdots \\[5pt]
+            \cdots \\[5pt]
+            \sin(\theta_A)\sin(\theta_B) + \cos(\theta_A)\cos(\theta_B)
+        \end{pmatrix} = \nonumber \\[5pt]
+        = \frac{1}{2} \left( \cos(\theta_A)\cos(\theta_B) + \sin(\theta_A)\sin(\theta_B) + \sin(\theta_A)\sin(\theta_B) + \cos(\theta_A)\cos(\theta_B) \right) = \nonumber \\[5pt]
+        = \frac{1}{2} \left( 2 \left( \cos(\theta_A)\cos(\theta_B) \right) + 2 \left( \sin(\theta_A)\sin(\theta_B) \right) \right) = \left( \cos(\theta_A)\cos(\theta_B) \right) + \left( \sin(\theta_A)\sin(\theta_B) \right) \nonumber \\[5pt]
+        \boxed{ E(a,b) = \cos(\theta_A - \theta_{B}) }
+    \end{gather}
+
+    \vspace{2.5mm}
+
+    SEGUIR POR AQUIII!!!
+
 
 
     \vspace{10mm}

@@ -3191,7 +3191,7 @@
 
     \vspace{5mm}
 
-    Para hacer el cálculo de \textit{S}, primero necesitamos explicar el concepto de correlación \( E(a, b) \). La correlación \( E(a, b) \) de dos bases \( a \) y \( b \), cuantifica la relación entre los resultados obtenidos de medir en la base \( a \), la cual en nuestro caso será la base de Alice, con los resultados de medir en la base \( b \) (base de Bob) en un par entrelazado de qubits. De esta manera, si los resultados entre la base \( a \) y \( b \) son siempre los mismos, obtendremos un valor de \( E(a, b) = 1 \), lo cual sucede para las bases \( \vec{a_{2}} \) y \( \vec{b_{1}} \), además de \( \vec{a_{3}} \) y \( \vec{b_{2}} \), como se puede ver en (\ref{fig: bases_e91}).
+    Para hacer el cálculo de \textit{S}, primero necesitamos explicar el concepto de correlación \( E(a, b) \). La correlación \( E(a, b) \) de dos bases \( a \) y \( b \), cuantifica la relación entre los resultados obtenidos de medir en la base \( a \), la cual en nuestro caso será la base de Alice, con los resultados de medir en la base \( b \) (base de Bob) en un par entrelazado de qubits. De esta manera, si la base \( a \) y \( b \) resulta ser la misma, obtendremos un valor de \( E(a, b) = 1 \), lo cual sucede para las bases \( \vec{a_{2}} \) y \( \vec{b_{1}} \), además de \( \vec{a_{3}} \) y \( \vec{b_{2}} \), ya que estas bases son idénticas, como se puede ver en (\ref{fig: bases_e91}), y se obtiene el mismo resultado en caso de coincidir (\ref{fig: ejemplo_e91}), creando así la clave de cifrado.
 
     \vspace{5mm}
 
@@ -3291,9 +3291,26 @@
 
     \vspace{2.5mm}
 
-    SEGUIR POR AQUIII!!!
+    Es en este punto cuando podemos definir \textit{S}. Para un par de bases de Alice \( A_{1}, A_{2} \) y otro par de bases de Bob \( B_{1}, B_{2} \), se define \textit{S} como
+    
+    \begin{equation*}
+        S = E(A1, B1) - E(A1, B2) + E(A2, B1) + E(A2, B2) \leq 2 
+    \end{equation*}
 
+    \vspace{2.5mm}
 
+    Y, en definitiva, si obtenemos un valor de \( S \leq 2 \) significa que los qubits medidos en las bases de Alice y Bob no están realmente entrelazados. Es por esto que queremos violar esta desigualdad, demostrando así que los pares de qubits de Alice y Bob se encontraban en entrelazamiento antes de realizar sus respectivas mediciones. Si escogemos las bases adecuadas, \( S \) puede alcanzar un límite teórico de \( 2 \sqrt{2} \), y esto lo podemos lograr con las bases \( \vec{a_{1}}, \vec{a_{3}} \) de Alice y las bases \( \vec{b_{1}}, \vec{b_{3}} \) de Bob (\ref{fig: bases_e91}):
+
+    \begin{gather}
+        S = E(\vec{a_{1}}, \vec{b_{1}}) - E(\vec{a_{1}}, \vec{b_{3}}) + E(\vec{a_{3}}, \vec{b_{1}}) + E(\vec{a_{3}}, \vec{b_{3}}) \\[5pt] \label{eq: s_bases_correctas}
+        S = \cos(\frac{\pi}{2} - \frac{\pi}{4}) - \cos(\frac{\pi}{2} - (-\frac{\pi}{4})) + \cos(0 - \frac{\pi}{4}) + \cos(0 - (-\frac{\pi}{4})) = \nonumber \\[5pt]
+        S = \frac{\sqrt{2}}{2} - \left( - \frac{\sqrt{2}}{2} \right) + \frac{\sqrt{2}}{2} + \frac{\sqrt{2}}{2} \nonumber \\[5pt]
+        S = 2 \sqrt{2} \label{eq: valor_correcto_s}
+    \end{gather}
+
+    \vspace{2.5mm}
+
+    Y este es el valor que deberíamos obtener si no hay presencia de Eve en un escenario completamente ideal. En la práctica, este resultado exacto no se consigue debido al ruido cuántico del sistema, aunque se debería obtener un resultado basante similar.
 
     \vspace{10mm}
 

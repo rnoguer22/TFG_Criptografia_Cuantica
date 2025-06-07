@@ -3162,13 +3162,13 @@
             Qubit entrelazado de Alice     & $q_{1}$ & $q_{2}$ & $q_{3}$ & $q_{4}$ & $q_{5}$ & $q_{6}$ & $q_{7}$ & $q_{8}$ & $q_{9}$ \\
             Base de Alice $\vec{a_j}$      & $\vec{a_1}$ & $\vec{a_2}$ & $\vec{a_3}$ & $\vec{a_3}$ & $\vec{a_1}$ & $\vec{a_2}$ & $\vec{a_2}$ & $\vec{a_1}$ & $\vec{a_3}$ \\
             Resultado de Alice             & $\ket{1}$ & $\ket{+}$ & $\ket{-}$ & $\ket{-}$ & $\ket{0}$ & $\ket{-}$ & $\ket{+}$ & $\ket{1}$ & $\ket{+}$ \\
-            Valor Final de Alice           & 1 & 0 & 1 & 1 & 0 & 1 & 0 & 1 & 0 \\ \hline
+            Valor Final de Alice           & -1 & 1 & -1 & -1 & 1 & -1 & 1 & -1 & 1 \\ \hline
             Qubit entrelazado de Bob       & $q_{1}'$ & $q_{2}'$ & $q_{3}'$ & $q_{4}'$ & $q_{5}'$ & $q_{6}'$ & $q_{7}'$ & $q_{8}'$ & $q_{9}'$ \\
             Base de Bob $\vec{b_j}$        & $\vec{b_1}$ & $\vec{b_3}$ & $\vec{b_2}$ & $\vec{b_1}$ & $\vec{b_2}$ & $\vec{b_3}$ & $\vec{b_1}$ & $\vec{b_2}$ & $\vec{b_3}$ \\
             Resultado de Bob               & $\ket{+}$ & $\ket{-}$ & $\ket{-}$ & $\ket{+}$ & $\ket{+}$ & $\ket{-}$ & $\ket{+}$ & $\ket{-}$ & $\ket{+}$ \\
-            Valor Final de Bob             & 0 & 1 & 1 & 0 & 0 & 1 & 0 & 1 & 0 \\ \hline
-            ¿Clave secreta?                &         &         & \checkmark &         &         &         &         &         & \checkmark \\ 
-            ¿Usado para calcular $S$?     &         & \checkmark &          & \checkmark &         & \checkmark & \checkmark &         & \\
+            Valor Final de Bob             & 1 & -1 & -1 & 1 & 1 & -1 & 1 & -1 & 1 \\ \hline
+            ¿Clave secreta?                &  &  & \checkmark &  &  &  & \checkmark & & \\ 
+            ¿Usado para calcular $S$?      & \checkmark &  &  & \checkmark &  &  &  &  & \checkmark \\
             \hline
         \end{tabular}
         \caption{Ejemplo del Protocolo E91.}\label{fig: ejemplo_e91}
@@ -3176,13 +3176,18 @@
     
     \vspace{2.5mm}
 
-    Y con esta tabla (\ref{fig: ejemplo_e91}) podemos ver que la clave privada que obtenemos está formada por los qubits \( q_{3} \) y \( q_{9} \), y esta es el número binario \( 10 \). Sin embargo,si comparamos este método frente a \textit{BB84}, vemos que no tenemos ninguna ventaja aparente, ya que hemos conseguido la clave privada partiendo de coincidencias en las bases utilizadas. De hecho, este protocolo es bastante más ineficiente que \textit{BB84}, ya que con el mismo número de 9 unidades de información, obtenemos una clave de 2 bits frente a la clave de 4 bits obtenida en (\ref{fig: obtencion_clave_privada_bb84}), por lo que necesitaríamos un ordenador cuántico mucho más potente para obtener una clave privada utilizando este método, lo cual es una desventaja.
+    Donde los valores obtenidos son 1 si el resultado final es \( \ket{0} \) o \( \ket{+} \), o -1 si el resultado final es \( \ket{1} \) o \( \ket{-} \), esto es simplemente un formalismo para cumplir con los autovalores del operador de medición \( \hat{O} \) (\ref{eq: operador_medicion}). Posteriormente, los valores obtenidos como 1 pasarán a ser 0 en la clave de cifrado, y de la misma manera sucede con -1, el cual pasará a ser 1.
+    
+    \vspace{5mm}
+    
+    Entonces, con esta tabla (\ref{fig: ejemplo_e91}) podemos ver que la clave privada que obtenemos está formada por los qubits \( q_{3} \) y \( q_{7} \), y esta es el número binario \( 10 \). Sin embargo,si comparamos este método frente a \textit{BB84}, vemos que no tenemos ninguna ventaja aparente, ya que hemos conseguido la clave privada partiendo de coincidencias en las bases utilizadas. De hecho, este protocolo es bastante más ineficiente que \textit{BB84}, ya que con el mismo número de 9 unidades de información, obtenemos una clave de 2 bits frente a la clave de 4 bits obtenida en (\ref{fig: obtencion_clave_privada_bb84}), por lo que necesitaríamos un ordenador cuántico mucho más potente para obtener una clave privada utilizando este método, lo cual es una desventaja.
 
     \vspace{5mm}
 
 
 
 
+    
     \subsubsection{La Desigualdad de Bell CHSH}
 
     \vspace{5mm}
@@ -3208,6 +3213,7 @@
 
     \begin{equation}
         \hat{O}_{\theta} = \cos(\theta) Z + \sin(\theta) X, \qquad \theta \in \left[ 0, 2\pi \right]
+        \label{eq: operador_medicion}
     \end{equation}
 
     \vspace{2.5mm}
@@ -3286,7 +3292,7 @@
         \end{pmatrix} = \nonumber \\[5pt]
         = \frac{1}{2} \left( \cos(\theta_A)\cos(\theta_B) + \sin(\theta_A)\sin(\theta_B) + \sin(\theta_A)\sin(\theta_B) + \cos(\theta_A)\cos(\theta_B) \right) = \nonumber \\[5pt]
         = \frac{1}{2} \left( 2 \left( \cos(\theta_A)\cos(\theta_B) \right) + 2 \left( \sin(\theta_A)\sin(\theta_B) \right) \right) = \left( \cos(\theta_A)\cos(\theta_B) \right) + \left( \sin(\theta_A)\sin(\theta_B) \right) \nonumber \\[5pt]
-        \boxed{ E(a,b) = \cos(\theta_A - \theta_{B}) }
+        \boxed{ E(a,b) = \cos(\theta_A - \theta_{B}) }\label{eq: s_coseno}
     \end{gather}
 
     \vspace{2.5mm}
@@ -3303,14 +3309,43 @@
 
     \begin{gather}
         S = E(\vec{a_{1}}, \vec{b_{1}}) - E(\vec{a_{1}}, \vec{b_{3}}) + E(\vec{a_{3}}, \vec{b_{1}}) + E(\vec{a_{3}}, \vec{b_{3}}) \\[5pt] \label{eq: s_bases_correctas}
-        S = \cos(\frac{\pi}{2} - \frac{\pi}{4}) - \cos(\frac{\pi}{2} - (-\frac{\pi}{4})) + \cos(0 - \frac{\pi}{4}) + \cos(0 - (-\frac{\pi}{4})) = \nonumber \\[5pt]
+        S = \cos \left( \frac{\pi}{2} - \frac{\pi}{4} \right) - \cos \left( \frac{\pi}{2} - \left( -\frac{\pi}{4} \right) \right) + \cos \left( 0 - \frac{\pi}{4} \right) + \cos \left( 0 - \left( -\frac{\pi}{4} \right) \right) = \nonumber \\[5pt]
         S = \frac{\sqrt{2}}{2} - \left( - \frac{\sqrt{2}}{2} \right) + \frac{\sqrt{2}}{2} + \frac{\sqrt{2}}{2} \nonumber \\[5pt]
         S = 2 \sqrt{2} \label{eq: valor_correcto_s}
     \end{gather}
 
     \vspace{2.5mm}
 
-    Y este es el valor que deberíamos obtener si no hay presencia de Eve en un escenario completamente ideal. En la práctica, este resultado exacto no se consigue debido al ruido cuántico del sistema, aunque se debería obtener un resultado basante similar.
+    Y este es el valor que deberíamos obtener si no hay presencia de Eve en un escenario completamente ideal. En la práctica, este resultado exacto no se suele conseguir debido al ruido cuántico del sistema, aunque se debería obtener un resultado basante similar. Es más, en una simulación real no podemos aplicar la expresión vista en (\ref{eq: s_coseno}) ya que \( E(a, b) \) no varía según los resultados de Alice y Bob, y es esto en lo que nos hemos fijar para detectar a Eve. Para ello tenemos que calcular la correlación \( E(a, b) \) en función de los resultados experimentales, de la siguiente manera:
+
+    \begin{equation}
+        E(a, b) = P_{++}(a, b) - P_{+-}(a, b) - P_{-+}(a, b) + P_{--}(a, b), \qquad E(a, b) \in \left[ -1, 1 \right]
+        \label{s_experimental}
+    \end{equation}
+
+    \vspace{2.5mm}
+
+    Donde \( P_{++}(a, b) \) es la probabilidad de que Alice obtenga 1 en la base \textit{a} Bob obtenga 1 en su respectiva base \textit{b}. De la misma manera aplica para \( P_{+-}(a, b) \), donde el símbolo \( + \) representa la obtención del factor 1 en la base de Alice y \( - \) el factor -1 en la base de Bob. Esta idea se aplica al resto de miembros \( P_{-+}(a, b) \) y \( P_{--}(a, b) \). Generalizando esta notación, se obtiene que
+
+    \begin{equation*}
+        P_{XY}(a, b) = \frac{\text{Nº resultados XY}}{\text{Nº total de pares medidos en las bases a, b}}
+    \end{equation*}
+
+    \vspace{2.5mm}
+
+    Entonces, cuanto mayor sea el número de mediciones, mejor será la aproximación de \textit{S} a su valor teórico (\ref{eq: s_coseno}). Esto no lo podemos hacer con los resultados obtenidos en la tabla de ejemplo (\ref{fig: ejemplo_e91}) ya que no tenemos un número suficiente de qubits. Sin embargo, podemos realizar una simulación en un escenario cuántico real y analizar su comportamiento.
+
+    \vspace{5mm}
+
+    
+
+
+
+    \subsubsection{Simulación de E91}
+
+    \vspace{5mm}
+
+
 
     \vspace{10mm}
 

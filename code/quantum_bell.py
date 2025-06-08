@@ -14,7 +14,7 @@ import os
 
 load_dotenv()
 
-# Rotaciones para cada base
+# Angulos de las bases en el plano XZ que Alice y Bob van a usar para obtener el valor maximo de S
 angles = {
     'a1': np.pi / 2,
     'a3': 0,
@@ -22,23 +22,20 @@ angles = {
     'b3': -np.pi / 4
 }
 
-# Crea el circuito CHSH
+# Funcion para crear el circuito
 def create_chsh_circuit(theta_a, theta_b, eve: bool = False):
     qc = QuantumCircuit(2, 2)
-
-    # Crear estado de Bell |Φ+>
+    # Creamos el estado de Bell |Φ+>
     qc.h(0)
     qc.cx(0, 1)
     if eve:
         # Eve intercepta y mide Q0 (de Alice), destruyendo el entrelazamiento
         qc.measure(0, 0)
-        qc.reset(0)
         # Después envía un nuevo qubit |0⟩ sin entrelazar
         qc.barrier()
-    # Aplicar rotaciones de base
+    # Aplicamos las rotaciones de las bases que Alice y Bob han elegido
     qc.ry(- theta_a, 0)
     qc.ry(- theta_b, 1)
-    # Medición final
     qc.measure(0, 0)
     qc.measure(1, 1)
 
@@ -50,39 +47,38 @@ def get_Backend_ISA(circuit):
     service = QiskitRuntimeService(channel="ibm_quantum")
     # El backend sera el procesador menos ocupado en el momento
     backend = service.least_busy(min_num_qubits=100, operational=True)
-    # pass_manager
     pm = generate_preset_pass_manager(backend=backend, optimization_level=2)
     # circuito ISA (Instruction Set Architecture)
     circuit_isa = pm.run(circuit)
     return backend, circuit_isa
     
 
-# Ejecutamos el circuito con un IBM Quantum
+# Ejecutamos el circuito con IBM Quantum
 def execute(backend, circuit_isa, shots: int = 8192):
     sampler = SamplerV2(backend)
     sampler.options.default_shots = shots
-    sampler.options.dynamical_decoupling.enable = True          # Supresión de errores: Dynamical Decoupling
+    sampler.options.dynamical_decoupling.enable = True          
     sampler.options.dynamical_decoupling.sequence_type = "XY4"
-    sampler.options.twirling.enable_gates = True                # Supresión de errores: Pauli Twirling
+    sampler.options.twirling.enable_gates = True               
     pub = (circuit_isa)
     job = sampler.run([pub])        
     return job
 
 
-# Calcula E(a,b)
+# Con esta funcion calculamos E(a,b)
 def compute_expectation(counts):
     shots = sum(counts.values())
     expectation = 0
     for outcome, count in counts.items():
-        bit_a = int(outcome[-1])  # Qubit 0 es el último bit en Qiskit
-        bit_b = int(outcome[-2])  # Qubit 1 es el penúltimo bit
-        parity = (-1) ** (bit_a + bit_b)  # Cambia XOR por suma para correlación CHSH
+        bit_a = int(outcome[-1])  
+        bit_b = int(outcome[-2])  
+        parity = (-1) ** (bit_a + bit_b)  
         expectation += parity * count / shots
     return expectation
 
 
-# Ejecuta todos los circuitos y calcula S
-def compute_S(eve=False):
+# Ejecutamos todo y calculamos S
+def compute_S(circuit_path: str, eve: bool = False):
     # backend = Aer.get_backend('qasm_simulator')
     simulator = AerSimulator()  # ← Simulador sin ruido
     settings = [
@@ -91,27 +87,35 @@ def compute_S(eve=False):
         ('a3', 'b1'),
         ('a3', 'b3')
     ]
+
     E = {}
+    all_counts_data = {} 
+
+    count = 0
     for a, b in settings:
         theta_a = angles[a]
         theta_b = angles[b]
         qc = create_chsh_circuit(theta_a, theta_b, eve)
-        # qc.draw('mpl')
-        # plt.show()
+        if count == 0:
+            qc.draw('mpl')
+            plt.savefig(circuit_path)
         # backend, circuit_isa = get_Backend_ISA(qc)
         # job = execute(backend, circuit_isa)
         '''job = get_Job(os.getenv('BELL_JOB_ID'))
         counts = job.result()[0].data.c.get_counts()'''
-        result = simulator.run(qc, shots = 8192*2).result()
+        result = simulator.run(qc, shots = 8192).result()
         counts = result.get_counts()
+        key_str = f"{a}{b}"
+        all_counts_data[key_str] = counts
         E[(a, b)] = compute_expectation(counts)
 
-    # Calcular S
+    # Calculamos S
     S = E[('a1', 'b1')] - E[('a1', 'b3')] + E[('a3', 'b1')] + E[('a3', 'b3')]
     print(counts, ' ', S, ' ', E, '\n')
-    return S, E
+    return all_counts_data, counts, S, E
 
 
+# Mostramos un grafico de barras con las correlaciones entre las bases de Alice y Bob
 def plot_correlations(correlations_dict: dict, eve: bool = True, path: str = ''):
     labels = list(correlations_dict.keys())
     values = [float(correlations_dict[k]) for k in labels]
@@ -122,11 +126,12 @@ def plot_correlations(correlations_dict: dict, eve: bool = True, path: str = '')
     # Añadimos los valores encima de las barras
     for bar in bars:
         height = bar.get_height()
+        original_height = height
         if height >= 0:
             height += 0.05
         else:
             height -= 0.05
-        plt.text(bar.get_x() + bar.get_width()/2, height, f'{height:.2f}',  # 2 decimales
+        plt.text(bar.get_x() + bar.get_width()/2, height, f'{original_height:.2f}',  # Tomamos solamente 2 decimales
                  ha='center', va='bottom' if height >=0 else 'top', fontsize=11)
     if not eve:
         plt.axhline(ideal, linestyle='dashed', color='red', label=r'Valor ideal $\frac{\sqrt{2}}{2}$')
@@ -145,6 +150,7 @@ def plot_correlations(correlations_dict: dict, eve: bool = True, path: str = '')
     # plt.show()
 
 
+# Grafico para ver mejor el valor de S
 def plot_s_value(s_simulado, eve: bool = True, path: str = ''):
     s_ideal = 2 * np.sqrt(2)
 
@@ -157,17 +163,43 @@ def plot_s_value(s_simulado, eve: bool = True, path: str = ''):
                     ha='center', va='bottom' if height >=0 else 'top', fontsize=11)
     if not eve:
         plt.axhline(s_ideal, linestyle='dashed', color='green', label='Valor ideal 2√2')
-    plt.axhline(2, linestyle='dotted', color='red', label='Límite clásico (2)')
+        plt.axhline(2, linestyle='dotted', color='red', label='Límite clásico (2)')
+        plt.legend(loc='lower right', bbox_to_anchor=(1.0, 0.0), frameon=True, shadow=False, ncol=1)
+    else:
+        plt.axhline(2, linestyle='dotted', color='red', label='Límite clásico (2)')
+        plt.legend()
     plt.ylim(0, max(s_simulado, s_ideal) + 0.5)
     plt.title('Valor de S en la desigualdad de CHSH')
     plt.ylabel('S')
-    plt.legend(loc='lower right', bbox_to_anchor=(1.0, 0.0), frameon=True, shadow=False, ncol=1)
     plt.tight_layout()
     if path:
         plt.savefig(path)
     # plt.show()
 
 
+# Mostramos en otro grafico los qubits de Alice y Bob una vez ya han colapsado y finalizado el protocolo
+def plot_measurement_histogram(counts, path: str = ''):
+    keys = sorted(counts.keys()) 
+    values = [counts[key] for key in keys]
+
+    plt.figure(figsize=(6, 5))
+    bars = plt.bar(keys, values, color='mediumslateblue')
+    for bar in bars:
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2, height + 0.05, height,
+                    ha='center', va='bottom' if height >=0 else 'top', fontsize=11)
+
+    plt.title('Histograma de resultados de medición')
+    plt.xlabel('Resultado (Alice y Bob)')
+    plt.ylabel('Frecuencia')
+    plt.grid(axis='y', linestyle='--', alpha=0.6)
+    plt.tight_layout()
+    if path:
+        plt.savefig(path)
+    # plt.show()
+
+
+# Funcion para obtener el job_id de una simulacion de IBM Quantum
 def get_Job(job_id):
     service = QiskitRuntimeService(channel="ibm_quantum")
     job = service.job(job_id) 
@@ -178,17 +210,19 @@ def get_Job(job_id):
 
 if __name__ == '__main__':
 
-    S_honest, E_honest = compute_S(eve=False)
-    S_eavesdropped, E_eavesdropped = compute_S(eve=True)
+    all_counts_honest, counts_honest, S_honest, E_honest = compute_S(circuit_path='img/Simulation/e91/circuit.png', eve=False)
+    all_counts_eavesdropped, counts_eavesdropped, S_eavesdropped, E_eavesdropped = compute_S(circuit_path='img/Simulation/e91/circuit_eve.png', eve=True)
 
     print("📡 Caso sin Eve:")
     print("Correlaciones:", E_honest)
     print("S =", S_honest)
-    plot_correlations(E_honest, eve=False, path='img/Simulation/corr_e91.png')
-    plot_s_value(S_honest, eve=False, path='img/Simulation/s_e91.png')
+    plot_correlations(E_honest, eve=False, path='img/Simulation/e91/corr_e91.png')
+    plot_s_value(S_honest, eve=False, path='img/Simulation/e91/s_e91.png')
+    plot_measurement_histogram(counts=counts_honest, path='img/Simulation/e91/histograma_medidas.png')
 
     print("\n🚨 Caso con Eve:")
     print("Correlaciones:", E_eavesdropped)
     print("S =", S_eavesdropped)
-    plot_correlations(E_eavesdropped, path='img/Simulation/corr_e91_eve.png')
-    plot_s_value(S_eavesdropped, path='img/Simulation/s_e91_eve.png')
+    plot_correlations(E_eavesdropped, path='img/Simulation/e91/corr_e91_eve.png')
+    plot_s_value(S_eavesdropped, path='img/Simulation/e91/s_e91_eve.png')
+    plot_measurement_histogram(counts=counts_eavesdropped, path='img/Simulation/e91/histograma_medidas_eve.png')

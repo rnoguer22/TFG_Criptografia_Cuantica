@@ -96,9 +96,9 @@ def compute_S(circuit_path: str, eve: bool = False):
         theta_a = angles[a]
         theta_b = angles[b]
         qc = create_chsh_circuit(theta_a, theta_b, eve)
-        if count == 0:
+        '''if count == 0:
             qc.draw('mpl')
-            plt.savefig(circuit_path)
+            plt.savefig(circuit_path)'''
         # backend, circuit_isa = get_Backend_ISA(qc)
         # job = execute(backend, circuit_isa)
         '''job = get_Job(os.getenv('BELL_JOB_ID'))
@@ -111,8 +111,8 @@ def compute_S(circuit_path: str, eve: bool = False):
 
     # Calculamos S
     S = E[('a1', 'b1')] - E[('a1', 'b3')] + E[('a3', 'b1')] + E[('a3', 'b3')]
-    print(counts, ' ', S, ' ', E, '\n')
-    return all_counts_data, counts, S, E
+    print(all_counts_data, ' ', S, ' ', E, '\n')
+    return all_counts_data, S, E
 
 
 # Mostramos un grafico de barras con las correlaciones entre las bases de Alice y Bob
@@ -178,22 +178,44 @@ def plot_s_value(s_simulado, eve: bool = True, path: str = ''):
 
 
 # Mostramos en otro grafico los qubits de Alice y Bob una vez ya han colapsado y finalizado el protocolo
-def plot_measurement_histogram(counts, path: str = ''):
-    keys = sorted(counts.keys()) 
-    values = [counts[key] for key in keys]
+def plot_measurement_histogram(all_counts_data: dict, path: str = ''):
+    possible_outcomes = ['00', '01', '10', '11']    
+    base_pairs = list(all_counts_data.keys())
+    
+    reorganized_data = {outcome: [] for outcome in possible_outcomes}
 
-    plt.figure(figsize=(6, 5))
-    bars = plt.bar(keys, values, color='mediumslateblue')
-    for bar in bars:
-        height = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width()/2, height + 0.05, height,
-                    ha='center', va='bottom' if height >=0 else 'top', fontsize=11)
+    for base_pair in base_pairs:
+        counts = all_counts_data[base_pair]
+        for outcome in possible_outcomes:
+            reorganized_data[outcome].append(counts.get(outcome, 0)) # Obtener el conteo o 0 si no existe
 
-    plt.title('Histograma de resultados de medición')
-    plt.xlabel('Resultado (Alice y Bob)')
+    # Configuramos las barras del grafico
+    num_base_pairs = len(base_pairs)
+    bar_width = 0.2  # Ancho de cada sub-barra
+    
+    # Posiciones para las distintas agrupaciones de barras en el gráfico
+    indices = np.arange(len(possible_outcomes))
+    plt.figure(figsize=(12, 7))
+    # Colores
+    colors = plt.cm.viridis(np.linspace(0, 1, num_base_pairs))
+
+    # Crearmos cada barra del par de bases de cada resultado de la medición
+    for i, base_pair in enumerate(base_pairs):
+        x_positions = indices + (i - num_base_pairs / 2 + 0.5) * bar_width
+        # Frecuencias para cada par de bases
+        frequencies_for_this_pair = [all_counts_data[base_pair].get(outcome, 0) for outcome in possible_outcomes]  
+        # Dibujamos las barras
+        plt.bar(x_positions, frequencies_for_this_pair, width=bar_width, 
+                label=base_pair, color=colors[i])
+
+    plt.title('Histograma de los Resultados de las Mediciones')
+    plt.xlabel('Resultado de las Mediciones de Bob y Alice')
     plt.ylabel('Frecuencia')
+    plt.xticks(indices, possible_outcomes) 
     plt.grid(axis='y', linestyle='--', alpha=0.6)
+    plt.legend(title='Par de Bases')
     plt.tight_layout()
+
     if path:
         plt.savefig(path)
     # plt.show()
@@ -210,19 +232,21 @@ def get_Job(job_id):
 
 if __name__ == '__main__':
 
-    all_counts_honest, counts_honest, S_honest, E_honest = compute_S(circuit_path='img/Simulation/e91/circuit.png', eve=False)
-    all_counts_eavesdropped, counts_eavesdropped, S_eavesdropped, E_eavesdropped = compute_S(circuit_path='img/Simulation/e91/circuit_eve.png', eve=True)
+    all_counts_honest, S_honest, E_honest = compute_S(circuit_path='img/Simulation/e91/circuit.png', eve=False)
+    all_counts_eavesdropped, S_eavesdropped, E_eavesdropped = compute_S(circuit_path='img/Simulation/e91/circuit_eve.png', eve=True)
 
-    print("📡 Caso sin Eve:")
+    '''print("📡 Caso sin Eve:")
     print("Correlaciones:", E_honest)
     print("S =", S_honest)
     plot_correlations(E_honest, eve=False, path='img/Simulation/e91/corr_e91.png')
-    plot_s_value(S_honest, eve=False, path='img/Simulation/e91/s_e91.png')
-    plot_measurement_histogram(counts=counts_honest, path='img/Simulation/e91/histograma_medidas.png')
+    plot_s_value(S_honest, eve=False, path='img/Simulation/e91/s_e91.png')'''
+    # plot_measurement_histogram(counts=counts_honest, path='img/Simulation/e91/histograma_medidas.png')
+    plot_measurement_histogram(all_counts_data=all_counts_honest, path='img/Simulation/e91/histograma_medidas.png')
 
-    print("\n🚨 Caso con Eve:")
+    '''print("\n🚨 Caso con Eve:")
     print("Correlaciones:", E_eavesdropped)
     print("S =", S_eavesdropped)
     plot_correlations(E_eavesdropped, path='img/Simulation/e91/corr_e91_eve.png')
-    plot_s_value(S_eavesdropped, path='img/Simulation/e91/s_e91_eve.png')
-    plot_measurement_histogram(counts=counts_eavesdropped, path='img/Simulation/e91/histograma_medidas_eve.png')
+    plot_s_value(S_eavesdropped, path='img/Simulation/e91/s_e91_eve.png')'''
+    # plot_measurement_histogram(counts=counts_eavesdropped, path='img/Simulation/e91/histograma_medidas_eve.png')
+    plot_measurement_histogram(all_counts_data=all_counts_eavesdropped, path='img/Simulation/e91/histograma_medidas_eve.png')

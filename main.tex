@@ -3161,11 +3161,11 @@
             \hline
             Qubit entrelazado de Alice     & $q_{1}$ & $q_{2}$ & $q_{3}$ & $q_{4}$ & $q_{5}$ & $q_{6}$ & $q_{7}$ & $q_{8}$ & $q_{9}$ \\
             Base de Alice $\vec{a_j}$      & $\vec{a_1}$ & $\vec{a_2}$ & $\vec{a_3}$ & $\vec{a_3}$ & $\vec{a_1}$ & $\vec{a_2}$ & $\vec{a_2}$ & $\vec{a_1}$ & $\vec{a_3}$ \\
-            Resultado de Alice             & $\ket{1}$ & $\ket{+}$ & $\ket{-}$ & $\ket{-}$ & $\ket{0}$ & $\ket{-}$ & $\ket{+}$ & $\ket{1}$ & $\ket{+}$ \\
+            Medición de Alice             & $\ket{1}$ & $\ket{a_2^+}$ & $\ket{-}$ & $\ket{-}$ & $\ket{0}$ & $\ket{a_2^-}$ & $\ket{a_2^+}$ & $\ket{1}$ & $\ket{+}$ \\
             Valor Final de Alice           & -1 & 1 & -1 & -1 & 1 & -1 & 1 & -1 & 1 \\ \hline
             Qubit entrelazado de Bob       & $q_{1}'$ & $q_{2}'$ & $q_{3}'$ & $q_{4}'$ & $q_{5}'$ & $q_{6}'$ & $q_{7}'$ & $q_{8}'$ & $q_{9}'$ \\
             Base de Bob $\vec{b_j}$        & $\vec{b_1}$ & $\vec{b_3}$ & $\vec{b_2}$ & $\vec{b_1}$ & $\vec{b_2}$ & $\vec{b_3}$ & $\vec{b_1}$ & $\vec{b_2}$ & $\vec{b_3}$ \\
-            Resultado de Bob               & $\ket{+}$ & $\ket{-}$ & $\ket{-}$ & $\ket{+}$ & $\ket{+}$ & $\ket{-}$ & $\ket{+}$ & $\ket{-}$ & $\ket{+}$ \\
+            Medición de Bob               & $\ket{b_1^+}$ & $\ket{b_3^-}$ & $\ket{-}$ & $\ket{b_1^+}$ & $\ket{+}$ & $\ket{b_3^-}$ & $\ket{b_1^+}$ & $\ket{-}$ & $\ket{b_3^+}$ \\
             Valor Final de Bob             & 1 & -1 & -1 & 1 & 1 & -1 & 1 & -1 & 1 \\ \hline
             ¿Clave secreta?                &  &  & \checkmark &  &  &  & \checkmark & & \\ 
             ¿Usado para calcular $S$?      & \checkmark &  &  & \checkmark &  &  &  &  & \checkmark \\
@@ -3176,7 +3176,7 @@
     
     \vspace{2.5mm}
 
-    Donde los valores obtenidos son 1 si el resultado final es \( \ket{0} \) o \( \ket{+} \), o -1 si el resultado final es \( \ket{1} \) o \( \ket{-} \), esto es simplemente un formalismo para cumplir con los autovalores del operador de medición \( \hat{O} \) (\ref{eq: operador_medicion}). Posteriormente, los valores obtenidos como 1 pasarán a ser 0 en la clave de cifrado, y de la misma manera sucede con -1, el cual pasará a ser 1.
+    Donde los valores obtenidos son 1 si el resultado final es \( \ket{0} \), \( \ket{+} \) o contiene \( + \), o -1 si el resultado final es \( \ket{1} \), \( \ket{-} \) o contiene \( - \), esto es simplemente un formalismo para cumplir con los autovalores del operador de medición \( \hat{O} \) (\ref{eq: operador_medicion}). Posteriormente, los valores obtenidos como 1 pasarán a ser 0 en la clave de cifrado, y de la misma manera sucede con -1, el cual pasará a ser 1.
     
     \vspace{5mm}
     
@@ -3325,7 +3325,7 @@
 
     \vspace{2.5mm}
 
-    Donde \( P_{++}(a, b) \) es la probabilidad de que Alice obtenga 1 en la base \textit{a} Bob obtenga 1 en su respectiva base \textit{b}. De la misma manera aplica para \( P_{+-}(a, b) \), donde el símbolo \( + \) representa la obtención del factor 1 en la base de Alice y \( - \) el factor -1 en la base de Bob. Esta idea se aplica al resto de miembros \( P_{-+}(a, b) \) y \( P_{--}(a, b) \). Generalizando esta notación, se obtiene que
+    Donde \( P_{++}(a, b) \) es la probabilidad de que Alice obtenga 1 en la base \textit{a} y Bob obtenga 1 en su respectiva base \textit{b}. De la misma manera aplica para \( P_{+-}(a, b) \), donde el símbolo \( + \) representa la obtención del factor 1 en la base de Alice y \( - \) el factor -1 en la base de Bob. Esta idea se aplica al resto de miembros \( P_{-+}(a, b) \) y \( P_{--}(a, b) \). Generalizando esta notación, se obtiene que
 
     \begin{equation*}
         P_{XY}(a, b) = \frac{\text{Nº resultados XY}}{\text{Nº total de pares medidos en las bases a, b}}
@@ -3333,7 +3333,7 @@
 
     \vspace{2.5mm}
 
-    Entonces, cuanto mayor sea el número de mediciones, mejor será la aproximación de \textit{S} a su valor teórico (\ref{eq: s_coseno}). Esto no lo podemos hacer con los resultados obtenidos en la tabla de ejemplo (\ref{fig: ejemplo_e91}) ya que no tenemos un número suficiente de qubits. Sin embargo, podemos realizar una simulación en un escenario cuántico real y analizar su comportamiento.
+    Entonces, cuanto mayor sea el número de mediciones mejor será la aproximación de \textit{S} a su valor teórico (\ref{eq: s_coseno}). Esto no lo podemos hacer con los resultados obtenidos en la tabla de ejemplo (\ref{fig: ejemplo_e91}) ya que no tenemos un número suficiente de qubits. Sin embargo, podemos realizar una simulación en un escenario cuántico real y analizar su comportamiento.
 
     \vspace{5mm}
 

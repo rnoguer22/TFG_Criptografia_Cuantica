@@ -25,13 +25,12 @@ angles = {
 # Funcion para crear el circuito
 def create_chsh_circuit(theta_a, theta_b, eve: bool = False):
     qc = QuantumCircuit(2, 2)
-    # Creamos el estado de Bell |Φ+>
     qc.h(0)
     qc.cx(0, 1)
     if eve:
-        # Eve intercepta y mide Q0 (de Alice), destruyendo el entrelazamiento
-        qc.measure(0, 0)
-        # Después envía un nuevo qubit |0⟩ sin entrelazar
+        # Eve intercepta y mide el qubit de Alice, destruyendo el entrelazamiento
+        qc.measure(0, 0) 
+        qc.reset(0)      # Eve resetea el qubit 0 a |0>
         qc.barrier()
     # Aplicamos las rotaciones de las bases que Alice y Bob han elegido
     qc.ry(- theta_a, 0)
@@ -40,30 +39,7 @@ def create_chsh_circuit(theta_a, theta_b, eve: bool = False):
     qc.measure(1, 1)
 
     return qc
-
-
-# Obtenemos el backend y el ISA
-def get_Backend_ISA(circuit):
-    service = QiskitRuntimeService(channel="ibm_quantum")
-    # El backend sera el procesador menos ocupado en el momento
-    backend = service.least_busy(min_num_qubits=100, operational=True)
-    pm = generate_preset_pass_manager(backend=backend, optimization_level=2)
-    # circuito ISA (Instruction Set Architecture)
-    circuit_isa = pm.run(circuit)
-    return backend, circuit_isa
     
-
-# Ejecutamos el circuito con IBM Quantum
-def execute(backend, circuit_isa, shots: int = 8192):
-    sampler = SamplerV2(backend)
-    sampler.options.default_shots = shots
-    sampler.options.dynamical_decoupling.enable = True          
-    sampler.options.dynamical_decoupling.sequence_type = "XY4"
-    sampler.options.twirling.enable_gates = True               
-    pub = (circuit_isa)
-    job = sampler.run([pub])        
-    return job
-
 
 # Con esta funcion calculamos E(a,b)
 def compute_expectation(counts):
@@ -221,13 +197,6 @@ def plot_measurement_histogram(all_counts_data: dict, path: str = ''):
     # plt.show()
 
 
-# Funcion para obtener el job_id de una simulacion de IBM Quantum
-def get_Job(job_id):
-    service = QiskitRuntimeService(channel="ibm_quantum")
-    job = service.job(job_id) 
-    return job
-
-
 
 
 if __name__ == '__main__':
@@ -240,7 +209,6 @@ if __name__ == '__main__':
     print("S =", S_honest)
     plot_correlations(E_honest, eve=False, path='img/Simulation/e91/corr_e91.png')
     plot_s_value(S_honest, eve=False, path='img/Simulation/e91/s_e91.png')'''
-    # plot_measurement_histogram(counts=counts_honest, path='img/Simulation/e91/histograma_medidas.png')
     plot_measurement_histogram(all_counts_data=all_counts_honest, path='img/Simulation/e91/histograma_medidas.png')
 
     '''print("\n🚨 Caso con Eve:")
@@ -248,5 +216,4 @@ if __name__ == '__main__':
     print("S =", S_eavesdropped)
     plot_correlations(E_eavesdropped, path='img/Simulation/e91/corr_e91_eve.png')
     plot_s_value(S_eavesdropped, path='img/Simulation/e91/s_e91_eve.png')'''
-    # plot_measurement_histogram(counts=counts_eavesdropped, path='img/Simulation/e91/histograma_medidas_eve.png')
     plot_measurement_histogram(all_counts_data=all_counts_eavesdropped, path='img/Simulation/e91/histograma_medidas_eve.png')

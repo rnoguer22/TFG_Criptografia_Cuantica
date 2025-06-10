@@ -22,28 +22,55 @@ class Quantum_Simulation:
     
 
     # Metodo para definir el circuito
-    def define_Circuit(self):
-        # Crear registros cuántico y clásico
-        qreg = QuantumRegister(2, 'q')  # q[0] = Alice, q[1] = Bob
-        creg = ClassicalRegister(2, 'c')  # c[0] = Alice, c[1] = Bob
-        circuit = QuantumCircuit(qreg, creg)
+    def define_Circuit(self, psi_state: QuantumCircuit = None):
 
-        # Preparar el estado Bell (entrelazado)
-        circuit.h(qreg[0])        # Hadamard en qubit de Alice
-        circuit.cx(qreg[0], qreg[1])  # CNOT: Alice controla a Bob
+        # Definimos los registros cuanticos y clasicos
+        qreg = QuantumRegister(3, 'q')
+        creg_alice = ClassicalRegister(2, 'ca') 
+        creg_bob_x = ClassicalRegister(1, 'cx')
 
-        # Aquí se aplicarían las rotaciones (bases aleatorias) de Alice y Bob
-        # Ejemplo (puedes sustituir por cualquier elección de base):
-        # Base de Alice
-        circuit.ry(-np.pi/8, qreg[0])  # o cualquier otro ángulo de medición
-        # Base de Bob
-        circuit.ry(np.pi/4, qreg[1])   # o cualquier otro ángulo de medición
+        #Creamos el circuito
+        circuit = QuantumCircuit(qreg, creg_alice, creg_bob_x)
 
-        # Medida en base Z después de rotar
-        circuit.measure(qreg[0], creg[0])
-        circuit.measure(qreg[1], creg[1])
+        # Preparamos el estado que vamos a teletransportar, el cual sera |+>
+        if psi_state is None:
+            circuit.h(qreg[2]) # Creamos |+> si no indiciamos ningun estado
+        else:
+            if psi_state.num_qubits == 1:
+                circuit.compose(psi_state, [qreg[2]], inplace=True)
+            else:
+                raise ValueError("psi_state debe ser un QuantumCircuit de 1 qubit.")
 
-        return circuit
+        # Creamos el par de Bell entrelazado |Φ+⟩ entre el qubit q[1] de Alice y q[0] de Bob
+        circuit.h(qreg[1])
+        circuit.cx(qreg[1], qreg[0])
+
+        # Aplicamos una CNOT sobre q[2] y q[1] (q[2] es el qubit de control, y q[1] el objetivo)
+        circuit.cx(qreg[2], qreg[1])
+        
+        # Aplicamos una puerta de Hadamard sobre q[2]
+        circuit.h(qreg[2])
+
+        # Medimos los qubits de Alice
+        circuit.measure(qreg[1], creg_alice[0]) # Mide q[1] y guarda en ca[0]
+        circuit.measure(qreg[2], creg_alice[1]) # Mide q[2] y guarda en ca[1]
+
+        # Ahora Bob aplica correcciones en q[0] basadas en los resultados clásicos de Alice
+        # ca[0] controla la puerta X
+        with circuit.if_test((creg_alice[0], 1)):
+            circuit.x(qreg[0]) # Se aplica X a q[0] (qubit de Bob)
+
+        # ca[1] controla la puerta Z
+        with circuit.if_test((creg_alice[1], 1)):
+            circuit.z(qreg[0]) # Aplicamos Z a q[0] (qubit de Bob)
+
+        circuit.barrier()
+        # Aplicamos una puerta de Hadamard a q[0] para medir sobre la base X
+        circuit.h(qreg[0])
+        # Medimos el qubit de Bob, dando como resultado el estado teleportado
+        circuit.measure(qreg[0], creg_bob_x[0])
+
+        return circuit, creg_alice, creg_bob_x
     
 
     # Metodo para dibujar y guardar el circuito
@@ -54,7 +81,7 @@ class Quantum_Simulation:
         plt.show()
 
     
-    # Obtenemos el backend y el ISA
+    # Obtenemos el backend y el ISA, esto es para ejecutar con un procesador cuantico de IBM Quantum
     def get_Backend_ISA(self, circuit):
         service = QiskitRuntimeService(channel="ibm_quantum")
         # El backend sera el procesador menos ocupado en el momento
@@ -67,6 +94,7 @@ class Quantum_Simulation:
         return backend, circuit_isa
 
 
+    # Con este metodo obtenemos un breve resumen de las caracteristicas del circuito
     def get_Characteristics(self, circuit_isa):
             print("\nCaracterísticas del circuito cuántico")
             print("  Depth:", circuit_isa.depth())
@@ -79,16 +107,13 @@ class Quantum_Simulation:
     def execute(self, backend, circuit_isa):
         sampler = SamplerV2(backend)
         sampler.options.default_shots = 4096
-        sampler.options.dynamical_decoupling.enable = True          # Supresión de errores: Dynamical Decoupling
-        sampler.options.dynamical_decoupling.sequence_type = "XY4"
-        sampler.options.twirling.enable_gates = True                # Supresión de errores: Pauli Twirling
         pub = (circuit_isa)
         job = sampler.run([pub])
         
         return job
     
 
-    # Metodo para seguir con un job que se ha quedado pendiente
+    # Metodo para seguir con un job que se ha quedado pendiente, para no gastar minutos de procesamiento de IBM Quantum
     def continue_Job(self, job_id):
         service = QiskitRuntimeService(channel="ibm_quantum")
         job = service.job(job_id)
@@ -96,22 +121,54 @@ class Quantum_Simulation:
     
 
     # Metodo para mostrar los resultados
-    def plot_Results(self, job, probs: bool = False, path: str = None):
-        # Imprimimos los resultados obtenidos
-        resultado = job.result()
-        distribucion = resultado[0].data.c.get_counts()
-        print('\n', distribucion, '\n')
-        maximo = max(distribucion.items(), key=lambda x: x[1])
-        print("Maximo :", maximo)
+    def plot_Results(self, job, probs: bool = False, path: str = None, creg_bob_x_name: str = 'cx'):
 
-        if probs:
-            # Ploteamos la distribución de probabilidades obtenida
-            shots = sum(distribucion.values())
-            distribucion_probas = {key: val/shots for key, val in distribucion.items()}
-            plot_histogram(distribucion_probas, title = 'Distribución de Probabilidades') 
-        else:
-            plot_histogram(distribucion, title = 'Distribución de los Resultados')
+        # Obtenemos el resultado de las medicicones del circuito con IBM Quantum
+        resultado = job.result()
         
+        # Obtenemos unicamente el conteo de resultados del registro de Bob para ver si se ha hecho la teleportacion correctamente
+        bob_raw_counts_original = resultado[0].data[creg_bob_x_name].get_counts()            
+        title_suffix = " (Base X)"
+        bob_raw_counts = {}
+        # Mapeamos los resultados a la base X, ya que hemos medido en la base Z
+        # Como hemos aplicado una puerta H justo antes de la medicion del qubit, por las propiedades de la puerta de Hadamard sobre + y - obtenemos que
+        for outcome, count in bob_raw_counts_original.items():
+            if outcome == '0':
+                # Si el resultado al medir en la base Z es 0, significa que antes de aplicar H el qubit se encontraba en +
+                bob_raw_counts['+'] = bob_raw_counts.get('+', 0) + count
+            elif outcome == '1':
+                # Si el resultado es 1, el resultado antes de aplicar la puerta H es -
+                bob_raw_counts['-'] = bob_raw_counts.get('-', 0) + count
+
+        # Si indicamos que queremos un grafico con las probabilidades, las calculamos y ploteamos el grafico
+        # Si no, mostramos el conteo de los resultados de las mediciones, en lugar de una probabilidad
+        if probs:
+            shots = sum(bob_raw_counts.values())
+            distribucion_probas = {key: val/shots for key, val in bob_raw_counts.items()}
+            fig = plot_histogram(distribucion_probas, title = f'Probabilidades del Qubit Teletransportado{title_suffix}', figsize=(5, 5)) 
+        else:
+            fig = plot_histogram(bob_raw_counts, title = f'Resultados del Qubit Teletransportado{title_suffix}', figsize=(5, 5))
+
+        # Con el codigo de arriba ya obtendriamos el grafico
+        # Lo que sigue es para modificar algunos parametros del grafico (grosor de barras, agrandar la fuente, etc.)
+
+        ax = fig.gca() # Obtenemos los ejes del grafico
+
+        # Ajustamos el grosor de las barras del plot
+        for patch in ax.patches: # ax.patches es lo que forma las barras
+            current_width = patch.get_width()
+            patch.set_width(current_width * 0.5)
+            # Centramos las barras después de haber cambiado su ancho
+            x = patch.get_x()
+            patch.set_x(x + (current_width - (current_width * 0.5)) / 2)
+
+        # Ajustamos las etiquetas del eje X (las rotamos y ponemos la fuente en 14 para que se vea mejor)
+        for tick in ax.get_xticklabels():
+                tick.set_rotation(0) 
+                tick.set_fontsize(14) 
+
+        fig.tight_layout()
+                
         if path:
             plt.savefig(path)
         plt.show()
@@ -218,17 +275,28 @@ class Quantum_Simulation:
 if __name__ == '__main__':
 
     simulation = Quantum_Simulation()
-    circuit = simulation.define_Circuit()
-    simulation.draw_Circuit(circuit=circuit)
 
+    # Definimos el estado que queremos hacer la teleportacion. En este caso sera el estado |+>
+    psi_to_teleport = QuantumCircuit(1)
+    psi_to_teleport.h(0) 
+
+    circuit, creg, creg_bob_x = simulation.define_Circuit(psi_state=psi_to_teleport)
+    simulation.draw_Circuit(circuit=circuit, path='img/Simulation/teleportation/tp_circuit.png')
+
+    # Estas lineas comentadas son para ejecutar utilizando IBM Quantum
+    # Si ya hemos ejecutado IBM Quantum, cogemos el id del proceso y asi no gastamos minutos
     '''backend, circuit_isa = simulation.get_Backend_ISA(circuit=circuit)
     simulation.get_Characteristics(circuit_isa=circuit_isa)
     
     job = simulation.execute(backend=backend, circuit_isa=circuit_isa)
-    print('\n', job.job_id())
-    job = simulation.continue_Job(os.getenv('JOB_ID'))
+    print('\n', job.job_id())'''
 
-    simulation.plot_Results(job=job)
+    # Obtenemos el id de la simulacion, para no gastar minutos volviendo a ejeuctar, los datos se guardan tras la primera ejecucion 
+    job = simulation.continue_Job(os.getenv('TP_JOB_ID'))
+
+    # simulation.plot_Results(job=job, path='img/Simulation/teleportation/results.png')
+    simulation.plot_Results(job=job, probs=False, path='img/Simulation/teleportation/tp_results_X_basis.png', 
+                     measure_bob_in_x_basis=True, creg_bob_x_name=creg_bob_x.name)
     # simulation.plot_Results(job=job, probs=True)
     # simulation.plot_Noise_Model(circuit=circuit)
-    # simulation.plot_QBER_vs_Alpha(circuit=circuit, alphas=np.linspace(0, 1, 21), shots=5000)'''
+    # simulation.plot_QBER_vs_Alpha(circuit=circuit, alphas=np.linspace(0, 1, 21), shots=5000)

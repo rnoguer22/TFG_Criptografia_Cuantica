@@ -4,7 +4,7 @@
 
 % Fuente y formato
 \usepackage[T1]{fontenc} % Para las ñ y letras con tilde
-\usepackage{times}
+% \usepackage{times}
 \usepackage{microtype} % Mejora el espaciado de las palabras
 
 % --- Fuente Helvetica en la pagina de titulo ---
@@ -98,7 +98,7 @@
         \centering
         {\fontsize{18pt}{22pt}\selectfont \textbf{\helveticatitle UNIVERSIDAD ALFONSO X EL SABIO}\par}
         \vspace{1cm}
-        {\fontsize{16pt}{22pt}\selectfont \textbf{\helveticatitle ESCUELA POLITÉCNICA SUPERIOR}\par}
+        {\fontsize{16pt}{22pt}\selectfont \textbf{\helveticatitle ESCUELA BUSINESS \& TECH}\par}
         \vspace{1cm}
         {\fontsize{14pt}{22pt}\selectfont \textbf{\helveticatitle GRADO EN INGENIERÍA MATEMÁTICA}\par}
         \vspace{2cm}
@@ -112,6 +112,36 @@
         \vspace{1cm}
         {\fontsize{14pt}{22pt}\selectfont \textbf{\helveticatitle Junio de 2025}\par}
     \end{titlepage}
+
+
+    % Segunda página con información adicional
+    \newpage
+    \thispagestyle{empty}
+    \begin{flushleft}
+        \begin{center}
+            \includegraphics[width=0.25\textwidth]{img/primera_hoja.png}\\
+        \end{center}
+        \begin{center}
+            {\fontsize{16}{16}\selectfont \textbf{\helveticatitle UNIVERSIDAD ALFONSO X EL SABIO}}\\
+            {\fontsize{14}{14}\selectfont \textbf{\helveticatitle ESCUELA BUSINESS \& TECH}}\\[0cm]
+            {\fontsize{12}{12}\selectfont \textbf{\helveticatitle GRADO EN INGENIERÍA MATEMÁTICA}}\\[0cm]
+            \textbf{}\\[0.3cm]
+            {\fontsize{14}{14}\selectfont \textbf{\helveticatitle COMPUTACIÓN CUÁNTICA APLICADA A LA CRIPTOGRAFÍA}}\\[0cm]
+        \end{center}
+
+        {\fontsize{12}{12}\selectfont \textbf{\helveticatitle ALUMNO:}} \helveticatitle RUBÉN NOGUERAS GONZÁLEZ\\
+        {\fontsize{12}{12}\selectfont \textbf{\helveticatitle N.P.:}} \helveticatitle 139174\\
+        {\fontsize{12}{12}\selectfont \textbf{\helveticatitle TUTOR ACADÉMICO:}} \helveticatitle JOSÉ ANTONIO PRIETO PERSIGUERO\\
+        {\fontsize{12}{12}\selectfont \textbf{\helveticatitle FECHA DE PRESENTACIÓN:} 13/06/2025}\\
+        {\fontsize{12}{12}\selectfont \textbf{\helveticatitle BREVE DESCRIPCIÓN:}}
+    \end{flushleft}
+
+    {\fontsize{12}{12}\selectfont \helveticatitle
+    
+    }
+
+    {\fontsize{10}{10}\selectfont
+    \noindent  \textbf{\helveticatitle FIRMA DEL DIRECTOR DEL TRABAJO:}\hspace{4cm}\textbf{\helveticatitle FIRMA DEL ALUMNO:}}
     
     % Pagina en blanco
     \newpage
@@ -1237,7 +1267,7 @@
 
     \vspace{5mm}
 
-    Antes de nada, es importante definir algunos conceptos. Empecemos por el ordenador cuántico, esto es una máquina que se rige por las leyes de la mecánica cuántica, como hemos estudiado anteriormente, de manera que es capaz de aprovechar todas las ventajas de las partículas a nivel subatómico como la superposición, vista en (\ref{eq: superposicion}), o el entrelazamiento, el cual veremos más adelante. Estas propiedades son fundamentales para la reducción de tiempos de cómputo y complejidad de ciertas tareas, poniendo como ejemplo algoritmos de fuerza bruta o de factorización, los cuales se ven mejorados con los algoritmos cuánticos de \textit{Grover} y \textit{Shor}, respectivamente. 
+    Una vez aclarados los fundamentos teóricos de la mecánica cuántica, es importante definir otros conceptos para poder hablar sobre computación. Empecemos por el ordenador cuántico, esto es una máquina que se rige por las leyes de la mecánica cuántica, como hemos estudiado anteriormente, de manera que es capaz de aprovechar todas las ventajas de las partículas a nivel subatómico como la superposición, vista en (\ref{eq: superposicion}), o el entrelazamiento, el cual veremos más adelante. Estas propiedades son fundamentales para la reducción de tiempos de cómputo y complejidad de ciertas tareas, poniendo como ejemplo algoritmos de fuerza bruta o de factorización, los cuales se ven mejorados con los algoritmos cuánticos de \textit{Grover} y \textit{Shor}, respectivamente. 
 
     \vspace{5mm}
 
@@ -1361,7 +1391,7 @@
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.3\textwidth]{img/Bloch/bloch_other_bases.png}
-        \caption{Estados principales de la esfera de Bloch. Obtenida de [Qiskit]}\label{fig: bloch_other_bases}
+        \caption{Estados principales de la esfera de Bloch.}\label{fig: bloch_other_bases}
     \end{figure}
 
     Estos estados se pueden expresar en base a \( \ket{0} \) y \( \ket{1} \):
@@ -2665,7 +2695,7 @@
 
     \vspace{5mm}
 
-    Como hemos introducido anteriormente, no todos los estados en entrelazamiento nos garantizan con total certeza el estado de la siguiente medición secuencial como hemos estado viendo hasta ahora con los estados de Bell, existen otros muchos estados en entrelazamiento (la gran mayoría) que se denominan estados parcialmente entrelazados, y esto en definitiva es, que no se garantiza el estado de la siguiente medición secuencial al medir qubits entrelazados. Para ver esto, vamos a considerar el siguiente estado:
+    Como hemos introducido anteriormente, no todos los estados en entrelazamiento nos garantizan con total certeza el estado de la siguiente medición secuencial como hemos estado viendo hasta ahora con los estados de Bell, existen otros muchos estados en entrelazamiento que se denominan estados parcialmente entrelazados, y esto en definitiva es, que no se garantiza el estado de la siguiente medición secuencial al medir qubits entrelazados. Para ver esto, vamos a considerar el siguiente estado:
 
     \begin{equation*}
         \ket{\psi} = \frac{\sqrt{3}}{2 \sqrt{2}} \ket{0 0} + \frac{\sqrt{3}}{2 \sqrt{2}} \ket{0 1} + \frac{\sqrt{3}}{4} \ket{1 0} + \frac{1}{4} \ket{1 1} 
@@ -3462,7 +3492,7 @@
 
     \vspace{5mm}
 
-    Cabe destacar que no todo algoritmo cuántico por ser cuántico, valga la redundancia, es más rápido, esto no siempre sucede así, pero como vimos anteriormente, toda información clásica se puede representar mediante un ordenador cuántico, por lo que únicamente tendríamos que clonar dichos procesos. En esta sección vamos a centrarnos en dos algoritmos: El algoritmo de Grover y el de Shor, los cuales mejoran la búsqueda por fuerza bruta y se optimiza de exponencial manera el problema de factorización, rompiendo con las claves públicas y privadas de ciertos cifrados como veremos próximamente.
+    Cabe destacar que no todo algoritmo cuántico por ser cuántico, valga la redundancia, es más rápido, esto no siempre sucede así, pero como vimos anteriormente, toda información clásica se puede representar mediante un ordenador cuántico, por lo que únicamente tendríamos que clonar dichos procesos. En esta sección vamos seguir el plan propuesto en el libro escrito por \textit{Thomas G. Wong}~\cite{wong}, centrándonos en dos algoritmos: El algoritmo de Grover y el de Shor, los cuales mejoran la búsqueda por fuerza bruta y se optimiza de exponencial manera el problema de factorización, rompiendo con las claves públicas y privadas de ciertos cifrados como veremos próximamente.
 
     \vspace{5mm}
 
@@ -4067,7 +4097,7 @@
 
     \vspace{5mm}
 
-    Una de las partes clave del algoritmo de Shor es determinar el periodo de una expresión modular (\ref{subsubsection: periodo_expresion_modular}), y para ello necesitamos obtener los autovalores, los cuales tienen la forma \( e^{2 \pi i s / r} \), de un determinado operador el cual denotaremos \textit{U} ya que en efecto se trata de una puerta cuántica. 
+    Una de las partes clave del algoritmo de Shor es determinar el periodo de una expresión modular, y para ello necesitamos obtener autovalores, los cuales tienen la forma \( e^{2 \pi i s / r} \), de un determinado operador el cual denotaremos \textit{U} ya que en efecto se trata de una puerta cuántica. 
 
     \vspace{5mm}
 
@@ -4164,15 +4194,11 @@
 
     \vspace{2.5mm}
 
-    Lo cual simplemente es un proceso clásico para pasar de la base binaria a la base decimal. Con esto ya sabemos el valor de \textit{j} y por lo tanto de \( \theta \) ya que \( \theta = 2 \pi j \), por lo que hemos hallado el autovalor final \( e^{i \theta} \) con \textit{m} bits de precisión, para lo cual hemos precisado de \textit{m} puertas de Hadamard \textit{H} y \textit{m} puertas \( U^{p} \) controladas, además de la transformada de Fourier inversa. Esto hace que la complejidad de este algoritmo sea de \( O(m^{2}) \), ya que aplicar las puertas de Hadamard tiene una complejidad lineal a la misma vez que al aplicar las puertas \( U^{p} \) controladas, sin embargo, la transformada de fourier inversa es cuadŕatica \( O(m^{2}) \), por lo que la complejidad total de este algoritmo es también cuadrática \( O(m^{2}) \). Esto es un gran avance sobre el algoritmo clásico, cuya complejidad es de \( O(N) \), lo cual es una complejidad exponencial al ser \( N = 2^{n} \).
+    Lo cual simplemente es un proceso clásico para pasar de la base binaria a la base decimal. Con esto ya sabemos el valor de \textit{j} y por lo tanto de \( \theta \) ya que \( \theta = 2 \pi j \), por lo que hemos hallado el autovalor final \( e^{i \theta} \) con \textit{m} bits de precisión, para lo cual hemos precisado de \textit{m} puertas de Hadamard \textit{H} y \textit{m} puertas \( U^{p} \) controladas, además de la transformada de Fourier inversa. Esto hace que la complejidad de este algoritmo sea de \( O(m^{2}) \), ya que aplicar las puertas de Hadamard tiene una complejidad lineal a la misma vez que al aplicar las puertas \( U^{p} \) controladas, sin embargo, la transformada de fourier inversa es cuadŕatica \( O(m^{2}) \), por lo que la complejidad total de este algoritmo es también cuadrática \( O(m^{2}) \). Esto es un gran avance sobre el algoritmo clásico, cuya complejidad es de \( O(N) \), lo cual es una complejidad exponencial al ser \( N = 2^{n} \), siendo esto la clave del famoso \textit{Algoritmo de Shor}, el cual desafía los sistemas de encriptación clásicos mediante el uso de la computación cuántica.
     
     
 
 
-
-
-
-    \subsubsection{El Periodo de una Expresión Modular}\label{subsubsection: periodo_expresion_modular}
 
 
 

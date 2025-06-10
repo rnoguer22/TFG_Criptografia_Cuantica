@@ -18,6 +18,10 @@ import numpy as np
 class Quantum_Simulation:
 
     def __init__(self):
+        # Para cargar el job de IBM Quantum
+        # Tenemos que crear un archivo .env en el mismo directorio que este archivo con el id del job con el que se ejecuto el circuito con los procesadores cuanticos de IBM
+        # Poner una linea que sea: TP_JOB_ID = "*******************" <-- Ahi pondriamos el id en lugar de ****
+        # Esto se hace para no exponer el id publicamente, por motivos de seguridad
         load_dotenv()
     
 
@@ -56,13 +60,11 @@ class Quantum_Simulation:
         circuit.measure(qreg[2], creg_alice[1]) # Mide q[2] y guarda en ca[1]
 
         # Ahora Bob aplica correcciones en q[0] basadas en los resultados clásicos de Alice
-        # ca[0] controla la puerta X
         with circuit.if_test((creg_alice[0], 1)):
-            circuit.x(qreg[0]) # Se aplica X a q[0] (qubit de Bob)
-
-        # ca[1] controla la puerta Z
+            circuit.x(qreg[0])
         with circuit.if_test((creg_alice[1], 1)):
-            circuit.z(qreg[0]) # Aplicamos Z a q[0] (qubit de Bob)
+            circuit.z(qreg[0])
+
 
         circuit.barrier()
         # Aplicamos una puerta de Hadamard a q[0] para medir sobre la base X
@@ -78,7 +80,7 @@ class Quantum_Simulation:
         circuit.draw('mpl')
         if path is not None:
             plt.savefig(path)
-        plt.show()
+        # plt.show()
 
     
     # Obtenemos el backend y el ISA, esto es para ejecutar con un procesador cuantico de IBM Quantum
@@ -174,9 +176,9 @@ class Quantum_Simulation:
         plt.show()
 
     
-    # Metodo para mostrar el nivel de depolarizacion de error 
+    # Metodo para mostrar el nivel de depolarizacion de error (No se incluye finalmente en el TFG)
     def plot_Noise_Model(self, circuit: QuantumCircuit, alphas: list = [0, 0.25, 0.50], shots: int = 4096, path: str = None):
-        counts_list = []
+        counts_list_bob = []
         legends = []
 
         # Esquema de colores
@@ -202,19 +204,30 @@ class Quantum_Simulation:
                 transpiled_circuit = transpile(circuit, backend=simulator, optimization_level=0)
 
                 result = simulator.run(transpiled_circuit, shots=shots).result()
-                counts = result.get_counts(0) 
-                counts_list.append(counts)
+                all_counts = result.get_counts(0)
+                
+                bob_counts_for_alpha = {}
+                for outcome_str, count in all_counts.items():
+                    # El qubit de Bob (q[0]) es el último carácter en la cadena de resultados de Qiskit
+                    bob_bit = outcome_str[-1] 
+                    
+                    if bob_bit == '0':
+                        bob_counts_for_alpha['+'] = bob_counts_for_alpha.get('+', 0) + count
+                    elif bob_bit == '1':
+                        bob_counts_for_alpha['-'] = bob_counts_for_alpha.get('-', 0) + count
+
+                counts_list_bob.append(bob_counts_for_alpha)
                 legends.append(f'α={alpha}')
-                print(f"Simulation for alpha={alpha} completed. Counts: {counts}")
+                print(f"Simulation for alpha={alpha} completed. Bob's Counts: {bob_counts_for_alpha}")
 
             except Exception as e:
                 print(f"Error en la simulación de alpha = {alpha}: {e}")
-                counts_list.append({}) 
+                counts_list_bob.append({}) 
                 legends.append(f'α={alpha} (Error)')
                 continue 
 
-        if counts_list: 
-            fig = plot_histogram(counts_list, legend=legends, title="Frecuencias de Medición vs. Nivel de Ruido", color=colors)
+        if counts_list_bob: 
+            fig = plot_histogram(counts_list_bob, legend=legends, title="Frecuencias de Medición vs. Nivel de Ruido", color=colors)
             if path is not None:
                 plt.savefig(path)
             plt.show()
@@ -223,7 +236,8 @@ class Quantum_Simulation:
             print("Error en la simulación")
 
     
-    def plot_QBER_vs_Alpha(self, circuit: QuantumCircuit, alphas: list = np.linspace(0, 1, 11), shots: int = 1000, path: str = None):
+    # Funcion para mostrar el QBER (no se incluye finalmente en el TFG)
+    def plot_QBER_vs_Alpha(self, circuit: QuantumCircuit, alphas: list = np.linspace(0, 1, 11), shots: int = 1000, path: str = None): 
         # Los valores ideales, sin ruido, son un 50, 50 para cada estado en nuestro caso
         ideal_counts = {'00': shots/2, '11': shots/2}  # Para un circuito Bell perfecto
         qber_values = []
@@ -294,9 +308,7 @@ if __name__ == '__main__':
     # Obtenemos el id de la simulacion, para no gastar minutos volviendo a ejeuctar, los datos se guardan tras la primera ejecucion 
     job = simulation.continue_Job(os.getenv('TP_JOB_ID'))
 
-    # simulation.plot_Results(job=job, path='img/Simulation/teleportation/results.png')
     simulation.plot_Results(job=job, probs=False, path='img/Simulation/teleportation/tp_results_X_basis.png', 
-                     measure_bob_in_x_basis=True, creg_bob_x_name=creg_bob_x.name)
-    # simulation.plot_Results(job=job, probs=True)
-    # simulation.plot_Noise_Model(circuit=circuit)
-    # simulation.plot_QBER_vs_Alpha(circuit=circuit, alphas=np.linspace(0, 1, 21), shots=5000)
+                            creg_bob_x_name=creg_bob_x.name)
+    simulation.plot_Results(job=job, probs=True, path='img/Simulation/teleportation/tp_probs_X_basis.png', 
+                            creg_bob_x_name=creg_bob_x.name)

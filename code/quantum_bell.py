@@ -54,9 +54,9 @@ def compute_expectation(counts):
 
 
 # Ejecutamos todo y calculamos S
-def compute_S(circuit_path: str, eve: bool = False):
-    # backend = Aer.get_backend('qasm_simulator')
-    simulator = AerSimulator()  # ← Simulador sin ruido
+def compute_S(eve: bool = False):
+    # Usamos un simulador sin ruido
+    simulator = AerSimulator()
     settings = [
         ('a1', 'b1'),
         ('a1', 'b3'),
@@ -71,6 +71,7 @@ def compute_S(circuit_path: str, eve: bool = False):
     for a, b in settings:
         theta_a = angles[a]
         theta_b = angles[b]
+        # Para cada angulo de las bases de Alice y Bob, creamos un circuito y lo ejecutamos para calcular la correlacion
         qc = create_chsh_circuit(theta_a, theta_b, eve)
         '''if count == 0:
             qc.draw('mpl')
@@ -201,19 +202,19 @@ def plot_measurement_histogram(all_counts_data: dict, path: str = ''):
 
 if __name__ == '__main__':
 
-    all_counts_honest, S_honest, E_honest = compute_S(circuit_path='img/Simulation/e91/circuit.png', eve=False)
-    all_counts_eavesdropped, S_eavesdropped, E_eavesdropped = compute_S(circuit_path='img/Simulation/e91/circuit_eve.png', eve=True)
+    all_counts_honest, S_honest, E_honest = compute_S(eve=False)
+    all_counts_eavesdropped, S_eavesdropped, E_eavesdropped = compute_S(eve=True)
 
-    '''print("📡 Caso sin Eve:")
+    print("📡 Caso sin Eve:")
     print("Correlaciones:", E_honest)
     print("S =", S_honest)
     plot_correlations(E_honest, eve=False, path='img/Simulation/e91/corr_e91.png')
-    plot_s_value(S_honest, eve=False, path='img/Simulation/e91/s_e91.png')'''
+    plot_s_value(S_honest, eve=False, path='img/Simulation/e91/s_e91.png')
     plot_measurement_histogram(all_counts_data=all_counts_honest, path='img/Simulation/e91/histograma_medidas.png')
 
-    '''print("\n🚨 Caso con Eve:")
+    print("\n🚨 Caso con Eve:")
     print("Correlaciones:", E_eavesdropped)
     print("S =", S_eavesdropped)
     plot_correlations(E_eavesdropped, path='img/Simulation/e91/corr_e91_eve.png')
-    plot_s_value(S_eavesdropped, path='img/Simulation/e91/s_e91_eve.png')'''
+    plot_s_value(S_eavesdropped, path='img/Simulation/e91/s_e91_eve.png')
     plot_measurement_histogram(all_counts_data=all_counts_eavesdropped, path='img/Simulation/e91/histograma_medidas_eve.png')

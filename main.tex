@@ -2929,7 +2929,7 @@
 
     En esto se resume, a falta del procedimiento a seguir tras la medición, la teleportación cuántica, cuyo circuito viene recogido de la siguiente manera:
 
-    \begin{figure}[h!]
+    \begin{figure}[H]
         \centering
         \[
         \Qcircuit @C=1em @R=1.5em {
@@ -2966,6 +2966,50 @@
     \vspace{5mm}
 
     Y esta es la magia de la teleportación cuántica, la cual surge ante el problema de no poder enviar físicamente información cuántica debido a problemas como el teorema de no-clonación o la decoherencia. Es por esto que aprovechamos las propiedades del entrelazamiento cuántico para asentar las bases que nos permiten describir el estado de un qubit de un emisor, en este caso Alice, a un receptor, Bob, tomando de la mano el uso de puertas cuánticas vistas en (\ref{subsection: puertas_cuanticas_multiples_qubits}) como la \textit{CNOT} y la puerta de Hadamard \textit{H}.
+
+    \vspace{5mm}
+
+
+
+
+
+    \subsubsection{Simulación}
+
+    \vspace{5mm}
+
+    Una vez ya hemos explicado la teleportación cuántica teóricamente, vamos a hacer una pequeña aplicación práctica, se va a realizar una simulacón cuántica del circuito visto en (\ref{fig: circuito_teleportacion}). De esta manera, comprobamos de una manera experimental los resultados obtenidos en la teoría. Supongamos que Alice quiere enviar el estado \( \ket{+} \) a Bob, para lo cual entrelazan dos qubits formando el estado de Bell \( \ket{\Phi^{+}} \). El circuito para realizar esta teleportación es el siguiente:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{img/Simulation/teleportation/tp_circuit.png}
+        \caption{Circuito experimental de teleportación cuántica, para enviar el estado \( \ket{+} \).}
+    \end{figure}
+
+    \vspace{2.5mm}
+
+    Una vez ya se ha definido el circuito, podemos seguir con la ejecución. Para la ejecución del circuito se ha hecho uso de la plataforma \textit{IBM Quantum}, mediante una de sus \textit{QPU} (Quantum Processing Unit), la cual resultó ser \textit{ibm brisbane}, el cual almacena un error de \( 1,85 \% \) entre capas según podemos ver en la página oficial~\cite{ibm_quantum_qpu_info}, lo que quiere decir que el error se acumula rápidamente al aplicar múltiples puertas seguidas, desencadenando en el siguiente resultado:
+
+    \begin{figure}[H]
+        \begin{subfigure}[t]{0.45\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{./img/Simulation/teleportation/tp_results_X_basis.png}
+            \caption{Conteo de resultados para la teleportación experimental.}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[t]{0.45\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{./img/Simulation/teleportation/tp_probs_X_basis.png}
+            \caption{Conteo de probabilidades para la teleportación experimental.}
+        \end{subfigure}
+    \end{figure}\label{fig: resultados_teleportacion_simulacion}
+
+    \vspace{2.5mm}
+
+    En estos gráficos vemos que el resultado es el esperado. En el gráfico de la izquierda, vemos un conteo de los resultados experimentales obtenidos, mientras que el gráfico de la derecha tiene un carácter probabilístico. Esto muestra que el \( 91 \% \) de los resultados obtenidos son correctos, ya que el resultado que se espera obtener es \( \ket{+} \), y el resto de resultados (\( 9 \% \)) vienen condicionados por el error cuántico de la unidad de procesamiento cuántica, el cual ya se vio que es ciertamente elevado. Este error está causado por compuertas cuánticas ruidosas y decoherencia.
+    
+    \vspace{5mm}
+
+    Con esto podemos concluir que la computación cuántica no es ciertamente exacta como se explica teóricamente, sino que existen errores asociados debidos a las unidades de procesamiento y decoherencia. Esto es algo que se pretende solucionar, con el paso de los años, pero por el momento se ha podido comprobar experimentalmente los problemas actuales de la cuántica, por lo que se está trabajando en construir unidades de procesamiento más robustas y tolerante a fallos para alcanzar el verdadero potencial de esta revolución tecnológica.
 
     \vspace{5mm}
 

@@ -41,7 +41,7 @@ def create_chsh_circuit(theta_a, theta_b, eve: bool = False):
     return qc
     
 
-# Con esta funcion calculamos E(a,b)
+# Con esta funcion calculamos las dinstintas correlaciones E(a,b) 
 def compute_expectation(counts):
     shots = sum(counts.values())
     expectation = 0
@@ -73,20 +73,25 @@ def compute_S(eve: bool = False):
         theta_b = angles[b]
         # Para cada angulo de las bases de Alice y Bob, creamos un circuito y lo ejecutamos para calcular la correlacion
         qc = create_chsh_circuit(theta_a, theta_b, eve)
-        '''if count == 0:
+        # Establecemos un contador para visualizar unicamente un circuito, ya que el resto son iguales y solo varian en los angulos
+        if count == 0:
             qc.draw('mpl')
-            plt.savefig(circuit_path)'''
+        
+        # Estas lineas estan comentadas para ejecutar con IBM Quantum o para partir de un job ya procesado por IBM
         # backend, circuit_isa = get_Backend_ISA(qc)
         # job = execute(backend, circuit_isa)
         '''job = get_Job(os.getenv('BELL_JOB_ID'))
         counts = job.result()[0].data.c.get_counts()'''
+
+        # En este caso hemos usado un simulador sin ruido AerSimulator simulando un caso ideal, aunque en la practica no sea asi
         result = simulator.run(qc, shots = 8192).result()
+        # Conteamos los resultados y calculamos la correlacion E(a, b), como se ha visto en la teoria
         counts = result.get_counts()
         key_str = f"{a}{b}"
         all_counts_data[key_str] = counts
         E[(a, b)] = compute_expectation(counts)
 
-    # Calculamos S
+    # Una vez tenemos todas las correlaciones, calculamos S
     S = E[('a1', 'b1')] - E[('a1', 'b3')] + E[('a3', 'b1')] + E[('a3', 'b3')]
     print(all_counts_data, ' ', S, ' ', E, '\n')
     return all_counts_data, S, E
@@ -99,21 +104,28 @@ def plot_correlations(correlations_dict: dict, eve: bool = True, path: str = '')
     ideal = np.sqrt(2)/2
 
     plt.figure(figsize=(8, 5))
+
+    # Ajustamos el grafico de barras
     bars = plt.bar([str(x) for x in labels], values, width=0.6, color='steelblue')
     # Añadimos los valores encima de las barras
     for bar in bars:
         height = bar.get_height()
         original_height = height
         if height >= 0:
+            # Sumamos una pequeña altura a la altura original de la barra para que no quede tan pegado
             height += 0.05
         else:
             height -= 0.05
-        plt.text(bar.get_x() + bar.get_width()/2, height, f'{original_height:.2f}',  # Tomamos solamente 2 decimales
+        # Tomamos solamente dos decimales para mostrar el resultado
+        plt.text(bar.get_x() + bar.get_width()/2, height, f'{original_height:.2f}', 
                  ha='center', va='bottom' if height >=0 else 'top', fontsize=11)
+    
+    # Si eve = False, añadimos las lineas con el valor ideal de las correlaciones
     if not eve:
         plt.axhline(ideal, linestyle='dashed', color='red', label=r'Valor ideal $\frac{\sqrt{2}}{2}$')
         plt.axhline(-ideal, linestyle='dashed', color='red')
 
+    # Configuramos el grafico a nuestro gusto 
     plt.axhline(0, color='black', linewidth=0.5)
     plt.ylim(-1.1, 1.1)
     plt.title('Correlaciones $E(a_i, b_j)$')
@@ -124,7 +136,7 @@ def plot_correlations(correlations_dict: dict, eve: bool = True, path: str = '')
     plt.tight_layout()
     if path:
         plt.savefig(path)
-    # plt.show()
+    plt.show()
 
 
 # Grafico para ver mejor el valor de S
@@ -132,12 +144,17 @@ def plot_s_value(s_simulado, eve: bool = True, path: str = ''):
     s_ideal = 2 * np.sqrt(2)
 
     plt.figure(figsize=(4, 3))
+    # Grafico de barras, como en el grafico de las correlaciones
     bars = plt.bar(['S simulado'], [s_simulado], width=0.2, color='skyblue')
     plt.xlim(-0.5, 0.5) 
+
+    # Bucle para que el valor de S no se ponga justamente pegado a la barra, como en el grafico de las correlaciones
     for bar in bars:
         height = bar.get_height()
         plt.text(bar.get_x() + bar.get_width()/2, height + 0.05, f'{height:.2f}',  # 2 decimales
                     ha='center', va='bottom' if height >=0 else 'top', fontsize=11)
+    
+    # Si hacemos la simulacion sin Eve, mostramos una leyenda un poco diferente
     if not eve:
         plt.axhline(s_ideal, linestyle='dashed', color='green', label='Valor ideal 2√2')
         plt.axhline(2, linestyle='dotted', color='red', label='Límite clásico (2)')
@@ -145,13 +162,15 @@ def plot_s_value(s_simulado, eve: bool = True, path: str = ''):
     else:
         plt.axhline(2, linestyle='dotted', color='red', label='Límite clásico (2)')
         plt.legend()
+
+    # Configuraciones finales del grafico
     plt.ylim(0, max(s_simulado, s_ideal) + 0.5)
     plt.title('Valor de S en la desigualdad de CHSH')
     plt.ylabel('S')
     plt.tight_layout()
     if path:
         plt.savefig(path)
-    # plt.show()
+    plt.show()
 
 
 # Mostramos en otro grafico los qubits de Alice y Bob una vez ya han colapsado y finalizado el protocolo
@@ -161,19 +180,21 @@ def plot_measurement_histogram(all_counts_data: dict, path: str = ''):
     
     reorganized_data = {outcome: [] for outcome in possible_outcomes}
 
+    # Obtenemos el conteo para cada par de bases
     for base_pair in base_pairs:
         counts = all_counts_data[base_pair]
         for outcome in possible_outcomes:
-            reorganized_data[outcome].append(counts.get(outcome, 0)) # Obtener el conteo o 0 si no existe
+            reorganized_data[outcome].append(counts.get(outcome, 0))
 
     # Configuramos las barras del grafico
     num_base_pairs = len(base_pairs)
-    bar_width = 0.2  # Ancho de cada sub-barra
+    bar_width = 0.2
     
-    # Posiciones para las distintas agrupaciones de barras en el gráfico
+    # Establecemos las posiciones para las distintas agrupaciones del gráfico
     indices = np.arange(len(possible_outcomes))
     plt.figure(figsize=(12, 7))
-    # Colores
+
+    # Esquema de colores
     colors = plt.cm.viridis(np.linspace(0, 1, num_base_pairs))
 
     # Crearmos cada barra del par de bases de cada resultado de la medición
@@ -185,6 +206,7 @@ def plot_measurement_histogram(all_counts_data: dict, path: str = ''):
         plt.bar(x_positions, frequencies_for_this_pair, width=bar_width, 
                 label=base_pair, color=colors[i])
 
+    # Terminamos de configurar el grafico
     plt.title('Histograma de los Resultados de las Mediciones')
     plt.xlabel('Resultado de las Mediciones de Bob y Alice')
     plt.ylabel('Frecuencia')
@@ -195,7 +217,7 @@ def plot_measurement_histogram(all_counts_data: dict, path: str = ''):
 
     if path:
         plt.savefig(path)
-    # plt.show()
+    plt.show()
 
 
 

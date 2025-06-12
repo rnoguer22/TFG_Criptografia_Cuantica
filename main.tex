@@ -51,7 +51,7 @@
     linkcolor=blue,      % Color de los enlaces internos (por ejemplo, índice)
     citecolor=blue,      % Color de los enlaces de citas
     filecolor=magenta,   % Color de los enlaces a archivos
-    urlcolor=blue,      % Color de los enlaces a URLs
+    urlcolor=black,      % Color de los enlaces a URLs
 }
 
 \renewcommand{\UrlFont}{\sffamily\small}
@@ -137,8 +137,18 @@
     \end{flushleft}
 
     {\fontsize{12}{12}\selectfont \helveticatitle
-    
+    El objetivo fundamental de este Trabajo de Fin de Grado es explorar los principios de la computación cuántica y sus diversas aplicaciones en el mundo de la criptografía, uno de los campos más prometedores de esta nueva tecnología. A lo largo de este proyecto se analizan propiedades detalladamente tanto a nivel teórico como práctico, comenzando por los fundamentos físicos de la mecánica cuántica y su relación con la matemática, especialmente con el álgebra lineal, mediante el estudio de la ecuación de Schrödinger y espacios de Hilbert, sin dejar de lado el qubit, el cual constituye la base formal de la computación cuántica.
+
+    \vspace{5mm}
+
+    Posteriormente, este trabajo se centra especialmente en conceptos clave como el entrelazamiento cuántico y la teleportación cuántica, las cuales son herramientas imprescindibles en criptografía cuántica, concluyendo con la implementación y  simulación de protocolos como BB84 y E91, mediante los cuales se permite la distribución de claves de cifrado de manera segura, analizando el impacto del ruido, la decoherencia y la fidelidad de la información transmitida mediante simulaciones prácticas en Python con Qiskit, la librería de IBM para realizar simulaciones con sus procesadores cuánticos.
+
+    \vspace{5mm}
+
+    Finalmente, se presentan vulnerabilidades de los sistemas clásicos frente a computadores cuánticos, analizando algoritmos como el de \textit{Grover} o el de \textit{Shor}, los cuales rompen con las claves de cifrado de un sistema clásico y mejoran la búsqueda por fuerza bruta, siendo esto dos de los aspectos más relevantes de la criptografía. Con esto se pretende demostrar el nuevo paradigma que propone la información cuántica en el ámbito de la ciberseguridad, visualizando de una manera experimental y haciendo uso de las propiedades de las partículas subatómicas para presentar tanto las posibles amenazas como estrategias y protocolos de mitigación para mantener la información lo más segura posible.
     }
+
+    \vspace{5mm}
 
     {\fontsize{10}{10}\selectfont
     \noindent  \textbf{\helveticatitle FIRMA DEL DIRECTOR DEL TRABAJO:}\hspace{4cm}\textbf{\helveticatitle FIRMA DEL ALUMNO:}}
@@ -147,7 +157,6 @@
     \newpage
     \thispagestyle{empty}
     \mbox{}
-    \newpage
 
     \tableofcontents
 
@@ -167,18 +176,10 @@
 
     \thispagestyle{empty}
     \section{Introducción}
-        \subsection{Objetivos}
 
         \vspace{5mm}
 
-        \begin{itemize}
-            \item Comprender la necesidad de la mecánica cuántica en la física clásica.
-            \item Entender los fundamentos matemáticos de la mecánica cuántica, incluyendo álgebra lineal y espacios de Hilbert.
-            \item Aprender las diferencias, ventajas y desventajas entre un ordenador cuántico y uno tradicional.
-            \item Analizar el papel que juegan las puertas cuánticas en la manipulación de estados, y por lo tanto en algoritmos cuánticos.
-            \item Explicar los distintos principios básicos de la criptografía cuántica para garantizar la seguridad de los nuevos sistemas.
-            \item Aprender el concepto de teleportación cuántica como mecanismo eficiente y seguro para la transmisión de información.
-        \end{itemize}
+        En este primer capítulo, veremos y comprendremos la necesidad de la mecánica cuántica en la física clásica, mediante los experimentos realizados por \textit{Max Planck} y \textit{Albert Einstein}, entre otros, para posteriormente comprender el origen de la \textit{ecuación de Schrödinger}, con la cual se rige el comportamiento de las partículas a nivel subatómico, algo crucial para entender el funcionamiento de los \textit{qubits}, la unidad de información cuántica, que se verá en capítulos posteriores (\ref{sec: el_qubit}), lo que será la base de los protocolos y algoritmos implementados en computación cuántica.
 
         \vspace{5mm}
 
@@ -394,9 +395,7 @@
     \thispagestyle{empty}
     \mbox{}
 
-    \section{La Ecuación de Schrödinguer}\label{sec: la_ecuacion_de_schrodinguer}
-
-    \subsection{Obtención de la Ecuación de Schrödinguer}
+    \subsection{La Ecuación de Schrödinguer}\label{sec: la_ecuacion_de_schrodinguer}
 
     \vspace{5mm}
 
@@ -492,7 +491,7 @@
 
 
 
-    \subsection{La Ecuación de Schrödinguer Independiente del Tiempo}
+    \subsubsection{La Ecuación de Schrödinguer Independiente del Tiempo}
 
     \vspace{5mm}
 
@@ -2973,7 +2972,7 @@
 
 
 
-    \subsubsection{Simulación}
+    \subsubsection{Simulación}\label{subsubsection: simulacion_tp}
 
     \vspace{5mm}
 
@@ -3141,7 +3140,7 @@
 
     \vspace{2.5mm}
 
-    Una vez han recibido correctamente cada uno de sus qubits entrelazados y están listos para la comunicación, ambos eligen una base entre las dos posibles opciones con la que medir el qubit. Las bases que vamos a usar las vamos a denotar como \( \{ \vec{a_{1}}, \vec{a_{2}}, \vec{a_{3}} \} \) para Alice y \( \{ \vec{b_{1}}, \vec{b_{2}}, \vec{b_{3}} \} \) en el caso de Bob, para hacer un postprocesamiento de los resultados obtenidos con el fin de detectar a Eve o un excesivo ruido cuántico. En definitiva, estas bases son
+    Una vez han recibido correctamente cada uno de sus qubits entrelazados y están listos para la comunicación, ambos eligen una base entre las dos posibles opciones con la que medir el qubit. Las bases que vamos a usar las vamos a denotar como \( \{ \vec{a_{1}}, \vec{a_{2}}, \vec{a_{3}} \} \) para Alice y \( \{ \vec{b_{1}}, \vec{b_{2}}, \vec{b_{3}} \} \) en el caso de Bob, para hacer un postprocesamiento de los resultados obtenidos con el fin de detectar a Eve o un excesivo ruido cuántico. En definitiva, estas bases se definen de la misma manera que en~\cite{uniandes2023qkd}, y son las siguientes:
 
     \begin{minipage}[t]{0.45\textwidth}
         \begin{align*}
@@ -3390,7 +3389,7 @@
 
     \vspace{2.5mm}
 
-    Y este es el valor que deberíamos obtener si no hay presencia de Eve en un escenario completamente ideal. En la práctica, este resultado exacto no se suele conseguir debido al ruido cuántico del sistema, aunque se debería obtener un resultado basante similar. Es más, en una simulación real no podemos aplicar la expresión vista en (\ref{eq: s_coseno}) ya que \( E(a, b) \) no varía según los resultados de Alice y Bob, y es esto en lo que nos hemos fijar para detectar a Eve. Para ello tenemos que calcular la correlación \( E(a, b) \) en función de los resultados experimentales, de la siguiente manera:
+    Y este es el valor que deberíamos obtener si no hay presencia de Eve en un escenario completamente ideal. En la práctica, este resultado exacto no se suele conseguir debido al ruido cuántico del sistema, aunque se debería obtener un resultado basante similar. Es más, en una simulación real no podemos aplicar la expresión vista en (\ref{eq: s_coseno}) ya que \( E(a, b) \) no varía según los resultados de Alice y Bob, y es esto en lo que nos hemos fijar para detectar a Eve. Para ello tenemos que calcular la correlación \( E(a, b) \) en función de los resultados experimentales, siguiendo el artículo~\cite{mariani2024qkd}, de la siguiente manera:
 
     \begin{equation}
         E(a, b) = P_{++}(a, b) - P_{+-}(a, b) - P_{-+}(a, b) + P_{--}(a, b), \qquad E(a, b) \in \left[ -1, 1 \right]
@@ -3415,7 +3414,7 @@
 
 
 
-    \subsubsection{Simulación cuántica de CHSH}
+    \subsubsection{Simulación cuántica de CHSH}\label{subsubsection: simulacion_CHSH}
 
     \vspace{5mm}
 
@@ -4285,21 +4284,31 @@
 
 
 
+    \vspace{5mm}
+
+    \subsection{Anexo}
+
+    \vspace{5mm}
+
+    En este anexo, hacemos una mención al código empleado para este trabajo. El código se ha empleado principalmente para generar imágenes de la esfera de Bloch, como (\ref{fig: bloch_ejemplo_medicion}), y para realizar simulaciones cuánticas, tanto para simular la teleportación (\ref{subsubsection: simulacion_tp}) como la desigualdad \textit{CHSH} vista en (\ref{subsubsection: simulacion_CHSH}). El enlace al repositorio fuente está disponible en la bibliografía y es accesible en~\cite{noguer_TFG_Latex}.
+
+    \vspace{5mm}
+
+    Dentro del repositorio veremos el archivo final de este documento, así como su versión en \textit{LaTeX} con la que se genera dicho documento. De la misma manera encontramos un archivo con la extensión \textit{bib}, el cual se ha empleado para manejar las referencias de la bibliografía de una manera eficiente. Por último, se pueden diferenciar dos carpetas, la carpeta \textit{code} en la que encontramos el código de las distintas simulaciones en archivos de Python, y la carpeta \textit{img} en la que se almacenan las imágenes generadas por las simulaciones, destacando alguna imagen para la portada y la primera página que fueron proporcionadas por la universidad para cumplir con el formato de este proyecto.
+
+
+
+
+
     % Pagina en blanco
     \newpage
     \thispagestyle{empty}
     \mbox{}
     
     \nocite{*} % Esto incluye todas las referencias aunque no se citen
-    \bibliographystyle{ieeetr} % Estilo IEEE
-    \bibliography{referencias} % Nombre de tu archivo .bib
+    \bibliographystyle{ieeetr} % Formato IEEE
+    \bibliography{referencias} % Archivo .bib con las referencias
 
-    \\
 
-    S. Laverde & S. N. González Estudio comparativo y evaluación de utilidad de protocolos de transmisión de datos usando criptografía cuántica. [online]. Available in: http://hdl.handle.net/10554/21443
-
-    \\
-
-    \url{https://www.academia.edu/102791510/Análisis_de_algoritmos_criptográficos_clásicos_vs_algoritmos_cuánticos}
 
 \end{document}

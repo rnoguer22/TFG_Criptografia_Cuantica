@@ -91,6 +91,8 @@
 
 
 
+
+
 \begin{document}
     \parindent=0pt
 
@@ -1266,11 +1268,15 @@
 
     \vspace{5mm}
 
-    Una vez aclarados los fundamentos teóricos de la mecánica cuántica, es importante definir otros conceptos para poder hablar sobre computación. Empecemos por el ordenador cuántico, esto es una máquina que se rige por las leyes de la mecánica cuántica, como hemos estudiado anteriormente, de manera que es capaz de aprovechar todas las ventajas de las partículas a nivel subatómico como la superposición, vista en (\ref{eq: superposicion}), o el entrelazamiento, el cual veremos más adelante. Estas propiedades son fundamentales para la reducción de tiempos de cómputo y complejidad de ciertas tareas, poniendo como ejemplo algoritmos de fuerza bruta o de factorización, los cuales se ven mejorados con los algoritmos cuánticos de \textit{Grover} y \textit{Shor}, respectivamente. 
+    Para esta sección, nos hemos basado en el libro escrito por \textit{Nielsen & Chuang}~\cite{nielsen2010quantum} para comprender los fundamentos del qubit y la superposición, Posteriormente, explicaremos las mediciones de un qubit en diferentes bases y la posibilidad de realizar un cambio de base, para lo cual es realmente útil el manifiesto propuesto por \textit{McMahon} en 2007~\cite{mcmahon2007quantum}, lo cual está muy enlazado con las fases globales y relativas, definidas de una manera extraordinaria según propuso \textit{Mermin}~\cite{mermin2007quantum}. Finalmente, culminaremos explicando el concepto de puerta cuántica aplicada a un único qubit, lo cual se ha escrito siguiendo el plan propuesto por \textit{Thomas G. Wong} recientemente en 2022~\cite{wong}.
 
     \vspace{5mm}
 
-    De la misma manera que los computadores cuánticos aprovechan las propiedades de la mecánica cuántica, sus predecesores, los computadores clásicos se apoyan en un cierto sistema numérico, el \textit{sistema binario}. Este sistema se basa únicamente en dos estados, 0 y 1, que se construyen en base a la ausencia o incremento de corriente, respectivamente. Estos estados se conocen como \textit{bits}, que por definición son la unidad de información clásica. Sin embargo, un ordenador cuántico utiliza la unidad de información cuántica, el \textit{qubit}, que representa el estado de una partícula subatómica y que además de poder encontrarse en los estados clásicos \( \ket{0} \) y \( \ket{1} \), también se puede encontrar en una combinación lineal de estos estados, es decir
+    Una vez aclarados los fundamentos teóricos de la mecánica cuántica en la sección anterior, es importante definir otros conceptos para poder hablar sobre computación. Empecemos por el ordenador cuántico, esto es una máquina que se rige por las leyes de la mecánica cuántica, como hemos estudiado anteriormente, de manera que es capaz de aprovechar todas las ventajas de las partículas a nivel subatómico como la superposición, vista en (\ref{eq: superposicion}), o el entrelazamiento, el cual veremos más adelante. Estas propiedades son fundamentales para la reducción de tiempos de cómputo y complejidad de ciertas tareas, poniendo como ejemplo algoritmos de fuerza bruta o de factorización, los cuales se ven mejorados con los algoritmos cuánticos de \textit{Grover} y \textit{Shor}, respectivamente. 
+
+    \vspace{5mm}
+
+    De la misma manera que los computadores cuánticos aprovechan las propiedades de la mecánica cuántica, sus predecesores, los computadores clásicos se apoyan en un cierto sistema numérico, el \textit{sistema binario}. Este sistema se basa únicamente en dos estados, 0 y 1, que se construyen en base a la ausencia o incremento de corriente, respectivamente. Estos estados se conocen como \textit{bits}, que por definición son la unidad de información clásica. Sin embargo, un ordenador cuántico utiliza la unidad de información cuántica, el \textit{qubit}, que representa el estado de un sistema cuántico bidimensional (como puede ser el espín de un electrón o la polarización de un fotón) y que además de poder encontrarse en los estados clásicos \( \ket{0} \) y \( \ket{1} \), también se puede encontrar en una combinación lineal normalizada de estos estados, es decir
 
     \begin{equation}
         \ket{\psi} = \alpha \ket{0} + \beta \ket{1}, \qquad \alpha, \beta \in \mathbb{C}
@@ -1289,22 +1295,6 @@
     \vspace{2.5mm}
 
     Con esta condición, podemos representar el estado del qubit en una esfera, la \textit{esfera de Bloch}, esto nos ayudará a visualizar el estado del qubit de la mejor manera posible, y nos ayudará a comprender los siguientes capítulos. Para ello, podemos parametrizar el estado del qubit \( \ket{\psi} \) definido en (\ref{eq: combinacion_lineal_estados_1_qubit}) en función de dos ángulos \( \theta \ \) y \( \ \varphi \), sustituyendo \( \alpha \) y \( \beta \) por las siguientes funciones trigonométricas:
-
-    \begin{equation*}
-        \ket{\psi} = \cos \left( \frac{\theta}{2} \right) \ket{0} + \sin \left( \frac{\theta}{2} \right) \ket{1}
-    \end{equation*}
-
-    \vspace{2.5mm}
-
-    Pero ya definimos en (\ref{eq: combinacion_lineal_estados_1_qubit}) que \( \alpha, \beta \in \mathbb{C} \), por lo que podemos multiplicar ambos coeficientes por un número complejo de módulo igual a la unidad, de manera que se cumple (\ref{eq: condicion_coeficientes_probabilidad_1}), y desarrollando, llegamos a que 
-
-    \begin{equation*}
-        \ket{\psi} = e^{i \alpha} \cos \left( \frac{\theta}{2} \right) \ket{0} + e^{i \beta} \sin \left( \frac{\theta}{2} \right) \ket{1} = e^{i \alpha} \left[ \cos \left( \frac{\theta}{2} \right) \ket{0} + e^{i (\beta - \alpha)} \sin \left( \frac{\theta}{2} \right) \ket{1} \right]
-    \end{equation*}
-
-    \vspace{2.5mm}
-
-    Esto es el estado de nuestro qubit \( \ket{\psi} \) multiplicado por una fase global \( e^{i \alpha} \), de manera que no cambia el estado físico del qubit, siendo su módulo al cuadrado equivalente, como vimos en el quinto postulado, de manera que podemos eliminar dicha fase global ya que no aporta significado físico a nuestro qubit. También vamos a establecer el ańgulo \( \varphi = \beta - \alpha \), concluyendo en 
     
     \begin{equation}
         \ket{\psi} = \cos \left( \frac{\theta}{2} \right) \ket{0} + e^{i \varphi} \sin \left( \frac{\theta}{2} \right) \ket{1}, \qquad 0 \leq \theta \leq \pi, \quad 0 \leq \varphi \leq 2 \pi
@@ -1321,8 +1311,7 @@
         \caption{Esfera de Bloch. Obtenida de~\cite{wikiblochsphere}}\label{fig: bloch_sphere}
     \end{figure}
 
-    Pudiendo representar todos los posibles estados de un qubit \( \ket{\psi} \) como un vector dentro de esta esfera. 
-    Si nos fijamos en la expresión (\ref{eq: qubit_trigonometrico_esfera_bloch}) que acabamos de ver, vemos que hay un número complejo \( e^{i \varphi} \) de módulo uno, similar a una fase global. Sin embargo, esto no es una fase global, ya que para ello ha de multiplicar a todos los posibles estados del qubit, y vemos en este caso que solo aparece en el estado \( \ket{1} \), por lo que es una \textit{fase relativa}, y a diferencia de las fases globales que no cambian el significado físico del qubit, la fase relativa sí lo modifica. Esto es debido a que, aunque los coeficientes que acompañan a \( \ket{0} \) y \( \ket{1} \) sigan cumpliendo que su módulo al cuadrado sea uno, el vector representado en la esfera de Bloch es diferente, ya que puede variar el ángulo \( \varphi \).
+    Pudiendo representar todos los posibles estados de un qubit \( \ket{\psi} \) como un punto en la superficie de esta esfera. Si nos fijamos en la expresión (\ref{eq: qubit_trigonometrico_esfera_bloch}) que acabamos de ver, vemos que hay un número complejo \( e^{i \varphi} \) de módulo uno, similar a una fase global. Sin embargo, esto no es una fase global, ya que para ello ha de multiplicar a todos los posibles estados del qubit, y vemos en este caso que solo aparece en el estado \( \ket{1} \), por lo que es una \textit{fase relativa}, y a diferencia de las fases globales que no cambian el significado físico del qubit, la fase relativa sí lo modifica. Esto es debido a que, aunque los coeficientes que acompañan a \( \ket{0} \) y \( \ket{1} \) sigan cumpliendo que su módulo al cuadrado sea uno, el vector representado en la esfera de Bloch es diferente, ya que puede variar el ángulo \( \varphi \).
 
     \vspace{5mm}
 
@@ -1334,7 +1323,7 @@
 
     \vspace{5mm}
 
-    Antes de hacer cambios de base, tenemos que tratar sobre las mediciones, las cuales ya hemos introducido en los párrafos anteriores y en esta pequeña sección vamos a profundizar sobre este tema. Como bien sabemos, un qubit puede estar en una superposición de \( \ket{0} \) y \( \ket{1} \) debido a las leyes de la mecánica cuántica, pero esto también establece que cuando vamos a leer el resultado de una operación, como al finalizar un algoritmo cuántico, este qubit colapsa a un único estado, de manera que obtenemos \( \ket{0} \) o bien \( \ket{1} \), cada uno con una cierta probabilidad, y esa probabilidad es el módulo al cuadrado de los coeficientes que acompañan a cada posible estado, como vimos en (\ref{eq: condicion_coeficientes_probabilidad_1}). Estos coeficientes se denominan amplitudes, y al tratarse de una probabilidad, la suma del módulo al cuadrado de las amplitudes ha de ser igual a uno. Vamos a ver esto con un ejemplo:
+    Antes de hacer cambios de base, tenemos que tratar sobre las mediciones. La medición es una aplicación de un operador hermítico (observable) sobre el estado cuántico, y los estados \( \ket{0}, \ket{1} \) son los autovectores del observable asociado a la medición en la base computacional. Como bien sabemos, un qubit puede estar en una superposición de \( \ket{0} \) y \( \ket{1} \) debido a las leyes de la mecánica cuántica, pero esto también establece que cuando vamos a leer el resultado de una operación, como al finalizar un algoritmo cuántico, este qubit colapsa a un único estado, de manera que obtenemos \( \ket{0} \) o bien \( \ket{1} \), cada uno con una cierta probabilidad, y esa probabilidad es el módulo al cuadrado de los coeficientes que acompañan a cada posible estado, como vimos en (\ref{eq: condicion_coeficientes_probabilidad_1}). Estos coeficientes se denominan amplitudes, y al tratarse de una probabilidad, la suma del módulo al cuadrado de las amplitudes ha de ser igual a uno. Vamos a ver esto con un ejemplo:
 
     \vspace{2.5mm}
 
@@ -1365,7 +1354,7 @@
 
     \vspace{5mm}
 
-    Una vez definida correctamente la medición de un qubit, podemos hablar más profundamente sobre el concepto de \textit{colapso} de un qubit. Cuando medimos un qubit, este colapsa a un estado como hemos visto anteriormente, que puede ser \( \ket{0} \) o \( \ket{1} \) según el ejemplo propuesto, de manera que el estado del qubit se vuelve completamente fijo al estado que ha colapsado, por lo que el qubit deja de estar en superposición, y es forzado a tomar un bando, en este caso \( \ket{0} \) o \( \ket{1} \). Esto hace que el estado del qubit esté ya completamente definido, de manera que si volvemos a medir el estado de \( \ket{\psi} \), obtendremos el estado al que ha colapsado con una probabilidad de 1.
+    Una vez definida correctamente la medición de un qubit, podemos hablar más profundamente sobre el concepto de \textit{colapso} de un qubit. Un qubit proyecta su estado sobre un autovalor del observable correspondiente a la base de medida, y si se repite la medición inmediatamente después, el resultado será idéntico con probabilidad 1, por lo que el qubit deja de estar en superposición, y es forzado a tomar un bando, en este caso \( \ket{0} \) o \( \ket{1} \). Esto hace que el estado del qubit se encuentre ya completamente definido, de manera que si volvemos a medir el estado de \( \ket{\psi} \), obtendremos el estado al que ha colapsado con probabilidad 1.
 
     \vspace{5mm}
 
@@ -2526,7 +2515,11 @@
     \section{Entrelazamiento Cuántico}\label{sec: entrelazamiento_cuantico}
 
     \vspace{5mm}
-    En esta sección vamos a introducirnos mucho más detalladamente en el \textit{entrelazamiento cuántico}, el cual es uno de los fenómenos más importantes de esta revolución cuántica. Ya dimos al definir la puerta \textit{CNOT} en (\ref{subsubsection: la_puerta_cnot}) una definición muy informal de entrelazamiento cuántico, en la que decíamos que si tenemos dos qubits entrelazados entre sí, un cambio en el estado de uno de ellos afectaba al otro y viceversa. Esto es una propiedad muy potente, ya que nos permite enviar información cuántica, lo cual veremos al final de este capítulo, o en el ámbito de la criptografía generar claves que sean indescifrables, además de otras muchas explotaciones que podemos conseguir con este fenómeno. Para entender mucho mejor esto, vamos a partir de un estado de dos qubits como ya vimos en (\ref{eq: superposicion_qubit_2_estados})
+    En esta sección vamos a introducirnos mucho más detalladamente en el \textit{entrelazamiento cuántico}, siguiendo el índice propuesto por \textit{Thomas G. Wong}~\cite{wong}, hasta adentrarnos en protocolos de encriptación de claves cuánticas, como \textit{BB84} o \textit{E91}, para los cuales ha sido de gran utlidad el trabajo escrito por \textit{Antonio Segovia Galante}~\cite{dem_CHSH}, y los artículos propuestos por \textit{Escanez-Exposito}~\cite{escanez2023interactive} y \textit{Mariani}~\cite{mariani2024qkd}, tomando el artículo original propuesto por \textit{Artur Ekert} en 1991~\cite{ekert_Original} como el pilar fundamental que sostiene este protocolo.
+
+    \vspace{5mm}
+    
+    El entrelazamiento es uno de los fenómenos más importantes de esta revolución cuántica. Ya dimos al definir la puerta \textit{CNOT} en (\ref{subsubsection: la_puerta_cnot}) una definición muy informal de entrelazamiento cuántico, en la que decíamos que si tenemos dos qubits entrelazados entre sí, la medición de uno de los qubits afecta la distribución estadística de resultados del otro, en virtud de su correlación cuántica. Esto es una propiedad muy potente, ya que nos permite enviar información cuántica, lo cual veremos al final de este capítulo, o en el ámbito de la criptografía generar claves que sean indescifrables, además de otras muchas explotaciones que podemos conseguir con este fenómeno. Para entender mucho mejor esto, vamos a partir de un estado de dos qubits como ya vimos en (\ref{eq: superposicion_qubit_2_estados})
 
     \begin{equation*}
         \ket{\psi} = c_{0} \ket{0 0} + c_{1} \ket{0 1} + c_{2} \ket{1 0} + c_{3} \ket{1 1}
@@ -2590,7 +2583,7 @@
 
     \vspace{2.5mm}
 
-    Y vemos que en efecto estas son las probabilidades iniciales, por lo que acabamos de demostrar que medir el estado de una partícula \( \ket{\psi} \) es lo mismo que medir cada uno de sus qubits secuencialmente, o al menos eso es lo que parece. Esto generalmente es cierto para cualquier \( \ket{\psi} \) siempre y cuando sus qubits no estén entrelazados, ya que si realmente lo están, esto cambia completamente. Supongamos el siguiente estado
+    Y vemos que en efecto estas son las probabilidades iniciales, por lo que acabamos de demostrar que medir el estado de una partícula \( \ket{\psi} \) es lo mismo que medir cada uno de sus qubits secuencialmente. Sin embargo esto solo es válido para estados no entrelazados o separables, ya que esta propiedad únicamente la podemos aplicar si es posible expresar \( \ket{\psi} \) como un producto de dos estados \( \ket{\psi_{1}} \ket{\psi_{2}} \). Para entender mejor este último punto, supongamos el siguiente estado
 
     \begin{equation*}
         \ket{\Phi^{+}} = \frac{1}{\sqrt{2}} \left( \ket{0 0} + \ket{1 1} \right)
@@ -2666,7 +2659,7 @@
 
     \vspace{2.5mm}
 
-    Y podemos demostrar de manera análoga a la vista para \( \ket{\Phi^{+}} \) que si medimos uno de los dos qubits y secuencialmente medimos el otro, el estado que obtenemos al medir por segunda vez esta directamente relacionado con la medición anterior, confirmando que estos estados son estados máximamente entrelazados. Otra propiedad de un estado entrelazado es que no se pueden expresar como un producto de otros estados. Para ello vamos a tomar como ejemplo el estado de Bell \( \ket{\Phi^{+}} \) y lo vamos a intentar expresar en función del producto de dos estados \( \ket{\psi_{1}} \ket{\psi_{0}} \):
+    Y podemos demostrar de manera análoga a la vista para \( \ket{\Phi^{+}} \) que si medimos uno de los dos qubits y secuencialmente medimos el otro, el estado que obtenemos al medir por segunda vez esta directamente relacionado con la medición anterior, confirmando que estos estados son estados máximamente entrelazados. Es importante recalcar que esto solo es cierto para ciertos estados, como \( \ket{\Phi^{+}} \), pero no para todos los casos en los que se de este fenómeno, ya que podemos encontrarnos con estados parcialmente entrelazados como se verá más adelante (\ref{subsubsection: parcialmente_entrelazados}). Otra propiedad de un estado entrelazado es que no se pueden expresar como un producto de otros estados. Para ello vamos a tomar como ejemplo el estado de Bell \( \ket{\Phi^{+}} \) y lo vamos a intentar expresar en función del producto de dos estados \( \ket{\psi_{1}} \ket{\psi_{0}} \):
 
     \begin{equation}
         \ket{\psi_{1}} \ket{\psi_{0}} = \left( \alpha_{1} \ket{0} \beta_{1} \ket{0} \right) \left( \alpha_{1} \ket{0} \beta_{1} \ket{0} \right) = \alpha_{1} \alpha_{0} \ket{0 0} + \alpha_{1} \beta_{0} \ket{0 1} + \beta_{1} \alpha_{0} \ket{1 0} + \beta_{1} \beta_{0} \ket{1 1}
@@ -2690,7 +2683,7 @@
 
 
 
-    \subsubsection{Estados Parcialmente Entrelazados}
+    \subsubsection{Estados Parcialmente Entrelazados}\label{subsubsection: parcialmente_entrelazados}
 
     \vspace{5mm}
 
@@ -2742,7 +2735,7 @@
 
     \vspace{2.5mm}
 
-    Cuya constante de normalización ya ha sido calculada de la misma manera que en el caso anterior. Esto nos muestra que la probabilidad de obtener \( \ket{1 0} \) es ahora de \( \frac{3}{4} \) y la de obtener \( \ket{1 1} \) de \( \frac{1}{4} \), probando así que los resultados de las mediciones no son los mismos, ya que estamos ante un caso parcialmente entrelazado, ya que el estado de la segunda medición secuencial de \( \ket{\psi} \) depende del resultado de la primera medición, pero no sabemos el resultado tras la primera medición con total certeza, ya que no estamos ante un caso de entrelazamiento de máximo nivel.
+    Cuya constante de normalización ya ha sido calculada de la misma manera que en el caso anterior. Esto nos muestra que la probabilidad de obtener el estado \( \ket{10} \) es tres veces mayor que la de obtener \( \ket{11} \), lo cual evidencia que los resultados de las mediciones han cambiado. Esto es porque nuestro sistema cuántico se encuentra parcialmente entrelazado, es decir, el resultado de la segunda medición depende del resultado de la primera, pero no con certeza absoluta. Es otras palabras, no nos encontramos ante un estado de entrelazamiento máximo ya que la correlación entre las mediciones no es determinista.
 
     \vspace{5mm}
 
@@ -2765,6 +2758,10 @@
     Llegados a este punto puede surgirnos una duda, ¿Por qué no enviamos la información cuántica directamente desde Alice hasta Bob? De esta manera nos ahorraríamos el uso de bits, sin embargo, esto no es posible, y para explicar esto nos vamos a basar en dos principios básicos que impiden esto, el \textit{Teorema de no-clonación} y la \textit{decoherencia}. Comencemos por el \textit{Teorema de no-clonación}.
 
     \vspace{5mm}
+
+
+
+
 
     \subsubsection{Teorema de No-Clonación}\label{subsubsection: teorema_no_clonacion}
 
@@ -2858,11 +2855,11 @@
 
     \vspace{5mm}
 
-    \subsubsection{Decoherencia}
+    \subsubsection{Decoherencia}\label{subsubsection: decoherencia}
 
     \vspace{5mm}
 
-    El otro fenómeno que hace imposible duplicar el estado de \( \ket{\psi} \) se conoce como decoherencia. La decoherencia es un fenómeno que sucede cuando un sistema cuántico interactúa con las propiedades del entorno, y como resultado podemos perder información, ya que lo que sucede es que el estado nuestro sistema cuántico \( \ket{\psi} \) se ve alterado, por lo que si tenemos un qubit en \( \ket{0} \), este puede verse ligeramente afectado por la decoherencia, cambiando su valor, como podemos ver en el siguiente ejemplo:
+    El otro fenómeno que hace imposible duplicar el estado de \( \ket{\psi} \) se conoce como decoherencia. La decoherencia es un fenómeno que sucede cuando un sistema cuántico interactúa con las propiedades del entorno, y como resultado podemos perder información, ya que lo que sucede es que el estado nuestro sistema cuántico \( \ket{\psi} \) se ve alterado, por lo que si tenemos un qubit en \( \ket{0} \), este puede verse ligeramente afectado por la decoherencia, convertiendo un estado cuántico coherente en una mezcla estadística, como podemos ver en el siguiente ejemplo:
 
     \vspace{2.5mm}
 
@@ -2908,7 +2905,7 @@
 
     \vspace{2.5mm}
 
-    Entonces, el objetivo que tenemos ahora es expresar el estado del qubit de Bob en función de \( \alpha \) y \( \beta \), y debido a que se encuentra entrelazado con uno de los qubits de Alice, Bob va a poder saber el estado de \( \ket{\psi} \) antes de la medición, ya que tendremos que medir el qubit entrelazado de Alice, lo cual afectará directamente al qubit entrelazado de Bob al encontrarse ambos en un estado máximo de entrelazamiento, y Bob podrá conocer de esta manera el estado de \( \ket{\psi} \). Comencemos aplicando una puerta \textit{CNOT} sobre los dos qubits de Alice, los cuales son el qubit izquierdo y el central, obteniendo el siguiente resultado:
+    Entonces, el objetivo que tenemos ahora es expresar el estado del qubit de Bob en función de \( \alpha \) y \( \beta \), y debido a que se encuentra entrelazado con uno de los qubits de Alice, Bob va a poder reconstruir el estado de \( \ket{\psi} \) antes de la medición, ya que tendremos que medir el qubit entrelazado de Alice, lo cual afectará directamente al qubit entrelazado de Bob al encontrarse ambos en un estado máximo de entrelazamiento, y Bob podrá de esta manera partir del mismo estado de Alice \( \ket{\psi} \). Comencemos aplicando una puerta \textit{CNOT} sobre los dos qubits de Alice, los cuales son el qubit izquierdo y el central, obteniendo el siguiente resultado:
 
     \begin{equation*}
         \frac{1}{\sqrt{2}} \left[ \alpha \left( \ket{0 0 0} + \ket{0 1 1} \right) + \beta \left( \ket{1 0 0} + \ket{1 1 1} \right)\right] \ \overset{\textit{CNOT}}{\longrightarrow} \ \frac{1}{\sqrt{2}} \left[ \alpha \left( \ket{0 0 0} + \ket{0 1 1} \right) + \beta \left( \ket{1 1 0} + \ket{1 0 1} \right)\right]
@@ -3020,7 +3017,7 @@
 
     \vspace{5mm}
 
-    Digamos ahora que Alice y Bob quieren mandar un mensaje, pero de manera segura, ya que la información enviada entre ambos pueden ser datos confidenciales, contraseñas, etc. Es por esto que ciertas personas nos van a intentar robar esta información, y nos solemos referir a estas personas en el aḿbito de la criptografía cuántica como Eve, y de la misma manera que en la computación clásica se estableceremos una clave pública y privada para que Bob descifre la información enviada por Alice. Es en esto en lo que se basa el protocolo que vamos a ver en este capítulo, BB84.
+    Digamos ahora que Alice y Bob quieren mandar un mensaje, pero de manera segura, ya que la información enviada entre ambos pueden ser datos confidenciales, contraseñas, etc. Es por esto que ciertas personas nos van a intentar robar esta información, y nos solemos referir a estas personas en el aḿbito de la criptografía cuántica como Eve, por lo que enfrentamos la necesidad de establecer una clave de cifrado que permite a Bob descifrar la información enviada por Alice, tal y como se hace en un sistema clásico. Es en esto en lo que se basa el protocolo que vamos a ver en este capítulo, BB84.
 
     \vspace{5mm}
 
@@ -4255,30 +4252,28 @@
 
     \vspace{5mm}
 
-    La empresa líder en computación cuántica es, hasta la fecha y sin duda alguna, IBM, la cual ofrece a nuestra disposición distintas páginas web en las que podemos ejecutar circuitos cuánticos y ver su comportamiento de la manera más real posible. El desarrollo del circuito se hace a través de \textit{Python} mediante su librería destinada a la computación cuántica \textit{Qiskit}, y una vez lo hemos completado, tenemos distintas opciones de configuración para la ejecución del circuito.
-
-    \vspace{5mm}
-
-    Por otra parte, si la programación en \textit{Python} no es nuestro punto fuerte, tenemos a nuestra disposición la interfaz gráfica para el desarrollo de circuitos cuánticos de IBM, Quantum Composer. Con esta herramiento web podemos crear circuitos cuánticos con el sistema \textit{drag and drop} sobre puertas cuánticas o qubits, de manera que se genera el correspondiente código equivalente al circuito cuántico creado y se ejecuta en un emulador o sistema cuántico, además de que podemos visualizar el estado y la fase correspondiente en la \textit{esfera de Bloch}, y un histograma con las probabilidades de los estados a los que puede colapsar el circuito.
+    La empresa líder en computación cuántica es, hasta la fecha y sin duda alguna, IBM, la cual ofrece a nuestra disposición distintas páginas web en las que podemos ejecutar circuitos cuánticos y ver su comportamiento de la manera más real posible. El desarrollo del circuito se hace a través de \textit{Python} mediante su librería destinada a la computación cuántica \textit{Qiskit}, con la que se tienen distintas configuraciones para la ejecución del circuito.
     
     \vspace{5mm}
 
-    De la misma manera que IBM, Amazon ha desarrollado su propia plataforma para la ejecución de circuitos cuánticos, la cual está basada nuevamente en \textit{Python}, con la diferencia de que usamos la librería relacionada con su propio producto, \textit{Braket}. Este producto incluye ciertas ventajas sobre el producto de IBM, como que permite la combinación de computación cuántica y clásica, aunque como vimos anteriormente, todo circuito clásico se puede expresar como un circuito cuántico. Tambień podemos encontrar productos de otras empresas para la simulación y ejecución de circuitos cuánticos, como Google o Azure, pero no dejan de ser, junto con el producto de Amazon, competidores de la solución presentada por IBM, la cual fue la primera en salir públicamente al mercado con su plataforma IBM Quantum Experience, lanzada en \textit{2016}.
+
+    Por otra parte y de la misma manera que IBM, Amazon ha desarrollado su propia plataforma para la ejecución de circuitos cuánticos, la cual está basada nuevamente en \textit{Python}, con la diferencia de que usamos la librería relacionada con su propio producto, \textit{Braket}. Este producto incluye ciertas ventajas sobre la solución de IBM, como que se permite la combinación de computación cuántica y clásica, aunque como vimos anteriormente, todo circuito clásico se puede expresar como un circuito cuántico. Tambień podemos encontrar productos de otras empresas para la simulación y ejecución de circuitos cuánticos, como Google o Azure, pero no dejan de ser, junto con el producto de Amazon, competidores de la solución presentada por IBM, la cual fue la primera en presentarse públicamente al mercado con su plataforma IBM Quantum Experience, lanzada en 2016.
 
     \vspace{5mm}
 
-    No obstante, la computación cuántica tiene muchos problemas, relacionados precisamente con la naturaleza de las partículas subatómicas, las cuales son muy sensibles al ruido causado por el exterior, lo que hace que se produzcan muchos fallos en los circuitos y que, por lo tanto, los computadores cuánticos actuales no sean tolerantes a fallos (\textit{fault-tolerant}), de manera que los errores se acumulan muy rápidamente y sin la capacidad de ser revertidos con la tecnología cuántica hasta el momento. Sin embargo, Microsoft ha hecho un hallazgo que puede convertirse en la revolución del siglo, mucho más allá que el desarrollo de la inteligencia artificial en estos últimos años.
+    Sin embargo, como hemos podido comprobar en las simulaciones (\ref{subsubsection: simulacion_tp}) y (\ref{subsubsection: simulacion_CHSH}), los errores cuánticos son un gran problema y que persisten hasta la fecha de este trabajo, en la mayoría de casos provocados por la decoherencia, la cual se vio en (\ref{subsubsection: decoherencia}), de manera que los procesadores cuánticos actuales no son capaces de corregir estos errores a tiempo, acumulándose uno tras otro causando incluso mayor error. Esto se conoce como \textit{fault-tolerant} (tolerantes a fallos), por lo que IBM tuvo la gran idea de crear un módulo de \textit{Qiskit}, \code{AerSimulator}, con el que se permite, mediante a través de un ordenador clásico, emular el comportamiento de un procesador cuántico con un nivel de ruido ideal, es decir, nulo, permitiendo al usuario evaluar los resultados en un entorno sin ruido. Sin embargo, Microsoft ha hecho muy recientemente un hallazgo que puede convertirse en la revolución del siglo, mucho más allá del desarrollo de la inteligencia artificial en estos últimos años.
 
     \vspace{5mm}
 
-    Microsoft ha anunciado el lanzamiento de \textit{Majorana 1}, la primera unidad de procesamiento cuántico (QPU) con qubits topológicos, qubits que almacenan informacion cuántica de manera más estable y robusta, de manera que es mucho menos susceptible a errores cuánticos, que es uno de los principales problemas de este campo de la física y la tecnología, siendo una de las principales motivaciones para Microsoft construir el primer ordenador cuántico con tolerancia a fallos en los próximos años.
+    Según se explica en la fuente oficial~\cite{microsoft2023}, Microsoft ha anunciado el lanzamiento de \textit{Majorana 1}, la primera unidad de procesamiento cuántico (QPU) con qubits topológicos, qubits que almacenan informacion cuántica de manera más estable y robusta, de manera que son mucho menos susceptibles a errores cuánticos, uno de los principales problemas de este campo de la física y la tecnología, siendo una de las principales motivaciones para Microsoft construir el primer ordenador cuántico con tolerancia a fallos en los próximos años.
 
     \vspace{5mm}
 
     La clave de este gran avance ha sido el desarrollo de materiales topoconductores, los cuales permiten la superconductividad topológica, un estado de la materia que hasta este descubrimiento solo existía en la teoría. Este tipo de materiales se crean con arseniuro de indio y aluminio, de manera que cuando se enfrían prácticamente al cero aboluto y se sintonizan con campos magnéticos, se forman nanocables superconductores topológicos con modos cero de Majorana (MZM) en sus extremos, de manera que aumentan la estabilidad y se reducen los errores en comparación con los qubits tradicionales.
+
     \vspace{5mm}
 
-    Así es como se ha desarrollado el primer qubit topológico del mundo, y se plantea tener un chip cuántico con más de un millón de qubits y tolerante a fallos en unos años, y no en unas décadas como se planteaba anteriormente, dando un gran paso en la computación cuántica práctica y probablemente uno de los mayores hitos de este campo.
+    Así es como se ha desarrollado el primer qubit topológico del mundo, y se plantea tener un chip cuántico con una considerable cantidad de qubits y tolerante a fallos en unos años, y no en unas décadas como se planteaba anteriormente, dando un gran paso en la computación cuántica práctica y probablemente uno de los mayores hitos de este campo, acercándonos cada vez más a la era cuántica.
 
 
 

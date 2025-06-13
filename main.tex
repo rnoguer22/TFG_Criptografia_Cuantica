@@ -3528,11 +3528,15 @@
 
     \vspace{5mm}
 
+    Para esta sección se explican los oráculos cuánticos y posteriormente nos centramos en los algoritmos más importantes para la criptografía cuántica, los cuales son el algoritmo de Shor y el de Grover. Para esto se ha contado con la ayuda del manuscrito escrito por \textit{Thomas G. Wong}~\cite{wong} y de \textit{Nielsen \& Chuang}~\cite{nielsen2010quantum}, así como de los artículos originales propuestos por \textit{Lov K. Grover}~\cite{grover_Original} y \textit{Peter Shor}~\cite{shor_Original}, los cuales nos ayudan a tener una mejor visión sobre estos algoritmos.
+
+    \vspace{5mm}
+
     En este punto llegamos a una de las últimas secciones de este trabajo, en el que vamos a explicar y desarrollar por qué los ordenadores cuánticos son tan importantes. Todo se reduce a los algoritmos cuánticos, y es que, aprovechando las propiedades que ya sabemos como la superposición (\ref{eq: superposicion}) o entrelazamiento (\ref{sec: entrelazamiento_cuantico}) podemos mejorar la eficiencia de ciertos algoritmos, optimizándolos lo máximo posible, de manera que obtenemos algoritmos que en muchos casos son infinitamente más rápidos que la versión tradicional de estos procesos.
 
     \vspace{5mm}
 
-    Cabe destacar que no todo algoritmo cuántico por ser cuántico, valga la redundancia, es más rápido, esto no siempre sucede así, pero como vimos anteriormente, toda información clásica se puede representar mediante un ordenador cuántico, por lo que únicamente tendríamos que clonar dichos procesos. En esta sección vamos seguir el plan propuesto en el libro escrito por \textit{Thomas G. Wong}~\cite{wong}, centrándonos en dos algoritmos: El algoritmo de Grover y el de Shor, los cuales mejoran la búsqueda por fuerza bruta y se optimiza de exponencial manera el problema de factorización, rompiendo con las claves públicas y privadas de ciertos cifrados como veremos próximamente.
+    Cabe destacar que no todo algoritmo cuántico por ser cuántico, valga la redundancia, es más rápido, esto no siempre sucede así, pero como vimos anteriormente, toda información clásica se puede representar mediante un ordenador cuántico, por lo que únicamente tendríamos que clonar dichos procesos. Relacionados con la criptografía, se destacan el algoritmo de Grover y el de Shor, los cuales mejoran la búsqueda por fuerza bruta optimizan de exponencial manera el problema de factorización, rompiendo con las claves públicas y privadas de ciertos cifrados como veremos próximamente.
 
     \vspace{5mm}
 
@@ -3544,7 +3548,7 @@
 
     \vspace{5mm}
 
-    Antes de comenzar por los oráculos, tenemos que explicar un par de conceptos. El primero es el de \textit{complejidad de circuitos}, ya que no todos los circuitos son iguales, podemos encontrar circuitos más o menos complejos que otros, y esto se mide contando el número mínimo de puertas cuánticas, tomando como referenca un conjunto de puertas cuánticas universales, como explicamos anteriormente al final de (\ref{subsubsection: la_puerta_de_toffoli}). Tomando como ejemplo el sumador cuántico require \( 32n - 14 \) puertas cuánticas, siendo \textit{n} el número de qubits que represetan a cada sumando en el sumador, y esto al depender de \textit{n}, decimos que tiene una complejidad lineal \textit{O(N)}.
+    Antes de comenzar por los oráculos, tenemos que explicar un par de conceptos. El primero es el de \textit{complejidad de circuitos}, ya que no todos los circuitos son iguales, podemos encontrar circuitos más o menos complejos que otros, y esto se mide contando el número mínimo de puertas cuánticas, tomando como referencia un conjunto de puertas cuánticas universales, como explicamos anteriormente al final de (\ref{subsubsection: la_puerta_de_toffoli}). Tomando como ejemplo el sumador cuántico, requiere un total de \( 32n - 14 \) puertas cuánticas, siendo \textit{n} el número de qubits que representan a cada sumando en el sumador, y esto al depender de \textit{n}, decimos que tiene una complejidad lineal \textit{O(N)}.
 
     \vspace{5mm}
 
@@ -3556,7 +3560,7 @@
 
     \vspace{5mm}
 
-    Esta idea aparece y se aplica en otros muchos otros algoritmos cuánticos, por lo que podemos asentar este concepto. Un oráculo cuántico no es más que una función booleana, es decir, su valor solo puede ser 0 o 1, lo que significa que puede definirse por medio de puertas lógicas convencionales. Si queremos tener un oráculo cuántico, tenemos que convertir este oráculo, el cual es un conjunto de puertas lógicas, en una puerta cuántica, y para ello debemos hacerla reversible como vimos en (\ref{subsection: puertas_cuanticas_de_1_qubit}). Esto se traduce a hacer que el oráculo sea reversible, y esto lo podemos hacer muy fácilmente, apoyándonos en una de las puertas lógicas más importantes, la puerta \textit{XOR}, cuya tabla de verdad es la siguiente:
+    Esta idea aparece y se aplica en otros muchos otros algoritmos cuánticos, por lo que podemos asentar este concepto. Un oráculo cuántico no es más que una función booleana, es decir, su valor solo puede ser 0 o 1, lo que significa que puede definirse por medio de puertas lógicas convencionales. Si queremos tener un oráculo cuántico, tenemos que definir una operación reversible y unitaria que codifique la función, como se vio en (\ref{subsection: puertas_cuanticas_de_1_qubit}). La reversibilidad se puede conseguir muy fácilmente, con el apoyo de una de las puertas lógicas más importantes, la puerta \textit{XOR}, cuya tabla de verdad es la siguiente:
 
     \vspace{2.5mm}
 
@@ -3598,10 +3602,6 @@
         \ket{x} \ket{y} \ \overset{U_{f}}{\longrightarrow} \ \ket{x} \ket{y \otimes f(x)}
         \label{eq: oraculo_cuantico}
     \end{equation}
-
-    \vspace{2.5mm}
-
-    Y este oráculo lo utilizaremos posteriormente en el algoritmo de Shor (\ref{subsection: algoritmo_shor}).
 
     \vspace{5mm}
 
@@ -4000,7 +4000,7 @@
 
     \vspace{2.5mm}
 
-    Hay muchos métodos que nos permiten obtener un valor de \textit{e}, como el algoritmo de euclides. En definitiva, \textit{e} es la segunda clave pública de Bob. Continuando con este protocolo, vamos a hallar la clave privada de Bob, la cual es 
+    Hay muchos métodos que nos ayudan a obtener un valor de \textit{e}, como el algoritmo de euclides, el cual es usado para hallar el máximo común divisor. En definitiva, \textit{e} es la segunda clave pública de Bob. Continuando con este protocolo, vamos a hallar la clave privada de Bob, la cual es 
 
     \begin{equation}
         e \cdot d \equiv 1 \ \text{mod} \ \phi
@@ -4008,7 +4008,7 @@
 
     \vspace{2.5mm}
 
-    Esta será nuestra clave privada \textit{d}, cual multiplicada por una de las claves públicas \textit{e}, da como resultado la unidad módulo \( \phi \). Esta clave \textit{d} permitirá a Bob desencriptar cualquier mensaje encriptado por Alice, y será una clave muy segura ya que para hallar \textit{d} hemos de conocer el valor de \( \phi \), el cual se estableció en (\ref{eq: phi_RSA}) y que depende de dos números primos \textit{p} y \textit{q}, por lo que si queremos conocer el valor de \textit{d}, es necesario aplicar un algoritmo de factorización, y los ordenadores clásicos en esta tarea son muy ineficientes.
+    Esta será nuestra clave privada \textit{d}, cual multiplicada por una de las claves públicas \textit{e}, da como resultado la unidad módulo \( \phi \). Esta clave \textit{d} permitirá a Bob desencriptar cualquier mensaje encriptado por Alice, y será una clave muy segura ya que para hallar \textit{d} hemos de conocer el valor de \( \phi \), el cual se estableció en (\ref{eq: phi_RSA}) y que depende de dos números primos \textit{p} y \textit{q}, por lo que si queremos conocer el valor de \textit{d}, es necesario aplicar un algoritmo de factorización, y esta tarea para los ordenadores clásicos, en el caso de factorizar un número muy grande, es considerada un problema con una complejidad extremadamente alta.
 
     \vspace{5mm}
 
@@ -4088,7 +4088,7 @@
 
         \vspace{2.5mm}
 
-        Donde \( k \in \mathbb{Z} \) es un múltiplo de \textit{N}. No obstante el objetivo de este problema es hallar \textit{p} y \textit{q}, por lo que expresamos \textit{N} en función de ellos, y además, podemos factorizar el término \( a^{r} - 1 \) como sigue
+        Donde \( k N \) es un múltiplo de \textit{N}, con \( k \in \mathbb{Z} \). No obstante el objetivo de este problema es hallar \textit{p} y \textit{q}, por lo que expresamos \textit{N} en función de ellos, y además, podemos factorizar el término \( a^{r} - 1 \) como sigue
 
         \begin{equation*}
             \left( a^{r / 2} + 1 \right) \left( a^{r / 2} - 1 \right) = k p q
@@ -4137,7 +4137,7 @@
 
     \vspace{5mm}
 
-    Una de las partes clave del algoritmo de Shor es determinar el periodo de una expresión modular, y para ello necesitamos obtener autovalores, los cuales tienen la forma \( e^{2 \pi i s / r} \), de un determinado operador el cual denotaremos \textit{U} ya que en efecto se trata de una puerta cuántica. 
+    Una de las partes clave del algoritmo de Shor es determinar el periodo de una expresión modular, y para ello necesitamos obtener autovalores, los cuales tienen la forma \( e^{2 \pi i s / r} \), de un determinado operador el cual denotaremos \textit{U} ya que en efecto se trata de una puerta cuántica. Este algoritmo se encuentra perfectamente explicado en el libro escrito por \textit{Thomas G. Wong}~\cite{wong} en la sección dedicada a algoritmos cuánticos.
 
     \vspace{5mm}
 
@@ -4252,20 +4252,19 @@
 
     \vspace{5mm}
 
-    La empresa líder en computación cuántica es, hasta la fecha y sin duda alguna, IBM, la cual ofrece a nuestra disposición distintas páginas web en las que podemos ejecutar circuitos cuánticos y ver su comportamiento de la manera más real posible. El desarrollo del circuito se hace a través de \textit{Python} mediante su librería destinada a la computación cuántica \textit{Qiskit}, con la que se tienen distintas configuraciones para la ejecución del circuito.
+    La empresa líder en computación cuántica es, hasta la fecha y sin duda alguna, IBM, la cual ofrece a nuestra disposición distintas páginas web en las que podemos ejecutar circuitos cuánticos y ver su comportamiento de la manera más real posible, como se puede apreciar en su página oficial~\cite{ibm_quantum_website}. El desarrollo del circuito se hace a través de \textit{Python} mediante su librería destinada a la computación cuántica \textit{Qiskit}, accesible mediante~\cite{qiskit_main}, con la que se tienen distintas configuraciones para la ejecución del circuito, según se establece en la documentación oficial~\cite{qiskit_docs}. La información técnica sobre los distintos procesadores, número de qubits, etc. Se puede ver reflejada muy bien en el trabajo escrito por \textit{Muhammad AbuGhanem}~\cite{ibm_leader_2024}. 
     
     \vspace{5mm}
 
-
-    Por otra parte y de la misma manera que IBM, Amazon ha desarrollado su propia plataforma para la ejecución de circuitos cuánticos, la cual está basada nuevamente en \textit{Python}, con la diferencia de que usamos la librería relacionada con su propio producto, \textit{Braket}. Este producto incluye ciertas ventajas sobre la solución de IBM, como que se permite la combinación de computación cuántica y clásica, aunque como vimos anteriormente, todo circuito clásico se puede expresar como un circuito cuántico. Tambień podemos encontrar productos de otras empresas para la simulación y ejecución de circuitos cuánticos, como Google o Azure, pero no dejan de ser, junto con el producto de Amazon, competidores de la solución presentada por IBM, la cual fue la primera en presentarse públicamente al mercado con su plataforma IBM Quantum Experience, lanzada en 2016.
-
-    \vspace{5mm}
-
-    Sin embargo, como hemos podido comprobar en las simulaciones (\ref{subsubsection: simulacion_tp}) y (\ref{subsubsection: simulacion_CHSH}), los errores cuánticos son un gran problema y que persisten hasta la fecha de este trabajo, en la mayoría de casos provocados por la decoherencia, la cual se vio en (\ref{subsubsection: decoherencia}), de manera que los procesadores cuánticos actuales no son capaces de corregir estos errores a tiempo, acumulándose uno tras otro causando incluso mayor error. Esto se conoce como \textit{fault-tolerant} (tolerantes a fallos), por lo que IBM tuvo la gran idea de crear un módulo de \textit{Qiskit}, \code{AerSimulator}, con el que se permite, mediante a través de un ordenador clásico, emular el comportamiento de un procesador cuántico con un nivel de ruido ideal, es decir, nulo, permitiendo al usuario evaluar los resultados en un entorno sin ruido. Sin embargo, Microsoft ha hecho muy recientemente un hallazgo que puede convertirse en la revolución del siglo, mucho más allá del desarrollo de la inteligencia artificial en estos últimos años.
+    Por otra parte y de la misma manera que IBM, Amazon ha desarrollado su propia plataforma para la ejecución de circuitos cuánticos, como se puede ver en la página web oficial~\cite{amazon_braket_main}, la cual está basada nuevamente en \textit{Python}, con la diferencia de que usamos la librería relacionada con su propio producto, \textit{Braket}, como se refleja en la documentación oficial~\cite{amazon_braket_docs}. Este producto incluye ciertas ventajas sobre la solución de IBM, como que se permite la combinación de computación cuántica y clásica, aunque como vimos anteriormente, todo circuito clásico se puede expresar como un circuito cuántico. Tambień podemos encontrar productos de otras empresas para la simulación y ejecución de circuitos cuánticos, como Google, el cual explica brevemente el funcionamiento de \textit{Willow}, sus chips cuánticos, como se puede apreciar en~\cite{google_quantum_ai}, o Azure, cuya fuente oficial es~\cite{azure_quantum}. No obstante no dejan de ser competidores de la solución presentada por IBM, la cual fue la primera en presentarse públicamente al mercado con su plataforma IBM Quantum Experience, lanzada en 2016, como se detalla en~\cite{ibm_five_years_2021}.
 
     \vspace{5mm}
 
-    Según se explica en la fuente oficial~\cite{microsoft2023}, Microsoft ha anunciado el lanzamiento de \textit{Majorana 1}, la primera unidad de procesamiento cuántico (QPU) con qubits topológicos, qubits que almacenan informacion cuántica de manera más estable y robusta, de manera que son mucho menos susceptibles a errores cuánticos, uno de los principales problemas de este campo de la física y la tecnología, siendo una de las principales motivaciones para Microsoft construir el primer ordenador cuántico con tolerancia a fallos en los próximos años.
+    Sin embargo, como hemos podido comprobar en las simulaciones (\ref{subsubsection: simulacion_tp}) y (\ref{subsubsection: simulacion_CHSH}), los errores cuánticos son un gran problema y que persisten hasta la fecha de este trabajo, en la mayoría de casos provocados por la decoherencia, la cual se vio en (\ref{subsubsection: decoherencia}), de manera que los procesadores cuánticos actuales no son capaces de corregir estos errores a tiempo, acumulándose uno tras otro causando incluso mayor error. Esto se conoce como \textit{fault-tolerant} (tolerantes a fallos), por lo que IBM tuvo la gran idea de crear un módulo de \textit{Qiskit}, \code{AerSimulator}, cuya documentación encontramos en~\cite{qiskit_aersimulator}. Con esto se permite, mediante a través de un ordenador clásico, emular el comportamiento de un procesador cuántico con un nivel de ruido ideal, es decir, nulo, permitiendo al usuario evaluar los resultados en un entorno sin ruido. Sin embargo, Microsoft ha hecho muy recientemente un hallazgo que puede convertirse en la revolución del siglo, mucho más allá del desarrollo de la inteligencia artificial en estos últimos años.
+
+    \vspace{5mm}
+
+    Según se explica en la fuente oficial~\cite{microsoft2023}, Microsoft ha anunciado el lanzamiento de \textit{Majorana 1}, la primera unidad de procesamiento cuántico (QPU) con qubits topológicos, qubits que almacenan informacion cuántica de manera más estable y robusta, de manera que son mucho menos susceptibles a errores cuánticos, uno de los principales problemas de este campo de la física y la tecnología, siendo una de las principales motivaciones para Microsoft construir el primer ordenador cuántico con tolerancia a fallos en los próximos años. Esto también se puede ver reflejado en el artículo escrito por \textit{Chetan Nayak} en~\cite{microsoft_majorana1_2025}.
 
     \vspace{5mm}
 
@@ -4285,7 +4284,7 @@
 
     \vspace{5mm}
 
-    En este anexo, hacemos una mención al código empleado para este trabajo. El código se ha empleado principalmente para generar imágenes de la esfera de Bloch, como (\ref{fig: bloch_ejemplo_medicion}), y para realizar simulaciones cuánticas, tanto para simular la teleportación (\ref{subsubsection: simulacion_tp}) como la desigualdad \textit{CHSH} vista en (\ref{subsubsection: simulacion_CHSH}). El enlace al repositorio fuente está disponible en la bibliografía y es accesible en~\cite{noguer_TFG_Latex}.
+    En este anexo, hacemos una mención al código empleado para este trabajo. El código se ha empleado principalmente para generar imágenes de la esfera de Bloch, como (\ref{fig: bloch_ejemplo_medicion}), y para realizar simulaciones cuánticas, tanto para simular la teleportación (\ref{subsubsection: simulacion_tp}) como la desigualdad \textit{CHSH} vista en (\ref{subsubsection: simulacion_CHSH}). El enlace al repositorio fuente se encuentra disponible en la bibliografía y es accesible en~\cite{noguer_TFG_Latex}.
 
     \vspace{5mm}
 
